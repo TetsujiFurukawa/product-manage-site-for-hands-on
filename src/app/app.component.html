@@ -8,14 +8,19 @@
   <!-- Main contents -->
   <mat-sidenav-content>
 
-    <!-- Header -->
-    <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+    <!-- Wrapper of body -->
+    <div class="body-wrapper">
 
-    <!-- Router -->
-    <router-outlet></router-outlet>
+      <!-- Header -->
+      <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
 
-    <!-- Footer -->
-    <app-footer></app-footer>
+      <!-- Router -->
+      <router-outlet></router-outlet>
+
+      <!-- Footer -->
+      <app-footer></app-footer>
+
+    </div>
 
   </mat-sidenav-content>
 

@@ -1,0 +1,46 @@
+/* --------------------------------------------------------------------------------
+ * Sign in page.
+ * -------------------------------------------------------------------------------- */
+.sign-in-page {
+  width: 30%;
+  margin: 150px auto 0;
+  background-color: #fff;
+  border: 1px solid #A9A9A9;
+}
+
+.sign-in-title {
+  height: 30px;
+  width: 100%;
+  margin: 0 auto 0;
+  background-color: #323232;
+}
+
+.sign-in-page:hover {
+  opacity: 0.8;
+}
+
+.sign-in-page input[type=text],
+.sign-in-page input[type=password] {
+  border-width: 0;
+  display: block;
+  width: 20rem;
+  margin: 50px auto 50px;
+}
+
+.sign-in-page .button {
+  display: block;
+  padding: 10px;
+  margin: 50px auto 50px;
+  width: 200px;
+  border-radius: 2px;
+  background-color: #A9A9A9;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  letter-spacing: 1px;
+  font-size: 1.2rem;
+}
+
+.sign-in-page .button:hover {
+  opacity: 0.9;
+}

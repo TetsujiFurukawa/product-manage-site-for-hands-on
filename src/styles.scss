@@ -1,4 +1,32 @@
-/* You can add global styles to this file, and also import other style files */
+@charset "UTF-8";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* --------------------------------------------------------------------------------
+ * Basic styles.
+ * -------------------------------------------------------------------------------- */
+html,
+body {
+  height: 100%;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  color: #323232;
+  background-color: #F5F5F5;
+  font-size: 1.2rem;
+  font-family: "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+
+.body-wrapper {
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 7px;
+  box-sizing: border-box;
+}
+
+// Overrided back ground color of mat-side-nav
+body .mat-drawer-container {
+  background-color: #F5F5F5;
+}

@@ -6,12 +6,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './component/common/footer/footer.component';
 import { HeaderComponent } from './component/common/header/header.component';
+import { SidenavComponent } from './component/common/sidenav/sidenav.component';
 import {
   DummyPurchasingPageComponent
 } from './component/pages/dummy-purchasing-page/dummy-purchasing-page.component';
 import {
-  ProductListingComponent
-} from './component/pages/product-listing/product-listing.component';
+  ProductListingPageComponent
+} from './component/pages/product-listing-page/product-listing-page.component';
 import {
   ProductRegisteringPageComponent
 } from './component/pages/product-registering-page/product-registering-page.component';
@@ -30,11 +31,13 @@ import { MaterialModule } from './utils/material/material.module';
     HeaderComponent,
     FooterComponent,
     SignInPageComponent,
-    ProductListingComponent,
+    ProductListingPageComponent,
     ProductRegisteringPageComponent,
     StockRegisteringPageComponent,
     PurchaseHistoryListingPageComponent,
-    DummyPurchasingPageComponent
+    DummyPurchasingPageComponent,
+    ProductListingPageComponent,
+    SidenavComponent
   ],
   imports: [
     BrowserModule,

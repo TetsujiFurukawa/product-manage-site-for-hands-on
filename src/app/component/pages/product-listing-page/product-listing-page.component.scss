@@ -47,7 +47,7 @@
 
 .search-functions .button {
   display: inline-block;
-  padding: 10px;
+  padding: 10px 0;
   margin-left: 10px;
   width: 200px;
   border-radius: 2px;
@@ -61,6 +61,11 @@
 
 .search-functions .button:hover {
   opacity: 0.8;
+}
+
+.search-functions .button.active {
+  background-color: rgb(254, 94, 173, 0.55);
+  color: #fff;
 }
 
 .search-results {
@@ -88,7 +93,7 @@ tbody {
 tbody {
   overflow-y: scroll;
   /* height: 330px; */
-  height: 56vh;
+  height: 55vh;
 }
 
 .search-results table,
@@ -171,9 +176,4 @@ tbody {
 
 .search-results table img {
   max-height: 30px;
-}
-
-.button.active {
-  background-color: rgb(254, 94, 173, 0.55);
-  color: #fff;
 }

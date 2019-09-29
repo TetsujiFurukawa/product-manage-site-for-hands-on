@@ -2,7 +2,7 @@
   <div class="sign-in-title"></div>
   <div class="sign-in-conditions">
     <form [formGroup]="signInForm">
-      <!-- <input type="text" name="signInUserAccount" placeholder="ユーザアカウント"> -->
+
       <mat-form-field class="mat-form-field">
         <input id="signInUserAccount" class="mat-input" matInput type="text" formControlName="signInUserAccount"
           placeholder="ユーザアカウント">
@@ -10,6 +10,7 @@
           入力が必要な項目です。
         </mat-error>
       </mat-form-field>
+
       <mat-form-field class="mat-form-field">
         <input id="signInPassword" class="mat-input" matInput type="text" formControlName="signInPassword"
           placeholder="パスワード">
@@ -17,10 +18,9 @@
           入力が必要な項目です。
         </mat-error>
       </mat-form-field>
+
     </form>
     <button mat-raised-button id="signInBtn" class="mat-raised-button" type="submit" [disabled]="!signInForm.valid"
       (click)="singnIn()">サインイン</button>
-
-    <!-- <a href="product-listing" class="button">サインイン</a> -->
   </div>
 </section>

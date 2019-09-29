@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-product-registering-page',
@@ -7,7 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductRegisteringPageComponent implements OnInit {
 
-  constructor() { }
+  registerForm = this.formBuilder.group({
+    // signInEMailAddress: this.signInUserAccount,
+    // signInPassword: this.signInPassword
+  });
+
+  constructor(
+    private formBuilder: FormBuilder,
+
+  ) { }
 
   ngOnInit() {
   }

@@ -1,6 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +27,12 @@ import {
   StockRegisteringPageComponent
 } from './component/pages/stock-registering-page/stock-registering-page.component';
 import { MaterialModule } from './utils/material/material.module';
+import { ReactiveFormsModule } from '@angular/forms';
+
+// 他言語化の設定
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -42,7 +51,16 @@ import { MaterialModule } from './utils/material/material.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule, MaterialModule
+    BrowserAnimationsModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
 
   ],
   providers: [],

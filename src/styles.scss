@@ -26,7 +26,21 @@ body {
   box-sizing: border-box;
 }
 
-// Overrided back ground color of mat-side-nav
+// Overrides back ground color of mat-side-nav.
 body .mat-drawer-container {
   background-color: rgba(248, 248, 248, 0.55);
+}
+
+// Overrides font size of mat input.
+body .mat-form-field {
+  font-size: 1.6rem;
+  display: inline-block;
+}
+
+body .mat-raised-button {
+  width: 200px;
+  background-color: #A9A9A9;
+  color: white;
+  border-radius: 2px;
+
 }

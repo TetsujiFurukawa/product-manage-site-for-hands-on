@@ -1,8 +1,26 @@
 <section class="sign-in-page">
   <div class="sign-in-title"></div>
-  <form class="sign-in-form">
-    <input type="text" name="user-account" placeholder="ユーザアカウント">
-    <input type="password" name="password" placeholder="パスワード">
-    <a href="product-listing" class="button">サインイン</a>
-  </form>
+  <div class="sign-in-conditions">
+    <form [formGroup]="signInForm">
+      <!-- <input type="text" name="signInUserAccount" placeholder="ユーザアカウント"> -->
+      <mat-form-field class="mat-form-field">
+        <input id="signInUserAccount" class="mat-input" matInput type="text" formControlName="signInUserAccount"
+          placeholder="ユーザアカウント">
+        <mat-error *ngIf="signInUserAccount.hasError('required')">
+          入力が必要な項目です。
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="mat-form-field">
+        <input id="signInPassword" class="mat-input" matInput type="text" formControlName="signInPassword"
+          placeholder="パスワード">
+        <mat-error *ngIf="signInPassword.hasError('required')">
+          入力が必要な項目です。
+        </mat-error>
+      </mat-form-field>
+    </form>
+    <button mat-raised-button id="signInBtn" class="mat-raised-button" type="submit" [disabled]="!signInForm.valid"
+      (click)="singnIn()">サインイン</button>
+
+    <!-- <a href="product-listing" class="button">サインイン</a> -->
+  </div>
 </section>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in-page',
@@ -7,9 +9,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignInPageComponent implements OnInit {
 
-  constructor() { }
+  // E-Mailアドレス
+  signInUserAccount = new FormControl('', [
+    Validators.required
+  ]);
+
+  // パスワード
+  signInPassword = new FormControl('', [
+    Validators.required
+  ]);
+
+  // サインインのフォーム設定
+  signInForm = this.formBuilder.group({
+    signInUserAccount: this.signInUserAccount,
+    signInPassword: this.signInPassword
+  });
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
 
+  singnIn() {
+    this.router.navigate(['/product-listing']);
+  }
 }

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { SignInRequestDto } from 'src/app/entity/dto/request/sign-in-request-dto';
 import { SignInPageService } from 'src/app/service/pages/sign-in-page.service';
+
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in-page',
@@ -16,14 +18,14 @@ export class SignInPageComponent implements OnInit {
   ]);
 
   // パスワード
-  signInPassword = new FormControl('', [
+  signInUserPassword = new FormControl('', [
     Validators.required
   ]);
 
   // サインインのフォーム設定
   signInForm = this.formBuilder.group({
     signInUserAccount: this.signInUserAccount,
-    signInPassword: this.signInPassword
+    signInUserPassword: this.signInUserPassword
   });
 
   constructor(
@@ -36,8 +38,18 @@ export class SignInPageComponent implements OnInit {
   }
 
   singnIn() {
+    // Creates request dto.
+    const signInRequestDto = this.createSignInRequestDto();
 
+    this.signInPageService.signIn(signInRequestDto);
 
-    this.router.navigate(['/product-listing']);
+    // this.router.navigate(['/product-listing']);
+  }
+
+  private createSignInRequestDto(): SignInRequestDto {
+    const signInRequestDto = new SignInRequestDto();
+    signInRequestDto.Username = this.signInUserAccount.value;
+    signInRequestDto.Password = this.signInUserPassword.value;
+    return signInRequestDto;
   }
 }

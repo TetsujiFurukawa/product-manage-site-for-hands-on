@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SignInPageService } from 'src/app/service/pages/sign-in-page.service';
 
 @Component({
   selector: 'app-sign-in-page',
@@ -27,6 +28,7 @@ export class SignInPageComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private signInPageService: SignInPageService,
     private router: Router
   ) { }
 
@@ -34,6 +36,8 @@ export class SignInPageComponent implements OnInit {
   }
 
   singnIn() {
+
+
     this.router.navigate(['/product-listing']);
   }
 }

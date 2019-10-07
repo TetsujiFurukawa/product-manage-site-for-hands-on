@@ -12,9 +12,9 @@
       </mat-form-field>
 
       <mat-form-field class="mat-form-field">
-        <input id="signInPassword" class="mat-input" matInput type="text" formControlName="signInPassword"
+        <input id="signInUserPassword" class="mat-input" matInput type="text" formControlName="signInUserPassword"
           placeholder="パスワード">
-        <mat-error *ngIf="signInPassword.hasError('required')">
+        <mat-error *ngIf="signInUserPassword.hasError('required')">
           入力が必要な項目です。
         </mat-error>
       </mat-form-field>

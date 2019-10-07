@@ -41,15 +41,16 @@ export class SignInPageComponent implements OnInit {
     // Creates request dto.
     const signInRequestDto = this.createSignInRequestDto();
 
+    // Sign in using dto.
     this.signInPageService.signIn(signInRequestDto);
-
-    // this.router.navigate(['/product-listing']);
   }
 
   private createSignInRequestDto(): SignInRequestDto {
+    // Create Request dto.
     const signInRequestDto = new SignInRequestDto();
     signInRequestDto.Username = this.signInUserAccount.value;
     signInRequestDto.Password = this.signInUserPassword.value;
+
     return signInRequestDto;
   }
 }

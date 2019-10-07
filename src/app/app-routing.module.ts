@@ -14,14 +14,15 @@ import { SignInPageComponent } from './component/pages/sign-in-page/sign-in-page
 import {
   StockRegisteringPageComponent
 } from './component/pages/stock-registering-page/stock-registering-page.component';
+import { UrlConst } from './const/url-const';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
-  { path: 'sign-in', component: SignInPageComponent },
-  { path: 'product-listing', component: ProductListingPageComponent },
-  { path: 'product-registering', component: ProductRegisteringPageComponent },
-  { path: 'purchase-history-Listing', component: PurchaseHistoryListingPageComponent },
-  { path: 'stock-registering', component: StockRegisteringPageComponent }
+  { path: '', redirectTo: '/' + UrlConst.PATH_SIGN_IN, pathMatch: 'full' },
+  { path: UrlConst.PATH_SIGN_IN, component: SignInPageComponent },
+  { path: UrlConst.PATH_PRODUCT_LISTING, component: ProductListingPageComponent },
+  { path: UrlConst.PATH_PRODUCT_REGISTERING, component: ProductRegisteringPageComponent },
+  { path: UrlConst.PATH_PURCHASE_HISTORY_LISTING, component: PurchaseHistoryListingPageComponent },
+  { path: UrlConst.PATH_STOCK_REGISTERING, component: StockRegisteringPageComponent }
 ];
 
 @NgModule({

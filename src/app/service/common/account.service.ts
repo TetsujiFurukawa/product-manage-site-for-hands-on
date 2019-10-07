@@ -6,7 +6,7 @@ import { SignInRequestDto } from 'src/app/entity/dto/request/sign-in-request-dto
 import { SignInResponseDto } from 'src/app/entity/dto/response/sign-in-response-dto';
 import { environment } from 'src/environments/environment';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -25,9 +25,12 @@ export class AccountService {
   ) { }
 
   public signIn(signInRequestDto: SignInRequestDto): Observable<SignInResponseDto> {
-    const webApiUrl = this.server + UrlConst.URL_SIGN_IN;
+    const webApiUrl = this.server + UrlConst.PATH_SIGN_IN;
+    const headers = new HttpHeaders(signInRequestDto ? {
+      authorization: 'Basic ' + btoa(signInRequestDto.Username + ':' + signInRequestDto.Password)
+    } : {});
 
-    return this.http.post<SignInResponseDto>(webApiUrl, signInRequestDto)
+    return this.http.post<SignInResponseDto>(webApiUrl, signInRequestDto, { headers })
       .pipe(
         catchError(error => {
           // this.errorMessageService.add(this.translateService.instant('errMessage.http'));

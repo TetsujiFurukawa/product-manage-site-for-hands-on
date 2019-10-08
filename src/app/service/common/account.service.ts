@@ -35,7 +35,7 @@ export class AccountService {
       authorization: 'Basic ' + btoa(signInRequestDto.Username + ':' + signInRequestDto.Password)
     } : {});
 
-    return this.http.post<SignInResponseDto>(webApiUrl, signInRequestDto, { headers, withCredentials: true })
+    return this.http.post<SignInResponseDto>(webApiUrl, signInRequestDto, { headers })
       .pipe(
         catchError(error => {
           console.log(error.status);

@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,6 +28,8 @@ import {
 } from './component/pages/stock-registering-page/stock-registering-page.component';
 import { MaterialModule } from './utils/material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { XhrInterceptor } from './intercepter/xhr-interceptor';
+import { ErrorMessagingComponent } from './component/common/error-messaging/error-messaging.component';
 
 // 他言語化の設定
 export function HttpLoaderFactory(http: HttpClient) {
@@ -46,7 +48,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PurchaseHistoryListingPageComponent,
     DummyPurchasingPageComponent,
     ProductListingPageComponent,
-    SidenavComponent
+    SidenavComponent,
+    ErrorMessagingComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +67,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     })
 
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

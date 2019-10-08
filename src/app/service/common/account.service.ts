@@ -18,6 +18,11 @@ import { ErrorMessagingService } from './error-messaging.service';
 export class AccountService {
   private server = environment.production ? AppConst.URL_PROD_SERVER : AppConst.URL_DEV_SERVER;
 
+  public userAccount: string;
+  userName: string;
+  userLang: string;
+  userTimezone: string;
+
   constructor(
     private http: HttpClient,
     private errorMessageService: ErrorMessagingService,
@@ -30,10 +35,15 @@ export class AccountService {
       authorization: 'Basic ' + btoa(signInRequestDto.Username + ':' + signInRequestDto.Password)
     } : {});
 
-    return this.http.post<SignInResponseDto>(webApiUrl, signInRequestDto, { headers })
+    return this.http.post<SignInResponseDto>(webApiUrl, signInRequestDto, { headers, withCredentials: true })
       .pipe(
         catchError(error => {
-          // this.errorMessageService.add(this.translateService.instant('errMessage.http'));
+          console.log(error.status);
+          if (error.status === 401) {
+            this.errorMessageService.setErrorMessage(this.translateService.instant('認証に失敗しました。'));
+          } else {
+            this.errorMessageService.setErrorMessage(this.translateService.instant('通信エラーが発生しました。'));
+          }
           return of(null as SignInResponseDto);
         })
       );

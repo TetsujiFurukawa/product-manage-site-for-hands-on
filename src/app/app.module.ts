@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -30,6 +30,7 @@ import { MaterialModule } from './utils/material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { XhrInterceptor } from './intercepter/xhr-interceptor';
 import { ErrorMessagingComponent } from './component/common/error-messaging/error-messaging.component';
+import { HttpXsrfInterceptor } from './intercepter/http-xsrf-interceptor';
 
 // 他言語化の設定
 export function HttpLoaderFactory(http: HttpClient) {
@@ -54,6 +55,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     BrowserModule,
     HttpClientModule,
+    HttpClientXsrfModule.withOptions({ cookieName: 'XSRF-TOKEN', headerName: 'X-XSRF-TOKEN' }),
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
@@ -67,7 +69,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     })
 
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true }],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: HttpXsrfInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

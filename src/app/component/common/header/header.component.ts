@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HeaderPageService } from 'src/app/service/pages/header-page.service';
 import { MenuListResponseDto } from 'src/app/entity/dto/response/menu-list-response-dto';
-import { UrlConst } from 'src/app/const/url-const';
 
 @Component({
   selector: 'app-header',
@@ -20,11 +19,8 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.router.url !== '/' && this.router.url !== '/' + UrlConst.PATH_SIGN_IN) {
-      // メニューデータを取得する。
-      this.getMenu();
-    }
-    console.log(this.router.url);
+    // メニューデータを取得する。
+    this.getMenu();
   }
 
   onToggleSidenav() {

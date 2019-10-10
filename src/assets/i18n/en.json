@@ -1,0 +1,20 @@
+{
+    "menu": {
+        "purchase": "購入",
+        "product": "商品",
+        "stock": "在庫"
+    },
+    "subMenu": {
+        "purchase-history-Listing": "購入履歴",
+        "dummy-purchasing": "購入登録(ダミー)",
+        "product-listing": "商品一覧",
+        "stock-registering": "在庫登録"
+    },
+    "signInPage": {
+        "userAccount": "User Account",
+        "userPassword": "Password"
+    },
+    "errMessage": {
+        "http": "サーバとの通信に失敗しました。"
+    }
+}

@@ -11,6 +11,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { ErrorMessagingService } from './error-messaging.service';
+import { MenuListResponseDto } from 'src/app/entity/dto/response/menu-list-response-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,17 @@ export class AccountService {
             this.errorMessageService.setErrorMessage(this.translateService.instant('通信エラーが発生しました。'));
           }
           return of(null as SignInResponseDto);
+        })
+      );
+  }
+
+  public getMenu(): Observable<MenuListResponseDto[]> {
+    const webApiUrl = this.server + UrlConst.PATH_MENU;
+    return this.http.get<MenuListResponseDto[]>(webApiUrl)
+      .pipe(
+        catchError(error => {
+          this.errorMessageService.setErrorMessage(this.translateService.instant('通信エラーが発生しました。'));
+          return of(null as MenuListResponseDto[]);
         })
       );
   }

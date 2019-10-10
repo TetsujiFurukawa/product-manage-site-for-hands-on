@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HeaderPageService } from 'src/app/service/pages/header-page.service';
+import { MenuListResponseDto } from 'src/app/entity/dto/response/menu-list-response-dto';
 
 @Component({
   selector: 'app-header',
@@ -8,11 +10,20 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
+  // メニュー
+  menuListResponseDto: MenuListResponseDto[];
+
   constructor(
+    private headerPageService: HeaderPageService,
     public router: Router
   ) { }
 
   ngOnInit() {
+
+    // メニューを取得する。
+    this.headerPageService.getMenu()
+      .subscribe(menuListResponseDto => { this.menuListResponseDto = menuListResponseDto; console.log(menuListResponseDto.length); });
+
   }
 
 }

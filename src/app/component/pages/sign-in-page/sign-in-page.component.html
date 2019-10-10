@@ -6,7 +6,7 @@
 
       <mat-form-field class="mat-form-field">
         <input id="signInUserAccount" class="mat-input" matInput type="text" formControlName="signInUserAccount"
-          placeholder="ユーザアカウント">
+          placeholder="{{ 'signInPage.userAccount' | translate }}">
         <mat-error *ngIf="signInUserAccount.hasError('required')">
           入力が必要な項目です。
         </mat-error>
@@ -14,7 +14,7 @@
 
       <mat-form-field class="mat-form-field">
         <input id="signInUserPassword" class="mat-input" matInput type="text" formControlName="signInUserPassword"
-          placeholder="パスワード">
+          placeholder="{{ 'signInPage.userPassword' | translate }}">
         <mat-error *ngIf="signInUserPassword.hasError('required')">
           入力が必要な項目です。
         </mat-error>
@@ -22,6 +22,6 @@
 
     </form>
     <button mat-raised-button id="signInBtn" class="mat-raised-button" type="submit" [disabled]="!signInForm.valid"
-      (click)="singnIn()">サインイン</button>
+      (click)="singnIn()">{{ 'signInPage.signInButton' | translate }}</button>
   </div>
 </section>

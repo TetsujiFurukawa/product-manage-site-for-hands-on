@@ -4,6 +4,7 @@ import { SignInPageService } from 'src/app/service/pages/sign-in-page.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sign-in-page',
@@ -12,17 +13,17 @@ import { Router } from '@angular/router';
 })
 export class SignInPageComponent implements OnInit {
 
-  // E-Mailアドレス
+  // account
   signInUserAccount = new FormControl('', [
     Validators.required
   ]);
 
-  // パスワード
+  // pwd
   signInUserPassword = new FormControl('', [
     Validators.required
   ]);
 
-  // サインインのフォーム設定
+  // form group setting
   signInForm = this.formBuilder.group({
     signInUserAccount: this.signInUserAccount,
     signInUserPassword: this.signInUserPassword
@@ -31,22 +32,31 @@ export class SignInPageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private signInPageService: SignInPageService,
+    public translateService: TranslateService,
     private router: Router
   ) { }
 
   ngOnInit() {
+    // Sets default language to ja.
+    this.setupLangage();
+  }
+
+  private setupLangage() {
+    this.translateService.setDefaultLang(navigator.language);
+    // Sets using language.
+    this.translateService.use(navigator.language);
   }
 
   singnIn() {
     // Creates request dto.
     const signInRequestDto = this.createSignInRequestDto();
 
-    // Sign in using dto.
+    // Signs in using dto.
     this.signInPageService.signIn(signInRequestDto);
   }
 
   private createSignInRequestDto(): SignInRequestDto {
-    // Create Request dto.
+    // Creates Request dto.
     const signInRequestDto = new SignInRequestDto();
     signInRequestDto.Username = this.signInUserAccount.value;
     signInRequestDto.Password = this.signInUserPassword.value;

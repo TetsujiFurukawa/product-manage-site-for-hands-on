@@ -2,10 +2,11 @@
  * Sign in page.
  * -------------------------------------------------------------------------------- */
 .sign-in-page {
-  width: 30%;
+  width: 450px;
+  height: 300px;
   margin: 150px auto 0;
-  background-color: #fff;
-  border: 1px solid #A9A9A9;
+  background-color: #ffffff;
+  border: 1px solid rgb(236, 239, 241, 0.45);
 }
 
 .sign-in-page:hover {
@@ -14,22 +15,34 @@
 
 .sign-in-title {
   height: 30px;
-  width: 100%;
+  width: 440px;
   margin: 0 auto 0;
-  background-color: #323232;
+  padding: 0 5px;
+  background-color: #1B435D;
+}
+
+.sign-in-title p {
+  line-height: 30px;
+  color: #ffffff;
 }
 
 .sign-in-conditions {
   width: 80%;
-  margin: 0 auto 0;
+  margin: 20px auto 0;
   text-align: center;
 }
 
 .sign-in-conditions .mat-form-field {
-  margin: 10px auto 0;
+  margin: 20px auto 0;
   width: 200px;
 }
 
 .sign-in-page .mat-raised-button {
   margin: 50px auto 50px;
+  width: 200px;
+  border-radius: 2px;
+  background-color: #78BBE6;
+  color: #ffffff;
+  letter-spacing: 1px;
+  font-size: 1.2rem;
 }

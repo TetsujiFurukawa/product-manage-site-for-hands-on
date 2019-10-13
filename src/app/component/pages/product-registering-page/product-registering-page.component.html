@@ -1,45 +1,53 @@
-<section class="product-registering-page">
-  <h1>商品登録</h1>
-  <div class="register-conditions">
-    <form class="register-form" [formGroup]="registerForm">
-      <div class="register-area-wrapper left">
-        <div class="register-condition-wrapper">
-          <input type="text" name="product-code" placeholder="*商品コード">
-        </div>
-        <div class="register-condition-wrapper">
-          <input type="text" name="product-name" placeholder="*商品名">
-        </div>
-        <div class="register-condition-wrapper">
-          <select name="product-genre" value="">
-            <option value='' disabled selected style='display:none;'>*ジャンル</option>
-            <option value="1">靴・スニーカー</option>
-            <option value="2">トップス</option>
-            <option value="3">バッグ</option>
-          </select>
-        </div>
-        <div class="register-condition-wrapper">
-          <input type="text" name="product-name" placeholder="サイズ・規格">
-        </div>
-        <div class="register-condition-wrapper">
-          <input type="text" name="product-name" placeholder="色">
-        </div>
-        <div class="register-condition-wrapper">
-          <input type="text" name="product-name" placeholder="*単価">
-        </div>
-        <div class="search-condition-wrapper">
-          <input type="checkbox" name="product-end" value="1">販売終了
-          <input type="text" name="product-name" placeholder="販売終了日">
-        </div>
-      </div>
-      <div class="register-area-wrapper right">
-        <p>商品イメージ</p>
-        <img src="img/test11.png" />
-        <a href="#" class="button active">画像のアップロード</a>
-      </div>
-    </form>
+<section class="registering-page">
+  <div class="registering-title">
+    <div class="registering-title-wrapper">
+      <h1>商品登録</h1>
+    </div>
   </div>
-  <div class="register-functions">
-    <a href="product-listing" class="button">戻る</a>
-    <a href="#" class="button active">登録</a>
+  <div class="registering-conditions">
+    <div class="registering-conditions-wrapper">
+      <form class="registering-form" [formGroup]="registerForm">
+        <div class="registering-area-wrapper left">
+          <div class="registering-condition-wrapper">
+            <input type="text" name="product-code" placeholder="*商品コード">
+          </div>
+          <div class="registering-condition-wrapper">
+            <input type="text" name="product-name" placeholder="*商品名">
+          </div>
+          <div class="registering-condition-wrapper">
+            <select name="product-genre" value="">
+              <option value='' disabled selected style='display:none;'>*ジャンル</option>
+              <option value="1">靴・スニーカー</option>
+              <option value="2">トップス</option>
+              <option value="3">バッグ</option>
+            </select>
+          </div>
+          <div class="registering-condition-wrapper">
+            <input type="text" name="product-name" placeholder="サイズ・規格">
+          </div>
+          <div class="registering-condition-wrapper">
+            <input type="text" name="product-name" placeholder="色">
+          </div>
+          <div class="registering-condition-wrapper">
+            <input type="text" name="product-name" placeholder="*単価">
+          </div>
+          <div class="search-condition-wrapper">
+            <input type="checkbox" name="product-end" value="1">販売終了
+            <input type="text" name="product-name" placeholder="販売終了日">
+          </div>
+        </div>
+        <div class="registering-area-wrapper right">
+          <p>商品イメージ</p>
+          <img src="img/test11.png" />
+          <a href="#" class="button active">画像のアップロード</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="registering-functions">
+    <div class="registering-functions-wrapper">
+      <a href="product-listing" class="button">戻る</a>
+      <a href="#" class="button active mgr-70px">登録</a>
+    </div>
   </div>
 </section>

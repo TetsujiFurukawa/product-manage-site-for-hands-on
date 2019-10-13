@@ -1,46 +1,284 @@
 @charset "UTF-8";
 
 /* --------------------------------------------------------------------------------
- * Basic styles.
+ * Basic settings.
  * -------------------------------------------------------------------------------- */
-html,
-body {
-  height: 100%;
-}
-
 html {
   font-size: 62.5%;
 }
 
 body {
   color: #323232;
-  background-color: rgba(248, 248, 248, 0.55);
+  background-color: rgb(236, 239, 241, 0.45);
   font-size: 1.2rem;
   font-family: "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
 }
 
+/* footer */
 .body-wrapper {
-  min-height: 100vh;
+  min-height: 90vh;
+  /* ↑ Fallback of calc() for unsupported browsers */
+  min-height: calc(100vh-50px);
   position: relative;
-  padding-bottom: 7px;
+  padding-bottom: 35px;
   box-sizing: border-box;
 }
 
-// Overrides back ground color of mat-side-nav.
-body .mat-drawer-container {
-  background-color: rgba(248, 248, 248, 0.55);
+footer {
+  width: 100%;
+  text-align: center;
+  padding: 5px 0;
+  position: absolute;
+  bottom: 0;
 }
 
-// Overrides font size of mat input.
-body .mat-form-field {
-  font-size: 1.6rem;
+/* --------------------------------------------------------------------------------
+ * Basic settings of the listing page.
+ * -------------------------------------------------------------------------------- */
+.Listing-page .listing-title {
+  margin-top: 50px;
+  height: 35px;
+  background-color: #78BBE6;
+  padding: 0 10px;
+}
+
+.Listing-page h1,
+.Listing-page th {
+  font-weight: normal;
+}
+
+.Listing-page h1 {
+  line-height: 35px;
+  color: #ffffff;
+  font-size: 1.4rem;
+}
+
+.search-criteria form {
+  height: 50px;
+  width: 96%;
+  padding: 20px 2% 10px;
+  margin: 0 auto 10px;
+  background-color: #ffffff;
+  display: table;
+  table-layout: fixed;
+}
+
+.search-criteria:hover {
+  opacity: 0.8;
+}
+
+.search-condition-wrapper {
+  display: table-cell;
+}
+
+.search-criteria input[type=text] {
+  border-width: 0;
+  display: block;
+}
+
+.search-functions {
+  height: 30px;
+  width: 100%;
+  margin: 20px auto;
+  text-align: right;
+}
+
+.search-functions .button {
   display: inline-block;
+  padding: 10px 0;
+  margin-right: 5px;
+  width: 200px;
+  border-radius: 2px;
+  background-color: #78BBE6;
+  color: #ffffff;
+  text-decoration: none;
+  text-align: center;
+  letter-spacing: 1px;
+  font-size: 1.2rem;
 }
 
-body .mat-raised-button {
-  width: 200px;
-  background-color: #A9A9A9;
-  color: white;
-  border-radius: 2px;
+.search-functions .button:hover {
+  opacity: 0.8;
+}
 
+.search-functions .button.active {
+  background-color: #F99F48;
+  color: #ffffff;
+}
+
+.search-results {
+  width: 100%;
+  /* margin: 1px auto; */
+  text-align: center;
+}
+
+.search-results:hover {
+  opacity: 0.8;
+}
+
+.search-results .results {
+  table-layout: fixed;
+  border-collapse: separate;
+  width: 100%;
+}
+
+thead,
+tbody {
+  display: block;
+}
+
+tbody {
+  overflow-y: scroll;
+  /* height: 330px; */
+  height: 57vh;
+}
+
+.search-results table,
+.search-results th,
+.search-results td {
+  height: 40px;
+  vertical-align: middle;
+}
+
+.search-results th {
+  color: #323232;
+  background-color: #D5EEFF;
+  border-bottom: 1px solid #F2F2F2;
+}
+
+.search-results tr {
+  background-color: #ffffff;
+}
+
+.search-results td {
+  border-bottom: 1px solid #F2F2F2;
+}
+
+.search-results a {
+  color: #323232;
+}
+
+.search-results tr:hover {
+  background-color: rgb(213, 238, 255, 0.1);
+}
+
+/* --------------------------------------------------------------------------------
+ * Basic settings of the registering page.
+ * -------------------------------------------------------------------------------- */
+.registering-page {
+  margin: 50px auto 10px;
+}
+
+.registering-page .registering-title {
+  height: 35px;
+  background-color: #78BBE6;
+  padding: 0 10px;
+}
+
+.registering-page h1 {
+  line-height: 35px;
+  font-weight: normal;
+  color: #ffffff;
+  font-size: 1.4rem;
+}
+
+.registering-conditions {
+  height: 440px;
+  /* margin: 0 auto 10px; */
+  background-color: #ffffff;
+}
+
+.registering-title-wrapper {
+  width: 820px;
+  margin: 0 auto;
+}
+
+.registering-conditions-wrapper,
+.registering-functions-wrapper {
+  width: 770px;
+  margin: 0 auto;
+  padding: 20px 40px 10px;
+}
+
+.registering-conditions:hover {
+  opacity: 0.8;
+}
+
+registering-conditions form {
+  display: table;
+  table-layout: fixed;
+}
+
+.registering-area-wrapper {
+  vertical-align: top;
+  display: table-cell;
+}
+
+.registering-area-wrapper.left {
+  width: 500px;
+}
+
+.registering-area-wrapper.right,
+.registering-area-wrapper img {
+  width: 200px;
+  text-align: right;
+}
+
+.registering-area-wrapper img {
+  max-width: 200px;
+}
+
+.registering-area-wrapper p {
+  text-align: left;
+}
+
+.registering-conditions input[type=text] {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-width: 0;
+  font-size: 1.4rem;
+  display: block;
+}
+
+.registering-conditions p {
+  margin-top: 30px;
+  font-size: 1.4rem;
+  display: block;
+}
+
+.registering-functions {
+  height: 30px;
+  text-align: right;
+}
+
+.registering-area-wrapper .button,
+.registering-functions .button {
+  display: inline-block;
+  padding: 10px 0;
+  width: 200px;
+  border-radius: 2px;
+  background-color: #78BBE6;
+  color: #ffffff;
+  text-decoration: none;
+  text-align: center;
+  letter-spacing: 1px;
+  font-size: 1.2rem;
+}
+
+.registering-functions .button {
+  padding: 10px 0;
+  margin-left: 18px;
+}
+
+.registering-functions .button:hover {
+  opacity: 0.8;
+}
+
+.registering-functions .button.active {
+  background-color: #F99F48;
+  color: #ffffff;
+}
+
+.mgr-70px {
+  margin-right: 70px;
 }

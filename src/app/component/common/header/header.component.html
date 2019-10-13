@@ -1,22 +1,22 @@
 <div *ngIf="this.router.url!=='/' && this.router.url!=='/sign-in'">
   <header class="header">
-    <mat-toolbar class="toolbar mat-elevation-z1">
-      <mat-toolbar-row class="toolbar">
+    <mat-toolbar class="toolbar">
+      <mat-toolbar-row class="toolbar-row">
         <button mat-icon-button (click)="onToggleSidenav()">
           <mat-icon>menu</mat-icon>
         </button>
-        <button mat-button routerLink="/account-setting" class="btnMenu">
+        <button mat-button routerLink="/account-setting" class="menu">
           <div class="systemName">EXAPMLE SITE</div>
         </button>
 
         <div class="toolBarMenu">
           <ng-container *ngFor="let item of menuListResponseDto">
-            <button mat-button [matMenuTriggerFor]="appMenu" class="btnMenu">
-              <div class="btnMenu">{{ 'menu.' + item.menuCode | translate }}</div>
+            <button mat-button [matMenuTriggerFor]="appMenu" class="menu">
+              <div>{{ 'menu.' + item.menuCode | translate }}</div>
             </button>
             <mat-menu #appMenu="matMenu">
               <ng-container *ngFor="let subMenuCode of item.subMenuCodeList">
-                <button mat-menu-item routerLink="/{{subMenuCode}}">
+                <button mat-menu-item routerLink="/{{subMenuCode}}" class="sub-menu">
                   {{'subMenu.' + subMenuCode | translate }}
                 </button>
               </ng-container>
@@ -27,7 +27,6 @@
         <button mat-button routerLink="/signIn" class="btnSignOut">
           <mat-icon>exit_to_app</mat-icon>
         </button>
-
       </mat-toolbar-row>
     </mat-toolbar>
   </header>

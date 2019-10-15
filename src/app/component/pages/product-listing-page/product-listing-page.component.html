@@ -5,21 +5,36 @@
   <div class="search-criteria">
     <form class="search-form" [formGroup]="searchForm">
       <div class="search-condition-wrapper">
-        <input type="text" name="product-name" placeholder="商品名">
+        <div id="searchCondition1">
+          <mat-form-field class="form-field">
+            <input id="product-name" matInput type="text" formControlName="productName"
+              placeholder="{{ 'productListPage.productName' | translate }}">
+          </mat-form-field>
+        </div>
       </div>
       <div class="search-condition-wrapper">
-        <input type="text" name="product-code" placeholder="商品コード">
+        <div id="searchCondition1">
+          <mat-form-field class="form-field">
+            <input id="product-code" matInput type="text" formControlName="productCode"
+              placeholder="{{ 'productListPage.productCode' | translate }}">
+          </mat-form-field>
+        </div>
       </div>
       <div class="search-condition-wrapper">
-        <select name="product-genre" value="">
-          <option value='' disabled selected style='display:none;'>ジャンル</option>
-          <option value="1">靴・スニーカー</option>
-          <option value="2">トップス</option>
-          <option value="3">バッグ</option>
-        </select>
+        <mat-form-field>
+          <mat-label>{{ 'productListPage.genre' | translate }}</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let genre of genres" [value]="genre.value">
+              {{genre.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
       <div class="search-condition-wrapper">
-        <input type="checkbox" name="product-end" value="1">販売終了
+        <div id="searchCondition4">
+          <mat-checkbox id="deleted" formControlName="deleted"></mat-checkbox>
+          <label class="labelFor">{{ 'productListPage.deleted' | translate }}</label>
+        </div>
       </div>
     </form>
   </div>

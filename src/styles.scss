@@ -71,9 +71,14 @@ footer {
   display: table-cell;
 }
 
-.search-criteria input[type=text] {
-  border-width: 0;
-  display: block;
+// .search-criteria input[type=text] {
+//   border-width: 0;
+//   display: block;
+// }
+
+.search-criteria .mat-form-field {
+  margin: 20px auto 0;
+  width: 200px;
 }
 
 .search-functions {

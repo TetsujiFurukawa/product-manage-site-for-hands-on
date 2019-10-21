@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
+import { AccountService } from 'src/app/service/common/account.service';
 
 export interface Genre {
   value: string;
@@ -13,8 +14,7 @@ export interface Genre {
 export class ProductListingPageComponent implements OnInit {
 
   constructor(
-    private formBuilder: FormBuilder,
-
+    private formBuilder: FormBuilder
   ) { }
 
   // product name
@@ -39,5 +39,6 @@ export class ProductListingPageComponent implements OnInit {
   ];
 
   ngOnInit() {
+
   }
 }

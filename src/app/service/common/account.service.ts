@@ -19,7 +19,7 @@ import { MenuListResponseDto } from 'src/app/entity/dto/response/menu-list-respo
 export class AccountService {
   private server = environment.production ? AppConst.URL_PROD_SERVER : AppConst.URL_DEV_SERVER;
 
-  public userAccount: string;
+  userAccount: string;
   userName: string;
   userLang: string;
   userTimezone: string;

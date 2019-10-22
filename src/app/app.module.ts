@@ -31,6 +31,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { XhrInterceptor } from './intercepter/xhr-interceptor';
 import { ErrorMessagingComponent } from './component/common/error-messaging/error-messaging.component';
 import { HttpXsrfInterceptor } from './intercepter/http-xsrf-interceptor';
+import { LoadingComponent } from './component/common/loading/loading.component';
 
 // 他言語化の設定
 export function HttpLoaderFactory(http: HttpClient) {
@@ -50,7 +51,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DummyPurchasingPageComponent,
     ProductListingPageComponent,
     SidenavComponent,
-    ErrorMessagingComponent
+    ErrorMessagingComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

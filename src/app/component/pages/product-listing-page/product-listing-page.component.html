@@ -44,13 +44,13 @@
     </div>
     <div class="search-functions-buttons">
       <button mat-raised-button id="newBtn" class="mat-raised-button" type="submit"
-        (click)="new()">{{ 'productListPage.newButton' | translate }}</button>
+        (click)="onNew()">{{ 'productListPage.newButton' | translate }}</button>
 
       <button mat-raised-button id="clearBtn" class="mat-raised-button" type="submit"
-        (click)="clear()">{{ 'productListPage.clearButton' | translate }}</button>
+        (click)="onClear()">{{ 'productListPage.clearButton' | translate }}</button>
 
       <button mat-raised-button id="searchBtn" class="mat-raised-button active" type="submit"
-        (click)="search()">{{ 'productListPage.searchButton' | translate }}</button>
+        (click)="onSearch()">{{ 'productListPage.searchButton' | translate }}</button>
     </div>
   </div>
   <div class="search-results">

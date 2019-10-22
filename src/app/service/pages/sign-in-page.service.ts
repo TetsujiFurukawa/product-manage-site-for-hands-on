@@ -6,6 +6,7 @@ import { SignInRequestDto } from 'src/app/entity/dto/request/sign-in-request-dto
 import { SignInResponseDto } from 'src/app/entity/dto/response/sign-in-response-dto';
 import { AccountService } from '../common/account.service';
 import { RoutingService } from '../common/routing.service';
+import { LoadingService } from '../common/loading.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,16 @@ export class SignInPageService {
 
     private accountService: AccountService,
     private translateService: TranslateService,
+    private loadingService: LoadingService,
     private routingService: RoutingService
 
   ) { }
 
   signIn(signInRequestDto: SignInRequestDto) {
+    // Starts Loading.
+    this.loadingService.startLoading();
 
-    // Sign in and gets response d
+    // Signs in and gets response dto.
     const signInResponseDto: Observable<SignInResponseDto> = this.accountService.signIn(signInRequestDto);
     signInResponseDto.subscribe((responseDto) => {
 
@@ -38,6 +42,9 @@ export class SignInPageService {
         this.routingService.navigate(UrlConst.PATH_PRODUCT_LISTING);
 
       }
+
+      // Stops Loading.
+      this.loadingService.stopLoading();
 
     });
 

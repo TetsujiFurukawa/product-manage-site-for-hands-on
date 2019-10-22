@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { AccountService } from 'src/app/service/common/account.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { ProductResponseDto } from 'src/app/entity/dto/response/product-response-dto';
+import { Router } from '@angular/router';
+import { UrlConst } from 'src/app/const/url-const';
 
 export interface Genre {
   value: string;
@@ -15,7 +19,7 @@ export class ProductListingPageComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private accountService: AccountService
+    private router: Router
   ) { }
 
   // product name
@@ -39,23 +43,41 @@ export class ProductListingPageComponent implements OnInit {
     { value: '3', viewValue: 'バッグ' }
   ];
 
+  // Material table's header
+  displayColumns: string[] = [
+    'No',
+    'productName',
+    'productCode',
+    'productGenre',
+    'productImage',
+    'productSize',
+    'productColor',
+    'productUnitPrice',
+    'productStock',
+    'productEnd'
+  ];
 
-  resultsLength: BigInteger;
+  // Search result
+  productResponseDtos: ProductResponseDto[];
+
+  // Loading and pagenation
+  isLoadingResults = false;
+  resultsLength = 0;
+  @ViewChild(MatPaginator, { static: true }) public paginator: MatPaginator;
 
   ngOnInit() {
-    console.log(this.accountService.userLang);
 
   }
 
-  new() {
+  onNew() {
+    this.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING]);
+  }
+
+  onClear() {
 
   }
 
-  clear() {
-
-  }
-
-  search() {
+  onSearch() {
 
   }
 

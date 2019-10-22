@@ -1,3 +1,4 @@
+<!-- Loading Sppiner -->
 <mat-sidenav-container>
 
   <!-- Side navigation -->
@@ -8,9 +9,11 @@
   <!-- Main contents -->
   <mat-sidenav-content>
 
+    <!-- Loading Spinner -->
+    <app-loading></app-loading>
+
     <!-- Wrapper of body -->
     <div class="body-wrapper">
-
       <!-- Header -->
       <app-header (sidenavToggle)="sidenav.toggle()" *ngIf="this.router.url!=='/' && this.router.url!=='/sign-in'">
       </app-header>

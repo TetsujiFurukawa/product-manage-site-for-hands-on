@@ -18,8 +18,13 @@
     "productListPage": {
         "productName": "商品名",
         "productCode": "商品コード",
-        "genre": "ジャンル",
-        "deleted": "販売終了",
+        "productGenre": "ジャンル",
+        "productImage": "イメージ",
+        "productSize": "サイズ・規格",
+        "productColor": "色",
+        "productUnitPrice": "単価",
+        "productStock": "在庫数",
+        "productEnd": "販売終了",
         "newButton": "新規",
         "clearButton": "クリア",
         "searchButton": "検索"

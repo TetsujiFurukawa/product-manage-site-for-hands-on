@@ -5,6 +5,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { ProductResponseDto } from 'src/app/entity/dto/response/product-response-dto';
 import { Router } from '@angular/router';
 import { UrlConst } from 'src/app/const/url-const';
+import { LoadingService } from 'src/app/service/common/loading.service';
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { of, merge } from 'rxjs';
+import { ProductListingPageService } from 'src/app/service/pages/product-listing-page.service';
+import { ProductService } from 'src/app/service/common/product.service';
+import { HttpParams } from '@angular/common/http';
 
 export interface Genre {
   value: string;
@@ -19,6 +25,9 @@ export class ProductListingPageComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private loadingService: LoadingService,
+    private productListingPageService: ProductListingPageService,
+    private productService: ProductService,
     private router: Router
   ) { }
 
@@ -29,12 +38,12 @@ export class ProductListingPageComponent implements OnInit {
   productCode = new FormControl('', []);
 
   // deleted
-  deleted = new FormControl('', []);
+  productEnd = new FormControl(false, []);
 
   searchForm = this.formBuilder.group({
     productName: this.productName,
     productCode: this.productCode,
-    deleted: this.deleted
+    productEnd: this.productEnd
   });
 
   genres: Genre[] = [
@@ -59,10 +68,9 @@ export class ProductListingPageComponent implements OnInit {
 
   // Search result
   productResponseDtos: ProductResponseDto[];
+  resultsLength = 0;
 
   // Loading and pagenation
-  isLoadingResults = false;
-  resultsLength = 0;
   @ViewChild(MatPaginator, { static: true }) public paginator: MatPaginator;
 
   ngOnInit() {
@@ -79,6 +87,51 @@ export class ProductListingPageComponent implements OnInit {
 
   onSearch() {
 
+    merge(this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.loadingService.startLoading();
+          return this.productService.getProductList(this.createHttpParams());
+        }),
+
+        map(data => {
+          // Flip flag to show that loading has finished.
+          this.loadingService.stopLoading();
+          this.resultsLength = data.resultsLength;
+          this.paginator.pageIndex = data.pageIndex;
+          return data.productResponseDto;
+        }),
+
+        catchError(() => {
+          this.loadingService.stopLoading();
+          return of(null as ProductResponseDto[]);
+        })
+
+      ).subscribe(data => this.productResponseDtos = data);
+
+  }
+
+  onRowClicked(productResponseDto: ProductResponseDto) {
+    this.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING, productResponseDto.productCode]);
+  }
+
+  /**
+   * Creates search criterias.
+   */
+  private createHttpParams(): HttpParams {
+    const conditions = {
+      // companyName: this.companyName.value,
+      // companyKana: this.companyKana.value,
+      deleted: this.productEnd.value.toString(),
+      pageSize: this.paginator.pageSize.toString(),
+      pageIndex: this.paginator.pageIndex.toString()
+    };
+
+    const paramsOptions = { fromObject: conditions };
+    const params = new HttpParams(paramsOptions);
+
+    return params;
   }
 
 }

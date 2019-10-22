@@ -1,21 +1,21 @@
 export class ProductResponseDto {
 
-  private productName: string;
+  productName: string;
 
-  private productCode: string;
+  productCode: string;
 
-  private productGenre: string;
+  productGenre: string;
 
-  private productImageUrl: string;
+  productImageUrl: string;
 
-  private productSizeStandard: string;
+  productSizeStandard: string;
 
-  private productColor: string;
+  productColor: string;
 
-  private productUnitPrice: number;
+  productUnitPrice: number;
 
-  private productStockQuantity: bigint;
+  productStockQuantity: bigint;
 
-  private endOfSale: boolean;
+  endOfSale: boolean;
 
 }

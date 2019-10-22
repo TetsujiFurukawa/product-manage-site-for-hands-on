@@ -37,7 +37,7 @@ export class ProductListingPageComponent implements OnInit {
   // product code
   productCode = new FormControl('', []);
 
-  // deleted
+  // product end
   productEnd = new FormControl(false, []);
 
   searchForm = this.formBuilder.group({
@@ -100,7 +100,7 @@ export class ProductListingPageComponent implements OnInit {
           this.loadingService.stopLoading();
           this.resultsLength = data.resultsLength;
           this.paginator.pageIndex = data.pageIndex;
-          return data.productResponseDto;
+          return data.productResponseDtos;
         }),
 
         catchError(() => {
@@ -121,9 +121,9 @@ export class ProductListingPageComponent implements OnInit {
    */
   private createHttpParams(): HttpParams {
     const conditions = {
-      // companyName: this.companyName.value,
-      // companyKana: this.companyKana.value,
-      deleted: this.productEnd.value.toString(),
+      productName: this.productName.value,
+      productCode: this.productCode.value,
+      endOfSale: this.productEnd.value.toString(),
       pageSize: this.paginator.pageSize.toString(),
       pageIndex: this.paginator.pageIndex.toString()
     };

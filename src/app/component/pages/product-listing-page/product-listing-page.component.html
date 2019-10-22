@@ -57,7 +57,7 @@
     <table mat-table *ngIf="resultsLength>0" [dataSource]="productResponseDtos">
       <ng-container matColumnDef="No">
         <th mat-header-cell *matHeaderCellDef>
-          {{ "productListPage.searchResult.companySeq" | translate }}
+          {{ "productListPage.no" | translate }}
         </th>
         <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
       </ng-container>
@@ -82,7 +82,6 @@
           {{ "productListPage.productImage" | translate }}</th>
         <td mat-cell *matCellDef="let element"> {{element.productImage}} </td>
       </ng-container>
-
       <ng-container matColumnDef="productSize">
         <th mat-header-cell *matHeaderCellDef>
           {{ "productListPage.productSize" | translate }}</th>
@@ -95,7 +94,7 @@
       </ng-container>
       <ng-container matColumnDef="productUnitPrice">
         <th mat-header-cell *matHeaderCellDef>
-          {{ "productListPage.searchResult.createTime" | translate }}</th>
+          {{ "productListPage.productUnitPrice" | translate }}</th>
         <td mat-cell *matCellDef="let element"> {{element.productUnitPrice}}</td>
       </ng-container>
       <ng-container matColumnDef="productStock">

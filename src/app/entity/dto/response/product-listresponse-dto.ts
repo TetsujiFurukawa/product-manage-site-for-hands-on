@@ -3,6 +3,6 @@ import { ProductResponseDto } from './product-response-dto';
 
 export class ProductListresponseDto extends BaseSearchListResponseDto {
 
-  productResponseDto: ProductResponseDto[];
+  productResponseDtos: ProductResponseDto[];
 
 }

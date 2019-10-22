@@ -2,8 +2,8 @@
   <div class="listing-title">
     <h1>商品一覧</h1>
   </div>
-  <div class="search-criteria">
-    <form class="search-form" [formGroup]="searchForm">
+  <form class="search-form" [formGroup]="searchForm">
+    <div class="search-criteria">
       <div class="search-condition-wrapper">
         <div id="searchCondition1">
           <mat-form-field class="form-field">
@@ -36,12 +36,22 @@
           </mat-checkbox>
         </div>
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
   <div class="search-functions">
-    <a href="#" class="button">新規</a>
-    <a href="#" class="button">クリア</a>
-    <a href="#" class="button active">検索</a>
+    <div class="search-functions-paginator">
+      <mat-paginator [length]="resultsLength" [pageSize]="50" [pageSizeOptions]="[10, 50, 100]"></mat-paginator>
+    </div>
+    <div class="search-functions-buttons">
+      <button mat-raised-button id="newBtn" class="mat-raised-button" type="submit"
+        (click)="new()">{{ 'productListPage.newButton' | translate }}</button>
+
+      <button mat-raised-button id="clearBtn" class="mat-raised-button" type="submit"
+        (click)="clear()">{{ 'productListPage.clearButton' | translate }}</button>
+
+      <button mat-raised-button id="searchBtn" class="mat-raised-button active" type="submit"
+        (click)="search()">{{ 'productListPage.searchButton' | translate }}</button>
+    </div>
   </div>
   <div class="search-results">
     <table class="results">

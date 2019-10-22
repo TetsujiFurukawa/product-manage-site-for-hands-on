@@ -14,7 +14,8 @@ export interface Genre {
 export class ProductListingPageComponent implements OnInit {
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private accountService: AccountService
   ) { }
 
   // product name
@@ -38,7 +39,24 @@ export class ProductListingPageComponent implements OnInit {
     { value: '3', viewValue: 'バッグ' }
   ];
 
+
+  resultsLength: BigInteger;
+
   ngOnInit() {
+    console.log(this.accountService.userLang);
 
   }
+
+  new() {
+
+  }
+
+  clear() {
+
+  }
+
+  search() {
+
+  }
+
 }

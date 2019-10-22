@@ -9,10 +9,6 @@
   border: 1px solid rgb(236, 239, 241, 0.45);
 }
 
-.sign-in-page:hover {
-  opacity: 0.8;
-}
-
 .sign-in-title {
   height: 30px;
   width: 440px;
@@ -45,4 +41,13 @@
   color: #ffffff;
   letter-spacing: 1px;
   font-size: 1.2rem;
+  box-shadow: none;
+}
+
+.sign-in-page .mat-raised-button:hover {
+  opacity: 0.8;
+}
+
+.sign-in-page .mat-raised-button:disabled {
+  opacity: 0.4;
 }

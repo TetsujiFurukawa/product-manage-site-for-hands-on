@@ -9,7 +9,7 @@ html {
 
 body {
   color: #323232;
-  background-color: rgb(236, 239, 241, 0.45);
+  background-color: #ECEFF1;
   font-size: 1.2rem;
   font-family: "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
 }
@@ -30,6 +30,7 @@ footer {
   padding: 5px 0;
   position: absolute;
   bottom: 0;
+  background-color: #ECEFF1;
 }
 
 /* --------------------------------------------------------------------------------
@@ -53,11 +54,11 @@ footer {
   font-size: 1.4rem;
 }
 
-.search-criteria form {
+.search-criteria {
   height: 50px;
   width: 96%;
-  padding: 20px 2% 10px;
-  margin: 0 auto 10px;
+  padding: 15px 2% 5px;
+  margin: 0 auto 0;
   background-color: #ffffff;
   display: table;
   table-layout: fixed;
@@ -71,42 +72,52 @@ footer {
   display: table-cell;
 }
 
-// .search-criteria input[type=text] {
-//   border-width: 0;
-//   display: block;
-// }
-
 .search-criteria .mat-form-field {
-  margin: 20px auto 0;
+  margin: 0 auto 0;
   width: 200px;
 }
 
 .search-functions {
+  display: table;
   height: 30px;
   width: 100%;
-  margin: 20px auto;
+  margin: 0 auto;
+  padding: 5px 0px;
+  background-color: #ECEFF1;
+}
+
+.search-functions-paginator {
+  display: table-cell;
+  width: 365px;
+}
+
+.search-functions-buttons {
+  display: table-cell;
   text-align: right;
 }
 
-.search-functions .button {
-  display: inline-block;
-  padding: 10px 0;
+.search-functions .mat-paginator-container {
+  padding: 0;
+  min-height: 50px;
+  background-color: #ECEFF1;
+}
+
+.search-functions .mat-raised-button {
   margin-right: 5px;
   width: 200px;
   border-radius: 2px;
   background-color: #78BBE6;
   color: #ffffff;
-  text-decoration: none;
-  text-align: center;
   letter-spacing: 1px;
   font-size: 1.2rem;
+  box-shadow: none;
 }
 
-.search-functions .button:hover {
+.search-functions .mat-raised-button:hover {
   opacity: 0.8;
 }
 
-.search-functions .button.active {
+.search-functions .mat-raised-button.active {
   background-color: #F99F48;
   color: #ffffff;
 }
@@ -287,7 +298,3 @@ registering-conditions form {
 .mgr-70px {
   margin-right: 70px;
 }
-
-/* --------------------------------------------------------------------------------
- * Basic settings of Material.
- * -------------------------------------------------------------------------------- */

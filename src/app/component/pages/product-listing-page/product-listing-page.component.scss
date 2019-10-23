@@ -41,8 +41,8 @@
   width: 5%;
 }
 
-.search-results .results .product-name,
-.search-results .results .product-size {
+.search-results .results td .product-name,
+.search-results .results td .product-size {
   text-align: left;
 }
 
@@ -53,4 +53,8 @@
 
 .search-results table img {
   max-height: 30px;
+}
+
+.search-results .results th{
+  text-align: center;
 }

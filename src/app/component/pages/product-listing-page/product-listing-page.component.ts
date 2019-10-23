@@ -37,12 +37,16 @@ export class ProductListingPageComponent implements OnInit {
   // product code
   productCode = new FormControl('', []);
 
+  // product genre
+  productGenre = new FormControl('', []);
+
   // product end
   productEnd = new FormControl(false, []);
 
   searchForm = this.formBuilder.group({
     productName: this.productName,
     productCode: this.productCode,
+    productGenre: this.productGenre,
     productEnd: this.productEnd
   });
 
@@ -59,10 +63,10 @@ export class ProductListingPageComponent implements OnInit {
     'productCode',
     'productGenre',
     'productImage',
-    'productSize',
+    'productSizeStandard',
     'productColor',
     'productUnitPrice',
-    'productStock',
+    'productStockQuantity',
     'productEnd'
   ];
 
@@ -82,7 +86,20 @@ export class ProductListingPageComponent implements OnInit {
   }
 
   onClear() {
+    this.clearSearchCondition();
+    this.clearSearchResultList();
+  }
 
+  private clearSearchCondition() {
+    this.productName.setValue('');
+    this.productCode.setValue('');
+    this.productGenre.setValue('');
+    this.productEnd.setValue(false);
+  }
+
+  private clearSearchResultList() {
+    this.productResponseDtos = null;
+    this.resultsLength = 0;
   }
 
   onSearch() {

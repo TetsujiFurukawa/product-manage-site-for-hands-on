@@ -7,6 +7,7 @@ import { SignInResponseDto } from 'src/app/entity/dto/response/sign-in-response-
 import { AccountService } from '../common/account.service';
 import { RoutingService } from '../common/routing.service';
 import { LoadingService } from '../common/loading.service';
+import { User } from 'src/app/entity/user';
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +36,11 @@ export class SignInPageService {
         // Sets account information.
         this.setUpAccount(responseDto);
 
-        // Sets lang.
-        this.translateService.use(responseDto.userLang);
+        // Sets default lang.
+        this.translateService.setDefaultLang('en');
+
+        // Sets use lang.
+        this.translateService.use('en');
 
         // Moves to the Product listing page.
         this.routingService.navigate(UrlConst.PATH_PRODUCT_LISTING);
@@ -52,10 +56,13 @@ export class SignInPageService {
 
   private setUpAccount(responseDto: SignInResponseDto) {
 
-    this.accountService.userAccount = responseDto.userAccount;
-    this.accountService.userName = responseDto.userName;
-    this.accountService.userLang = responseDto.userLang;
-    this.accountService.userTimezone = responseDto.userTimezone;
+    const user: User = new User();
+    user.userAccount = responseDto.userAccount;
+    user.userName = responseDto.userName;
+    user.userLang = responseDto.userLang;
+    user.userTimezone = responseDto.userTimezone;
+
+    this.accountService.setUser(user);
 
   }
 

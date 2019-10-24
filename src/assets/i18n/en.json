@@ -1,8 +1,8 @@
 {
     "menu": {
-        "purchase": "購入",
-        "product": "商品",
-        "stock": "在庫"
+        "purchase": "purchase",
+        "product": "product",
+        "stock": "stock"
     },
     "subMenu": {
         "purchase-history-Listing": "購入履歴",
@@ -13,6 +13,22 @@
     "signInPage": {
         "userAccount": "User Account",
         "userPassword": "Password"
+    },
+    "productListPage": {
+        "title": "Product listing",
+        "no": "No.",
+        "productName": "productName",
+        "productCode": "productCode",
+        "productGenre": "productGenre",
+        "productImage": "productImage",
+        "productSizeStandard": "productSizeStandard",
+        "productColor": "productColor",
+        "productUnitPrice": "productUnitPrice",
+        "productStockQuantity": "productStockQuantity",
+        "productEnd": "productEnd",
+        "newButton": "new",
+        "clearButton": "clear",
+        "searchButton": "search"
     },
     "errMessage": {
         "http": "サーバとの通信に失敗しました。"

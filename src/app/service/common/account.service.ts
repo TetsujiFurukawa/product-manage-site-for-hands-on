@@ -12,6 +12,8 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { ErrorMessagingService } from './error-messaging.service';
 import { MenuListResponseDto } from 'src/app/entity/dto/response/menu-list-response-dto';
+import { SessionStrageService } from './session-strage.service';
+import { User } from 'src/app/entity/user';
 
 @Injectable({
   providedIn: 'root'
@@ -19,15 +21,10 @@ import { MenuListResponseDto } from 'src/app/entity/dto/response/menu-list-respo
 export class AccountService {
   private server = environment.production ? AppConst.URL_PROD_SERVER : AppConst.URL_DEV_SERVER;
 
-  userAccount: string;
-  userName: string;
-  userLang: string;
-  userTimezone: string;
-
   constructor(
     private http: HttpClient,
     private errorMessageService: ErrorMessagingService,
-    private readonly translateService: TranslateService
+    private readonly translateService: TranslateService,
   ) { }
 
   public signIn(signInRequestDto: SignInRequestDto): Observable<SignInResponseDto> {
@@ -60,4 +57,13 @@ export class AccountService {
         })
       );
   }
+
+  public getUser(): User {
+    return SessionStrageService.getItem(AppConst.STRAGE_KEY_USER, new User());
+  }
+
+  public setUser(user: User): void {
+    SessionStrageService.setItem(AppConst.STRAGE_KEY_USER, user);
+  }
+
 }

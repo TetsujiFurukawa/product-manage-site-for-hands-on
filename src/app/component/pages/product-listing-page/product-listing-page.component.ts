@@ -3,14 +3,12 @@ import { FormBuilder, FormControl } from '@angular/forms';
 import { AccountService } from 'src/app/service/common/account.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { ProductResponseDto } from 'src/app/entity/dto/response/product-response-dto';
-import { Router } from '@angular/router';
-import { UrlConst } from 'src/app/const/url-const';
 import { LoadingService } from 'src/app/service/common/loading.service';
-import { startWith, switchMap, map, catchError } from 'rxjs/operators';
-import { of, merge } from 'rxjs';
+import { startWith, switchMap, map } from 'rxjs/operators';
+import { merge } from 'rxjs';
 import { ProductListingPageService } from 'src/app/service/pages/product-listing-page.service';
-import { ProductService } from 'src/app/service/common/product.service';
 import { HttpParams } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface Genre {
   value: string;
@@ -27,8 +25,8 @@ export class ProductListingPageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
     private productListingPageService: ProductListingPageService,
-    private productService: ProductService,
-    private router: Router
+    private accountService: AccountService,
+    public translateService: TranslateService
   ) { }
 
   // product name
@@ -78,11 +76,18 @@ export class ProductListingPageComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) public paginator: MatPaginator;
 
   ngOnInit() {
+    this.setupLangage();
 
   }
 
+  private setupLangage() {
+    const lang = this.accountService.getUser().userLang;
+    this.translateService.setDefaultLang(lang);
+    this.translateService.use(lang);
+  }
+
   onNew() {
-    this.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING]);
+    this.productListingPageService.onNew();
   }
 
   onClear() {
@@ -103,52 +108,37 @@ export class ProductListingPageComponent implements OnInit {
   }
 
   onSearch() {
-
     merge(this.paginator.page)
       .pipe(
         startWith({}),
         switchMap(() => {
           this.loadingService.startLoading();
-          return this.productService.getProductList(this.createHttpParams());
+          return this.productListingPageService.getProductList(this.createHttpParams());
         }),
-
         map(data => {
-          // Flip flag to show that loading has finished.
           this.loadingService.stopLoading();
           this.resultsLength = data.resultsLength;
           this.paginator.pageIndex = data.pageIndex;
           return data.productResponseDtos;
-        }),
-
-        catchError(() => {
-          this.loadingService.stopLoading();
-          return of(null as ProductResponseDto[]);
         })
-
       ).subscribe(data => this.productResponseDtos = data);
-
   }
 
   onRowClicked(productResponseDto: ProductResponseDto) {
-    this.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING, productResponseDto.productCode]);
+    this.productListingPageService.onRowClicked(productResponseDto);
   }
 
   /**
    * Creates search criterias.
    */
   private createHttpParams(): HttpParams {
-    const conditions = {
-      productName: this.productName.value,
-      productCode: this.productCode.value,
-      endOfSale: this.productEnd.value.toString(),
-      pageSize: this.paginator.pageSize.toString(),
-      pageIndex: this.paginator.pageIndex.toString()
-    };
-
-    const paramsOptions = { fromObject: conditions };
-    const params = new HttpParams(paramsOptions);
-
-    return params;
+    return this.productListingPageService.createHttpParams(
+      this.productName.value,
+      this.productCode.value,
+      this.productGenre.value,
+      this.productEnd.value.toString(),
+      this.paginator.pageSize,
+      this.paginator.pageIndex);
   }
 
 }

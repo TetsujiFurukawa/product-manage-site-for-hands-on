@@ -21,7 +21,7 @@ export class ProductListingPageService {
 
   onNew() {
 
-    this.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING]);
+    this.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING + '/new']);
 
   }
 

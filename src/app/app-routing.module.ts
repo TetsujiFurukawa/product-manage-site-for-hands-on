@@ -20,7 +20,8 @@ const routes: Routes = [
   { path: '', redirectTo: '/' + UrlConst.PATH_SIGN_IN, pathMatch: 'full' },
   { path: UrlConst.PATH_SIGN_IN, component: SignInPageComponent },
   { path: UrlConst.PATH_PRODUCT_LISTING, component: ProductListingPageComponent },
-  { path: UrlConst.PATH_PRODUCT_REGISTERING, component: ProductRegisteringPageComponent },
+  { path: UrlConst.PATH_PRODUCT_REGISTERING + '/new', component: ProductRegisteringPageComponent },
+  { path: UrlConst.PATH_PRODUCT_REGISTERING + '/:productSeq', component: ProductRegisteringPageComponent },
   { path: UrlConst.PATH_PURCHASE_HISTORY_LISTING, component: PurchaseHistoryListingPageComponent },
   { path: UrlConst.PATH_STOCK_REGISTERING, component: StockRegisteringPageComponent }
 ];

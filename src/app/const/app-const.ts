@@ -5,4 +5,6 @@ export class AppConst {
 
   static readonly STRAGE_KEY_USER = 'USER';
 
+  static readonly STRAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST = 'SEARCH_PARAMS_PRODUCT_LIST';
+
 }

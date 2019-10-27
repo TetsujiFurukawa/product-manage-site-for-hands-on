@@ -15,12 +15,10 @@ import { User } from 'src/app/entity/user';
 export class SignInPageService {
 
   constructor(
-
     private accountService: AccountService,
     private translateService: TranslateService,
     private loadingService: LoadingService,
     private routingService: RoutingService
-
   ) { }
 
   signIn(signInRequestDto: SignInRequestDto) {
@@ -36,11 +34,8 @@ export class SignInPageService {
         // Sets account information.
         this.setUpAccount(responseDto);
 
-        // Sets default lang.
-        this.translateService.setDefaultLang('en');
-
-        // Sets use lang.
-        this.translateService.use('en');
+        // Sets langage.
+        this.setupLanguage(responseDto);
 
         // Moves to the Product listing page.
         this.routingService.navigate(UrlConst.PATH_PRODUCT_LISTING);
@@ -49,13 +44,16 @@ export class SignInPageService {
 
       // Stops Loading.
       this.loadingService.stopLoading();
-
     });
+  }
 
+  private setupLanguage(responseDto: SignInResponseDto) {
+    // Sets langage.
+    this.translateService.setDefaultLang(responseDto.userLang);
+    this.translateService.use(responseDto.userLang);
   }
 
   private setUpAccount(responseDto: SignInResponseDto) {
-
     const user: User = new User();
     user.userAccount = responseDto.userAccount;
     user.userName = responseDto.userName;
@@ -63,7 +61,5 @@ export class SignInPageService {
     user.userTimezone = responseDto.userTimezone;
 
     this.accountService.setUser(user);
-
   }
-
 }

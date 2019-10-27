@@ -25,7 +25,7 @@
         "productColor": "productColor",
         "productUnitPrice": "productUnitPrice",
         "productStockQuantity": "productStockQuantity",
-        "productEnd": "productEnd",
+        "endOfSale": "endOfSale",
         "newButton": "new",
         "clearButton": "clear",
         "searchButton": "search"

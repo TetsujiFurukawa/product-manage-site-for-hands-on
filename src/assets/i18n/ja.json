@@ -26,7 +26,11 @@
         "productColor": "色",
         "productUnitPrice": "単価",
         "productStockQuantity": "在庫数",
-        "productEnd": "販売終了",
+        "endOfSale": "販売終了",
+        "endOfSaleValue": {
+            "true": "終了",
+            "false": "-"
+        },
         "newButton": "新規",
         "clearButton": "クリア",
         "searchButton": "検索"

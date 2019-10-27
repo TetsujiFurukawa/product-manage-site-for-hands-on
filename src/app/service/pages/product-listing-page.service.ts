@@ -8,6 +8,7 @@ import { ProductService } from '../common/product.service';
 import { Router } from '@angular/router';
 import { UrlConst } from 'src/app/const/url-const';
 import { ProductResponseDto } from 'src/app/entity/dto/response/product-response-dto';
+import { ProductListingSearchParams } from 'src/app/entity/product-listing-search-params';
 
 @Injectable({
   providedIn: 'root'
@@ -24,26 +25,26 @@ export class ProductListingPageService {
 
   }
 
-  createHttpParams(productName: string, productCode: string, productGenre: string, endOfSale: string, pageSize: number, pageIndex: number) {
-    const conditions = {
-      productName,
-      productCode,
-      productGenre,
-      endOfSale,
-      pageSize: pageSize.toString(),
-      pageIndex: pageIndex.toString()
-    };
-    const paramsOptions = { fromObject: conditions };
-    const params = new HttpParams(paramsOptions);
-    return params;
-  }
-
-  getProductList(httpParams: HttpParams): Observable<ProductListresponseDto> {
-    return this.productService.getProductList(httpParams);
+  getProductList(productListingSearchParams: ProductListingSearchParams): Observable<ProductListresponseDto> {
+    return this.productService.getProductList(this.createHttpParams(productListingSearchParams));
   }
 
   onRowClicked(productResponseDto: ProductResponseDto) {
     this.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING, productResponseDto.productCode]);
 
+  }
+
+  private createHttpParams(productListingSearchParams: ProductListingSearchParams) {
+    const conditions = {
+      productName: productListingSearchParams.productName,
+      productCode: productListingSearchParams.productCode,
+      productGenre: productListingSearchParams.productGenre,
+      endOfSale: productListingSearchParams.endOfSale,
+      pageSize: productListingSearchParams.pageSize,
+      pageIndex: productListingSearchParams.pageIndex
+    };
+    const paramsOptions = { fromObject: conditions } as any;
+    const params = new HttpParams(paramsOptions);
+    return params;
   }
 }

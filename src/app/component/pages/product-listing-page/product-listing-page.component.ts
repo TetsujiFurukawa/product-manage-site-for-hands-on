@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { Component, OnInit, ViewChild, Input, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AccountService } from 'src/app/service/common/account.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { ProductResponseDto } from 'src/app/entity/dto/response/product-response-dto';
@@ -7,8 +7,9 @@ import { LoadingService } from 'src/app/service/common/loading.service';
 import { startWith, switchMap, map } from 'rxjs/operators';
 import { merge } from 'rxjs';
 import { ProductListingPageService } from 'src/app/service/pages/product-listing-page.service';
-import { HttpParams } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
+import { SearchParamsService } from 'src/app/service/common/search-params.service';
+import { ProductListingSearchParams } from 'src/app/entity/product-listing-search-params';
 
 export interface Genre {
   value: string;
@@ -26,7 +27,9 @@ export class ProductListingPageComponent implements OnInit {
     private loadingService: LoadingService,
     private productListingPageService: ProductListingPageService,
     private accountService: AccountService,
-    public translateService: TranslateService
+    private searchParamsService: SearchParamsService,
+    public translateService: TranslateService,
+    private changeDetectorRef: ChangeDetectorRef
   ) { }
 
   // product name
@@ -38,14 +41,14 @@ export class ProductListingPageComponent implements OnInit {
   // product genre
   productGenre = new FormControl('', []);
 
-  // product end
-  productEnd = new FormControl(false, []);
+  // End of sale
+  endOfSale = new FormControl(false, []);
 
   searchForm = this.formBuilder.group({
     productName: this.productName,
     productCode: this.productCode,
     productGenre: this.productGenre,
-    productEnd: this.productEnd
+    endOfSale: this.endOfSale
   });
 
   genres: Genre[] = [
@@ -65,7 +68,7 @@ export class ProductListingPageComponent implements OnInit {
     'productColor',
     'productUnitPrice',
     'productStockQuantity',
-    'productEnd'
+    'endOfSale'
   ];
 
   // Search result
@@ -78,6 +81,33 @@ export class ProductListingPageComponent implements OnInit {
   ngOnInit() {
     this.setupLangage();
 
+    let productListingSearchParams: ProductListingSearchParams = new ProductListingSearchParams();
+    productListingSearchParams = this.searchParamsService.getProductListingSearchParam(productListingSearchParams);
+
+    console.log('productListingSearchParams:' + productListingSearchParams);
+
+    if (productListingSearchParams !== null) {
+      if (productListingSearchParams.productName !== undefined) {
+        this.productName.setValue(productListingSearchParams.productName);
+      }
+      if (productListingSearchParams.productCode !== undefined) {
+        this.productCode.setValue(productListingSearchParams.productCode);
+      }
+      if (productListingSearchParams.productGenre !== undefined) {
+        this.productGenre.setValue(productListingSearchParams.productGenre);
+      }
+      // Observes pagenator change events.
+      this.paginator.pageIndex = productListingSearchParams.pageIndex;
+      this.paginator.pageSize = productListingSearchParams.pageSize;
+      setTimeout(() => {
+        this.paginator._changePageSize(productListingSearchParams.pageSize);
+      }, 0);
+
+      this.endOfSale.setValue(productListingSearchParams.endOfSale);
+      this.onSearch();
+
+    }
+
   }
 
   private setupLangage() {
@@ -87,10 +117,12 @@ export class ProductListingPageComponent implements OnInit {
   }
 
   onNew() {
+    this.searchParamsService.removeProductListingSearchParam();
     this.productListingPageService.onNew();
   }
 
   onClear() {
+    this.searchParamsService.removeProductListingSearchParam();
     this.clearSearchCondition();
     this.clearSearchResultList();
   }
@@ -99,7 +131,7 @@ export class ProductListingPageComponent implements OnInit {
     this.productName.setValue('');
     this.productCode.setValue('');
     this.productGenre.setValue('');
-    this.productEnd.setValue(false);
+    this.endOfSale.setValue(false);
   }
 
   private clearSearchResultList() {
@@ -112,8 +144,14 @@ export class ProductListingPageComponent implements OnInit {
       .pipe(
         startWith({}),
         switchMap(() => {
+          console.log('paginator.pageSize:' + this.paginator.pageSize);
+          console.log('endOfSale:' + this.endOfSale.value);
+
           this.loadingService.startLoading();
-          return this.productListingPageService.getProductList(this.createHttpParams());
+          const productListingSearchParams: ProductListingSearchParams = this.createSearchParams();
+          this.searchParamsService.setProductListingSearchParam(productListingSearchParams);
+
+          return this.productListingPageService.getProductList(productListingSearchParams);
         }),
         map(data => {
           this.loadingService.stopLoading();
@@ -131,14 +169,16 @@ export class ProductListingPageComponent implements OnInit {
   /**
    * Creates search criterias.
    */
-  private createHttpParams(): HttpParams {
-    return this.productListingPageService.createHttpParams(
-      this.productName.value,
-      this.productCode.value,
-      this.productGenre.value,
-      this.productEnd.value.toString(),
-      this.paginator.pageSize,
-      this.paginator.pageIndex);
+  private createSearchParams(): ProductListingSearchParams {
+    const productListingSearchParams: ProductListingSearchParams = new ProductListingSearchParams();
+    productListingSearchParams.productName = this.productName.value;
+    productListingSearchParams.productCode = this.productCode.value;
+    productListingSearchParams.productGenre = this.productGenre.value;
+    productListingSearchParams.endOfSale = this.endOfSale.value;
+    productListingSearchParams.pageSize = this.paginator.pageSize;
+    productListingSearchParams.pageIndex = this.paginator.pageIndex;
+
+    return productListingSearchParams;
   }
 
 }

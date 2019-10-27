@@ -160,6 +160,8 @@ tbody {
   color: #323232;
   background-color: #D5EEFF;
   border-bottom: 1px solid #F2F2F2;
+  text-align: center;
+  min-width: 100px;
 }
 
 .search-results tr {
@@ -168,6 +170,8 @@ tbody {
 
 .search-results td {
   border-bottom: 1px solid #F2F2F2;
+  text-align: center;
+  min-width: 100px;
 }
 
 .search-results a {

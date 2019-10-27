@@ -1,5 +1,3 @@
-@charset "UTF-8";
-
 /* --------------------------------------------------------------------------------
  * Basic settings.
  * -------------------------------------------------------------------------------- */
@@ -149,14 +147,16 @@ tbody {
   height: 57vh;
 }
 
-.search-results table,
-.search-results th,
-.search-results td {
+.search-results .results table,
+.search-results .results th,
+.search-results .results td {
   height: 40px;
   vertical-align: middle;
+  text-align: center;
+  width: 300px;
 }
 
-.search-results th {
+.search-results .results th {
   color: #323232;
   background-color: #D5EEFF;
   border-bottom: 1px solid #F2F2F2;
@@ -164,21 +164,21 @@ tbody {
   min-width: 100px;
 }
 
-.search-results tr {
+.search-results .results tr {
   background-color: #ffffff;
 }
 
-.search-results td {
+.search-results .results td {
   border-bottom: 1px solid #F2F2F2;
   text-align: center;
   min-width: 100px;
 }
 
-.search-results a {
+.search-results .results a {
   color: #323232;
 }
 
-.search-results tr:hover {
+.search-results .results tr:hover {
   background-color: rgb(213, 238, 255, 0.1);
 }
 

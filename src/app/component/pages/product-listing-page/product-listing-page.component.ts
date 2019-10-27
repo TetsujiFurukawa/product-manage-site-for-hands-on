@@ -84,8 +84,6 @@ export class ProductListingPageComponent implements OnInit {
     let productListingSearchParams: ProductListingSearchParams = new ProductListingSearchParams();
     productListingSearchParams = this.searchParamsService.getProductListingSearchParam(productListingSearchParams);
 
-    console.log('productListingSearchParams:' + productListingSearchParams);
-
     if (productListingSearchParams !== null) {
       if (productListingSearchParams.productName !== undefined) {
         this.productName.setValue(productListingSearchParams.productName);
@@ -144,9 +142,6 @@ export class ProductListingPageComponent implements OnInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-          console.log('paginator.pageSize:' + this.paginator.pageSize);
-          console.log('endOfSale:' + this.endOfSale.value);
-
           this.loadingService.startLoading();
           const productListingSearchParams: ProductListingSearchParams = this.createSearchParams();
           this.searchParamsService.setProductListingSearchParam(productListingSearchParams);

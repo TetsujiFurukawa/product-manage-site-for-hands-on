@@ -32,6 +32,8 @@ export class HeaderComponent implements OnInit {
    */
   private getMenu() {
     this.headerPageService.getMenu()
-      .subscribe(menuListResponseDto => { this.menuListResponseDto = menuListResponseDto; console.log(menuListResponseDto.length); });
+      .subscribe(menuListResponseDto => {
+        this.menuListResponseDto = menuListResponseDto;
+      });
   }
 }

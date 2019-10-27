@@ -1,53 +1,15 @@
 /* --------------------------------------------------------------------------------
  * Product Listing page specific settings.
  * -------------------------------------------------------------------------------- */
-.search-results .results .width-no {
-  width: 5%;
-}
-
-.search-results .results .width-product-name {
-  width: 25%;
-}
-
-.search-results .results .width-product-code {
-  width: 10%;
-}
-
-.search-results .results .width-product-genre {
-  width: 5%;
-}
-
-.search-results .results .width-product-image {
-  width: 10%;
-}
-
-.search-results .results .width-product-size {
-  width: 25%;
-}
-
+.search-results .results .width-product-name,
+.search-results .results .width-product-code,
+.search-results .results .width-product-size,
 .search-results .results .width-product-color {
-  width: 5%;
-}
-
-.search-results .results .width-product-unit-price {
-  width: 5%;
-}
-
-.search-results .results .width-product-stock {
-  width: 5%;
-}
-
-.search-results .results .width-product-end {
-  width: 5%;
-}
-
-.search-results .results td.width-product-name,
-.search-results .results td.width-product-size {
   text-align: left;
 }
 
-.search-results .results td.width-product-unit-price,
-.search-results .results td.width-product-stock {
+.search-results .results width-product-unit-price,
+.search-results .results width-product-stock {
   text-align: right;
 }
 

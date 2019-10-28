@@ -29,7 +29,6 @@ export class ProductListingPageComponent implements OnInit {
     private accountService: AccountService,
     private searchParamsService: SearchParamsService,
     public translateService: TranslateService,
-    private changeDetectorRef: ChangeDetectorRef
   ) { }
 
   // product name

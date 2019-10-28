@@ -1,102 +1,106 @@
-/* --------------------------------------------------------------------------------
- * Product registering page.
- * -------------------------------------------------------------------------------- */
-.product-registering-page {
-  width: 782px;
-  margin: 20px auto 10px;
-}
+// /* --------------------------------------------------------------------------------
+//  * Product registering page.
+//  * -------------------------------------------------------------------------------- */
+// .product-registering-page {
+//   width: 782px;
+//   margin: 20px auto 10px;
+// }
 
-.product-registering-page h1 {
-  font-weight: normal;
-  font-size: 1.6rem;
-}
+// .product-registering-page h1 {
+//   font-weight: normal;
+//   font-size: 1.6rem;
+// }
 
-.register-conditions {
-  height: 440px;
-  padding: 20px 40px 10px;
-  margin: 20px auto 10px;
-  background-color: #ffffff;
-  border: 1px solid #A9A9A9;
-}
+// .register-conditions {
+//   height: 440px;
+//   padding: 20px 40px 10px;
+//   margin: 20px auto 10px;
+//   background-color: #ffffff;
+//   border: 1px solid #A9A9A9;
+// }
 
-.register-conditions:hover {
-  opacity: 0.8;
-}
+// .register-conditions:hover {
+//   opacity: 0.8;
+// }
 
-register-conditions form {
-  display: table;
-  table-layout: fixed;
-}
+// register-conditions form {
+//   display: table;
+//   table-layout: fixed;
+// }
 
-.register-area-wrapper {
-  vertical-align: top;
-  display: table-cell;
-}
+// .register-area-wrapper {
+//   vertical-align: top;
+//   display: table-cell;
+// }
 
-.register-area-wrapper.left {
-  width: 500px;
-}
+// .register-area-wrapper.left {
+//   width: 500px;
+// }
 
-.register-area-wrapper.right,
-.register-area-wrapper img {
-  width: 200px;
-  text-align: right;
-}
+// .register-area-wrapper.right,
+// .register-area-wrapper img {
+//   width: 200px;
+//   text-align: right;
+// }
 
-.register-area-wrapper img {
-  max-width: 200px;
-}
+// .register-area-wrapper img {
+//   max-width: 200px;
+// }
 
-.register-area-wrapper p {
-  text-align: left;
-}
+// .register-area-wrapper p {
+//   text-align: left;
+// }
 
-.register-conditions input[type=text] {
-  margin-top: 30px;
-  margin-bottom: 30px;
-  border-width: 0;
-  font-size: 1.4rem;
-  display: block;
-}
+// .register-conditions input[type=text] {
+//   margin-top: 30px;
+//   margin-bottom: 30px;
+//   border-width: 0;
+//   font-size: 1.4rem;
+//   display: block;
+// }
 
-.register-conditions p {
-  margin-top: 30px;
-  font-size: 1.4rem;
-  display: block;
-}
+// .register-conditions p {
+//   margin-top: 30px;
+//   font-size: 1.4rem;
+//   display: block;
+// }
 
-.register-functions {
-  height: 30px;
-  width: 700px;
-  margin: 20px auto;
-  margin-right: 40px;
-  text-align: right;
-}
+// .register-functions {
+//   height: 30px;
+//   width: 700px;
+//   margin: 20px auto;
+//   margin-right: 40px;
+//   text-align: right;
+// }
 
-.register-area-wrapper .button,
-.register-functions .button {
-  display: inline-block;
-  padding: 10px 0;
-  width: 200px;
-  border-radius: 2px;
-  background-color: #A9A9A9;
-  color: white;
-  text-decoration: none;
-  text-align: center;
-  letter-spacing: 1px;
-  font-size: 1.2rem;
-}
+// .register-area-wrapper .button,
+// .register-functions .button {
+//   display: inline-block;
+//   padding: 10px 0;
+//   width: 200px;
+//   border-radius: 2px;
+//   background-color: #A9A9A9;
+//   color: white;
+//   text-decoration: none;
+//   text-align: center;
+//   letter-spacing: 1px;
+//   font-size: 1.2rem;
+// }
 
-.register-functions .button {
-  padding: 10px 0;
-  margin-left: 18px;
-}
+// .register-functions .button {
+//   padding: 10px 0;
+//   margin-left: 18px;
+// }
 
-.register-functions .button:hover {
-  opacity: 0.8;
-}
+// .register-functions .button:hover {
+//   opacity: 0.8;
+// }
 
-.register-functions .button.active {
-  background-color: rgba(254, 94, 173, 0.55);
-  color: #fff;
+// .register-functions .button.active {
+//   background-color: rgba(254, 94, 173, 0.55);
+//   color: #fff;
+// }
+
+.registering-conditions .mat-form-field.width-45rem {
+  width: 45rem;
 }

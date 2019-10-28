@@ -1,6 +1,6 @@
 <section class="Listing-page">
   <div class="listing-title">
-    <h1>{{ 'productListPage.title' | translate }}</h1>
+    <h1>{{ 'productListingPage.title' | translate }}</h1>
   </div>
   <form class="search-form" [formGroup]="searchForm">
     <div class="search-criteria">
@@ -8,7 +8,7 @@
         <div id="searchCondition1">
           <mat-form-field class="form-field">
             <input id="product-name" matInput type="text" formControlName="productName"
-              placeholder="{{ 'productListPage.productName' | translate }}">
+              placeholder="{{ 'productListingPage.productName' | translate }}">
           </mat-form-field>
         </div>
       </div>
@@ -16,13 +16,13 @@
         <div id="searchCondition1">
           <mat-form-field class="form-field">
             <input id="product-code" matInput type="text" formControlName="productCode"
-              placeholder="{{ 'productListPage.productCode' | translate }}">
+              placeholder="{{ 'productListingPage.productCode' | translate }}">
           </mat-form-field>
         </div>
       </div>
       <div class="search-condition-wrapper">
         <mat-form-field>
-          <mat-label>{{ 'productListPage.productGenre' | translate }}</mat-label>
+          <mat-label>{{ 'productListingPage.productGenre' | translate }}</mat-label>
           <mat-select formControlName="productGenre">
             <mat-option></mat-option>
             <mat-option *ngFor="let genre of genres" [value]="genre.value">
@@ -33,7 +33,7 @@
       </div>
       <div class="search-condition-wrapper">
         <div id="searchCondition4">
-          <mat-checkbox id="end-of-sale" formControlName="endOfSale">{{ 'productListPage.endOfSale' | translate }}
+          <mat-checkbox id="end-of-sale" formControlName="endOfSale">{{ 'productListingPage.endOfSale' | translate }}
           </mat-checkbox>
         </div>
       </div>
@@ -45,69 +45,69 @@
     </div>
     <div class="search-functions-buttons">
       <button mat-raised-button id="newBtn" class="mat-raised-button" type="submit"
-        (click)="onNew()">{{ 'productListPage.newButton' | translate }}</button>
+        (click)="onNew()">{{ 'productListingPage.newButton' | translate }}</button>
 
       <button mat-raised-button id="clearBtn" class="mat-raised-button" type="submit"
-        (click)="onClear()">{{ 'productListPage.clearButton' | translate }}</button>
+        (click)="onClear()">{{ 'productListingPage.clearButton' | translate }}</button>
 
       <button mat-raised-button id="searchBtn" class="mat-raised-button active" type="submit"
-        (click)="onSearch()">{{ 'productListPage.searchButton' | translate }}</button>
+        (click)="onSearch()">{{ 'productListingPage.searchButton' | translate }}</button>
     </div>
   </div>
   <div class="search-results">
     <table class="results" mat-table *ngIf="resultsLength>0" [dataSource]="productResponseDtos">
       <ng-container matColumnDef="No">
         <th class="width-no" mat-header-cell *matHeaderCellDef>
-          {{ "productListPage.no" | translate }}
+          {{ "productListingPage.no" | translate }}
         </th>
         <td class="width-no" mat-cell *matCellDef="let element; index as i"> {{i+1}} </td>
       </ng-container>
       <ng-container matColumnDef="productName">
         <th class="width-product-name" mat-header-cell *matHeaderCellDef>
-          {{ "productListPage.productName" | translate }}
+          {{ "productListingPage.productName" | translate }}
         </th>
         <td class="width-product-name" mat-cell *matCellDef="let element"> {{element.productName}} </td>
       </ng-container>
       <ng-container matColumnDef="productCode">
         <th class="width-product-code" mat-header-cell *matHeaderCellDef>
-          {{ "productListPage.productCode" | translate }}</th>
+          {{ "productListingPage.productCode" | translate }}</th>
         <td class="width-product-code" mat-cell *matCellDef="let element"> {{element.productCode}} </td>
       </ng-container>
       <ng-container matColumnDef="productGenre">
         <th class="width-product-genre" mat-header-cell *matHeaderCellDef>
-          {{ "productListPage.productGenre" | translate }}</th>
+          {{ "productListingPage.productGenre" | translate }}</th>
         <td class="width-product-genre" mat-cell *matCellDef="let element"> {{element.productGenre}} </td>
       </ng-container>
       <ng-container matColumnDef="productImage">
         <th class="width-product-image" mat-header-cell *matHeaderCellDef>
-          {{ "productListPage.productImage" | translate }}</th>
+          {{ "productListingPage.productImage" | translate }}</th>
         <td class="width-product-image" mat-cell *matCellDef="let element"><img src={{element.productImageUrl}} /></td>
       </ng-container>
       <ng-container matColumnDef="productSizeStandard">
         <th class="width-product-size" mat-header-cell *matHeaderCellDef>
-          {{ "productListPage.productSizeStandard" | translate }}</th>
+          {{ "productListingPage.productSizeStandard" | translate }}</th>
         <td class="width-product-size" mat-cell *matCellDef="let element"> {{element.productSizeStandard}} </td>
       </ng-container>
       <ng-container matColumnDef="productColor">
         <th class="width-product-color" mat-header-cell *matHeaderCellDef>
-          {{ "productListPage.productColor" | translate }}</th>
+          {{ "productListingPage.productColor" | translate }}</th>
         <td class="width-product-color" mat-cell *matCellDef="let element"> {{element.productColor}} </td>
       </ng-container>
       <ng-container matColumnDef="productUnitPrice">
         <th class="width-product-unit-price" mat-header-cell *matHeaderCellDef>
-          {{ "productListPage.productUnitPrice" | translate }}</th>
+          {{ "productListingPage.productUnitPrice" | translate }}</th>
         <td class="width-product-unit-price" mat-cell *matCellDef="let element"> {{element.productUnitPrice}}</td>
       </ng-container>
       <ng-container matColumnDef="productStockQuantity">
         <th class="width-product-stock" mat-header-cell *matHeaderCellDef>
-          {{ "productListPage.productStockQuantity" | translate }}</th>
+          {{ "productListingPage.productStockQuantity" | translate }}</th>
         <td class="width-product-stock" mat-cell *matCellDef="let element"> {{element.productStockQuantity}} </td>
       </ng-container>
       <ng-container matColumnDef="endOfSale">
         <th class="width-product-end" mat-header-cell *matHeaderCellDef>
-          {{ "productListPage.endOfSale" | translate }}</th>
+          {{ "productListingPage.endOfSale" | translate }}</th>
         <td class="width-product-end" mat-cell *matCellDef="let element">
-          {{ "productListPage.endOfSaleValue." + element.endOfSale | translate}} </td>
+          {{ "productListingPage.endOfSaleValue." + element.endOfSale | translate}} </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayColumns;" (click)="onRowClicked(row)"></tr>

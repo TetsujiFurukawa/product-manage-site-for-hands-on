@@ -1,39 +1,83 @@
 <section class="registering-page">
   <div class="registering-title">
     <div class="registering-title-wrapper">
-      <h1>商品登録</h1>
+      <h1>{{ 'productRegisteringPage.title' | translate }}</h1>
     </div>
   </div>
   <div class="registering-conditions">
     <div class="registering-conditions-wrapper">
       <form class="registering-form" [formGroup]="registerForm">
+
         <div class="registering-area-wrapper left">
           <div class="registering-condition-wrapper">
-            <input type="text" name="product-code" placeholder="*商品コード">
+            <mat-form-field class="form-field">
+              <input id="product-code" matInput type="text" formControlName="productCode"
+                placeholder="{{ 'productRegisteringPage.productCode' | translate }}">
+              <mat-error *ngIf="productCode.hasError('required')">
+                {{'validationError.required'|translate}}
+              </mat-error>
+            </mat-form-field>
           </div>
           <div class="registering-condition-wrapper">
-            <input type="text" name="product-name" placeholder="*商品名">
+            <mat-form-field class="form-field width-45rem">
+              <input id="product-name" matInput type="text" formControlName="productName"
+                placeholder="{{ 'productRegisteringPage.productName' | translate }}">
+              <mat-error *ngIf="productName.hasError('required')">
+                {{'validationError.required'|translate}}
+              </mat-error>
+            </mat-form-field>
           </div>
           <div class="registering-condition-wrapper">
-            <select name="product-genre" value="">
-              <option value='' disabled selected style='display:none;'>*ジャンル</option>
-              <option value="1">靴・スニーカー</option>
-              <option value="2">トップス</option>
-              <option value="3">バッグ</option>
-            </select>
+            <mat-form-field>
+              <mat-label>{{ 'productRegisteringPage.productGenre' | translate }}</mat-label>
+              <mat-select formControlName="productGenre">
+                <mat-option *ngFor="let genre of genres" [value]="genre.value">
+                  {{genre.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
           <div class="registering-condition-wrapper">
-            <input type="text" name="product-name" placeholder="サイズ・規格">
+            <mat-form-field class="form-field width-45rem">
+              <input id="product-size-standard" matInput type="text" formControlName="productSizeStandard"
+                placeholder="{{ 'productRegisteringPage.productSizeStandard' | translate }}">
+              <mat-error *ngIf="productSizeStandard.hasError('required')">
+                {{'validationError.required'|translate}}
+              </mat-error>
+            </mat-form-field>
           </div>
           <div class="registering-condition-wrapper">
-            <input type="text" name="product-name" placeholder="色">
+            <mat-form-field class="form-field">
+              <input id="product-color" matInput type="text" formControlName="productColor"
+                placeholder="{{ 'productRegisteringPage.productColor' | translate }}">
+              <mat-error *ngIf="productColor.hasError('required')">
+                {{'validationError.required'|translate}}
+              </mat-error>
+            </mat-form-field>
           </div>
           <div class="registering-condition-wrapper">
-            <input type="text" name="product-name" placeholder="*単価">
+            <mat-form-field class="form-field">
+              <input id="product-unit-price" matInput type="text" formControlName="productUnitPrice"
+                placeholder="{{ 'productRegisteringPage.productUnitPrice' | translate }}">
+              <mat-error *ngIf="productUnitPrice.hasError('required')">
+                {{'validationError.required'|translate}}
+              </mat-error>
+            </mat-form-field>
           </div>
           <div class="search-condition-wrapper">
-            <input type="checkbox" name="product-end" value="1">販売終了
-            <input type="text" name="product-name" placeholder="販売終了日">
+            <mat-checkbox id="end-of-sale" formControlName="endOfSale">
+              {{ 'productRegisteringPage.endOfSale' | translate }}
+            </mat-checkbox>
+            <mat-form-field class="form-field">
+              <input id="end-of-sale-date" matInput type="text" formControlName="endOfSaleDate"
+                placeholder="{{ 'productRegisteringPage.endOfSaleDate' | translate }}">
+              <mat-error *ngIf="endOfSaleDate.hasError('required')">
+                {{'validationError.required'|translate}}
+              </mat-error>
+            </mat-form-field>
+
+            <!-- <input type="checkbox" name="product-end" value="1">販売終了 -->
+            <!-- <input type="text" name="product-name" placeholder="販売終了日"> -->
           </div>
         </div>
         <div class="registering-area-wrapper right">

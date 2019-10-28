@@ -15,7 +15,7 @@
         "userPassword": "パスワード",
         "signInButton": "サインイン"
     },
-    "productListPage": {
+    "productListingPage": {
         "title": "商品一覧",
         "no": "No.",
         "productName": "商品名",
@@ -34,6 +34,24 @@
         "newButton": "新規",
         "clearButton": "クリア",
         "searchButton": "検索"
+    },
+    "productRegisteringPage": {
+        "title": "商品登録",
+        "productCode": "* 商品コード",
+        "productName": "* 商品名",
+        "productGenre": "* ジャンル",
+        "productImage": "商品イメージ",
+        "productSizeStandard": "* サイズ・規格",
+        "productColor": "色",
+        "productUnitPrice": "* 単価",
+        "endOfSale": "販売終了",
+        "endOfSaleDate": "販売終了日",
+        "returnButton": "戻る",
+        "saveButton": "登録",
+        "imageUploadButton": "画像のアップロード"
+    },
+    "validationError": {
+        "required": "入力が必要な項目です。"
     },
     "errMessage": {
         "http": "サーバとの通信に失敗しました。"

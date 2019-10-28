@@ -252,13 +252,19 @@ registering-conditions form {
   text-align: left;
 }
 
-.registering-conditions input[type=text] {
-  margin-top: 30px;
-  margin-bottom: 30px;
-  border-width: 0;
+.registering-conditions .mat-form-field {
+  margin: 10px auto 0;
+  width: 20rem;
   font-size: 1.4rem;
-  display: block;
 }
+
+// .registering-conditions input[type=text] {
+//   margin-top: 30px;
+//   margin-bottom: 30px;
+//   border-width: 0;
+//   font-size: 1.4rem;
+//   display: block;
+// }
 
 .registering-conditions p {
   margin-top: 30px;

@@ -16,6 +16,9 @@
               <mat-error *ngIf="productCode.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
+              <mat-error *ngIf="productCode.hasError('pattern')">
+                {{'validationError.required'|translate}}
+              </mat-error>
             </mat-form-field>
           </div>
           <div class="registering-condition-wrapper">
@@ -75,23 +78,29 @@
                 {{'validationError.required'|translate}}
               </mat-error>
             </mat-form-field>
-
-            <!-- <input type="checkbox" name="product-end" value="1">販売終了 -->
-            <!-- <input type="text" name="product-name" placeholder="販売終了日"> -->
           </div>
         </div>
         <div class="registering-area-wrapper right">
           <p>商品イメージ</p>
-          <img src="http://localhost:8080/api/downloadFile/queen.jpg" />
-          <a href="#" class="button active">画像のアップロード</a>
+          <img [src]="imgURL" class="image-preview" width="200" height="auto" *ngIf="imgURL" />
+          <button mat-raised-button id="fileInput" class="mat-raised-button" type="button"
+            (click)="fileInput.click()">画像の選択</button>
+          <input hidden (change)="onFileSelected(fileInput.files)" #fileInput type="file" accept='image/*'
+            id="fileInput">
         </div>
       </form>
     </div>
   </div>
   <div class="registering-functions">
     <div class="registering-functions-wrapper">
-      <a href="product-listing" class="button">戻る</a>
-      <a href="#" class="button active mgr-70px">登録</a>
+      <button mat-raised-button id="clearBtn" class="mat-raised-button" type="button"
+        (click)="onReturn()">{{ 'productRegisteringPage.returnButton' | translate }}</button>
+
+      <button mat-raised-button id="searchBtn" class="mat-raised-button active" type="button"
+        (click)="onSave()">{{ 'productRegisteringPage.saveButton' | translate }}</button>
+
+      <!-- <a href="product-listing" class="button">戻る</a>
+      <a href="#" class="button active mgr-70px">登録</a> -->
     </div>
   </div>
 </section>

@@ -1,20 +1,23 @@
 import { Injectable } from '@angular/core';
 import { ProductService } from '../common/product.service';
-import { Router } from '@angular/router';
-import { UrlConst } from 'src/app/const/url-const';
+import { Observable, of } from 'rxjs';
+import { ProductDto } from 'src/app/entity/dto/product-dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductRegisteringPageService {
-
   constructor(
     private productService: ProductService,
-    private router: Router
   ) { }
 
+  onInit() {
+  }
+
+  getProduct(productCode: string): Observable<ProductDto> {
+    return this.productService.getProduct(productCode);
+  }
 
   onReturn() {
-    this.router.navigate([UrlConst.PATH_PRODUCT_LISTING]);
   }
 }

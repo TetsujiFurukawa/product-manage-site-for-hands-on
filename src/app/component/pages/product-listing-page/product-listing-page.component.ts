@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AccountService } from 'src/app/service/common/account.service';
 import { MatPaginator } from '@angular/material/paginator';
@@ -10,6 +10,8 @@ import { ProductListingPageService } from 'src/app/service/pages/product-listing
 import { TranslateService } from '@ngx-translate/core';
 import { SearchParamsService } from 'src/app/service/common/search-params.service';
 import { ProductListingSearchParams } from 'src/app/entity/product-listing-search-params';
+import { Router } from '@angular/router';
+import { UrlConst } from 'src/app/const/url-const';
 
 export interface Genre {
   value: string;
@@ -29,6 +31,7 @@ export class ProductListingPageComponent implements OnInit {
     private accountService: AccountService,
     private searchParamsService: SearchParamsService,
     public translateService: TranslateService,
+    private router: Router
   ) { }
 
   // product name
@@ -115,7 +118,7 @@ export class ProductListingPageComponent implements OnInit {
 
   onNew() {
     this.searchParamsService.removeProductListingSearchParam();
-    this.productListingPageService.onNew();
+    this.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING + '/new']);
   }
 
   onClear() {
@@ -157,7 +160,7 @@ export class ProductListingPageComponent implements OnInit {
   }
 
   onRowClicked(productResponseDto: ProductResponseDto) {
-    this.productListingPageService.onRowClicked(productResponseDto);
+    this.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING, productResponseDto.productCode]);
   }
 
   /**

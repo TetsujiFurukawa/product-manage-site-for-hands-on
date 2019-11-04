@@ -7,7 +7,6 @@
   <div class="registering-conditions">
     <div class="registering-conditions-wrapper">
       <form class="registering-form" [formGroup]="registerForm">
-
         <div class="registering-area-wrapper left">
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
@@ -67,11 +66,13 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="search-condition-wrapper">
+          <div class="registering-condition-wrapper">
             <mat-checkbox id="end-of-sale" formControlName="endOfSale">
               {{ 'productRegisteringPage.endOfSale' | translate }}
             </mat-checkbox>
-            <mat-form-field class="form-field">
+          </div>
+          <div class="registering-condition-wrapper">
+            <mat-form-field class="form-field" *ngIf="endOfSale.value">
               <input id="end-of-sale-date" matInput type="text" formControlName="endOfSaleDate"
                 placeholder="{{ 'productRegisteringPage.endOfSaleDate' | translate }}">
               <mat-error *ngIf="endOfSaleDate.hasError('required')">
@@ -95,12 +96,8 @@
     <div class="registering-functions-wrapper">
       <button mat-raised-button id="clearBtn" class="mat-raised-button" type="button"
         (click)="onReturn()">{{ 'productRegisteringPage.returnButton' | translate }}</button>
-
       <button mat-raised-button id="searchBtn" class="mat-raised-button active" type="button"
         (click)="onSave()">{{ 'productRegisteringPage.saveButton' | translate }}</button>
-
-      <!-- <a href="product-listing" class="button">戻る</a>
-      <a href="#" class="button active mgr-70px">登録</a> -->
     </div>
   </div>
 </section>

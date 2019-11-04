@@ -5,6 +5,9 @@ import { AccountService } from 'src/app/service/common/account.service';
 import { TranslateService } from '@ngx-translate/core';
 import { RegexConst } from 'src/app/const/regex-const';
 import { ProductRegisteringPageService } from 'src/app/service/pages/product-registering-page.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { UrlConst } from 'src/app/const/url-const';
+import { ProductDto } from 'src/app/entity/dto/product-dto';
 
 export interface Genre {
   value: string;
@@ -22,6 +25,8 @@ export class ProductRegisteringPageComponent implements OnInit {
     private loadingService: LoadingService,
     private productRegisteringPageService: ProductRegisteringPageService,
     private accountService: AccountService,
+    private router: Router,
+    private route: ActivatedRoute,
     public translateService: TranslateService,
 
   ) { }
@@ -78,9 +83,20 @@ export class ProductRegisteringPageComponent implements OnInit {
 
   ngOnInit() {
     this.setupLangage();
+    this.loadData();
   }
 
-
+  loadData() {
+    if (this.router.url !== '/' + UrlConst.PATH_PRODUCT_REGISTERING + '/new') {
+      const productCode = this.route.snapshot.paramMap.get('productCode');
+      this.loadingService.startLoading();
+      this.productRegisteringPageService.getProduct(productCode)
+        .subscribe(data => {
+          this.extract(data);
+          this.loadingService.stopLoading();
+        });
+    }
+  }
 
   onFileSelected(files: File) {
     if (files.size === 0) {
@@ -101,7 +117,7 @@ export class ProductRegisteringPageComponent implements OnInit {
   }
 
   onReturn() {
-    this.productRegisteringPageService.onReturn();
+    this.router.navigate([UrlConst.PATH_PRODUCT_LISTING]);
   }
 
   onSave() {
@@ -113,4 +129,16 @@ export class ProductRegisteringPageComponent implements OnInit {
     this.translateService.setDefaultLang(lang);
     this.translateService.use(lang);
   }
+
+  extract(productDto: ProductDto) {
+    this.productCode.setValue(productDto.productCode);
+    this.productName.setValue(productDto.productName);
+    this.productGenre.setValue(productDto.productGenre);
+    this.productSizeStandard.setValue(productDto.productSizeStandard);
+    this.productColor.setValue(productDto.productColor);
+    this.productUnitPrice.setValue(productDto.productUnitPrice);
+    this.endOfSale.setValue(productDto.endOfSale);
+    this.endOfSaleDate.setValue(productDto.endOfSaleDate);
+  }
+
 }

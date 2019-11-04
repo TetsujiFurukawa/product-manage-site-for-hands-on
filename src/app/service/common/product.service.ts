@@ -8,6 +8,8 @@ import { catchError } from 'rxjs/operators';
 import { ErrorMessagingService } from './error-messaging.service';
 import { TranslateService } from '@ngx-translate/core';
 import { UrlConst } from 'src/app/const/url-const';
+import { ProductDto } from 'src/app/entity/dto/product-dto';
+import { LoadingService } from './loading.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +17,12 @@ import { UrlConst } from 'src/app/const/url-const';
 export class ProductService {
   private server = environment.production ? AppConst.URL_PROD_SERVER : AppConst.URL_DEV_SERVER;
 
-
   constructor(
     private http: HttpClient,
     private errorMessageService: ErrorMessagingService,
-    private readonly translateService: TranslateService
+    private readonly translateService: TranslateService,
+    private loadingService: LoadingService,
+
   ) { }
 
   getProductList(httpParams: HttpParams): Observable<ProductListresponseDto> {
@@ -36,4 +39,15 @@ export class ProductService {
 
   }
 
+  getProduct(productCode: string): Observable<ProductDto> {
+    const webApiUrl = this.server + UrlConst.PATH_PRODUCT_REGISTERING;
+
+    return this.http.get<ProductDto>(webApiUrl, { params: { productCode } })
+      .pipe(
+        catchError(error => {
+          this.errorMessageService.setErrorMessage(this.translateService.instant('errMessage.http'));
+          return of(null as ProductDto);
+        })
+      );
+  }
 }

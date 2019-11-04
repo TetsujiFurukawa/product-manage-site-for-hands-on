@@ -36,6 +36,9 @@ export class ProductRegisteringPageComponent implements OnInit {
 
   ) { }
 
+  // product seq
+  productSeq = new FormControl('', []);
+
   // product code
   productCode = new FormControl('', [
     Validators.required, Validators.pattern(RegexConst.SINGLE_BYTE_ALPHANUMERIC_SYMBOLS)
@@ -69,6 +72,7 @@ export class ProductRegisteringPageComponent implements OnInit {
   imgURL: any;
 
   registerForm = this.formBuilder.group({
+    productSeq: this.productSeq,
     productCode: this.productCode,
     productName: this.productName,
     productGenre: this.productGenre,
@@ -140,13 +144,20 @@ export class ProductRegisteringPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog result: ${result}');
       if ('${result}') {
-        console.log('start');
-
-        // this.update();
+        const productDto: ProductDto = this.createDto();
+        this.save(productDto);
       }
     });
+  }
+
+  private save(productDto: ProductDto) {
+    this.loadingService.startLoading();
+    this.productRegisteringPageService.saveProduct(productDto)
+      .subscribe(data => {
+        this.extract(data);
+        this.loadingService.stopLoading();
+      });
   }
 
   private setupLangage() {
@@ -155,7 +166,23 @@ export class ProductRegisteringPageComponent implements OnInit {
     this.translateService.use(lang);
   }
 
-  extract(productDto: ProductDto) {
+  private createDto(): ProductDto {
+    const productDto: ProductDto = new ProductDto();
+    productDto.productSeq = this.productSeq.value;
+    productDto.productCode = this.productCode.value;
+    productDto.productName = this.productName.value;
+    productDto.productGenre = this.productGenre.value;
+    productDto.productSizeStandard = this.productSizeStandard.value;
+    productDto.productColor = this.productColor.value;
+    productDto.productUnitPrice = this.productUnitPrice.value;
+    productDto.endOfSale = this.endOfSale.value;
+    productDto.endOfSaleDate = this.endOfSaleDate.value;
+    productDto.productImage = this.imgURL;
+    return productDto;
+  }
+
+  private extract(productDto: ProductDto) {
+    this.productSeq.setValue(productDto.productSeq);
     this.productCode.setValue(productDto.productCode);
     this.productName.setValue(productDto.productName);
     this.productGenre.setValue(productDto.productGenre);

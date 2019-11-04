@@ -1,6 +1,6 @@
 export class ProductDto {
 
-  productSeq: bigint;
+  productSeq: number;
 
   productName: string;
 

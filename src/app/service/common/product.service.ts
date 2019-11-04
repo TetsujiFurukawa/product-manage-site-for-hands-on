@@ -50,4 +50,28 @@ export class ProductService {
         })
       );
   }
+
+  createProduct(productDto: ProductDto): Observable<ProductDto> {
+    const webApiUrl = this.server + UrlConst.PATH_PRODUCT_REGISTERING;
+
+    return this.http.post<ProductDto>(webApiUrl, productDto)
+      .pipe(
+        catchError(error => {
+          this.errorMessageService.setErrorMessage(this.translateService.instant('errMessage.http'));
+          return of(null as ProductDto);
+        })
+      );
+  }
+
+  updateProduct(productDto: ProductDto): Observable<ProductDto> {
+    const webApiUrl = this.server + UrlConst.PATH_PRODUCT_REGISTERING;
+
+    return this.http.put<ProductDto>(webApiUrl, productDto)
+      .pipe(
+        catchError(error => {
+          this.errorMessageService.setErrorMessage(this.translateService.instant('errMessage.http'));
+          return of(null as ProductDto);
+        })
+      );
+  }
 }

@@ -7,6 +7,7 @@ import { ProductDto } from 'src/app/entity/dto/product-dto';
   providedIn: 'root'
 })
 export class ProductRegisteringPageService {
+
   constructor(
     private productService: ProductService,
   ) { }
@@ -16,6 +17,15 @@ export class ProductRegisteringPageService {
 
   getProduct(productCode: string): Observable<ProductDto> {
     return this.productService.getProduct(productCode);
+  }
+
+  saveProduct(productDto: ProductDto): Observable<ProductDto> {
+    if (productDto.productSeq === undefined) {
+      return this.productService.updateProduct(productDto);
+    }
+
+    productDto.productSeq = null;
+    return this.productService.createProduct(productDto);
   }
 
   onReturn() {

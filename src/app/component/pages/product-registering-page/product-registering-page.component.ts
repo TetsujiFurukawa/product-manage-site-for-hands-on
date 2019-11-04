@@ -11,6 +11,7 @@ import { ProductDto } from 'src/app/entity/dto/product-dto';
 import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
 import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AppConst } from 'src/app/const/app-const';
 
 export interface Genre {
   value: string;
@@ -128,13 +129,13 @@ export class ProductRegisteringPageComponent implements OnInit {
     const dialogData: YesNoDialogData = {
       title: this.translateService.instant('productRegisteringPage.saveYesNoDialog.title'),
       message: this.translateService.instant('productRegisteringPage.saveYesNoDialog.message'),
-      captionYes: this.translateService.instant('productRegisteringPage.saveYesNoDialog.captionYes'),
-      captionNo: this.translateService.instant('productRegisteringPage.saveYesNoDialog.captionNo')
+      captionNo: this.translateService.instant('productRegisteringPage.saveYesNoDialog.captionNo'),
+      captionYes: this.translateService.instant('productRegisteringPage.saveYesNoDialog.captionYes')
     };
 
     const dialogRef = this.dialog.open(YesNoDialogComponent, {
-      width: '250px',
-      height: '175px',
+      height: AppConst.YES_NO_DIALOG_HEIGHT,
+      width: AppConst.YES_NO_DIALOG_WIDTH,
       data: dialogData
     });
 

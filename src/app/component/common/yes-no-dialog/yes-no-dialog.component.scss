@@ -1,0 +1,14 @@
+.mat-dialog-actions .mat-raised-button {
+  width: 75px;
+  border-radius: 2px;
+  background-color: #78BBE6;
+  color: #ffffff;
+  letter-spacing: 1px;
+  font-size: 1.2rem;
+  box-shadow: none;
+}
+
+.mat-dialog-actions .mat-raised-button.active {
+  background-color: #F99F48;
+  color: #ffffff;
+}

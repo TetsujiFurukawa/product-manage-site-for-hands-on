@@ -8,6 +8,9 @@ import { ProductRegisteringPageService } from 'src/app/service/pages/product-reg
 import { Router, ActivatedRoute } from '@angular/router';
 import { UrlConst } from 'src/app/const/url-const';
 import { ProductDto } from 'src/app/entity/dto/product-dto';
+import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
+import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 export interface Genre {
   value: string;
@@ -27,6 +30,7 @@ export class ProductRegisteringPageComponent implements OnInit {
     private accountService: AccountService,
     private router: Router,
     private route: ActivatedRoute,
+    private dialog: MatDialog,
     public translateService: TranslateService,
 
   ) { }
@@ -121,7 +125,27 @@ export class ProductRegisteringPageComponent implements OnInit {
   }
 
   onSave() {
+    const dialogData: YesNoDialogData = {
+      title: this.translateService.instant('productRegisteringPage.saveYesNoDialog.title'),
+      message: this.translateService.instant('productRegisteringPage.saveYesNoDialog.message'),
+      captionYes: this.translateService.instant('productRegisteringPage.saveYesNoDialog.captionYes'),
+      captionNo: this.translateService.instant('productRegisteringPage.saveYesNoDialog.captionNo')
+    };
 
+    const dialogRef = this.dialog.open(YesNoDialogComponent, {
+      width: '250px',
+      height: '175px',
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog result: ${result}');
+      if ('${result}') {
+        console.log('start');
+
+        // this.update();
+      }
+    });
   }
 
   private setupLangage() {

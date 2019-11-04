@@ -48,7 +48,13 @@
         "endOfSaleDate": "販売終了日",
         "returnButton": "戻る",
         "saveButton": "登録",
-        "imageUploadButton": "画像のアップロード"
+        "imageUploadButton": "画像のアップロード",
+        "saveYesNoDialog": {
+            "title": "登録の確認",
+            "message": "入力した内容を登録しますか？",
+            "captionYes": "はい",
+            "captionNo": "いいえ"
+        }
     },
     "validationError": {
         "required": "入力が必要な項目です。"

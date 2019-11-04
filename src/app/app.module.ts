@@ -32,6 +32,7 @@ import { XhrInterceptor } from './intercepter/xhr-interceptor';
 import { ErrorMessagingComponent } from './component/common/error-messaging/error-messaging.component';
 import { HttpXsrfInterceptor } from './intercepter/http-xsrf-interceptor';
 import { LoadingComponent } from './component/common/loading/loading.component';
+import { YesNoDialogComponent } from './component/common/yes-no-dialog/yes-no-dialog.component';
 
 // 他言語化の設定
 export function HttpLoaderFactory(http: HttpClient) {
@@ -52,7 +53,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProductListingPageComponent,
     SidenavComponent,
     ErrorMessagingComponent,
-    LoadingComponent
+    LoadingComponent,
+    YesNoDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -70,6 +72,9 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
 
+  ],
+  entryComponents: [
+    YesNoDialogComponent
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: HttpXsrfInterceptor, multi: true }],

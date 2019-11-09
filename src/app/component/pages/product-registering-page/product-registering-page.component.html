@@ -5,8 +5,9 @@
     </div>
   </div>
   <div class="registering-conditions">
+    <app-error-messaging></app-error-messaging>
     <div class="registering-conditions-wrapper">
-      <form class="registering-form" [formGroup]="registerForm">
+      <form class="registering-form" [formGroup]="registeringForm">
         <div class="registering-area-wrapper left">
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
@@ -16,7 +17,7 @@
                 {{'validationError.required'|translate}}
               </mat-error>
               <mat-error *ngIf="productCode.hasError('pattern')">
-                {{'validationError.required'|translate}}
+                {{'validationError.pattern.singleByteAlphanumericSymbols'|translate}}
               </mat-error>
             </mat-form-field>
           </div>
@@ -37,6 +38,9 @@
                   {{genre.viewValue}}
                 </mat-option>
               </mat-select>
+              <mat-error *ngIf="productGenre.hasError('required')">
+                {{'validationError.required'|translate}}
+              </mat-error>
             </mat-form-field>
           </div>
           <div class="registering-condition-wrapper">
@@ -64,6 +68,9 @@
               <mat-error *ngIf="productUnitPrice.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
+              <mat-error *ngIf="productUnitPrice.hasError('pattern')">
+                {{'validationError.pattern.halfWidthAlphanumericComma'|translate}}
+              </mat-error>
             </mat-form-field>
           </div>
           <div class="registering-condition-wrapper">
@@ -82,10 +89,10 @@
           </div>
         </div>
         <div class="registering-area-wrapper right">
-          <p>商品イメージ</p>
-          <img [src]="imgURL" class="image-preview" width="200" height="auto" *ngIf="imgURL" />
+          <p>{{ 'productRegisteringPage.productImage' | translate }}</p>
+          <img [src]="productImage" class="image-preview" width="200" height="auto" *ngIf="productImage" />
           <button mat-raised-button id="fileInput" class="mat-raised-button" type="button" (click)="fileInput.click()"
-            matTooltip="Select a product image">画像の選択</button>
+            matTooltip="Select a product image">{{ 'productRegisteringPage.imageUploadButton' | translate }}</button>
           <input hidden (change)="onFileSelected(fileInput.files)" #fileInput type="file" accept='image/*'
             id="fileInput">
         </div>
@@ -96,8 +103,8 @@
     <div class="registering-functions-wrapper">
       <button mat-raised-button id="clearBtn" class="mat-raised-button" type="button"
         (click)="onReturn()">{{ 'productRegisteringPage.returnButton' | translate }}</button>
-      <button mat-raised-button id="saveBtn" class="mat-raised-button active" type="button"
-        (click)="onSave()">{{ 'productRegisteringPage.saveButton' | translate }}</button>
+      <button mat-raised-button id="saveBtn" class="mat-raised-button active" type="button" (click)="onSave()"
+        [disabled]="!registeringForm.valid">{{ 'productRegisteringPage.saveButton' | translate }}</button>
     </div>
   </div>
 </section>

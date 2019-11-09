@@ -20,12 +20,10 @@ export class ProductRegisteringPageService {
   }
 
   saveProduct(productDto: ProductDto): Observable<ProductDto> {
-    if (productDto.productSeq === undefined) {
-      return this.productService.updateProduct(productDto);
+    if (productDto.productSeq === undefined || productDto.productSeq === null) {
+      return this.productService.createProduct(productDto);
     }
-
-    productDto.productSeq = null;
-    return this.productService.createProduct(productDto);
+    return this.productService.updateProduct(productDto);
   }
 
   onReturn() {

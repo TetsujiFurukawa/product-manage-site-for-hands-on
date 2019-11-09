@@ -12,11 +12,14 @@ import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
 import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AppConst } from 'src/app/const/app-const';
+import { Observable } from 'rxjs';
 
 export interface Genre {
   value: string;
   viewValue: string;
 }
+const CHAR_NEW = '/new';
+
 @Component({
   selector: 'app-product-registering-page',
   templateUrl: './product-registering-page.component.html',
@@ -51,27 +54,24 @@ export class ProductRegisteringPageComponent implements OnInit {
   productGenre = new FormControl('', [Validators.required]);
 
   // product size standard
-  productSizeStandard = new FormControl('', [
-    Validators.required, Validators.pattern(RegexConst.SINGLE_BYTE_ALPHANUMERIC_SYMBOLS)]);
+  productSizeStandard = new FormControl('', [Validators.required]);
 
   // product color
   productColor = new FormControl('', []);
 
   // product unit price
   productUnitPrice = new FormControl('', [
-    Validators.required
+    Validators.required, Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA)
   ]);
 
   // End of sale
   endOfSale = new FormControl(false, []);
   endOfSaleDate = new FormControl('', []);
 
-  // product image
-  productImage = new FormControl('', []);
+  // product image content.
+  productImage: any;
 
-  imgURL: any;
-
-  registerForm = this.formBuilder.group({
+  registeringForm = this.formBuilder.group({
     productSeq: this.productSeq,
     productCode: this.productCode,
     productName: this.productName,
@@ -80,8 +80,7 @@ export class ProductRegisteringPageComponent implements OnInit {
     productColor: this.productColor,
     productUnitPrice: this.productUnitPrice,
     endOfSale: this.endOfSale,
-    endOfSaleDate: this.endOfSaleDate,
-    productImage: this.productImage
+    endOfSaleDate: this.endOfSaleDate
   });
 
   genres: Genre[] = [
@@ -96,14 +95,14 @@ export class ProductRegisteringPageComponent implements OnInit {
   }
 
   loadData() {
-    if (this.router.url !== '/' + UrlConst.PATH_PRODUCT_REGISTERING + '/new') {
+    if (this.router.url !== '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW) {
       const productCode = this.route.snapshot.paramMap.get('productCode');
       this.loadingService.startLoading();
-      this.productRegisteringPageService.getProduct(productCode)
-        .subscribe(data => {
-          this.extract(data);
-          this.loadingService.stopLoading();
-        });
+      const productDto: Observable<ProductDto> = this.productRegisteringPageService.getProduct(productCode);
+      productDto.subscribe(data => {
+        this.extract(data);
+        this.loadingService.stopLoading();
+      });
     }
   }
 
@@ -117,11 +116,10 @@ export class ProductRegisteringPageComponent implements OnInit {
       return;
     }
 
-    this.productImage.setValue(files.name);
     const reader = new FileReader();
     reader.readAsDataURL(files[0]);
     reader.onload = (e: any) => {
-      this.imgURL = e.target.result;
+      this.productImage = e.target.result;
     };
   }
 
@@ -155,7 +153,6 @@ export class ProductRegisteringPageComponent implements OnInit {
     this.loadingService.startLoading();
     this.productRegisteringPageService.saveProduct(productDto)
       .subscribe(data => {
-        this.extract(data);
         this.loadingService.stopLoading();
       });
   }
@@ -168,7 +165,9 @@ export class ProductRegisteringPageComponent implements OnInit {
 
   private createDto(): ProductDto {
     const productDto: ProductDto = new ProductDto();
-    productDto.productSeq = this.productSeq.value;
+    if (this.router.url !== '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW) {
+      productDto.productSeq = this.productSeq.value;
+    }
     productDto.productCode = this.productCode.value;
     productDto.productName = this.productName.value;
     productDto.productGenre = this.productGenre.value;
@@ -177,20 +176,8 @@ export class ProductRegisteringPageComponent implements OnInit {
     productDto.productUnitPrice = this.productUnitPrice.value;
     productDto.endOfSale = this.endOfSale.value;
     productDto.endOfSaleDate = this.endOfSaleDate.value;
-    productDto.productImage = this.imgURL;
+    productDto.productImage = this.productImage;
     return productDto;
-  }
-
-  private extract(productDto: ProductDto) {
-    this.productSeq.setValue(productDto.productSeq);
-    this.productCode.setValue(productDto.productCode);
-    this.productName.setValue(productDto.productName);
-    this.productGenre.setValue(productDto.productGenre);
-    this.productSizeStandard.setValue(productDto.productSizeStandard);
-    this.productColor.setValue(productDto.productColor);
-    this.productUnitPrice.setValue(productDto.productUnitPrice);
-    this.endOfSale.setValue(productDto.endOfSale);
-    this.endOfSaleDate.setValue(productDto.endOfSaleDate);
   }
 
 }

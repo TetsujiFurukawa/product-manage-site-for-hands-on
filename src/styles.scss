@@ -224,7 +224,7 @@ tbody {
   padding-top: 20px;
 }
 
-.registering-conditions:hover {
+.registering-conditions .mat-raised-button:hover {
   opacity: 0.8;
 }
 
@@ -240,6 +240,7 @@ registering-conditions form {
 }
 
 .registering-area-wrapper.left {
+  padding-top: 10px;
   width: 500px;
 }
 
@@ -258,8 +259,11 @@ registering-conditions form {
   text-align: left;
 }
 
-.registering-conditions .mat-form-field {
+.registering-conditions .registering-condition-wrapper {
   margin: 10px auto 0;
+}
+
+.registering-conditions .mat-form-field {
   width: 20rem;
   font-size: 1.4rem;
 }
@@ -294,4 +298,8 @@ registering-conditions form {
 .registering-functions .mat-raised-button.active {
   background-color: #F99F48;
   color: #ffffff;
+}
+
+.registering-functions .mat-raised-button:disabled {
+  opacity: 0.4;
 }

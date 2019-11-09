@@ -4,4 +4,6 @@ export class RegexConst {
 
   static readonly SINGLE_BYTE_ALPHANUMERIC_SYMBOLS = '^[a-zA-Z0-9!-/:-@¥[-`{-~]+$';
 
+  static readonly HALF_WIDTH_ALPHANUMERIC_COMMA = '^[0-9,]+$';
+
 }

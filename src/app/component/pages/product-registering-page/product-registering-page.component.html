@@ -80,13 +80,9 @@
             </mat-checkbox>
           </div>
           <div class="registering-condition-wrapper">
-            <mat-form-field class="form-field" *ngIf="endOfSale.value">
-              <input id="end-of-sale-date" matInput type="text" formControlName="endOfSaleDate"
-                placeholder="{{ 'productRegisteringPage.endOfSaleDate' | translate }}">
-              <mat-error *ngIf="endOfSaleDate.hasError('required')">
-                {{'validationError.required'|translate}}
-              </mat-error>
-            </mat-form-field>
+            <app-mat-date-picker *ngIf="endOfSale.value" [locale]='ja-JP'
+              placeholder="{{ 'productRegisteringPage.endOfSaleDate' | translate }}" required=true
+              (event)=" onReceiveEventFromChild($event)"></app-mat-date-picker>
           </div>
         </div>
         <div class="registering-area-wrapper right">

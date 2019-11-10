@@ -122,7 +122,6 @@ footer {
 
 .search-results {
   width: 100%;
-  /* margin: 1px auto; */
   text-align: center;
 }
 
@@ -136,14 +135,13 @@ footer {
   width: 100%;
 }
 
-thead,
-tbody {
+.search-results thead,
+.search-results tbody {
   display: block;
 }
 
-tbody {
+.search-results tbody {
   overflow-y: scroll;
-  /* height: 330px; */
   height: 57vh;
 }
 

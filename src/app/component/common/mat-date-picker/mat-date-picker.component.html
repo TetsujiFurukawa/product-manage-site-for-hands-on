@@ -1,0 +1,11 @@
+<form [formGroup]="myForm">
+  <mat-form-field>
+    <input id="date" matInput [matDatepicker]="dp" placeholder="{{ this.placeholder | translate }}"
+      formControlName="date" (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
+    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+    <mat-datepicker #dp></mat-datepicker>
+    <mat-error *ngIf="date.hasError('required') && required">
+      {{'validationError.required'|translate}}
+    </mat-error>
+  </mat-form-field>
+</form>

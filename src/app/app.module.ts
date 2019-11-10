@@ -34,6 +34,7 @@ import { HttpXsrfInterceptor } from './intercepter/http-xsrf-interceptor';
 import { LoadingComponent } from './component/common/loading/loading.component';
 import { YesNoDialogComponent } from './component/common/yes-no-dialog/yes-no-dialog.component';
 import { SuccessMessagingComponent } from './component/common/success-messaging/success-messaging.component';
+import { MatDatePickerComponent } from './component/common/mat-date-picker/mat-date-picker.component';
 
 // 他言語化の設定
 export function HttpLoaderFactory(http: HttpClient) {
@@ -56,7 +57,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ErrorMessagingComponent,
     LoadingComponent,
     YesNoDialogComponent,
-    SuccessMessagingComponent
+    SuccessMessagingComponent,
+    MatDatePickerComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, LOCALE_ID } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { LoadingService } from 'src/app/service/common/loading.service';
 import { AccountService } from 'src/app/service/common/account.service';
@@ -36,6 +36,7 @@ export class ProductRegisteringPageComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     public translateService: TranslateService,
+    @Inject(LOCALE_ID) public locale: string,
 
   ) { }
 
@@ -198,4 +199,7 @@ export class ProductRegisteringPageComponent implements OnInit {
     this.productImage.setValue(productDto.productImage);
   }
 
+  onReceiveEventFromChild(eventData: string) {
+    this.endOfSaleDate.setValue(eventData);
+  }
 }

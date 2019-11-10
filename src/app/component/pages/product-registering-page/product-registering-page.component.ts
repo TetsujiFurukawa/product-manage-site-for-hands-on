@@ -12,7 +12,7 @@ import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
 import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AppConst } from 'src/app/const/app-const';
-import { Observable } from 'rxjs';
+import { SuccessMessagingService } from 'src/app/service/common/success-messaging.service';
 
 export interface Genre {
   value: string;
@@ -39,6 +39,8 @@ export class ProductRegisteringPageComponent implements OnInit {
     @Inject(LOCALE_ID) public locale: string,
 
   ) { }
+  // Called new or update?
+  isNew = this.router.url === '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW;
 
   // product seq
   productSeq = new FormControl('', []);
@@ -69,9 +71,14 @@ export class ProductRegisteringPageComponent implements OnInit {
   endOfSale = new FormControl(false, []);
   endOfSaleDate = new FormControl('', []);
 
-  // product image content.
-  // productImage: any;
+  // product image
   productImage = new FormControl(null, []);
+
+  // Other informations
+  enterDate = new FormControl(null, []);
+  enterUser = new FormControl('', []);
+  updateDate = new FormControl(null, []);
+  updateUser = new FormControl('', []);
 
   registeringForm = this.formBuilder.group({
     productSeq: this.productSeq,
@@ -97,7 +104,7 @@ export class ProductRegisteringPageComponent implements OnInit {
   }
 
   loadData() {
-    if (this.router.url !== '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW) {
+    if (!this.isNew) {
       const productCode = this.route.snapshot.paramMap.get('productCode');
       this.loadingService.startLoading();
       this.productRegisteringPageService.getProduct(productCode)
@@ -183,6 +190,11 @@ export class ProductRegisteringPageComponent implements OnInit {
     productDto.endOfSale = this.endOfSale.value;
     productDto.endOfSaleDate = this.endOfSaleDate.value;
     productDto.productImage = this.productImage.value;
+    productDto.enterUser = this.enterUser.value;
+    productDto.enterDate = this.enterDate.value;
+    productDto.updateUser = this.updateUser.value;
+    productDto.updateDate = this.updateDate.value;
+
     return productDto;
   }
 
@@ -197,6 +209,28 @@ export class ProductRegisteringPageComponent implements OnInit {
     this.endOfSale.setValue(productDto.endOfSale);
     this.endOfSaleDate.setValue(productDto.endOfSaleDate);
     this.productImage.setValue(productDto.productImage);
+    this.enterUser.setValue(productDto.enterUser);
+    this.enterDate.setValue(productDto.enterDate);
+    this.updateUser.setValue(productDto.updateUser);
+    this.updateDate.setValue(productDto.updateDate);
+  }
+
+  private clearControls() {
+    this.productSeq.setValue(null);
+    this.productCode.setValue('');
+    this.productName.setValue('');
+    this.productGenre.setValue('');
+    this.productSizeStandard.setValue('');
+    this.productColor.setValue('');
+    this.productUnitPrice.setValue('');
+    this.endOfSale.setValue(false);
+    this.endOfSaleDate.setValue(new Date());
+    this.productImage.setValue(null);
+    this.enterUser.setValue('');
+    this.enterDate.setValue(null);
+    this.updateUser.setValue('');
+    this.updateDate.setValue(null);
+
   }
 
   onReceiveEventFromChild(eventData: string) {

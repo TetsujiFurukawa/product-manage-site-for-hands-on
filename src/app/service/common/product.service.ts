@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { ProductListresponseDto } from 'src/app/entity/dto/response/product-listresponse-dto';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { ErrorMessagingService } from './error-messaging.service';
 import { TranslateService } from '@ngx-translate/core';
 import { UrlConst } from 'src/app/const/url-const';
 import { ProductDto } from 'src/app/entity/dto/product-dto';
 import { LoadingService } from './loading.service';
+import { SuccessMessagingService } from './success-messaging.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class ProductService {
 
   constructor(
     private http: HttpClient,
+    private successMessagingService: SuccessMessagingService,
     private errorMessageService: ErrorMessagingService,
     private readonly translateService: TranslateService,
   ) { }
@@ -54,6 +56,10 @@ export class ProductService {
 
     return this.http.post<ProductDto>(webApiUrl, productDto)
       .pipe(
+        map(res => {
+          this.successMessagingService.setMessage(this.translateService.instant('successMessage.http'));
+          return res;
+        }),
         catchError(error => {
           this.errorMessageService.setMessage(this.translateService.instant('errMessage.http'));
           return of(null as ProductDto);
@@ -67,6 +73,10 @@ export class ProductService {
 
     return this.http.put<ProductDto>(webApiUrl, productDto)
       .pipe(
+        map(res => {
+          this.successMessagingService.setMessage(this.translateService.instant('successMessage.http'));
+          return res;
+        }),
         catchError(error => {
           this.errorMessageService.setMessage(this.translateService.instant('errMessage.http'));
           return of(null as ProductDto);

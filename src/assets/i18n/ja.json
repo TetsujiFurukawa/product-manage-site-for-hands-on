@@ -64,6 +64,9 @@
             "halfWidthAlphanumericComma": "数値を入力してください。"
         }
     },
+    "successMessage": {
+        "http": "更新処理が完了しました。"
+    },
     "errMessage": {
         "http": "サーバとの通信に失敗しました。"
     }

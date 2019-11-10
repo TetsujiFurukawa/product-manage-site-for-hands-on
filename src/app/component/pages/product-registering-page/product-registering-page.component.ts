@@ -69,7 +69,8 @@ export class ProductRegisteringPageComponent implements OnInit {
   endOfSaleDate = new FormControl('', []);
 
   // product image content.
-  productImage: any;
+  // productImage: any;
+  productImage = new FormControl(null, []);
 
   registeringForm = this.formBuilder.group({
     productSeq: this.productSeq,
@@ -98,11 +99,11 @@ export class ProductRegisteringPageComponent implements OnInit {
     if (this.router.url !== '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW) {
       const productCode = this.route.snapshot.paramMap.get('productCode');
       this.loadingService.startLoading();
-      const productDto: Observable<ProductDto> = this.productRegisteringPageService.getProduct(productCode);
-      productDto.subscribe(data => {
-        this.extract(data);
-        this.loadingService.stopLoading();
-      });
+      this.productRegisteringPageService.getProduct(productCode)
+        .subscribe(data => {
+          this.extract(data);
+          this.loadingService.stopLoading();
+        });
     }
   }
 
@@ -119,8 +120,12 @@ export class ProductRegisteringPageComponent implements OnInit {
     const reader = new FileReader();
     reader.readAsDataURL(files[0]);
     reader.onload = (e: any) => {
-      this.productImage = e.target.result;
+      this.productImage.setValue(e.target.result);
     };
+  }
+
+  onClear() {
+    this.productImage.setValue(null);
   }
 
   onReturn() {
@@ -142,7 +147,7 @@ export class ProductRegisteringPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if ('${result}') {
+      if (result) {
         const productDto: ProductDto = this.createDto();
         this.save(productDto);
       }
@@ -176,8 +181,21 @@ export class ProductRegisteringPageComponent implements OnInit {
     productDto.productUnitPrice = this.productUnitPrice.value;
     productDto.endOfSale = this.endOfSale.value;
     productDto.endOfSaleDate = this.endOfSaleDate.value;
-    productDto.productImage = this.productImage;
+    productDto.productImage = this.productImage.value;
     return productDto;
+  }
+
+  private extract(productDto: ProductDto) {
+    this.productSeq.setValue(productDto.productSeq);
+    this.productCode.setValue(productDto.productCode);
+    this.productName.setValue(productDto.productName);
+    this.productGenre.setValue(productDto.productGenre);
+    this.productSizeStandard.setValue(productDto.productSizeStandard);
+    this.productColor.setValue(productDto.productColor);
+    this.productUnitPrice.setValue(productDto.productUnitPrice);
+    this.endOfSale.setValue(productDto.endOfSale);
+    this.endOfSaleDate.setValue(productDto.endOfSaleDate);
+    this.productImage.setValue(productDto.productImage);
   }
 
 }

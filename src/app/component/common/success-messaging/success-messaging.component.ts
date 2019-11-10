@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SuccessMessagingService } from 'src/app/service/common/success-messaging.service';
 
 @Component({
   selector: 'app-success-messaging',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SuccessMessagingComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public successMessagingService: SuccessMessagingService
+  ) { }
 
   ngOnInit() {
+    this.successMessagingService.clearMessage();
   }
 
 }

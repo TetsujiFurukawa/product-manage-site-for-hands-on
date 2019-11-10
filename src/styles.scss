@@ -233,6 +233,11 @@ registering-conditions form {
   table-layout: fixed;
 }
 
+registering-conditions .image-preview {
+  width: 200px;
+  height: auto;
+}
+
 .registering-area-wrapper {
   vertical-align: top;
   display: table-cell;
@@ -289,6 +294,10 @@ registering-conditions form {
   font-size: 1.2rem;
   box-shadow: none;
   margin-left: 18px;
+}
+
+.registering-area-wrapper .mat-raised-button {
+  margin-top: 10px;
 }
 
 .registering-functions .mat-raised-button:hover {

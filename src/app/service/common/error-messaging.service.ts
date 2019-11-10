@@ -1,24 +1,25 @@
 import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorMessagingService {
 
-  private errorMessage: string;
+  private message: string;
 
   constructor() { }
 
-  public getErrorMessage(): string {
-    return this.errorMessage;
+  public getMessage(): string {
+    return this.message;
   }
 
-  public setErrorMessage(errorMessage: string): void {
-    this.errorMessage = errorMessage;
+  public setMessage(message: string): void {
+    this.message = message;
   }
 
-  public clearErrorMessage(): void {
-    this.errorMessage = '';
+  public clearMessage(): void {
+    this.message = '';
   }
 
 }

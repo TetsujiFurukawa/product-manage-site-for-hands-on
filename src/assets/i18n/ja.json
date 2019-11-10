@@ -49,6 +49,7 @@
         "returnButton": "戻る",
         "saveButton": "登録",
         "imageUploadButton": "画像のアップロード",
+        "imageClearButton": "画像のクリア",
         "saveYesNoDialog": {
             "title": "登録の確認",
             "message": "入力した内容を登録しますか？",

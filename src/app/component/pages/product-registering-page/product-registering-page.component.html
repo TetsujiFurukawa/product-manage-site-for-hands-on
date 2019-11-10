@@ -6,13 +6,14 @@
   </div>
   <div class="registering-conditions">
     <app-error-messaging></app-error-messaging>
+    <app-success-messaging></app-success-messaging>
     <div class="registering-conditions-wrapper">
       <form class="registering-form" [formGroup]="registeringForm">
         <div class="registering-area-wrapper left">
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
               <input id="product-code" matInput type="text" formControlName="productCode"
-                placeholder="{{ 'productRegisteringPage.productCode' | translate }}">
+                placeholder="{{ 'productRegisteringPage.productCode' | translate }}" maxlength=20>
               <mat-error *ngIf="productCode.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
@@ -24,7 +25,7 @@
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field width-45rem">
               <input id="product-name" matInput type="text" formControlName="productName"
-                placeholder="{{ 'productRegisteringPage.productName' | translate }}">
+                placeholder="{{ 'productRegisteringPage.productName' | translate }}" maxlength=50>
               <mat-error *ngIf="productName.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
@@ -46,7 +47,7 @@
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field width-45rem">
               <input id="product-size-standard" matInput type="text" formControlName="productSizeStandard"
-                placeholder="{{ 'productRegisteringPage.productSizeStandard' | translate }}">
+                placeholder="{{ 'productRegisteringPage.productSizeStandard' | translate }}" maxlength=50>
               <mat-error *ngIf="productSizeStandard.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
@@ -55,7 +56,7 @@
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
               <input id="product-color" matInput type="text" formControlName="productColor"
-                placeholder="{{ 'productRegisteringPage.productColor' | translate }}">
+                placeholder="{{ 'productRegisteringPage.productColor' | translate }}" maxlength=20>
               <mat-error *ngIf="productColor.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
@@ -64,7 +65,7 @@
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
               <input id="product-unit-price" matInput type="text" formControlName="productUnitPrice"
-                placeholder="{{ 'productRegisteringPage.productUnitPrice' | translate }}">
+                placeholder="{{ 'productRegisteringPage.productUnitPrice' | translate }}" maxlength=12>
               <mat-error *ngIf="productUnitPrice.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
@@ -90,11 +91,15 @@
         </div>
         <div class="registering-area-wrapper right">
           <p>{{ 'productRegisteringPage.productImage' | translate }}</p>
-          <img [src]="productImage" class="image-preview" width="200" height="auto" *ngIf="productImage" />
+          <img src="../../../../assets/images/no_image.png" class="image-preview" *ngIf="!productImage.value" />
+          <img [src]="productImage.value" class="image-preview" *ngIf="productImage.value" />
           <button mat-raised-button id="fileInput" class="mat-raised-button" type="button" (click)="fileInput.click()"
+            [disabled]="productImage.value"
             matTooltip="Select a product image">{{ 'productRegisteringPage.imageUploadButton' | translate }}</button>
-          <input hidden (change)="onFileSelected(fileInput.files)" #fileInput type="file" accept='image/*'
-            id="fileInput">
+          <input hidden (change)="onFileSelected(fileInput.files)" #fileInput type="file" accept='image/*'>
+          <button mat-raised-button id="clear" class="mat-raised-button" type="button" (click)="onClear()"
+            [disabled]="!productImage.value"
+            matTooltip="Clears a product image">{{ 'productRegisteringPage.imageClearButton' | translate }}</button>
         </div>
       </form>
     </div>

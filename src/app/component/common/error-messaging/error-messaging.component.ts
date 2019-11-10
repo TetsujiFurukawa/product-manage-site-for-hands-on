@@ -13,7 +13,7 @@ export class ErrorMessagingComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.errorMessagingService.clearErrorMessage();
+    this.errorMessagingService.clearMessage();
   }
 
 }

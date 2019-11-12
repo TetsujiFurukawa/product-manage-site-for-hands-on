@@ -93,9 +93,9 @@ export class ProductRegisteringPageComponent implements OnInit {
   });
 
   genres: Genre[] = [
-    { value: '1', viewValue: '靴・スニーカー' },
-    { value: '2', viewValue: 'トップス' },
-    { value: '3', viewValue: 'バッグ' }
+    { value: '靴・スニーカー', viewValue: '靴・スニーカー' },
+    { value: 'トップス', viewValue: 'トップス' },
+    { value: 'バッグ', viewValue: 'バッグ' }
   ];
 
   ngOnInit() {

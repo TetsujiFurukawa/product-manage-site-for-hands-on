@@ -13,7 +13,7 @@
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
               <input id="product-code" matInput type="text" formControlName="productCode"
-                placeholder="{{ 'productRegisteringPage.productCode' | translate }}" maxlength=20>
+                placeholder="{{ 'productRegisteringPage.productCode' | translate }}" maxlength=20 [readonly]="!isNew">
               <mat-error *ngIf="productCode.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>

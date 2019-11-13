@@ -60,7 +60,7 @@
     "validationError": {
         "required": "入力が必要な項目です。",
         "pattern": {
-            "singleByteAlphanumericSymbols": "半角英数記号を入力してください。",
+            "singleByteAlphanumeric": "半角英数を入力してください。",
             "halfWidthAlphanumericComma": "数値を入力してください。"
         }
     },

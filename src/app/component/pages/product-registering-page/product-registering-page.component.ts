@@ -47,7 +47,7 @@ export class ProductRegisteringPageComponent implements OnInit {
 
   // product code
   productCode = new FormControl('', [
-    Validators.required, Validators.pattern(RegexConst.SINGLE_BYTE_ALPHANUMERIC_SYMBOLS)
+    Validators.required, Validators.pattern(RegexConst.SINGLE_BYTE_ALPHANUMERIC)
   ]);
 
   // product name

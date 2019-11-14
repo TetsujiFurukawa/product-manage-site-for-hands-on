@@ -20,12 +20,6 @@ export class ProductDto {
 
   endOfSaleDate: Date;
 
-  enterDate: Date;
-
-  enterUser: string;
-
   updateDate: Date;
-
-  updateUser: string;
 
 }

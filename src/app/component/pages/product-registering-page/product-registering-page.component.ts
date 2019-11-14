@@ -12,7 +12,6 @@ import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
 import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AppConst } from 'src/app/const/app-const';
-import { SuccessMessagingService } from 'src/app/service/common/success-messaging.service';
 
 export interface Genre {
   value: string;
@@ -36,11 +35,16 @@ export class ProductRegisteringPageComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     public translateService: TranslateService,
-    @Inject(LOCALE_ID) public locale: string,
+    // @Inject(LOCALE_ID) public locale: string,
 
   ) { }
   // Called new or update?
   isNew = this.router.url === '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW;
+
+  messagePropertytitle = 'productRegisteringPage.title.new';
+  messagePropertySaveButton = 'productRegisteringPage.saveButton.new';
+
+  locale = 'ja-JP';
 
   // product seq
   productSeq = new FormControl('', []);
@@ -105,6 +109,9 @@ export class ProductRegisteringPageComponent implements OnInit {
 
   loadData() {
     if (!this.isNew) {
+      this.messagePropertytitle = 'productRegisteringPage.title.edit';
+      this.messagePropertySaveButton = 'productRegisteringPage.saveButton.new';
+
       const productCode = this.route.snapshot.paramMap.get('productCode');
       this.loadingService.startLoading();
       this.productRegisteringPageService.getProduct(productCode)
@@ -190,9 +197,9 @@ export class ProductRegisteringPageComponent implements OnInit {
     productDto.endOfSale = this.endOfSale.value;
     productDto.endOfSaleDate = this.endOfSaleDate.value;
     productDto.productImage = this.productImage.value;
-    productDto.enterUser = this.enterUser.value;
-    productDto.enterDate = this.enterDate.value;
-    productDto.updateUser = this.updateUser.value;
+    // productDto.enterUser = this.enterUser.value;
+    // productDto.enterDate = this.enterDate.value;
+    // productDto.updateUser = this.updateUser.value;
     productDto.updateDate = this.updateDate.value;
 
     return productDto;
@@ -209,9 +216,9 @@ export class ProductRegisteringPageComponent implements OnInit {
     this.endOfSale.setValue(productDto.endOfSale);
     this.endOfSaleDate.setValue(productDto.endOfSaleDate);
     this.productImage.setValue(productDto.productImage);
-    this.enterUser.setValue(productDto.enterUser);
-    this.enterDate.setValue(productDto.enterDate);
-    this.updateUser.setValue(productDto.updateUser);
+    // this.enterUser.setValue(productDto.enterUser);
+    // this.enterDate.setValue(productDto.enterDate);
+    // this.updateUser.setValue(productDto.updateUser);
     this.updateDate.setValue(productDto.updateDate);
   }
 

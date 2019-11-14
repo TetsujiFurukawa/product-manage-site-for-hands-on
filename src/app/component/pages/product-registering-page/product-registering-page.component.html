@@ -1,7 +1,7 @@
 <section class="registering-page">
   <div class="registering-title">
     <div class="registering-title-wrapper">
-      <h1>{{ 'productRegisteringPage.title' | translate }}</h1>
+      <h1>{{ messagePropertytitle | translate }}</h1>
     </div>
   </div>
   <div class="registering-conditions">
@@ -65,7 +65,7 @@
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
               <input id="product-unit-price" matInput type="text" formControlName="productUnitPrice"
-                placeholder="{{ 'productRegisteringPage.productUnitPrice' | translate }}" maxlength=12>
+                placeholder="{{ 'productRegisteringPage.productUnitPrice' | translate }}" maxlength=11>
               <mat-error *ngIf="productUnitPrice.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
@@ -80,7 +80,7 @@
             </mat-checkbox>
           </div>
           <div class="registering-condition-wrapper">
-            <app-mat-date-picker *ngIf="endOfSale.value" [locale]='ja-JP'
+            <app-mat-date-picker *ngIf="endOfSale.value" [locale]='locale'
               placeholder="{{ 'productRegisteringPage.endOfSaleDate' | translate }}" required=true
               (event)=" onReceiveEventFromChild($event)"></app-mat-date-picker>
           </div>
@@ -91,21 +91,22 @@
           <img [src]="productImage.value" class="image-preview" *ngIf="productImage.value" />
           <button mat-raised-button id="fileInput" class="mat-raised-button" type="button" (click)="fileInput.click()"
             [disabled]="productImage.value"
-            matTooltip="Select a product image">{{ 'productRegisteringPage.imageUploadButton' | translate }}</button>
+            matTooltip="{{ 'productRegisteringPage.tooltip.imageUploadButton' | translate }}">{{ 'productRegisteringPage.imageUploadButton' | translate }}</button>
           <input hidden (change)="onFileSelected(fileInput.files)" #fileInput type="file" accept='image/*'>
           <button mat-raised-button id="clear" class="mat-raised-button" type="button" (click)="onClear()"
             [disabled]="!productImage.value"
-            matTooltip="Clears a product image">{{ 'productRegisteringPage.imageClearButton' | translate }}</button>
+            matTooltip="{{ 'productRegisteringPage.tooltip.imageClearButton' | translate }}">{{ 'productRegisteringPage.imageClearButton' | translate }}</button>
         </div>
       </form>
     </div>
   </div>
   <div class="registering-functions">
     <div class="registering-functions-wrapper">
-      <button mat-raised-button id="clearBtn" class="mat-raised-button" type="button"
-        (click)="onReturn()">{{ 'productRegisteringPage.returnButton' | translate }}</button>
+      <button mat-raised-button id="clearBtn" class="mat-raised-button" type="button" (click)="onReturn()"
+        matTooltip="{{ 'productRegisteringPage.tooltip.returnButton' | translate }}">{{ 'productRegisteringPage.returnButton' | translate }}</button>
       <button mat-raised-button id="saveBtn" class="mat-raised-button active" type="button" (click)="onSave()"
-        [disabled]="!registeringForm.valid">{{ 'productRegisteringPage.saveButton' | translate }}</button>
+        [disabled]="!registeringForm.valid" *ngIf="isNew"
+        matTooltip="{{ 'productRegisteringPage.tooltip.saveButton' | translate }}">{{ messagePropertySaveButton | translate }}</button>
     </div>
   </div>
 </section>

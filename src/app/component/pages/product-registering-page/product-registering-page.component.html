@@ -64,8 +64,9 @@
           </div>
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
-              <input id="product-unit-price" matInput type="text" formControlName="productUnitPrice"
-                placeholder="{{ 'productRegisteringPage.productUnitPrice' | translate }}" maxlength=11>
+              <input id="product-unit-price" matInput type="text" appNumberInput formControlName="productUnitPrice"
+                placeholder="{{ 'productRegisteringPage.productUnitPrice' | translate }}" maxlength=11
+                [attr.locale]='locale' [attr.currency]="currency">
               <mat-error *ngIf="productUnitPrice.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>

@@ -1,5 +1,5 @@
 import { HttpClient, HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -35,11 +35,17 @@ import { LoadingComponent } from './component/common/loading/loading.component';
 import { YesNoDialogComponent } from './component/common/yes-no-dialog/yes-no-dialog.component';
 import { SuccessMessagingComponent } from './component/common/success-messaging/success-messaging.component';
 import { MatDatePickerComponent } from './component/common/mat-date-picker/mat-date-picker.component';
+import { registerLocaleData, CurrencyPipe } from '@angular/common';
+import localeJa from '@angular/common/locales/ja';
+import { CurrencyToNumberPipe } from './pipe/currency-to-number.pipe';
+import { NumberInputDirective } from './directive/number-input.directive';
 
 // 他言語化の設定
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
+
+registerLocaleData(localeJa);
 
 @NgModule({
   declarations: [
@@ -58,7 +64,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoadingComponent,
     YesNoDialogComponent,
     SuccessMessagingComponent,
-    MatDatePickerComponent
+    MatDatePickerComponent,
+    CurrencyToNumberPipe,
+    NumberInputDirective
   ],
   imports: [
     BrowserModule,
@@ -80,8 +88,15 @@ export function HttpLoaderFactory(http: HttpClient) {
   entryComponents: [
     YesNoDialogComponent
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true },
-  { provide: HTTP_INTERCEPTORS, useClass: HttpXsrfInterceptor, multi: true }],
+  providers:
+    [
+      { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true },
+      { provide: HTTP_INTERCEPTORS, useClass: HttpXsrfInterceptor, multi: true },
+      CurrencyPipe,
+      CurrencyToNumberPipe,
+      // The locale to use for this system
+      { provide: LOCALE_ID, useValue: 'ja-JP' }
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -12,6 +12,9 @@ import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
 import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AppConst } from 'src/app/const/app-const';
+import { EndOfSaleEndOfSaleDateValidator } from 'src/app/validator/end-of-sale-end-of-sale-date-validator';
+import { CurrencyPipe } from '@angular/common';
+import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
 
 export interface Genre {
   value: string;
@@ -34,6 +37,8 @@ export class ProductRegisteringPageComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
+    private currencyToNumberPipe: CurrencyToNumberPipe,
+    private currencyPipe: CurrencyPipe,
     public translateService: TranslateService,
     // @Inject(LOCALE_ID) public locale: string,
 
@@ -45,6 +50,7 @@ export class ProductRegisteringPageComponent implements OnInit {
   messagePropertySaveButton = 'productRegisteringPage.saveButton.new';
 
   locale = 'ja-JP';
+  currency = 'JPY';
 
   // product seq
   productSeq = new FormControl('', []);
@@ -68,7 +74,7 @@ export class ProductRegisteringPageComponent implements OnInit {
 
   // product unit price
   productUnitPrice = new FormControl('', [
-    Validators.required, Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA)
+    Validators.required, Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)
   ]);
 
   // End of sale
@@ -94,6 +100,8 @@ export class ProductRegisteringPageComponent implements OnInit {
     productUnitPrice: this.productUnitPrice,
     endOfSale: this.endOfSale,
     endOfSaleDate: this.endOfSaleDate
+  }, {
+    validators: EndOfSaleEndOfSaleDateValidator.match
   });
 
   genres: Genre[] = [
@@ -242,5 +250,7 @@ export class ProductRegisteringPageComponent implements OnInit {
 
   onReceiveEventFromChild(eventData: string) {
     this.endOfSaleDate.setValue(eventData);
+
   }
+
 }

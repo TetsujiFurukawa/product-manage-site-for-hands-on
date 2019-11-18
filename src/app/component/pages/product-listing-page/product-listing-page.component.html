@@ -97,12 +97,14 @@
       <ng-container matColumnDef="productUnitPrice">
         <th class="width-product-unit-price" mat-header-cell *matHeaderCellDef>
           {{ "productListingPage.productUnitPrice" | translate }}</th>
-        <td class="width-product-unit-price" mat-cell *matCellDef="let element"> {{element.productUnitPrice}}</td>
+        <td class="width-product-unit-price" mat-cell *matCellDef="let element">
+          {{element.productUnitPrice | currencyToNumber:locale:currency }}</td>
       </ng-container>
       <ng-container matColumnDef="productStockQuantity">
         <th class="width-product-stock" mat-header-cell *matHeaderCellDef>
           {{ "productListingPage.productStockQuantity" | translate }}</th>
-        <td class="width-product-stock" mat-cell *matCellDef="let element"> {{element.productStockQuantity}} </td>
+        <td class="width-product-stock" mat-cell *matCellDef="let element">
+          {{element.productStockQuantity | currencyToNumber:locale:currency }} </td>
       </ng-container>
       <ng-container matColumnDef="endOfSale">
         <th class="width-product-end" mat-header-cell *matHeaderCellDef>

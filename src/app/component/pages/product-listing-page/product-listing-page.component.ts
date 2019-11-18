@@ -12,6 +12,7 @@ import { SearchParamsService } from 'src/app/service/common/search-params.servic
 import { ProductListingSearchParams } from 'src/app/entity/product-listing-search-params';
 import { Router } from '@angular/router';
 import { UrlConst } from 'src/app/const/url-const';
+import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
 
 export interface Genre {
   value: string;
@@ -30,8 +31,9 @@ export class ProductListingPageComponent implements OnInit {
     private productListingPageService: ProductListingPageService,
     private accountService: AccountService,
     private searchParamsService: SearchParamsService,
+    private router: Router,
+    public currencyToNumberPipe: CurrencyToNumberPipe,
     public translateService: TranslateService,
-    private router: Router
   ) { }
 
   // product name
@@ -52,6 +54,9 @@ export class ProductListingPageComponent implements OnInit {
     productGenre: this.productGenre,
     endOfSale: this.endOfSale
   });
+
+  locale = 'ja-JP';
+  currency = 'JPY';
 
   genres: Genre[] = [
     { value: '1', viewValue: '靴・スニーカー' },

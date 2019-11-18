@@ -13,7 +13,6 @@ import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.c
 import { MatDialog } from '@angular/material/dialog';
 import { AppConst } from 'src/app/const/app-const';
 import { EndOfSaleEndOfSaleDateValidator } from 'src/app/validator/end-of-sale-end-of-sale-date-validator';
-import { CurrencyPipe } from '@angular/common';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
 
 export interface Genre {
@@ -38,7 +37,6 @@ export class ProductRegisteringPageComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private currencyToNumberPipe: CurrencyToNumberPipe,
-    private currencyPipe: CurrencyPipe,
     public translateService: TranslateService,
 
   ) { }

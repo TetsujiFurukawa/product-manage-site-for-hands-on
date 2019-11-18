@@ -7,26 +7,26 @@ const INTERVAL_TIME = 8000;
 })
 export class SuccessMessagingService {
 
-  private message: string;
+  private messageProperty: string;
 
   constructor() { }
 
-  public getMessage(): string {
-    return this.message;
+  public getMessageProperty(): string {
+    return this.messageProperty;
   }
 
-  public setMessage(message: string): void {
-    this.message = message;
+  public setMessageProperty(message: string): void {
+    this.messageProperty = message;
     this.hideStart();
   }
 
-  public clearMessage(): void {
-    this.message = '';
+  public clearMessageProperty(): void {
+    this.messageProperty = '';
   }
 
   public hideStart() {
     setTimeout(() => {
-      this.clearMessage();
+      this.clearMessageProperty();
     }, INTERVAL_TIME);
   }
 

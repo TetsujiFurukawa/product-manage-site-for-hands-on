@@ -25,12 +25,12 @@ export class ProductService {
   getProductList(httpParams: HttpParams): Observable<ProductListresponseDto> {
 
     const webApiUrl = UrlConst.PATH_API_FOLDER + UrlConst.PATH_PRODUCT_LISTING;
-    this.errorMessageService.clearMessage();
+    this.clearMessageProperty();
 
     return this.http.get<ProductListresponseDto>(webApiUrl, { params: httpParams })
       .pipe(
         catchError(error => {
-          this.errorMessageService.setMessage(this.translateService.instant('errMessage.http'));
+          this.errorMessageService.setupPageErrorMessageFromResponse(error);
           return of(null as ProductListresponseDto);
         })
       );
@@ -39,12 +39,12 @@ export class ProductService {
 
   getProduct(productCode: string): Observable<ProductDto> {
     const webApiUrl = UrlConst.PATH_API_FOLDER + UrlConst.PATH_PRODUCT_REGISTERING;
-    this.errorMessageService.clearMessage();
+    this.clearMessageProperty();
 
     return this.http.get<ProductDto>(webApiUrl, { params: { productCode } })
       .pipe(
         catchError(error => {
-          this.errorMessageService.setMessage(this.translateService.instant('errMessage.http'));
+          this.errorMessageService.setupPageErrorMessageFromResponse(error);
           return of(null as ProductDto);
         })
       );
@@ -52,16 +52,16 @@ export class ProductService {
 
   createProduct(productDto: ProductDto): Observable<ProductDto> {
     const webApiUrl = UrlConst.PATH_API_FOLDER + UrlConst.PATH_PRODUCT_REGISTERING;
-    this.errorMessageService.clearMessage();
+    this.clearMessageProperty();
 
     return this.http.post<ProductDto>(webApiUrl, productDto)
       .pipe(
         map(res => {
-          this.successMessagingService.setMessage(this.translateService.instant('successMessage.http'));
+          this.successMessagingService.setMessageProperty('successMessage.http');
           return res;
         }),
         catchError(error => {
-          this.errorMessageService.setMessage(this.translateService.instant('errMessage.http'));
+          this.errorMessageService.setupPageErrorMessageFromResponse(error);
           return of(null as ProductDto);
         })
       );
@@ -69,18 +69,24 @@ export class ProductService {
 
   updateProduct(productDto: ProductDto): Observable<ProductDto> {
     const webApiUrl = UrlConst.PATH_API_FOLDER + UrlConst.PATH_PRODUCT_REGISTERING;
-    this.errorMessageService.clearMessage();
+    this.clearMessageProperty();
 
     return this.http.put<ProductDto>(webApiUrl, productDto)
       .pipe(
         map(res => {
-          this.successMessagingService.setMessage(this.translateService.instant('successMessage.http'));
+          this.successMessagingService.setMessageProperty('successMessage.http');
           return res;
         }),
         catchError(error => {
-          this.errorMessageService.setMessage(this.translateService.instant('errMessage.http'));
+          this.errorMessageService.setupPageErrorMessageFromResponse(error);
           return of(null as ProductDto);
         })
       );
   }
+
+  private clearMessageProperty() {
+    this.successMessagingService.clearMessageProperty();
+    this.errorMessageService.clearMessageProperty();
+  }
+
 }

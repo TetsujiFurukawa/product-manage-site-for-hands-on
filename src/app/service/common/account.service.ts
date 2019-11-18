@@ -36,12 +36,7 @@ export class AccountService {
     return this.http.post<SignInResponseDto>(webApiUrl, signInRequestDto, { headers })
       .pipe(
         catchError(error => {
-          console.log(error.status);
-          if (error.status === 401) {
-            this.errorMessageService.setMessage(this.translateService.instant('認証に失敗しました。'));
-          } else {
-            this.errorMessageService.setMessage(this.translateService.instant('通信エラーが発生しました。'));
-          }
+          this.errorMessageService.setupPageErrorMessageFromResponse(error);
           return of(null as SignInResponseDto);
         })
       );
@@ -52,7 +47,7 @@ export class AccountService {
     return this.http.get<MenuListResponseDto[]>(webApiUrl)
       .pipe(
         catchError(error => {
-          this.errorMessageService.setMessage(this.translateService.instant('通信エラーが発生しました。'));
+          this.errorMessageService.setupPageErrorMessageFromResponse(error);
           return of(null as MenuListResponseDto[]);
         })
       );

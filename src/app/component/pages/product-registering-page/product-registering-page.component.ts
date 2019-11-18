@@ -40,7 +40,6 @@ export class ProductRegisteringPageComponent implements OnInit {
     private currencyToNumberPipe: CurrencyToNumberPipe,
     private currencyPipe: CurrencyPipe,
     public translateService: TranslateService,
-    // @Inject(LOCALE_ID) public locale: string,
 
   ) { }
   // Called new or update?
@@ -74,7 +73,7 @@ export class ProductRegisteringPageComponent implements OnInit {
 
   // product unit price
   productUnitPrice = new FormControl('', [
-    Validators.required, Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)
+    Validators.required, Validators.max(999999999), Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)
   ]);
 
   // End of sale
@@ -112,21 +111,9 @@ export class ProductRegisteringPageComponent implements OnInit {
 
   ngOnInit() {
     this.setupLangage();
-    this.loadData();
-  }
-
-  loadData() {
     if (!this.isNew) {
-      this.messagePropertytitle = 'productRegisteringPage.title.edit';
-      this.messagePropertySaveButton = 'productRegisteringPage.saveButton.new';
-
-      const productCode = this.route.snapshot.paramMap.get('productCode');
-      this.loadingService.startLoading();
-      this.productRegisteringPageService.getProduct(productCode)
-        .subscribe(data => {
-          this.extract(data);
-          this.loadingService.stopLoading();
-        });
+      this.setupButtonTextToEdit();
+      this.loadData();
     }
   }
 
@@ -177,18 +164,42 @@ export class ProductRegisteringPageComponent implements OnInit {
     });
   }
 
-  private save(productDto: ProductDto) {
-    this.loadingService.startLoading();
-    this.productRegisteringPageService.saveProduct(productDto)
-      .subscribe(data => {
-        this.loadingService.stopLoading();
-      });
+  onReceiveEventFromChild(eventData: string) {
+    this.endOfSaleDate.setValue(eventData);
+
   }
 
+  // --------------------------------------------------------------------------------
+  // private methods
+  // --------------------------------------------------------------------------------
   private setupLangage() {
     const lang = this.accountService.getUser().userLang;
     this.translateService.setDefaultLang(lang);
     this.translateService.use(lang);
+  }
+
+  private loadData() {
+    const productCode = this.route.snapshot.paramMap.get('productCode');
+    this.loadingService.startLoading();
+    this.productRegisteringPageService.getProduct(productCode)
+      .subscribe(data => {
+        this.extract(data);
+        this.loadingService.stopLoading();
+      });
+  }
+
+  private save(productDto: ProductDto) {
+    this.loadingService.startLoading();
+    this.productRegisteringPageService.saveProduct(productDto)
+      .subscribe(data => {
+        this.extract(data);
+        this.loadingService.stopLoading();
+      });
+  }
+
+  private setupButtonTextToEdit() {
+    this.messagePropertytitle = 'productRegisteringPage.title.edit';
+    this.messagePropertySaveButton = 'productRegisteringPage.saveButton.edit';
   }
 
   private createDto(): ProductDto {
@@ -201,33 +212,31 @@ export class ProductRegisteringPageComponent implements OnInit {
     productDto.productGenre = this.productGenre.value;
     productDto.productSizeStandard = this.productSizeStandard.value;
     productDto.productColor = this.productColor.value;
-    productDto.productUnitPrice = this.productUnitPrice.value;
+    productDto.productUnitPrice = this.currencyToNumberPipe.parse(this.productUnitPrice.value);
     productDto.endOfSale = this.endOfSale.value;
     productDto.endOfSaleDate = this.endOfSaleDate.value;
     productDto.productImage = this.productImage.value;
-    // productDto.enterUser = this.enterUser.value;
-    // productDto.enterDate = this.enterDate.value;
-    // productDto.updateUser = this.updateUser.value;
     productDto.updateDate = this.updateDate.value;
 
     return productDto;
   }
 
   private extract(productDto: ProductDto) {
+    if (productDto === null) {
+      return;
+    }
     this.productSeq.setValue(productDto.productSeq);
     this.productCode.setValue(productDto.productCode);
     this.productName.setValue(productDto.productName);
     this.productGenre.setValue(productDto.productGenre);
     this.productSizeStandard.setValue(productDto.productSizeStandard);
     this.productColor.setValue(productDto.productColor);
-    this.productUnitPrice.setValue(productDto.productUnitPrice);
+    this.productUnitPrice.setValue(this.currencyToNumberPipe.transform(productDto.productUnitPrice.toString(), this.locale, this.currency));
     this.endOfSale.setValue(productDto.endOfSale);
     this.endOfSaleDate.setValue(productDto.endOfSaleDate);
     this.productImage.setValue(productDto.productImage);
-    // this.enterUser.setValue(productDto.enterUser);
-    // this.enterDate.setValue(productDto.enterDate);
-    // this.updateUser.setValue(productDto.updateUser);
     this.updateDate.setValue(productDto.updateDate);
+
   }
 
   private clearControls() {
@@ -247,10 +256,4 @@ export class ProductRegisteringPageComponent implements OnInit {
     this.updateDate.setValue(null);
 
   }
-
-  onReceiveEventFromChild(eventData: string) {
-    this.endOfSaleDate.setValue(eventData);
-
-  }
-
 }

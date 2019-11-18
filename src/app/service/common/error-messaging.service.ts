@@ -5,21 +5,46 @@ import { TranslateService } from '@ngx-translate/core';
   providedIn: 'root'
 })
 export class ErrorMessagingService {
-
-  private message: string;
+  private messageProperty: string;
 
   constructor() { }
 
-  public getMessage(): string {
-    return this.message;
+  public getMessageProperty(): string {
+    return this.messageProperty;
   }
 
-  public setMessage(message: string): void {
-    this.message = message;
+  public setMessageProperty(message: string): void {
+    this.messageProperty = message;
   }
 
-  public clearMessage(): void {
-    this.message = '';
+  public clearMessageProperty(): void {
+    this.messageProperty = '';
+  }
+
+  public setupPageErrorMessageFromResponse(error: any) {
+    switch (error.status) {
+      case 400:
+        this.setMessageProperty('errMessage.http.badRequest');
+        break;
+      case 401:
+        this.setMessageProperty('errMessage.http.unAuthorized');
+        break;
+      case 404:
+        this.setMessageProperty('errMessage.http.notFound');
+        break;
+      case 500:
+        if ('Duplicated key.' === error.error.message) {
+          this.setMessageProperty('errMessage.http.duplicateKeyException');
+        } else if ('Exclusive error occurred.' === error.error.message) {
+          this.setMessageProperty('errMessage.http.exclusiveProcessingException');
+        } else {
+          this.setMessageProperty('errMessage.http.internalServerError');
+        }
+        break;
+      default:
+        this.setMessageProperty('errMessage.http.GenericError');
+        break;
+    }
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ErrorMessagingService } from 'src/app/service/common/error-messaging.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-error-messaging',
@@ -9,11 +10,12 @@ import { ErrorMessagingService } from 'src/app/service/common/error-messaging.se
 export class ErrorMessagingComponent implements OnInit {
 
   constructor(
+    public translateService: TranslateService,
     public errorMessagingService: ErrorMessagingService
   ) { }
 
   ngOnInit() {
-    this.errorMessagingService.clearMessage();
+    this.errorMessagingService.clearMessageProperty();
   }
 
 }

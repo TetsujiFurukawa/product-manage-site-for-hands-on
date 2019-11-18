@@ -52,7 +52,7 @@
         "returnButton": "戻る",
         "saveButton": {
             "new": "登録",
-            "update": "更新"
+            "edit": "更新"
         },
         "imageUploadButton": "画像のアップロード",
         "imageClearButton": "画像のクリア",
@@ -74,12 +74,21 @@
         "pattern": {
             "singleByteAlphanumeric": "半角英数を入力してください。",
             "halfWidthAlphanumericComma": "数値を入力してください。"
-        }
+        },
+        "maxlength9": "最大9桁までが入力可能です。"
     },
     "successMessage": {
         "http": "更新処理が完了しました。"
     },
     "errMessage": {
-        "http": "サーバとの通信に失敗しました。"
+        "http": {
+            "badRequest": "入力情報が正しくありません。",
+            "unAuthorized": "権限がありません。",
+            "notFound": "ページがみつかりません。",
+            "duplicateKeyException": "同一キーの情報がすでに登録されています。",
+            "exclusiveProcessingException": "他ユーザーが同一データを変更しました、最新情報を取得してください。",
+            "internalServerError": "サーバ内でエラーが発生しました。",
+            "GenericError": "サーバとの通信に失敗しました。"
+        }
     }
 }

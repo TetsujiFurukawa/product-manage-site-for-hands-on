@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SuccessMessagingService } from 'src/app/service/common/success-messaging.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-success-messaging',
@@ -9,11 +10,12 @@ import { SuccessMessagingService } from 'src/app/service/common/success-messagin
 export class SuccessMessagingComponent implements OnInit {
 
   constructor(
+    public translateService: TranslateService,
     public successMessagingService: SuccessMessagingService
   ) { }
 
   ngOnInit() {
-    this.successMessagingService.clearMessage();
+    this.successMessagingService.clearMessageProperty();
   }
 
 }

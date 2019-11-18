@@ -7,7 +7,7 @@ import { RegexConst } from '../const/regex-const';
 })
 export class CurrencyToNumberPipe implements PipeTransform {
 
-  transform(value: any, locale: string, currency: string): any {
+  transform(value: string, locale: string, currency: string): any {
     const regexp = new RegExp(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD);
     if (!value.match(regexp)) {
       return value;

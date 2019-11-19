@@ -1,16 +1,30 @@
 /* --------------------------------------------------------------------------------
  * Product Listing page specific settings.
  * -------------------------------------------------------------------------------- */
+.search-results .results th.width-product-unit-price {
+  margin-right: 10px;
+}
+
+.search-results .results th.width-endOfSale {
+  padding-right: 40px;
+}
+
 .search-results .results .width-product-name,
 .search-results .results .width-product-code,
+.search-results .results .width-product-genre,
+.search-results .results .width-product-image,
 .search-results .results .width-product-size,
 .search-results .results .width-product-color {
   text-align: left;
 }
 
-.search-results .results width-product-unit-price,
-.search-results .results width-product-stock {
+.search-results .results .width-product-unit-price,
+.search-results .results .width-product-stock {
   text-align: right;
+}
+
+.search-results .results td.width-endOfSale {
+  text-align: center;
 }
 
 .search-results table img {

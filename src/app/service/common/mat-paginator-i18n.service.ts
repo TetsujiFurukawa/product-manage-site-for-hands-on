@@ -50,7 +50,6 @@ export class MatPaginatorI18nService extends MatPaginatorIntl {
         this.previousPageLabel = translation[PREV_PAGE];
         this.firstPageLabel = translation[FIRST_PAGE];
         this.lastPageLabel = translation[LAST_PAGE];
-
         this.changes.next();
       });
   }

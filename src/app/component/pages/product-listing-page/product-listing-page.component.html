@@ -107,9 +107,9 @@
           {{element.productStockQuantity | currencyToNumber:locale:currency }} </td>
       </ng-container>
       <ng-container matColumnDef="endOfSale">
-        <th class="width-product-end" mat-header-cell *matHeaderCellDef>
+        <th class="width-endOfSale" mat-header-cell *matHeaderCellDef>
           {{ "productListingPage.endOfSale" | translate }}</th>
-        <td class="width-product-end" mat-cell *matCellDef="let element">
+        <td class="width-endOfSale" mat-cell *matCellDef="let element">
           {{ "productListingPage.endOfSaleValue." + element.endOfSale | translate}} </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></tr>

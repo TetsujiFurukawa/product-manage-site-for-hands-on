@@ -39,6 +39,8 @@ import { registerLocaleData, CurrencyPipe } from '@angular/common';
 import localeJa from '@angular/common/locales/ja';
 import { CurrencyToNumberPipe } from './pipe/currency-to-number.pipe';
 import { NumberInputDirective } from './directive/number-input.directive';
+import { MatPaginatorI18nService } from './service/common/mat-paginator-i18n.service';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 
 // 他言語化の設定
 export function HttpLoaderFactory(http: HttpClient) {
@@ -95,7 +97,8 @@ registerLocaleData(localeJa);
       CurrencyPipe,
       CurrencyToNumberPipe,
       // The locale to use for this system
-      { provide: LOCALE_ID, useValue: 'ja-JP' }
+      { provide: LOCALE_ID, useValue: 'ja-JP' },
+      { provide: MatPaginatorIntl, useClass: MatPaginatorI18nService }
     ],
   bootstrap: [AppComponent]
 })

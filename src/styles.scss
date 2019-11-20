@@ -14,18 +14,19 @@ body {
 
 /* footer */
 .body-wrapper {
-  min-height: 90vh;
+  min-height: 95vh;
   /* ↑ Fallback of calc() for unsupported browsers */
-  min-height: calc(100vh-50px);
+  min-height: calc(100vh - 50px);
   position: relative;
   padding-bottom: 35px;
   box-sizing: border-box;
 }
 
 footer {
+  height: 30px;
   width: 100%;
   text-align: center;
-  padding: 5px 0;
+  padding-top: 5px;
   position: absolute;
   bottom: 0;
   background-color: #ECEFF1;
@@ -52,11 +53,15 @@ footer {
   font-size: 1.4rem;
 }
 
+.search-form {
+  background-color: #ffffff;
+}
+
 .search-criteria {
   height: 50px;
-  width: 96%;
-  padding: 15px 2% 5px;
-  margin: 0 auto 0;
+  width: 95%;
+  padding: 15px 10px 5px;
+  margin: 0 0 0;
   background-color: #ffffff;
   display: table;
   table-layout: fixed;
@@ -95,13 +100,15 @@ footer {
 }
 
 .search-functions .mat-paginator-container {
-  padding: 0;
+  justify-content: left;
+  padding-left: 8px;
+  width: 400px;
   min-height: 50px;
   background-color: #ECEFF1;
 }
 
 .search-functions .mat-raised-button {
-  margin-right: 5px;
+  margin-right: 10px;
   width: 200px;
   border-radius: 2px;
   background-color: #78BBE6;
@@ -142,7 +149,7 @@ footer {
 
 .search-results tbody {
   overflow-y: scroll;
-  height: 57vh;
+  height: calc(100vh - 310px);
 }
 
 .search-results .results table,
@@ -309,4 +316,13 @@ registering-conditions .image-preview {
 
 .registering-functions .mat-raised-button:disabled {
   opacity: 0.4;
+}
+
+/* --------------------------------------------------------------------------------
+ * Mat dialog.
+ * -------------------------------------------------------------------------------- */
+.mat-dialog-container {
+  background-color: #ECEFF1;
+  box-shadow: none;
+  padding: 0 !important;
 }

@@ -61,7 +61,7 @@
         <th class="width-no" mat-header-cell *matHeaderCellDef>
           {{ "productListingPage.no" | translate }}
         </th>
-        <td class="width-no" mat-cell *matCellDef="let element; index as i"> {{i+1}} </td>
+        <td class="width-no" mat-cell *matCellDef="let element"> {{element.no}} </td>
       </ng-container>
       <ng-container matColumnDef="productName">
         <th class="width-product-name" mat-header-cell *matHeaderCellDef>

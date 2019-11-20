@@ -1,14 +1,38 @@
+.mat-dialog-title {
+  background-color: rgba(0, 0, 0, 0.12);
+}
+
+.mat-dialog-actions {
+  padding-top: 30px;
+}
+
 .mat-dialog-actions .mat-raised-button {
-  width: 95px;
+  width: 150px;
   border-radius: 2px;
   background-color: #78BBE6;
   color: #ffffff;
   letter-spacing: 1px;
   font-size: 1.2rem;
   box-shadow: none;
+  margin-left: 5px;
+}
+
+.mat-dialog-actions .mat-raised-button:hover {
+  opacity: 0.8;
 }
 
 .mat-dialog-actions .mat-raised-button.active {
   background-color: #F99F48;
   color: #ffffff;
+}
+
+h1 {
+  font-size: 1.2rem;
+  // color: #ffffff;
+  padding-left: 3px;
+}
+
+p {
+  font-size: 1rem;
+  padding-left: 3px;
 }

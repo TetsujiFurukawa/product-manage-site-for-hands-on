@@ -1,5 +1,7 @@
 export class ProductResponseDto {
 
+  no: number;
+
   productName: string;
 
   productCode: string;

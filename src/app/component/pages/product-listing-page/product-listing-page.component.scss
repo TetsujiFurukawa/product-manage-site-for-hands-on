@@ -1,36 +1,32 @@
 /* --------------------------------------------------------------------------------
  * Product Listing page specific settings.
  * -------------------------------------------------------------------------------- */
-.search-results .results .width-no {
+ .body-wrapper {
+  background-color: #ffffff;
+}
+
+ .search-results .results .width-no {
   padding-left: 5px;
-  min-width: 5px;
-  max-width: 5px;
+  width: 10px;
 }
 
 .search-results .results .width-product-name {
-  min-width: 150px;
-  max-width: 150px;
-
+  width: 350px;
 }
 
 .search-results .results .width-product-code {
-  min-width: 150px;
-  max-width: 150px;
+  width: 250px;
 }
 
 .search-results .results .width-product-image {
-  min-width: 50px;
-  max-width: 50px;
+  width: 50px;
 }
 
 .search-results .results .width-product-size {
-  min-width: 100px;
-  max-width: 100px;
+  width: 100px;
 }
-
 .search-results .results .width-product-color {
-  min-width: 30px;
-  max-width: 30px;
+  width: 80px;
 }
 
 .search-results .results th.width-product-unit-price {

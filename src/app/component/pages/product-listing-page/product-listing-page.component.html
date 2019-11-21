@@ -9,7 +9,8 @@
         <div id="searchCondition1">
           <mat-form-field class="form-field">
             <input id="product-name" matInput type="text" formControlName="productName"
-              placeholder="{{ 'productListingPage.productName' | translate }}" maxlength=50>
+              placeholder="{{ 'productListingPage.productName' | translate }}" maxlength=50
+              matTooltip="{{ 'tooltip.searchCriteria.prefixMatching' | translate }}">
           </mat-form-field>
         </div>
       </div>
@@ -17,14 +18,15 @@
         <div id="searchCondition1">
           <mat-form-field class="form-field">
             <input id="product-code" matInput type="text" formControlName="productCode"
-              placeholder="{{ 'productListingPage.productCode' | translate }}" maxlength=20 >
+              placeholder="{{ 'productListingPage.productCode' | translate }}" maxlength=20
+              matTooltip="{{ 'tooltip.searchCriteria.prefixMatching' | translate }}">
           </mat-form-field>
         </div>
       </div>
       <div class="search-condition-wrapper">
         <mat-form-field>
           <mat-label>{{ 'productListingPage.productGenre' | translate }}</mat-label>
-          <mat-select formControlName="productGenre">
+          <mat-select formControlName="productGenre" matTooltip="{{ 'tooltip.searchCriteria.pullDown' | translate }}">
             <mat-option></mat-option>
             <mat-option *ngFor="let genre of genres" [value]="genre.value">
               {{genre.viewValue}}
@@ -34,7 +36,9 @@
       </div>
       <div class="search-condition-wrapper">
         <div id="searchCondition4">
-          <mat-checkbox id="end-of-sale" formControlName="endOfSale">{{ 'productListingPage.endOfSale' | translate }}
+          <mat-checkbox id="end-of-sale" formControlName="endOfSale"
+            matTooltip="{{ 'productListingPage.tooltip.endOfSale' | translate }}">
+            {{ 'productListingPage.endOfSale' | translate }}
           </mat-checkbox>
         </div>
       </div>
@@ -45,14 +49,14 @@
       <mat-paginator [length]="resultsLength" [pageSize]="50" [pageSizeOptions]="[10, 50, 100]"></mat-paginator>
     </div>
     <div class="search-functions-buttons">
-      <button mat-raised-button id="newBtn" class="mat-raised-button" type="button"
-        (click)="onNew()">{{ 'productListingPage.newButton' | translate }}</button>
+      <button mat-raised-button id="newBtn" class="mat-raised-button" type="button" (click)="onNew()"
+        matTooltip="{{ 'productListingPage.tooltip.newBtn' | translate }}">{{ 'productListingPage.newButton' | translate }}</button>
 
-      <button mat-raised-button id="clearBtn" class="mat-raised-button" type="button"
-        (click)="onClear()">{{ 'productListingPage.clearButton' | translate }}</button>
+      <button mat-raised-button id="clearBtn" class="mat-raised-button" type="button" (click)="onClear()"
+        matTooltip="{{ 'tooltip.searchBtn.clearBtn' | translate }}">{{ 'productListingPage.clearButton' | translate }}</button>
 
-      <button mat-raised-button id="searchBtn" class="mat-raised-button active" type="button"
-        (click)="onSearch()">{{ 'productListingPage.searchButton' | translate }}</button>
+      <button mat-raised-button id="searchBtn" class="mat-raised-button active" type="button" (click)="onSearch()"
+        matTooltip="{{ 'tooltip.searchBtn.searchBtn' | translate }}">{{ 'productListingPage.searchButton' | translate }}</button>
     </div>
   </div>
   <div class="search-results">

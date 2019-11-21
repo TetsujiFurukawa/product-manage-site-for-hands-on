@@ -33,7 +33,11 @@
         },
         "newButton": "新規",
         "clearButton": "クリア",
-        "searchButton": "検索"
+        "searchButton": "検索",
+        "tooltip": {
+            "endOfSale": "チェックONの場合、終了を含む全レコードを取得します。",
+            "newBtn": "商品の登録画面へ遷移します。"
+        }
     },
     "productRegisteringPage": {
         "title": {
@@ -79,6 +83,16 @@
             "halfWidthAlphanumericComma": "数値を入力してください。"
         },
         "maxlength9": "最大9桁までが入力可能です。"
+    },
+    "tooltip": {
+        "searchCriteria": {
+            "prefixMatching": "前方一致の文字検索です。",
+            "pullDown": "プルダウンの検索です。"
+        },
+        "searchBtn": {
+            "clearBtn": "検索画面をクリアします。",
+            "searchBtn": "検索を実行します。"
+        }
     },
     "successMessage": {
         "http": "更新処理が完了しました。"

@@ -1,38 +1,77 @@
 /* --------------------------------------------------------------------------------
  * Product Listing page specific settings.
  * -------------------------------------------------------------------------------- */
- .body-wrapper {
+.body-wrapper {
   background-color: #ffffff;
 }
 
- .search-results .results .width-no {
+.search-results .results .width-no {
   padding-left: 5px;
+  max-width: 10px;
   width: 10px;
 }
 
-.search-results .results .width-product-name {
-  width: 350px;
+/* product name */
+.search-results .results th.width-product-name {
+  width: 400px;
 }
 
-.search-results .results .width-product-code {
+.search-results .results td.width-product-name {
+  max-width: 100px;
+  width: 400px;
+}
+
+/* product code */
+.search-results .results th.width-product-code {
+  width: 240px;
+}
+
+.search-results .results td.width-product-code {
+  max-width: 100px;
   width: 250px;
 }
 
-.search-results .results .width-product-image {
+/* product genre */
+.search-results .results th.width-product-genre {
+  width: 220px;
+}
+
+.search-results .results td.width-product-genre {
+  max-width: 200px;
+  width: 210px;
+}
+
+/* product image */
+.search-results .results th.width-product-image {
   width: 50px;
 }
 
-.search-results .results .width-product-size {
-  width: 100px;
+.search-results .results td.width-product-image {
+  max-width: 50px;
+  width: 50px;
 }
-.search-results .results .width-product-color {
+
+/* product size */
+.search-results .results th.width-product-size {
+  width: 230px;
+}
+
+.search-results .results td.width-product-size {
+  max-width: 100px;
+  width: 230px;
+}
+
+/* product color */
+.search-results .results th.width-product-color {
   width: 80px;
 }
 
-.search-results .results th.width-product-unit-price {
-  margin-right: 10px;
+.search-results .results td.width-product-color {
+  max-width: 60px;
+  width: 80px;
 }
 
+/* end of sale th only */
 .search-results .results th.width-endOfSale {
   padding-right: 40px;
 }
@@ -43,6 +82,9 @@
 .search-results .results .width-product-image,
 .search-results .results .width-product-size,
 .search-results .results .width-product-color {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   text-align: left;
 }
 
@@ -56,5 +98,6 @@
 }
 
 .search-results table img {
+  max-width: 50px;
   max-height: 30px;
 }

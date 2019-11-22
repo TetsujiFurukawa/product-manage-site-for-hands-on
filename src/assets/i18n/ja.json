@@ -35,7 +35,7 @@
         "clearButton": "クリア",
         "searchButton": "検索",
         "tooltip": {
-            "endOfSale": "チェックONの場合、終了を含む全レコードを取得します。",
+            "endOfSale": "チェックONの場合、販売終了を含む全レコードを取得します。",
             "newBtn": "商品の登録画面へ遷移します。"
         }
     },

@@ -55,8 +55,9 @@ export class ProductListingPageComponent implements OnInit {
     endOfSale: this.endOfSale
   });
 
-  locale = 'ja-JP';
-  currency = 'JPY';
+  /** other informations */
+  locale: string = this.accountService.getUser().userLocale;
+  currency: string = this.accountService.getUser().userCurrency;
 
   genres: Genre[] = [
     { value: '1', viewValue: '靴・スニーカー' },
@@ -86,39 +87,8 @@ export class ProductListingPageComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) public paginator: MatPaginator;
 
   ngOnInit() {
-    this.setupLangage();
-
-    let productListingSearchParams: ProductListingSearchParams = new ProductListingSearchParams();
-    productListingSearchParams = this.searchParamsService.getProductListingSearchParam(productListingSearchParams);
-
-    if (productListingSearchParams !== null) {
-      if (productListingSearchParams.productName !== undefined) {
-        this.productName.setValue(productListingSearchParams.productName);
-      }
-      if (productListingSearchParams.productCode !== undefined) {
-        this.productCode.setValue(productListingSearchParams.productCode);
-      }
-      if (productListingSearchParams.productGenre !== undefined) {
-        this.productGenre.setValue(productListingSearchParams.productGenre);
-      }
-      // Observes pagenator change events.
-      this.paginator.pageIndex = productListingSearchParams.pageIndex;
-      this.paginator.pageSize = productListingSearchParams.pageSize;
-      setTimeout(() => {
-        this.paginator._changePageSize(productListingSearchParams.pageSize);
-      }, 0);
-
-      this.endOfSale.setValue(productListingSearchParams.endOfSale);
-      this.onSearch();
-
-    }
-
-  }
-
-  private setupLangage() {
-    const lang = this.accountService.getUser().userLang;
-    this.translateService.setDefaultLang(lang);
-    this.translateService.use(lang);
+    this.setupLanguage();
+    this.initSearchCriteria();
   }
 
   onNew() {
@@ -130,18 +100,6 @@ export class ProductListingPageComponent implements OnInit {
     this.searchParamsService.removeProductListingSearchParam();
     this.clearSearchCondition();
     this.clearSearchResultList();
-  }
-
-  private clearSearchCondition() {
-    this.productName.setValue('');
-    this.productCode.setValue('');
-    this.productGenre.setValue('');
-    this.endOfSale.setValue(false);
-  }
-
-  private clearSearchResultList() {
-    this.productResponseDtos = null;
-    this.resultsLength = 0;
   }
 
   onSearch() {
@@ -168,9 +126,39 @@ export class ProductListingPageComponent implements OnInit {
     this.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING, productResponseDto.productCode]);
   }
 
-  /**
-   * Creates search criterias.
-   */
+  // --------------------------------------------------------------------------------
+  // private methods
+  // --------------------------------------------------------------------------------
+  private setupLanguage() {
+    const lang = this.accountService.getUser().userLanguage;
+    this.translateService.setDefaultLang(lang);
+    this.translateService.use(lang);
+  }
+
+  private initSearchCriteria() {
+    let productListingSearchParams: ProductListingSearchParams = new ProductListingSearchParams();
+    productListingSearchParams = this.searchParamsService.getProductListingSearchParam(productListingSearchParams);
+    if (productListingSearchParams !== null) {
+      if (productListingSearchParams.productName !== undefined) {
+        this.productName.setValue(productListingSearchParams.productName);
+      }
+      if (productListingSearchParams.productCode !== undefined) {
+        this.productCode.setValue(productListingSearchParams.productCode);
+      }
+      if (productListingSearchParams.productGenre !== undefined) {
+        this.productGenre.setValue(productListingSearchParams.productGenre);
+      }
+      // Observes pagenator change events.
+      this.paginator.pageIndex = productListingSearchParams.pageIndex;
+      this.paginator.pageSize = productListingSearchParams.pageSize;
+      setTimeout(() => {
+        this.paginator._changePageSize(productListingSearchParams.pageSize);
+      }, 0);
+      this.endOfSale.setValue(productListingSearchParams.endOfSale);
+      this.onSearch();
+    }
+  }
+
   private createSearchParams(): ProductListingSearchParams {
     const productListingSearchParams: ProductListingSearchParams = new ProductListingSearchParams();
     productListingSearchParams.productName = this.productName.value;
@@ -183,4 +171,15 @@ export class ProductListingPageComponent implements OnInit {
     return productListingSearchParams;
   }
 
+  private clearSearchCondition() {
+    this.productName.setValue('');
+    this.productCode.setValue('');
+    this.productGenre.setValue('');
+    this.endOfSale.setValue(false);
+  }
+
+  private clearSearchResultList() {
+    this.productResponseDtos = null;
+    this.resultsLength = 0;
+  }
 }

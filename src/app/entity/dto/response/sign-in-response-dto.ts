@@ -4,8 +4,12 @@ export class SignInResponseDto {
 
   public userName: string;
 
-  public userLang: string;
+  public userLocale: string;
+
+  public userLanguage: string;
 
   public userTimezone: string;
+
+  public userCurrency: string;
 
 }

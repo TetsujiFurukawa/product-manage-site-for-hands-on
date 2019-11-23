@@ -49,16 +49,18 @@ export class SignInPageService {
 
   private setupLanguage(responseDto: SignInResponseDto) {
     // Sets langage.
-    this.translateService.setDefaultLang(responseDto.userLang);
-    this.translateService.use(responseDto.userLang);
+    this.translateService.setDefaultLang(responseDto.userLanguage);
+    this.translateService.use(responseDto.userLanguage);
   }
 
   private setUpAccount(responseDto: SignInResponseDto) {
     const user: User = new User();
     user.userAccount = responseDto.userAccount;
     user.userName = responseDto.userName;
-    user.userLang = responseDto.userLang;
+    user.userLocale = responseDto.userLocale;
+    user.userLanguage = responseDto.userLanguage;
     user.userTimezone = responseDto.userTimezone;
+    user.userCurrency = responseDto.userCurrency;
 
     this.accountService.setUser(user);
   }

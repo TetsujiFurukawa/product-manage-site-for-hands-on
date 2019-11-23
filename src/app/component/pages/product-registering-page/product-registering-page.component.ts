@@ -43,12 +43,6 @@ export class ProductRegisteringPageComponent implements OnInit {
   // Called new or update?
   isNew = this.router.url === '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW;
 
-  messagePropertytitle = 'productRegisteringPage.title.new';
-  messagePropertySaveButton = 'productRegisteringPage.saveButton.new';
-
-  locale = 'ja-JP';
-  currency = 'JPY';
-
   // product seq
   productSeq = new FormControl('', []);
 
@@ -100,6 +94,14 @@ export class ProductRegisteringPageComponent implements OnInit {
   }, {
     validators: EndOfSaleEndOfSaleDateValidator.match
   });
+
+  /** other informations */
+  locale: string = this.accountService.getUser().userLocale;
+  currency: string = this.accountService.getUser().userCurrency;
+
+  /** caption of buttons */
+  messagePropertytitle = 'productRegisteringPage.title.new';
+  messagePropertySaveButton = 'productRegisteringPage.saveButton.new';
 
   genres: Genre[] = [
     { value: '靴・スニーカー', viewValue: '靴・スニーカー' },
@@ -164,14 +166,13 @@ export class ProductRegisteringPageComponent implements OnInit {
 
   onReceiveEventFromChild(eventData: string) {
     this.endOfSaleDate.setValue(eventData);
-
   }
 
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------
   private setupLangage() {
-    const lang = this.accountService.getUser().userLang;
+    const lang = this.accountService.getUser().userLanguage;
     this.translateService.setDefaultLang(lang);
     this.translateService.use(lang);
   }
@@ -234,7 +235,6 @@ export class ProductRegisteringPageComponent implements OnInit {
     this.endOfSaleDate.setValue(productDto.endOfSaleDate);
     this.productImage.setValue(productDto.productImage);
     this.updateDate.setValue(productDto.updateDate);
-
   }
 
   private clearControls() {
@@ -252,6 +252,5 @@ export class ProductRegisteringPageComponent implements OnInit {
     this.enterDate.setValue(null);
     this.updateUser.setValue('');
     this.updateDate.setValue(null);
-
   }
 }

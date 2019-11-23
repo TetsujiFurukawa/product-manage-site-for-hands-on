@@ -2,7 +2,9 @@ export class User {
 
     userAccount: string;
     userName: string;
-    userLang: string;
+    userLocale: string;
+    userLanguage: string;
     userTimezone: string;
+    userCurrency: string;
 
 }

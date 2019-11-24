@@ -8,6 +8,25 @@
       <div class="search-condition-wrapper">
         <div id="searchCondition1">
           <mat-form-field class="form-field">
+            <input id="product-purchase-name" matInput type="text" formControlName="productPurchaseName"
+              placeholder="{{ 'PurchaseHistoryListingPage.productPurchaseName' | translate }}" maxlength=50
+              matTooltip="{{ 'tooltip.searchCriteria.prefixMatching' | translate }}">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="search-condition-wrapper">
+        <div id="searchCondition2">
+          <app-mat-date-picker [locale]='locale'
+            placeholder="{{ 'PurchaseHistoryListingPage.productPurchaseDateFrom' | translate }}" required=true
+            (event)=" onReceiveEventFromChildFrom($event)"></app-mat-date-picker>
+          <app-mat-date-picker [locale]='locale'
+            placeholder="{{ 'PurchaseHistoryListingPage.productPurchaseDateTo' | translate }}" required=true
+            (event)=" onReceiveEventFromChildTo($event)"></app-mat-date-picker>
+        </div>
+      </div>
+      <div class="search-condition-wrapper">
+        <div id="searchCondition3">
+          <mat-form-field class="form-field">
             <input id="product-name" matInput type="text" formControlName="productName"
               placeholder="{{ 'PurchaseHistoryListingPage.productName' | translate }}" maxlength=50
               matTooltip="{{ 'tooltip.searchCriteria.prefixMatching' | translate }}">
@@ -15,31 +34,12 @@
         </div>
       </div>
       <div class="search-condition-wrapper">
-        <div id="searchCondition1">
+        <div id="searchCondition4">
           <mat-form-field class="form-field">
             <input id="product-code" matInput type="text" formControlName="productCode"
               placeholder="{{ 'PurchaseHistoryListingPage.productCode' | translate }}" maxlength=20
               matTooltip="{{ 'tooltip.searchCriteria.prefixMatching' | translate }}">
           </mat-form-field>
-        </div>
-      </div>
-      <div class="search-condition-wrapper">
-        <mat-form-field>
-          <mat-label>{{ 'PurchaseHistoryListingPage.productGenre' | translate }}</mat-label>
-          <mat-select formControlName="productGenre" matTooltip="{{ 'tooltip.searchCriteria.pullDown' | translate }}">
-            <mat-option></mat-option>
-            <mat-option *ngFor="let genre of genres" [value]="genre.value">
-              {{genre.viewValue}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="search-condition-wrapper">
-        <div id="searchCondition4">
-          <mat-checkbox id="end-of-sale" formControlName="endOfSale"
-            matTooltip="{{ 'PurchaseHistoryListingPage.tooltip.endOfSale' | translate }}">
-            {{ 'PurchaseHistoryListingPage.endOfSale' | translate }}
-          </mat-checkbox>
         </div>
       </div>
     </div>

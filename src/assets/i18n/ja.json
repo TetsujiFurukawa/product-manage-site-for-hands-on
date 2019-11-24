@@ -76,7 +76,10 @@
     "PurchaseHistoryListingPage": {
         "title": "購入履歴一覧",
         "no": "No.",
+        "productPurchaseName": "購入者",
         "productName": "商品名",
+        "productPurchaseDateFrom": "購入日From",
+        "productPurchaseDateTo": "購入日To",
         "productCode": "商品コード",
         "productImage": "イメージ",
         "productUnitPrice": "単価",

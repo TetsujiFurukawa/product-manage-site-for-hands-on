@@ -15,10 +15,6 @@ import { merge } from 'rxjs';
 import { ProductService } from 'src/app/service/common/product.service';
 import { HttpParams } from '@angular/common/http';
 
-export interface Genre {
-  value: string;
-  viewValue: string;
-}
 @Component({
   selector: 'app-purchase-history-listing-page',
   templateUrl: './purchase-history-listing-page.component.html',
@@ -38,47 +34,43 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
     public translateService: TranslateService,
   ) { }
 
+  // product purchase name
+  productPurchaseName = new FormControl('', []);
+
+  // product purchase date from
+  productPurchaseDateFrom = new FormControl('', []);
+
+  // product purchase date to
+  productPurchaseDateTo = new FormControl('', []);
+
   // product name
   productName = new FormControl('', []);
 
   // product code
   productCode = new FormControl('', []);
 
-  // product genre
-  productGenre = new FormControl('', []);
-
-  // End of sale
-  endOfSale = new FormControl(false, []);
-
   searchForm = this.formBuilder.group({
     productName: this.productName,
-    productCode: this.productCode,
-    productGenre: this.productGenre,
-    endOfSale: this.endOfSale
+    productPurchaseDateFrom: this.productPurchaseDateFrom,
+    productPurchaseDateTo: this.productPurchaseDateTo,
+    productCode: this.productCode
   });
 
   /** other informations */
   locale: string = this.accountService.getUser().userLocale;
   currency: string = this.accountService.getUser().userCurrency;
 
-  genres: Genre[] = [
-    { value: '1', viewValue: '靴・スニーカー' },
-    { value: '2', viewValue: 'トップス' },
-    { value: '3', viewValue: 'バッグ' }
-  ];
-
   // Material table's header
   displayColumns: string[] = [
     'No',
     'productName',
     'productCode',
-    'productGenre',
+    'productPurchaseName',
     'productImage',
-    'productSizeStandard',
-    'productColor',
-    'productUnitPrice',
-    'productStockQuantity',
-    'endOfSale'
+    'productPurchaseDate',
+    'productPurchaseUnitPrice',
+    'productPurchaseQuantity',
+    'productPurchaseAmount'
   ];
 
   // Search result
@@ -90,12 +82,6 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
 
   ngOnInit() {
     this.setupLanguage();
-    this.initSearchCriteria();
-  }
-
-  onNew() {
-    this.searchParamsService.removeProductListingSearchParam();
-    this.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING + '/new']);
   }
 
   onClear() {
@@ -110,10 +96,10 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
         startWith({}),
         switchMap(() => {
           this.loadingService.startLoading();
-          const productListingSearchParams: ProductListingSearchParams = this.createSearchParams();
-          this.searchParamsService.setProductListingSearchParam(productListingSearchParams);
+          const purchaseHistoryListingSearchParams: ProductListingSearchParams = this.createSearchParams();
+          this.searchParamsService.setProductListingSearchParam(purchaseHistoryListingSearchParams);
 
-          return this.productService.getProductList(this.createHttpParams(productListingSearchParams));
+          return this.productService.getProductList(this.createHttpParams(purchaseHistoryListingSearchParams));
         }),
         map(data => {
           this.loadingService.stopLoading();
@@ -128,6 +114,12 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
     this.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING, productResponseDto.productCode]);
   }
 
+  onReceiveEventFromChildFrom(eventData: string) {
+    this.productPurchaseDateFrom.setValue(eventData);
+  }
+  onReceiveEventFromChildTo(eventData: string) {
+    this.productPurchaseDateTo.setValue(eventData);
+  }
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------
@@ -137,36 +129,10 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
     this.translateService.use(lang);
   }
 
-  private initSearchCriteria() {
-    let productListingSearchParams: ProductListingSearchParams = new ProductListingSearchParams();
-    productListingSearchParams = this.searchParamsService.getProductListingSearchParam(productListingSearchParams);
-    if (productListingSearchParams !== null) {
-      if (productListingSearchParams.productName !== undefined) {
-        this.productName.setValue(productListingSearchParams.productName);
-      }
-      if (productListingSearchParams.productCode !== undefined) {
-        this.productCode.setValue(productListingSearchParams.productCode);
-      }
-      if (productListingSearchParams.productGenre !== undefined) {
-        this.productGenre.setValue(productListingSearchParams.productGenre);
-      }
-      // Observes pagenator change events.
-      this.paginator.pageIndex = productListingSearchParams.pageIndex;
-      this.paginator.pageSize = productListingSearchParams.pageSize;
-      setTimeout(() => {
-        this.paginator._changePageSize(productListingSearchParams.pageSize);
-      }, 0);
-      this.endOfSale.setValue(productListingSearchParams.endOfSale);
-      this.onSearch();
-    }
-  }
-
   private createSearchParams(): ProductListingSearchParams {
     const productListingSearchParams: ProductListingSearchParams = new ProductListingSearchParams();
     productListingSearchParams.productName = this.productName.value;
     productListingSearchParams.productCode = this.productCode.value;
-    productListingSearchParams.productGenre = this.productGenre.value;
-    productListingSearchParams.endOfSale = this.endOfSale.value;
     productListingSearchParams.pageSize = this.paginator.pageSize;
     productListingSearchParams.pageIndex = this.paginator.pageIndex;
 
@@ -190,13 +156,12 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
   private clearSearchCondition() {
     this.productName.setValue('');
     this.productCode.setValue('');
-    this.productGenre.setValue('');
-    this.endOfSale.setValue(false);
   }
 
   private clearSearchResultList() {
     this.productResponseDtos = null;
     this.resultsLength = 0;
   }
+
 
 }

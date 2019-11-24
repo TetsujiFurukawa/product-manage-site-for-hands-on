@@ -1,7 +1,8 @@
+import { MenuListResponseDto } from 'src/app/entity/dto/response/menu-list-response-dto';
+import { AccountService } from 'src/app/service/common/account.service';
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HeaderPageService } from 'src/app/service/pages/header-page.service';
-import { MenuListResponseDto } from 'src/app/entity/dto/response/menu-list-response-dto';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,8 @@ export class HeaderComponent implements OnInit {
   menuListResponseDto: MenuListResponseDto[];
 
   constructor(
-    private headerPageService: HeaderPageService,
+    private accountService: AccountService,
+    // Usese router not ts but html.
     public router: Router
   ) { }
 
@@ -31,7 +33,7 @@ export class HeaderComponent implements OnInit {
    * Gets menu data in header.
    */
   private getMenu() {
-    this.headerPageService.getMenu()
+    this.accountService.getMenu()
       .subscribe(menuListResponseDto => {
         this.menuListResponseDto = menuListResponseDto;
       });

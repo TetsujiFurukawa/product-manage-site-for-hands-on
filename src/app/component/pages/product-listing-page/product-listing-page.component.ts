@@ -1,18 +1,20 @@
+import { merge } from 'rxjs';
+import { map, startWith, switchMap } from 'rxjs/operators';
+import { UrlConst } from 'src/app/const/url-const';
+import { ProductResponseDto } from 'src/app/entity/dto/response/product-response-dto';
+import { ProductListingSearchParams } from 'src/app/entity/product-listing-search-params';
+import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
+import { AccountService } from 'src/app/service/common/account.service';
+import { LoadingService } from 'src/app/service/common/loading.service';
+import { ProductService } from 'src/app/service/common/product.service';
+import { SearchParamsService } from 'src/app/service/common/search-params.service';
+
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { AccountService } from 'src/app/service/common/account.service';
 import { MatPaginator } from '@angular/material/paginator';
-import { ProductResponseDto } from 'src/app/entity/dto/response/product-response-dto';
-import { LoadingService } from 'src/app/service/common/loading.service';
-import { startWith, switchMap, map } from 'rxjs/operators';
-import { merge } from 'rxjs';
-import { ProductListingPageService } from 'src/app/service/pages/product-listing-page.service';
-import { TranslateService } from '@ngx-translate/core';
-import { SearchParamsService } from 'src/app/service/common/search-params.service';
-import { ProductListingSearchParams } from 'src/app/entity/product-listing-search-params';
 import { Router } from '@angular/router';
-import { UrlConst } from 'src/app/const/url-const';
-import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface Genre {
   value: string;
@@ -28,7 +30,7 @@ export class ProductListingPageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
-    private productListingPageService: ProductListingPageService,
+    private productService: ProductService,
     private accountService: AccountService,
     private searchParamsService: SearchParamsService,
     private router: Router,
@@ -111,7 +113,7 @@ export class ProductListingPageComponent implements OnInit {
           const productListingSearchParams: ProductListingSearchParams = this.createSearchParams();
           this.searchParamsService.setProductListingSearchParam(productListingSearchParams);
 
-          return this.productListingPageService.getProductList(productListingSearchParams);
+          return this.productService.getProductList(this.createHttpParams(productListingSearchParams));
         }),
         map(data => {
           this.loadingService.stopLoading();
@@ -169,6 +171,20 @@ export class ProductListingPageComponent implements OnInit {
     productListingSearchParams.pageIndex = this.paginator.pageIndex;
 
     return productListingSearchParams;
+  }
+
+  private createHttpParams(productListingSearchParams: ProductListingSearchParams) {
+    const conditions = {
+      productName: productListingSearchParams.productName,
+      productCode: productListingSearchParams.productCode,
+      productGenre: productListingSearchParams.productGenre,
+      endOfSale: productListingSearchParams.endOfSale,
+      pageSize: productListingSearchParams.pageSize,
+      pageIndex: productListingSearchParams.pageIndex
+    };
+    const paramsOptions = { fromObject: conditions } as any;
+    const params = new HttpParams(paramsOptions);
+    return params;
   }
 
   private clearSearchCondition() {

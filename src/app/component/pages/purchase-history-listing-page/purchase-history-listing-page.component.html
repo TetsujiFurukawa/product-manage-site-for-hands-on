@@ -1,1 +1,120 @@
-<p>purchase-history-listing-page works!</p>
+<section class="Listing-page">
+  <div class="listing-title">
+    <h1>{{ 'PurchaseHistoryListingPage.title' | translate }}</h1>
+  </div>
+  <app-error-messaging></app-error-messaging>
+  <form class="search-form" [formGroup]="searchForm">
+    <div class="search-criteria">
+      <div class="search-condition-wrapper">
+        <div id="searchCondition1">
+          <mat-form-field class="form-field">
+            <input id="product-name" matInput type="text" formControlName="productName"
+              placeholder="{{ 'PurchaseHistoryListingPage.productName' | translate }}" maxlength=50
+              matTooltip="{{ 'tooltip.searchCriteria.prefixMatching' | translate }}">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="search-condition-wrapper">
+        <div id="searchCondition1">
+          <mat-form-field class="form-field">
+            <input id="product-code" matInput type="text" formControlName="productCode"
+              placeholder="{{ 'PurchaseHistoryListingPage.productCode' | translate }}" maxlength=20
+              matTooltip="{{ 'tooltip.searchCriteria.prefixMatching' | translate }}">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="search-condition-wrapper">
+        <mat-form-field>
+          <mat-label>{{ 'PurchaseHistoryListingPage.productGenre' | translate }}</mat-label>
+          <mat-select formControlName="productGenre" matTooltip="{{ 'tooltip.searchCriteria.pullDown' | translate }}">
+            <mat-option></mat-option>
+            <mat-option *ngFor="let genre of genres" [value]="genre.value">
+              {{genre.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="search-condition-wrapper">
+        <div id="searchCondition4">
+          <mat-checkbox id="end-of-sale" formControlName="endOfSale"
+            matTooltip="{{ 'PurchaseHistoryListingPage.tooltip.endOfSale' | translate }}">
+            {{ 'PurchaseHistoryListingPage.endOfSale' | translate }}
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="search-functions">
+    <div class="search-functions-paginator">
+      <mat-paginator [length]="resultsLength" [pageSize]="50" [pageSizeOptions]="[10, 50, 100]"></mat-paginator>
+    </div>
+    <div class="search-functions-buttons">
+      <button mat-raised-button id="clearBtn" class="mat-raised-button" type="button" (click)="onClear()"
+        matTooltip="{{ 'tooltip.searchBtn.clearBtn' | translate }}">{{ 'PurchaseHistoryListingPage.clearButton' | translate }}</button>
+
+      <button mat-raised-button id="searchBtn" class="mat-raised-button active" type="button" (click)="onSearch()"
+        matTooltip="{{ 'tooltip.searchBtn.searchBtn' | translate }}">{{ 'PurchaseHistoryListingPage.searchButton' | translate }}</button>
+    </div>
+  </div>
+  <div class="search-results">
+    <table class="results" mat-table *ngIf="resultsLength>0" [dataSource]="productResponseDtos">
+      <ng-container matColumnDef="No">
+        <th class="width-no" mat-header-cell *matHeaderCellDef>
+          {{ "PurchaseHistoryListingPage.no" | translate }}
+        </th>
+        <td class="width-no" mat-cell *matCellDef="let element"> {{element.no}} </td>
+      </ng-container>
+      <ng-container matColumnDef="productName">
+        <th class="width-product-name" mat-header-cell *matHeaderCellDef>
+          {{ "PurchaseHistoryListingPage.productName" | translate }}
+        </th>
+        <td class="width-product-name" mat-cell *matCellDef="let element"> {{element.productName}} </td>
+      </ng-container>
+      <ng-container matColumnDef="productCode">
+        <th class="width-product-code" mat-header-cell *matHeaderCellDef>
+          {{ "PurchaseHistoryListingPage.productCode" | translate }}</th>
+        <td class="width-product-code" mat-cell *matCellDef="let element"> {{element.productCode}} </td>
+      </ng-container>
+      <ng-container matColumnDef="productGenre">
+        <th class="width-product-genre" mat-header-cell *matHeaderCellDef>
+          {{ "PurchaseHistoryListingPage.productGenre" | translate }}</th>
+        <td class="width-product-genre" mat-cell *matCellDef="let element"> {{element.productGenre}} </td>
+      </ng-container>
+      <ng-container matColumnDef="productImage">
+        <th class="width-product-image" mat-header-cell *matHeaderCellDef>
+          {{ "PurchaseHistoryListingPage.productImage" | translate }}</th>
+        <td class="width-product-image" mat-cell *matCellDef="let element"><img src={{element.productImageUrl}} /></td>
+      </ng-container>
+      <ng-container matColumnDef="productSizeStandard">
+        <th class="width-product-size" mat-header-cell *matHeaderCellDef>
+          {{ "PurchaseHistoryListingPage.productSizeStandard" | translate }}</th>
+        <td class="width-product-size" mat-cell *matCellDef="let element"> {{element.productSizeStandard}} </td>
+      </ng-container>
+      <ng-container matColumnDef="productColor">
+        <th class="width-product-color" mat-header-cell *matHeaderCellDef>
+          {{ "PurchaseHistoryListingPage.productColor" | translate }}</th>
+        <td class="width-product-color" mat-cell *matCellDef="let element"> {{element.productColor}} </td>
+      </ng-container>
+      <ng-container matColumnDef="productUnitPrice">
+        <th class="width-product-unit-price" mat-header-cell *matHeaderCellDef>
+          {{ "PurchaseHistoryListingPage.productUnitPrice" | translate }}</th>
+        <td class="width-product-unit-price" mat-cell *matCellDef="let element">
+          {{element.productUnitPrice | currencyToNumber:locale:currency }}</td>
+      </ng-container>
+      <ng-container matColumnDef="productStockQuantity">
+        <th class="width-product-stock" mat-header-cell *matHeaderCellDef>
+          {{ "PurchaseHistoryListingPage.productStockQuantity" | translate }}</th>
+        <td class="width-product-stock" mat-cell *matCellDef="let element">
+          {{element.productStockQuantity | currencyToNumber:locale:currency }} </td>
+      </ng-container>
+      <ng-container matColumnDef="endOfSale">
+        <th class="width-endOfSale" mat-header-cell *matHeaderCellDef>
+          {{ "PurchaseHistoryListingPage.endOfSale" | translate }}</th>
+        <td class="width-endOfSale" mat-cell *matCellDef="let element">
+          {{ "PurchaseHistoryListingPage.endOfSaleValue." + element.endOfSale | translate}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayColumns;" (click)="onRowClicked(row)"></tr>
+    </table>
+  </div>
+</section>

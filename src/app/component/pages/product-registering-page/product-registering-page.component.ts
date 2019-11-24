@@ -1,19 +1,23 @@
-import { Component, OnInit, Inject, LOCALE_ID } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { LoadingService } from 'src/app/service/common/loading.service';
-import { AccountService } from 'src/app/service/common/account.service';
-import { TranslateService } from '@ngx-translate/core';
+import { AppConst } from 'src/app/const/app-const';
 import { RegexConst } from 'src/app/const/regex-const';
-import { ProductRegisteringPageService } from 'src/app/service/pages/product-registering-page.service';
-import { Router, ActivatedRoute } from '@angular/router';
 import { UrlConst } from 'src/app/const/url-const';
 import { ProductDto } from 'src/app/entity/dto/product-dto';
 import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
-import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-import { AppConst } from 'src/app/const/app-const';
-import { EndOfSaleEndOfSaleDateValidator } from 'src/app/validator/end-of-sale-end-of-sale-date-validator';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
+import { AccountService } from 'src/app/service/common/account.service';
+import { LoadingService } from 'src/app/service/common/loading.service';
+import { ProductService } from 'src/app/service/common/product.service';
+import {
+  EndOfSaleEndOfSaleDateValidator
+} from 'src/app/validator/end-of-sale-end-of-sale-date-validator';
+
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+
+import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
 
 export interface Genre {
   value: string;
@@ -31,7 +35,7 @@ export class ProductRegisteringPageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
-    private productRegisteringPageService: ProductRegisteringPageService,
+    private productService: ProductService,
     private accountService: AccountService,
     private router: Router,
     private route: ActivatedRoute,
@@ -180,7 +184,7 @@ export class ProductRegisteringPageComponent implements OnInit {
   private loadData() {
     const productCode = this.route.snapshot.paramMap.get('productCode');
     this.loadingService.startLoading();
-    this.productRegisteringPageService.getProduct(productCode)
+    this.productService.getProduct(productCode)
       .subscribe(data => {
         this.extract(data);
         this.loadingService.stopLoading();
@@ -189,11 +193,21 @@ export class ProductRegisteringPageComponent implements OnInit {
 
   private save(productDto: ProductDto) {
     this.loadingService.startLoading();
-    this.productRegisteringPageService.saveProduct(productDto)
-      .subscribe(data => {
-        this.extract(data);
-        this.loadingService.stopLoading();
-      });
+
+    if (productDto.productSeq === undefined || productDto.productSeq === null) {
+      // Creates product.
+      this.productService.createProduct(productDto)
+        .subscribe(data => {
+          this.extract(data);
+          this.loadingService.stopLoading();
+        });
+    } else {
+      this.productService.updateProduct(productDto)
+        .subscribe(data => {
+          this.extract(data);
+          this.loadingService.stopLoading();
+        });
+    }
   }
 
   private setupButtonTextToEdit() {
@@ -235,22 +249,5 @@ export class ProductRegisteringPageComponent implements OnInit {
     this.endOfSaleDate.setValue(productDto.endOfSaleDate);
     this.productImage.setValue(productDto.productImage);
     this.updateDate.setValue(productDto.updateDate);
-  }
-
-  private clearControls() {
-    this.productSeq.setValue(null);
-    this.productCode.setValue('');
-    this.productName.setValue('');
-    this.productGenre.setValue('');
-    this.productSizeStandard.setValue('');
-    this.productColor.setValue('');
-    this.productUnitPrice.setValue('');
-    this.endOfSale.setValue(false);
-    this.endOfSaleDate.setValue(new Date());
-    this.productImage.setValue(null);
-    this.enterUser.setValue('');
-    this.enterDate.setValue(null);
-    this.updateUser.setValue('');
-    this.updateDate.setValue(null);
   }
 }

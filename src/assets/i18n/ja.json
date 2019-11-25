@@ -5,7 +5,7 @@
         "stock": "在庫"
     },
     "subMenu": {
-        "purchase-history-Listing": "購入履歴",
+        "purchase-history-listing": "購入履歴",
         "dummy-purchasing": "購入登録(ダミー)",
         "product-listing": "商品一覧",
         "stock-registering": "在庫登録"

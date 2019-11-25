@@ -16,7 +16,7 @@ export class ProductResponseDto {
 
   productUnitPrice: number;
 
-  productStockQuantity: bigint;
+  productStockQuantity: number;
 
   endOfSale: boolean;
 

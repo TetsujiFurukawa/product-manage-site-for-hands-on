@@ -14,6 +14,9 @@ import { startWith, switchMap, map } from 'rxjs/operators';
 import { merge } from 'rxjs';
 import { ProductService } from 'src/app/service/common/product.service';
 import { HttpParams } from '@angular/common/http';
+import { PurchaseService } from 'src/app/service/common/purchase-service';
+import { PurchaseHistoryResponseDto } from 'src/app/entity/dto/response/purchase-history-response-dto';
+import { PurchaseHistoryListingSearchParams } from 'src/app/entity/purchase-history-listing-search-params';
 
 @Component({
   selector: 'app-purchase-history-listing-page',
@@ -26,7 +29,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
-    private productService: ProductService,
+    private purchaseService: PurchaseService,
     private accountService: AccountService,
     private searchParamsService: SearchParamsService,
     private router: Router,
@@ -50,12 +53,14 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
   productCode = new FormControl('', []);
 
   searchForm = this.formBuilder.group({
+    productPurchaseName: this.productPurchaseName,
     productName: this.productName,
     productPurchaseDateFrom: this.productPurchaseDateFrom,
     productPurchaseDateTo: this.productPurchaseDateTo,
     productCode: this.productCode
   });
 
+  test: Date = new Date();
   /** other informations */
   locale: string = this.accountService.getUser().userLocale;
   currency: string = this.accountService.getUser().userCurrency;
@@ -74,7 +79,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
   ];
 
   // Search result
-  productResponseDtos: ProductResponseDto[];
+  purchaseHistoryResponseDto: PurchaseHistoryResponseDto[];
   resultsLength = 0;
 
   // Loading and pagenation
@@ -96,18 +101,18 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
         startWith({}),
         switchMap(() => {
           this.loadingService.startLoading();
-          const purchaseHistoryListingSearchParams: ProductListingSearchParams = this.createSearchParams();
-          this.searchParamsService.setProductListingSearchParam(purchaseHistoryListingSearchParams);
+          const purchaseHistoryListingSearchParams: PurchaseHistoryListingSearchParams = this.createSearchParams();
+          this.searchParamsService.setPurchaseHistoryListingSearchParam(purchaseHistoryListingSearchParams);
 
-          return this.productService.getProductList(this.createHttpParams(purchaseHistoryListingSearchParams));
+          return this.purchaseService.getPurchaseHistoryList(this.createHttpParams(purchaseHistoryListingSearchParams));
         }),
         map(data => {
           this.loadingService.stopLoading();
           this.resultsLength = data.resultsLength;
           this.paginator.pageIndex = data.pageIndex;
-          return data.productResponseDtos;
+          return data.purchaseHistoryResponseDtos;
         })
-      ).subscribe(data => this.productResponseDtos = data);
+      ).subscribe(data => this.purchaseHistoryResponseDto = data);
   }
 
   onRowClicked(productResponseDto: ProductResponseDto) {
@@ -129,24 +134,30 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
     this.translateService.use(lang);
   }
 
-  private createSearchParams(): ProductListingSearchParams {
-    const productListingSearchParams: ProductListingSearchParams = new ProductListingSearchParams();
-    productListingSearchParams.productName = this.productName.value;
-    productListingSearchParams.productCode = this.productCode.value;
-    productListingSearchParams.pageSize = this.paginator.pageSize;
-    productListingSearchParams.pageIndex = this.paginator.pageIndex;
+  private createSearchParams(): PurchaseHistoryListingSearchParams {
+    const purchaseHistoryListingSearchParams: PurchaseHistoryListingSearchParams = new PurchaseHistoryListingSearchParams();
+    purchaseHistoryListingSearchParams.productPurchaseName = this.productPurchaseName.value;
+    purchaseHistoryListingSearchParams.productPurchaseDateFrom = this.productPurchaseDateFrom.value;
+    purchaseHistoryListingSearchParams.productPurchaseDateTo = this.productPurchaseDateTo.value;
+    purchaseHistoryListingSearchParams.productName = this.productName.value;
+    purchaseHistoryListingSearchParams.productCode = this.productCode.value;
+    purchaseHistoryListingSearchParams.pageSize = this.paginator.pageSize;
+    purchaseHistoryListingSearchParams.pageIndex = this.paginator.pageIndex;
 
-    return productListingSearchParams;
+    return purchaseHistoryListingSearchParams;
   }
 
-  private createHttpParams(productListingSearchParams: ProductListingSearchParams) {
+  private createHttpParams(purchaseHistoryListingSearchParams: PurchaseHistoryListingSearchParams) {
     const conditions = {
-      productName: productListingSearchParams.productName,
-      productCode: productListingSearchParams.productCode,
-      productGenre: productListingSearchParams.productGenre,
-      endOfSale: productListingSearchParams.endOfSale,
-      pageSize: productListingSearchParams.pageSize,
-      pageIndex: productListingSearchParams.pageIndex
+      productPurchaseName: purchaseHistoryListingSearchParams.productPurchaseName,
+      // productPurchaseDateFrom: purchaseHistoryListingSearchParams.productPurchaseDateFrom.toString(),
+      // productPurchaseDateTo: purchaseHistoryListingSearchParams.productPurchaseDateTo.toString(),
+      productPurchaseDateFrom: this.test.toDateString(),
+      // productPurchaseDateTo: '2019/10/01',
+      productName: purchaseHistoryListingSearchParams.productName,
+      productCode: purchaseHistoryListingSearchParams.productCode,
+      pageSize: purchaseHistoryListingSearchParams.pageSize,
+      pageIndex: purchaseHistoryListingSearchParams.pageIndex
     };
     const paramsOptions = { fromObject: conditions } as any;
     const params = new HttpParams(paramsOptions);
@@ -159,7 +170,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
   }
 
   private clearSearchResultList() {
-    this.productResponseDtos = null;
+    this.purchaseHistoryResponseDto = null;
     this.resultsLength = 0;
   }
 

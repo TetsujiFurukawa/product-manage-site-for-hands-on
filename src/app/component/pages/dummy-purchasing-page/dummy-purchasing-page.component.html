@@ -1,1 +1,94 @@
-<p>dummy-purchasing-page works!</p>
+<section class="registering-page">
+  <div class="registering-title">
+    <div class="registering-title-wrapper">
+      <h1>{{ 'dummyPurchasingPage.title' | translate }}</h1>
+    </div>
+  </div>
+  <div class="registering-conditions">
+    <app-error-messaging></app-error-messaging>
+    <app-success-messaging></app-success-messaging>
+    <div class="registering-conditions-wrapper">
+      <form class="registering-form" [formGroup]="registeringForm">
+        <div class="registering-area-wrapper left">
+          <div class="registering-condition-wrapper">
+            <mat-form-field class="form-field">
+              <input id="product-code" matInput type="text" formControlName="productCode"
+                placeholder="{{ 'dummyPurchasingPage.productCode' | translate }}"
+                matTooltip="{{ 'tooltip.registerValue.input.AlphaNumeric' | translate }}" maxlength=20>
+              <mat-error *ngIf="productCode.hasError('required')">
+                {{'validationError.required'|translate}}
+              </mat-error>
+              <mat-error *ngIf="productCode.hasError('pattern')">
+                {{'validationError.pattern.singleByteAlphanumeric'|translate}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="registering-condition-wrapper margin-left-25px">
+            <mat-form-field class="form-field width-45rem">
+              <input id="product-name" matInput type="text" formControlName="productName"
+                placeholder="{{ 'dummyPurchasingPage.productName' | translate }}" [readonly]=true>
+            </mat-form-field>
+          </div>
+          <div class="registering-condition-wrapper margin-left-25px">
+            <mat-form-field>
+              <mat-label>{{ 'dummyPurchasingPage.productGenre' | translate }}</mat-label>
+              <mat-select formControlName="productGenre">
+                <mat-option *ngFor="let genre of genres" [value]="genre.value">
+                  {{genre.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="registering-condition-wrapper margin-left-25px">
+            <mat-form-field class="form-field width-45rem">
+              <input id="product-size-standard" matInput type="text" formControlName="productSizeStandard"
+                placeholder="{{ 'dummyPurchasingPage.productSizeStandard' | translate }}" [readonly]=true>
+            </mat-form-field>
+          </div>
+          <div class="registering-condition-wrapper margin-left-25px">
+            <mat-form-field class="form-field">
+              <input id="product-color" matInput type="text" formControlName="productColor"
+                placeholder="{{ 'dummyPurchasingPage.productColor' | translate }}" [readonly]=true>
+            </mat-form-field>
+          </div>
+          <div class="registering-condition-wrapper margin-left-25px">
+            <mat-form-field class="form-field">
+              <input id="product-unit-price" matInput type="text" appNumberInput
+                formControlName="productPurchaseUnitPrice"
+                placeholder="{{ 'dummyPurchasingPage.productPurchaseUnitPrice' | translate }}" [attr.locale]='locale'
+                [attr.currency]="currency" [readonly]=true>
+            </mat-form-field>
+          </div>
+          <div class="registering-condition-wrapper">
+            <mat-form-field class="form-field">
+              <input id="product-purchase-quantity" matInput type="text" appNumberInput
+                formControlName="productPurchaseQuantity"
+                placeholder="{{ 'dummyPurchasingPage.productPurchaseQuantity' | translate }}" [attr.locale]='locale'
+                [attr.currency]="currency" maxlength=11>
+            </mat-form-field>
+          </div>
+          <div class="registering-condition-wrapper margin-left-25px">
+            <mat-form-field class="form-field">
+              <input id="product-purchase-amount" matInput type="text" appNumberInput
+                formControlName="productPurchaseAmount"
+                placeholder="{{ 'dummyPurchasingPage.productPurchaseAmount' | translate }}" [attr.locale]='locale'
+                [attr.currency]="currency" [readonly]=true>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="registering-area-wrapper right">
+          <p>{{ 'dummyPurchasingPage.productImage' | translate }}</p>
+          <img src="../../../../assets/images/no_image.png" class="image-preview" *ngIf="!productImage.value" />
+          <img [src]="productImage.value" class="image-preview" *ngIf="productImage.value" />
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="registering-functions">
+    <div class="registering-functions-wrapper">
+      <button mat-raised-button id="saveBtn" class="mat-raised-button active" type="button" (click)="onSave()"
+        [disabled]="!registeringForm.valid"
+        matTooltip="{{ 'dummyPurchasingPage.tooltip.saveButton' | translate }}">{{ messagePropertySaveButton | translate }}</button>
+    </div>
+  </div>
+</section>

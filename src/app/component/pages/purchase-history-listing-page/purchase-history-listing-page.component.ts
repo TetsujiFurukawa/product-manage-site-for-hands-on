@@ -116,9 +116,9 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
       ).subscribe(data => this.purchaseHistorySearchResponseDtos = data);
   }
 
-  onRowClicked(productResponseDto: ProductSearchResponseDto) {
-    this.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING, productResponseDto.productCode]);
-  }
+  // onRowClicked(productResponseDto: ProductSearchResponseDto) {
+  //   this.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING, productResponseDto.productCode]);
+  // }
 
   onReceiveEventFromChildFrom(eventData: string) {
     this.productPurchaseDateFrom.setValue(eventData);

@@ -111,7 +111,7 @@
           {{element.productPurchaseAmount | currencyToNumber:locale:currency }} </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayColumns;" (click)="onRowClicked(row)"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
     </table>
   </div>
 </section>

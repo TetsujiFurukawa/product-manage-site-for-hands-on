@@ -13,7 +13,9 @@
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
               <input id="product-code" matInput type="text" formControlName="productCode"
-                placeholder="{{ 'productRegisteringPage.productCode' | translate }}" maxlength=20 [readonly]="!isNew">
+                placeholder="{{ 'productRegisteringPage.productCode' | translate }}"
+                matTooltip="{{ 'tooltip.registerValue.input.AlphaNumeric' | translate }}" maxlength=20
+                [readonly]="!isNew">
               <mat-error *ngIf="productCode.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
@@ -25,7 +27,8 @@
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field width-45rem">
               <input id="product-name" matInput type="text" formControlName="productName"
-                placeholder="{{ 'productRegisteringPage.productName' | translate }}" maxlength=50>
+                placeholder="{{ 'productRegisteringPage.productName' | translate }}"
+                matTooltip="{{ 'tooltip.registerValue.all' | translate }}" maxlength=50>
               <mat-error *ngIf="productName.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
@@ -34,7 +37,8 @@
           <div class="registering-condition-wrapper">
             <mat-form-field>
               <mat-label>{{ 'productRegisteringPage.productGenre' | translate }}</mat-label>
-              <mat-select formControlName="productGenre">
+              <mat-select formControlName="productGenre"
+                matTooltip="{{ 'tooltip.registerValue.pulldown' | translate }}">
                 <mat-option *ngFor="let genre of genres" [value]="genre.value">
                   {{genre.viewValue}}
                 </mat-option>
@@ -47,7 +51,8 @@
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field width-45rem">
               <input id="product-size-standard" matInput type="text" formControlName="productSizeStandard"
-                placeholder="{{ 'productRegisteringPage.productSizeStandard' | translate }}" maxlength=50>
+                placeholder="{{ 'productRegisteringPage.productSizeStandard' | translate }}"
+                matTooltip="{{ 'tooltip.registerValue.input.all' | translate }}" maxlength=50>
               <mat-error *ngIf="productSizeStandard.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
@@ -56,7 +61,8 @@
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
               <input id="product-color" matInput type="text" formControlName="productColor"
-                placeholder="{{ 'productRegisteringPage.productColor' | translate }}" maxlength=20>
+                placeholder="{{ 'productRegisteringPage.productColor' | translate }}"
+                matTooltip="{{ 'tooltip.registerValue.input.all' | translate }}" maxlength=20>
               <mat-error *ngIf="productColor.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
@@ -65,8 +71,9 @@
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
               <input id="product-unit-price" matInput type="text" appNumberInput formControlName="productUnitPrice"
-                placeholder="{{ 'productRegisteringPage.productUnitPrice' | translate }}" maxlength=11
-                [attr.locale]='locale' [attr.currency]="currency">
+                placeholder="{{ 'productRegisteringPage.productUnitPrice' | translate }}"
+                matTooltip="{{ 'tooltip.registerValue.input.numeric' | translate }}" maxlength=11 [attr.locale]='locale'
+                [attr.currency]="currency">
               <mat-error *ngIf="productUnitPrice.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
@@ -79,14 +86,16 @@
             </mat-form-field>
           </div>
           <div class="registering-condition-wrapper">
-            <mat-checkbox id="end-of-sale" formControlName="endOfSale">
+            <mat-checkbox id="end-of-sale" formControlName="endOfSale"
+              matTooltip="{{ 'productRegisteringPage.tooltip.endOfSale' | translate }}">
               {{ 'productRegisteringPage.endOfSale' | translate }}
             </mat-checkbox>
           </div>
           <div class="registering-condition-wrapper">
             <app-mat-date-picker *ngIf="endOfSale.value" [locale]='locale'
-              placeholder="{{ 'productRegisteringPage.endOfSaleDate' | translate }}" [isBlank]=false [required]=true
-              (event)=" onReceiveEventFromChild($event)"></app-mat-date-picker>
+              placeholder="{{ 'productRegisteringPage.endOfSaleDate' | translate }}"
+              matTooltip="{{ 'productRegisteringPage.tooltip.endOfSaleDate' | translate }}" [isBlank]=false
+              [required]=true (event)=" onReceiveEventFromChild($event)"></app-mat-date-picker>
           </div>
         </div>
         <div class="registering-area-wrapper right">

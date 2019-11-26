@@ -61,6 +61,8 @@
         "imageUploadButton": "画像のアップロード",
         "imageClearButton": "画像のクリア",
         "tooltip": {
+            "endOfSale": "販売を終了したい場合にチェックをONにします。",
+            "endOfSaleDate": "販売の終了をチェックした日を入力します。",
             "returnButton": "商品一覧画面に戻ります。",
             "saveButton": "入力した内容を保存します。",
             "imageUploadButton": "アップロードする画像を選択します。",
@@ -83,9 +85,9 @@
         "productCode": "商品コード",
         "productImage": "イメージ",
         "productPurchaseDate": "注文日",
-        "productPurchaseUnitPrice": "単価",
-        "productPurchaseQuantity": "数量",
-        "productPurchaseAmount": "金額",
+        "productPurchaseUnitPrice": "購入単価",
+        "productPurchaseQuantity": "購入数量",
+        "productPurchaseAmount": "購入金額",
         "clearButton": "クリア",
         "searchButton": "検索"
     },
@@ -94,6 +96,33 @@
             "shoes": "スニーカー・靴",
             "tops": "トップス",
             "bags": "バッグ"
+        }
+    },
+    "dummyPurchasingPage": {
+        "title": "購入ダミー",
+        "productCode": "* 商品コード",
+        "productName": "商品名",
+        "productGenre": "ジャンル",
+        "productImage": "商品イメージ",
+        "productSizeStandard": "サイズ・規格",
+        "productColor": "色",
+        "productPurchaseUnitPrice": "購入単価",
+        "productPurchaseQuantity": "* 購入数量",
+        "productPurchaseAmount": "購入金額",
+        "saveButton": "登録",
+        "imageUploadButton": "画像のアップロード",
+        "imageClearButton": "画像のクリア",
+        "tooltip": {
+            "returnButton": "商品一覧画面に戻ります。",
+            "saveButton": "入力した内容を保存します。",
+            "imageUploadButton": "アップロードする画像を選択します。",
+            "imageClearButton": "アップロード画像をクリアします。"
+        },
+        "saveYesNoDialog": {
+            "title": "保存の確認",
+            "message": "入力した内容を保存しますか？",
+            "captionYes": "はい",
+            "captionNo": "いいえ"
         }
     },
     "Items per page:": "件数：",
@@ -111,6 +140,14 @@
         "searchCriteria": {
             "prefixMatching": "前方一致の文字検索です。",
             "pullDown": "プルダウンの検索です。"
+        },
+        "registerValue": {
+            "input": {
+                "AlphaNumeric": "半角の英数字を入力します。",
+                "numeric": "数値を入力します。",
+                "all": "全角・半角英数記号を入力します。"
+            },
+            "pulldown": "選択肢の中から1つを選びます。"
         },
         "searchBtn": {
             "clearBtn": "検索画面をクリアします。",

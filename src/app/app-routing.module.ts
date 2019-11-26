@@ -15,6 +15,7 @@ import {
   StockRegisteringPageComponent
 } from './component/pages/stock-registering-page/stock-registering-page.component';
 import { UrlConst } from './const/url-const';
+import { DummyPurchasingPageComponent } from './component/pages/dummy-purchasing-page/dummy-purchasing-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/' + UrlConst.PATH_SIGN_IN, pathMatch: 'full' },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: UrlConst.PATH_PRODUCT_REGISTERING + '/new', component: ProductRegisteringPageComponent },
   { path: UrlConst.PATH_PRODUCT_REGISTERING + '/:productCode', component: ProductRegisteringPageComponent },
   { path: UrlConst.PATH_PURCHASE_HISTORY_LISTING, component: PurchaseHistoryListingPageComponent },
+  { path: UrlConst.PATH_DUMMY_PURCHASING, component: DummyPurchasingPageComponent },
   { path: UrlConst.PATH_STOCK_REGISTERING, component: StockRegisteringPageComponent }
 ];
 

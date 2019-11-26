@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { ProductListResponseDto } from 'src/app/entity/dto/response/product-list-response-dto';
+import { ProductSearchListResponseDto } from 'src/app/entity/dto/response/product-search-list-response-dto';
 import { catchError, map } from 'rxjs/operators';
 import { ErrorMessagingService } from './error-messaging.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -22,16 +22,16 @@ export class ProductService {
     private readonly translateService: TranslateService,
   ) { }
 
-  getProductList(httpParams: HttpParams): Observable<ProductListResponseDto> {
+  getProductList(httpParams: HttpParams): Observable<ProductSearchListResponseDto> {
 
     const webApiUrl = UrlConst.PATH_API_FOLDER + UrlConst.PATH_PRODUCT_LISTING;
     this.clearMessageProperty();
 
-    return this.http.get<ProductListResponseDto>(webApiUrl, { params: httpParams })
+    return this.http.get<ProductSearchListResponseDto>(webApiUrl, { params: httpParams })
       .pipe(
         catchError(error => {
           this.errorMessageService.setupPageErrorMessageFromResponse(error);
-          return of(null as ProductListResponseDto);
+          return of(null as ProductSearchListResponseDto);
         })
       );
 

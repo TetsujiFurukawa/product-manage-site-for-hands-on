@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, QueryList, ViewChildren } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { LoadingService } from 'src/app/service/common/loading.service';
 import { AccountService } from 'src/app/service/common/account.service';
@@ -6,17 +6,16 @@ import { SearchParamsService } from 'src/app/service/common/search-params.servic
 import { Router } from '@angular/router';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
 import { TranslateService } from '@ngx-translate/core';
-import { ProductResponseDto } from 'src/app/entity/dto/response/product-response-dto';
+import { ProductSearchResponseDto } from 'src/app/entity/dto/response/product-search-response-dto';
 import { MatPaginator } from '@angular/material/paginator';
 import { UrlConst } from 'src/app/const/url-const';
-import { ProductListingSearchParams } from 'src/app/entity/product-listing-search-params';
 import { startWith, switchMap, map } from 'rxjs/operators';
 import { merge } from 'rxjs';
-import { ProductService } from 'src/app/service/common/product.service';
 import { HttpParams } from '@angular/common/http';
-import { PurchaseService } from 'src/app/service/common/purchase-service';
-import { PurchaseHistoryResponseDto } from 'src/app/entity/dto/response/purchase-history-response-dto';
+import { PurchaseService } from 'src/app/service/common/purchase.service';
+import { PurchaseHistorySearchResponseDto } from 'src/app/entity/dto/response/purchase-history-search-response-dto';
 import { PurchaseHistoryListingSearchParams } from 'src/app/entity/purchase-history-listing-search-params';
+import { MatDatePickerComponent } from '../../common/mat-date-picker/mat-date-picker.component';
 
 @Component({
   selector: 'app-purchase-history-listing-page',
@@ -64,6 +63,8 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
   /** other informations */
   locale: string = this.accountService.getUser().userLocale;
   currency: string = this.accountService.getUser().userCurrency;
+  timezone: string = this.accountService.getUser().userTimezone;
+
 
   // Material table's header
   displayColumns: string[] = [
@@ -79,11 +80,12 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
   ];
 
   // Search result
-  purchaseHistoryResponseDto: PurchaseHistoryResponseDto[];
+  purchaseHistorySearchResponseDtos: PurchaseHistorySearchResponseDto[];
   resultsLength = 0;
 
   // Loading and pagenation
   @ViewChild(MatPaginator, { static: true }) public paginator: MatPaginator;
+  @ViewChildren(MatDatePickerComponent) matDatePickerComponents!: QueryList<MatDatePickerComponent>;
 
   ngOnInit() {
     this.setupLanguage();
@@ -103,19 +105,18 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
           this.loadingService.startLoading();
           const purchaseHistoryListingSearchParams: PurchaseHistoryListingSearchParams = this.createSearchParams();
           this.searchParamsService.setPurchaseHistoryListingSearchParam(purchaseHistoryListingSearchParams);
-
           return this.purchaseService.getPurchaseHistoryList(this.createHttpParams(purchaseHistoryListingSearchParams));
         }),
         map(data => {
           this.loadingService.stopLoading();
           this.resultsLength = data.resultsLength;
           this.paginator.pageIndex = data.pageIndex;
-          return data.purchaseHistoryResponseDtos;
+          return data.purchaseHistorySearchResponseDtos;
         })
-      ).subscribe(data => this.purchaseHistoryResponseDto = data);
+      ).subscribe(data => this.purchaseHistorySearchResponseDtos = data);
   }
 
-  onRowClicked(productResponseDto: ProductResponseDto) {
+  onRowClicked(productResponseDto: ProductSearchResponseDto) {
     this.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING, productResponseDto.productCode]);
   }
 
@@ -148,29 +149,40 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
   }
 
   private createHttpParams(purchaseHistoryListingSearchParams: PurchaseHistoryListingSearchParams) {
-    const conditions = {
+    const conditions: any = {
       productPurchaseName: purchaseHistoryListingSearchParams.productPurchaseName,
-      // productPurchaseDateFrom: purchaseHistoryListingSearchParams.productPurchaseDateFrom.toString(),
-      // productPurchaseDateTo: purchaseHistoryListingSearchParams.productPurchaseDateTo.toString(),
-      productPurchaseDateFrom: this.test.toDateString(),
-      // productPurchaseDateTo: '2019/10/01',
       productName: purchaseHistoryListingSearchParams.productName,
       productCode: purchaseHistoryListingSearchParams.productCode,
       pageSize: purchaseHistoryListingSearchParams.pageSize,
       pageIndex: purchaseHistoryListingSearchParams.pageIndex
     };
+    if (purchaseHistoryListingSearchParams.productPurchaseDateFrom !== '') {
+      const date = new Date(purchaseHistoryListingSearchParams.productPurchaseDateFrom);
+      conditions.productPurchaseDateFrom = date.toDateString();
+      console.log('productPurchaseDateFrom:' + date.toDateString);
+
+    }
+    if (purchaseHistoryListingSearchParams.productPurchaseDateTo !== '') {
+      const date = new Date(purchaseHistoryListingSearchParams.productPurchaseDateTo);
+      conditions.productPurchaseDateTo = date.toDateString();
+    }
+
     const paramsOptions = { fromObject: conditions } as any;
     const params = new HttpParams(paramsOptions);
     return params;
   }
 
   private clearSearchCondition() {
+    this.productPurchaseName.setValue('');
+    this.matDatePickerComponents.map(fn => fn.reset());
+    this.productPurchaseDateFrom.setValue('');
+    this.productPurchaseDateTo.setValue('');
     this.productName.setValue('');
     this.productCode.setValue('');
   }
 
   private clearSearchResultList() {
-    this.purchaseHistoryResponseDto = null;
+    this.purchaseHistorySearchResponseDtos = null;
     this.resultsLength = 0;
   }
 

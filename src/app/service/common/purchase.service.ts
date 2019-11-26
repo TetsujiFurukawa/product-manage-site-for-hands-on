@@ -5,7 +5,7 @@ import { HttpParams, HttpClient } from '@angular/common/http';
 import { SuccessMessagingService } from './success-messaging.service';
 import { ErrorMessagingService } from './error-messaging.service';
 import { UrlConst } from 'src/app/const/url-const';
-import { PurchaseHistoryListResponseDto } from 'src/app/entity/dto/response/purchase-history-list-response-dto';
+import { PurchaseHistorySearchListResponseDto } from 'src/app/entity/dto/response/purchase-history-search-list-response-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -18,16 +18,16 @@ export class PurchaseService {
     private errorMessageService: ErrorMessagingService
   ) { }
 
-  getPurchaseHistoryList(httpParams: HttpParams): Observable<PurchaseHistoryListResponseDto> {
+  getPurchaseHistoryList(httpParams: HttpParams): Observable<PurchaseHistorySearchListResponseDto> {
 
     const webApiUrl = UrlConst.PATH_API_FOLDER + UrlConst.PATH_PURCHASE_HISTORY_LISTING;
     this.clearMessageProperty();
 
-    return this.http.get<PurchaseHistoryListResponseDto>(webApiUrl, { params: httpParams })
+    return this.http.get<PurchaseHistorySearchListResponseDto>(webApiUrl, { params: httpParams })
       .pipe(
         catchError(error => {
           this.errorMessageService.setupPageErrorMessageFromResponse(error);
-          return of(null as PurchaseHistoryListResponseDto);
+          return of(null as PurchaseHistorySearchListResponseDto);
         })
       );
 

@@ -80,6 +80,11 @@ footer {
   width: 200px;
 }
 
+.search-criteria .mat-date-from .mat-form-field,
+.search-criteria .mat-date-to .mat-form-field {
+  width: 100px;
+}
+
 .search-functions {
   display: table;
   height: 30px;

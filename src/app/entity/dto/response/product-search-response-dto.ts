@@ -1,4 +1,4 @@
-export class ProductResponseDto {
+export class ProductSearchResponseDto {
 
   no: number;
 

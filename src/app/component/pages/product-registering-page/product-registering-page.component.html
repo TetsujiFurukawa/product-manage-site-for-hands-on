@@ -85,7 +85,7 @@
           </div>
           <div class="registering-condition-wrapper">
             <app-mat-date-picker *ngIf="endOfSale.value" [locale]='locale'
-              placeholder="{{ 'productRegisteringPage.endOfSaleDate' | translate }}" required=true
+              placeholder="{{ 'productRegisteringPage.endOfSaleDate' | translate }}" [isBlank]=false [required]=true
               (event)=" onReceiveEventFromChild($event)"></app-mat-date-picker>
           </div>
         </div>

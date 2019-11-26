@@ -82,12 +82,12 @@
         "productPurchaseDateTo": "購入日To",
         "productCode": "商品コード",
         "productImage": "イメージ",
-        "productUnitPrice": "単価",
+        "productPurchaseDate": "注文日",
+        "productPurchaseUnitPrice": "単価",
+        "productPurchaseQuantity": "数量",
+        "productPurchaseAmount": "金額",
         "clearButton": "クリア",
-        "searchButton": "検索",
-        "tooltip": {
-            "newBtn": "商品の登録画面へ遷移します。"
-        }
+        "searchButton": "検索"
     },
     "selectboxItem": {
         "productGenre": {

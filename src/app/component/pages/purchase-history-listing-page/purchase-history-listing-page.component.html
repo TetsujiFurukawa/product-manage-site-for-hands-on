@@ -16,12 +16,12 @@
       </div>
       <div class="search-condition-wrapper">
         <div id="searchCondition2">
-          <app-mat-date-picker [locale]='locale'
-            placeholder="{{ 'PurchaseHistoryListingPage.productPurchaseDateFrom' | translate }}" required=true
-            (event)=" onReceiveEventFromChildFrom($event)"></app-mat-date-picker>
-          <app-mat-date-picker [locale]='locale'
-            placeholder="{{ 'PurchaseHistoryListingPage.productPurchaseDateTo' | translate }}" required=true
-            (event)=" onReceiveEventFromChildTo($event)"></app-mat-date-picker>
+          <app-mat-date-picker [locale]='locale' class="mat-date-from"
+            placeholder="{{ 'PurchaseHistoryListingPage.productPurchaseDateFrom' | translate }}" [isBlank]=true
+            [required]=false (event)=" onReceiveEventFromChildFrom($event)"></app-mat-date-picker>
+          <app-mat-date-picker [locale]='locale' class="mat-date-to"
+            placeholder="{{ 'PurchaseHistoryListingPage.productPurchaseDateTo' | translate }}" [isBlank]=true
+            [required]=false (event)=" onReceiveEventFromChildTo($event)"></app-mat-date-picker>
         </div>
       </div>
       <div class="search-condition-wrapper">
@@ -51,13 +51,12 @@
     <div class="search-functions-buttons">
       <button mat-raised-button id="clearBtn" class="mat-raised-button" type="button" (click)="onClear()"
         matTooltip="{{ 'tooltip.searchBtn.clearBtn' | translate }}">{{ 'PurchaseHistoryListingPage.clearButton' | translate }}</button>
-
       <button mat-raised-button id="searchBtn" class="mat-raised-button active" type="button" (click)="onSearch()"
         matTooltip="{{ 'tooltip.searchBtn.searchBtn' | translate }}">{{ 'PurchaseHistoryListingPage.searchButton' | translate }}</button>
     </div>
   </div>
   <div class="search-results">
-    <table class="results" mat-table *ngIf="resultsLength>0" [dataSource]="productResponseDtos">
+    <table class="results" mat-table *ngIf="resultsLength>0" [dataSource]="purchaseHistorySearchResponseDtos">
       <ng-container matColumnDef="No">
         <th class="width-no" mat-header-cell *matHeaderCellDef>
           {{ "PurchaseHistoryListingPage.no" | translate }}
@@ -75,43 +74,41 @@
           {{ "PurchaseHistoryListingPage.productCode" | translate }}</th>
         <td class="width-product-code" mat-cell *matCellDef="let element"> {{element.productCode}} </td>
       </ng-container>
-      <ng-container matColumnDef="productGenre">
-        <th class="width-product-genre" mat-header-cell *matHeaderCellDef>
-          {{ "PurchaseHistoryListingPage.productGenre" | translate }}</th>
-        <td class="width-product-genre" mat-cell *matCellDef="let element"> {{element.productGenre}} </td>
+      <ng-container matColumnDef="productPurchaseName">
+        <th class="width-product-purchase-name" mat-header-cell *matHeaderCellDef>
+          {{ "PurchaseHistoryListingPage.productPurchaseName" | translate }}</th>
+        <td class="width-product-purchase-name" mat-cell *matCellDef="let element"> {{element.productPurchaseName}}
+        </td>
       </ng-container>
       <ng-container matColumnDef="productImage">
         <th class="width-product-image" mat-header-cell *matHeaderCellDef>
           {{ "PurchaseHistoryListingPage.productImage" | translate }}</th>
         <td class="width-product-image" mat-cell *matCellDef="let element"><img src={{element.productImageUrl}} /></td>
       </ng-container>
-      <ng-container matColumnDef="productSizeStandard">
-        <th class="width-product-size" mat-header-cell *matHeaderCellDef>
-          {{ "PurchaseHistoryListingPage.productSizeStandard" | translate }}</th>
-        <td class="width-product-size" mat-cell *matCellDef="let element"> {{element.productSizeStandard}} </td>
+      <ng-container matColumnDef="productPurchaseDate">
+        <th class="width-product-purchase-date" mat-header-cell *matHeaderCellDef>
+          {{ "PurchaseHistoryListingPage.productPurchaseDate" | translate }}</th>
+        <td class="width-product-purchase-date" mat-cell *matCellDef="let element">
+          {{element.productPurchaseDate | date:'medium':timezone:locale}}
+        </td>
       </ng-container>
-      <ng-container matColumnDef="productColor">
-        <th class="width-product-color" mat-header-cell *matHeaderCellDef>
-          {{ "PurchaseHistoryListingPage.productColor" | translate }}</th>
-        <td class="width-product-color" mat-cell *matCellDef="let element"> {{element.productColor}} </td>
+      <ng-container matColumnDef="productPurchaseUnitPrice">
+        <th class="width-product-purchase-unit-price" mat-header-cell *matHeaderCellDef>
+          {{ "PurchaseHistoryListingPage.productPurchaseUnitPrice" | translate }}</th>
+        <td class="width-product-purchase-unit-price" mat-cell *matCellDef="let element">
+          {{element.productPurchaseUnitPrice | currencyToNumber:locale:currency }}</td>
       </ng-container>
-      <ng-container matColumnDef="productUnitPrice">
-        <th class="width-product-unit-price" mat-header-cell *matHeaderCellDef>
-          {{ "PurchaseHistoryListingPage.productUnitPrice" | translate }}</th>
-        <td class="width-product-unit-price" mat-cell *matCellDef="let element">
-          {{element.productUnitPrice | currencyToNumber:locale:currency }}</td>
+      <ng-container matColumnDef="productPurchaseQuantity">
+        <th class="width-product-purchase-quantity" mat-header-cell *matHeaderCellDef>
+          {{ "PurchaseHistoryListingPage.productPurchaseQuantity" | translate }}</th>
+        <td class="width-product-purchase-quantity" mat-cell *matCellDef="let element">
+          {{element.productPurchaseQuantity | currencyToNumber:locale:currency }} </td>
       </ng-container>
-      <ng-container matColumnDef="productStockQuantity">
-        <th class="width-product-stock" mat-header-cell *matHeaderCellDef>
-          {{ "PurchaseHistoryListingPage.productStockQuantity" | translate }}</th>
-        <td class="width-product-stock" mat-cell *matCellDef="let element">
-          {{element.productStockQuantity | currencyToNumber:locale:currency }} </td>
-      </ng-container>
-      <ng-container matColumnDef="endOfSale">
-        <th class="width-endOfSale" mat-header-cell *matHeaderCellDef>
-          {{ "PurchaseHistoryListingPage.endOfSale" | translate }}</th>
-        <td class="width-endOfSale" mat-cell *matCellDef="let element">
-          {{ "PurchaseHistoryListingPage.endOfSaleValue." + element.endOfSale | translate}} </td>
+      <ng-container matColumnDef="productPurchaseAmount">
+        <th class="width-product-purchase-amount" mat-header-cell *matHeaderCellDef>
+          {{ "PurchaseHistoryListingPage.productPurchaseAmount" | translate }}</th>
+        <td class="width-product-purchase-amount" mat-cell *matCellDef="let element">
+          {{element.productPurchaseAmount | currencyToNumber:locale:currency }} </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayColumns;" (click)="onRowClicked(row)"></tr>

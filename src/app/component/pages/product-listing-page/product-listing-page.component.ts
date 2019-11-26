@@ -1,7 +1,7 @@
 import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { UrlConst } from 'src/app/const/url-const';
-import { ProductResponseDto } from 'src/app/entity/dto/response/product-response-dto';
+import { ProductSearchResponseDto } from 'src/app/entity/dto/response/product-search-response-dto';
 import { ProductListingSearchParams } from 'src/app/entity/product-listing-search-params';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
 import { AccountService } from 'src/app/service/common/account.service';
@@ -82,7 +82,7 @@ export class ProductListingPageComponent implements OnInit {
   ];
 
   // Search result
-  productResponseDtos: ProductResponseDto[];
+  productSearchResponseDtos: ProductSearchResponseDto[];
   resultsLength = 0;
 
   // Loading and pagenation
@@ -119,12 +119,12 @@ export class ProductListingPageComponent implements OnInit {
           this.loadingService.stopLoading();
           this.resultsLength = data.resultsLength;
           this.paginator.pageIndex = data.pageIndex;
-          return data.productResponseDtos;
+          return data.productSearchResponseDtos;
         })
-      ).subscribe(data => this.productResponseDtos = data);
+      ).subscribe(data => this.productSearchResponseDtos = data);
   }
 
-  onRowClicked(productResponseDto: ProductResponseDto) {
+  onRowClicked(productResponseDto: ProductSearchResponseDto) {
     this.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING, productResponseDto.productCode]);
   }
 
@@ -195,7 +195,7 @@ export class ProductListingPageComponent implements OnInit {
   }
 
   private clearSearchResultList() {
-    this.productResponseDtos = null;
+    this.productSearchResponseDtos = null;
     this.resultsLength = 0;
   }
 }

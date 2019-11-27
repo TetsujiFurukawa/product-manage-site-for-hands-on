@@ -47,32 +47,25 @@ export class ProductRegisteringPageComponent implements OnInit {
   // Called new or update?
   isNew = this.router.url === '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW;
 
-  // product seq
+  // Form controls
   productSeq = new FormControl('', []);
 
-  // product code
   productCode = new FormControl('', [
     Validators.required, Validators.pattern(RegexConst.SINGLE_BYTE_ALPHANUMERIC)
   ]);
 
-  // product name
   productName = new FormControl('', [Validators.required]);
 
-  // product genre
   productGenre = new FormControl('', [Validators.required]);
 
-  // product size standard
   productSizeStandard = new FormControl('', [Validators.required]);
 
-  // product color
   productColor = new FormControl('', []);
 
-  // product unit price
   productUnitPrice = new FormControl('', [
     Validators.required, Validators.max(999999999), Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)
   ]);
 
-  // End of sale
   endOfSale = new FormControl(false, []);
   endOfSaleDate = new FormControl('', []);
 

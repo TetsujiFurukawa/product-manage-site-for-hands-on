@@ -107,6 +107,7 @@
         "productSizeStandard": "サイズ・規格",
         "productColor": "色",
         "productPurchaseUnitPrice": "購入単価",
+        "productStockQuantity": "在庫数",
         "productPurchaseQuantity": "* 購入数量",
         "productPurchaseAmount": "購入金額",
         "saveButton": "登録",

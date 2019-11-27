@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { AppConst } from 'src/app/const/app-const';
+import { RegexConst } from 'src/app/const/regex-const';
+import { ProductDto } from 'src/app/entity/dto/product-dto';
+import { PurchaseDto } from 'src/app/entity/dto/purchase-dto';
+import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
+import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
+import { AccountService } from 'src/app/service/common/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
 import { ProductService } from 'src/app/service/common/product.service';
-import { AccountService } from 'src/app/service/common/account.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { PurchaseService } from 'src/app/service/common/purchase.service';
+
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
 import { TranslateService } from '@ngx-translate/core';
-import { UrlConst } from 'src/app/const/url-const';
-import { RegexConst } from 'src/app/const/regex-const';
-import { EndOfSaleEndOfSaleDateValidator } from 'src/app/validator/end-of-sale-end-of-sale-date-validator';
-import { AppConst } from 'src/app/const/app-const';
+
 import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
-import { ProductDto } from 'src/app/entity/dto/product-dto';
-import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
+import { ProductStockDto } from 'src/app/entity/dto/product-stock-dto';
 
 export interface Genre {
   value: string;
@@ -32,15 +34,14 @@ export class DummyPurchasingPageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
     private productService: ProductService,
+    private purchaseService: PurchaseService,
     private accountService: AccountService,
-    private router: Router,
-    private route: ActivatedRoute,
     private dialog: MatDialog,
     private currencyToNumberPipe: CurrencyToNumberPipe,
     public translateService: TranslateService,
 
   ) { }
-  // product seq
+  // form controls
   productSeq = new FormControl('', []);
 
   // product code
@@ -48,24 +49,15 @@ export class DummyPurchasingPageComponent implements OnInit {
     Validators.required, Validators.pattern(RegexConst.SINGLE_BYTE_ALPHANUMERIC)
   ]);
 
-  // product name
   productName = new FormControl('');
-
-  // product genre
   productGenre = new FormControl('');
-
-  // product size standard
   productSizeStandard = new FormControl('');
-
-  // product color
   productColor = new FormControl('');
-
-  // product unit price
-  productPurchaseUnitPrice = new FormControl('', [
+  productPurchaseUnitPrice = new FormControl('');
+  productStockQuantity = new FormControl('');
+  productPurchaseQuantity = new FormControl('', [
     Validators.required, Validators.max(999999999), Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)
   ]);
-
-  productPurchaseQuantity = new FormControl('');
   productPurchaseAmount = new FormControl('');
 
   // product image
@@ -78,18 +70,15 @@ export class DummyPurchasingPageComponent implements OnInit {
     productGenre: this.productGenre,
     productSizeStandard: this.productSizeStandard,
     productColor: this.productColor,
-    productUnitPrice: this.productPurchaseUnitPrice,
+    productPurchaseUnitPrice: this.productPurchaseUnitPrice,
+    productStockQuantity: this.productStockQuantity,
     productPurchaseQuantity: this.productPurchaseQuantity,
-    productPurchaseAmount: this.productPurchaseAmount
+    productPurchaseAmount: this.productPurchaseAmount,
   });
 
   /** other informations */
   locale: string = this.accountService.getUser().userLocale;
   currency: string = this.accountService.getUser().userCurrency;
-
-  /** caption of buttons */
-  messagePropertytitle = 'productRegisteringPage.title.new';
-  messagePropertySaveButton = 'productRegisteringPage.saveButton.new';
 
   genres: Genre[] = [
     { value: '靴・スニーカー', viewValue: '靴・スニーカー' },
@@ -117,12 +106,20 @@ export class DummyPurchasingPageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const productDto: ProductDto = this.createDto();
-        this.save(productDto);
+        const purchaseDto: PurchaseDto = this.createDto();
+        this.save(purchaseDto);
       }
     });
   }
 
+  onBlur() {
+    this.loadData();
+  }
+
+  onKey() {
+    console.log('onKey');
+
+  }
 
   // --------------------------------------------------------------------------------
   // private methods
@@ -134,63 +131,50 @@ export class DummyPurchasingPageComponent implements OnInit {
   }
 
   private loadData() {
-    const productCode = this.route.snapshot.paramMap.get('productCode');
     this.loadingService.startLoading();
-    this.productService.getProduct(productCode)
+    this.productService.getProductStock(this.productCode.value)
+      .subscribe(data => {
+        this.load(data);
+        this.loadingService.stopLoading();
+      });
+  }
+
+  private save(purchaseDto: PurchaseDto) {
+    this.loadingService.startLoading();
+
+    this.purchaseService.createPurchase(purchaseDto)
       .subscribe(data => {
         this.extract(data);
         this.loadingService.stopLoading();
       });
   }
 
-  private save(productDto: ProductDto) {
-    this.loadingService.startLoading();
+  private createDto(): PurchaseDto {
+    const purchaseDto: PurchaseDto = new PurchaseDto();
+    purchaseDto.productCode = this.productCode.value;
+    purchaseDto.productStockQuantity = this.currencyToNumberPipe.parse(this.productStockQuantity.value);
+    purchaseDto.productPurchaseQuantity = this.currencyToNumberPipe.parse(this.productPurchaseQuantity.value);
 
-    if (productDto.productSeq === undefined || productDto.productSeq === null) {
-      // Creates product.
-      this.productService.createProduct(productDto)
-        .subscribe(data => {
-          this.extract(data);
-          this.loadingService.stopLoading();
-        });
-    } else {
-      this.productService.updateProduct(productDto)
-        .subscribe(data => {
-          this.extract(data);
-          this.loadingService.stopLoading();
-        });
-    }
+    return purchaseDto;
   }
 
-  private createDto(): ProductDto {
-    const productDto: ProductDto = new ProductDto();
-    if (this.router.url !== '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW) {
-      productDto.productSeq = this.productSeq.value;
-    }
-    productDto.productCode = this.productCode.value;
-    productDto.productName = this.productName.value;
-    productDto.productGenre = this.productGenre.value;
-    productDto.productSizeStandard = this.productSizeStandard.value;
-    productDto.productColor = this.productColor.value;
-    productDto.productUnitPrice = this.currencyToNumberPipe.parse(this.productPurchaseUnitPrice.value);
-    productDto.productImage = this.productImage.value;
-
-    return productDto;
-  }
-
-  private extract(productDto: ProductDto) {
-    if (productDto === null) {
-      return;
-    }
-    this.productSeq.setValue(productDto.productSeq);
-    this.productCode.setValue(productDto.productCode);
-    this.productName.setValue(productDto.productName);
-    this.productGenre.setValue(productDto.productGenre);
-    this.productSizeStandard.setValue(productDto.productSizeStandard);
-    this.productColor.setValue(productDto.productColor);
-    this.productPurchaseUnitPrice.setValue(this.currencyToNumberPipe.transform(productDto.productUnitPrice.toString(),
+  private load(productStockDto: ProductStockDto) {
+    this.productCode.setValue(productStockDto.productCode);
+    this.productName.setValue(productStockDto.productName);
+    this.productGenre.setValue(productStockDto.productGenre);
+    this.productSizeStandard.setValue(productStockDto.productSizeStandard);
+    this.productColor.setValue(productStockDto.productColor);
+    this.productPurchaseUnitPrice.setValue(this.currencyToNumberPipe.transform(productStockDto.productUnitPrice.toString(),
       this.locale, this.currency));
-    this.productImage.setValue(productDto.productImage);
+    this.productStockQuantity.setValue(this.currencyToNumberPipe.transform(productStockDto.productStockQuantity.toString(),
+      this.locale, this.currency));
+  }
+
+  private extract(purchaseDto: PurchaseDto) {
+    this.productStockQuantity.setValue(this.currencyToNumberPipe.transform(purchaseDto.productStockQuantity.toString(),
+      this.locale, this.currency));
+    this.productPurchaseQuantity.setValue(this.currencyToNumberPipe.transform(purchaseDto.productPurchaseQuantity.toString(),
+      this.locale, this.currency));
   }
 
 }

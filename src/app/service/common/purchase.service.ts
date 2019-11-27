@@ -6,11 +6,15 @@ import { SuccessMessagingService } from './success-messaging.service';
 import { ErrorMessagingService } from './error-messaging.service';
 import { UrlConst } from 'src/app/const/url-const';
 import { PurchaseHistorySearchListResponseDto } from 'src/app/entity/dto/response/purchase-history-search-list-response-dto';
+import { PurchaseDto } from 'src/app/entity/dto/purchase-dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PurchaseService {
+  createPurchase(purchaseDto: PurchaseDto): Observable<any> {
+    throw new Error("Method not implemented.");
+  }
 
   constructor(
     private http: HttpClient,

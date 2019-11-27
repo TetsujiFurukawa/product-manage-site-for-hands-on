@@ -9,12 +9,12 @@ import { UrlConst } from 'src/app/const/url-const';
 import { ProductDto } from 'src/app/entity/dto/product-dto';
 import { LoadingService } from './loading.service';
 import { SuccessMessagingService } from './success-messaging.service';
+import { ProductStockDto } from 'src/app/entity/dto/product-stock-dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-
   constructor(
     private http: HttpClient,
     private successMessagingService: SuccessMessagingService,
@@ -84,6 +84,23 @@ export class ProductService {
       );
   }
 
+  getProductStock(productCode: string): Observable<ProductStockDto> {
+    const webApiUrl = UrlConst.PATH_API_FOLDER + UrlConst.PATH_PRODUCT_REGISTERING;
+    this.clearMessageProperty();
+
+    return this.http.get<ProductStockDto>(webApiUrl)
+      .pipe(
+        catchError(error => {
+          this.errorMessageService.setupPageErrorMessageFromResponse(error);
+          return of(null as ProductStockDto);
+        })
+      );
+  }
+
+
+  // --------------------------------------------------------------------------------
+  // private methods
+  // --------------------------------------------------------------------------------
   private clearMessageProperty() {
     this.successMessagingService.clearMessageProperty();
     this.errorMessageService.clearMessageProperty();

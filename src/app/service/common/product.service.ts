@@ -1,15 +1,19 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { ProductSearchListResponseDto } from 'src/app/entity/dto/response/product-search-list-response-dto';
 import { catchError, map } from 'rxjs/operators';
-import { ErrorMessagingService } from './error-messaging.service';
-import { TranslateService } from '@ngx-translate/core';
+import { ApiConst } from 'src/app/const/api-const';
 import { UrlConst } from 'src/app/const/url-const';
 import { ProductDto } from 'src/app/entity/dto/product-dto';
-import { LoadingService } from './loading.service';
-import { SuccessMessagingService } from './success-messaging.service';
 import { ProductStockDto } from 'src/app/entity/dto/product-stock-dto';
+import {
+  ProductSearchListResponseDto
+} from 'src/app/entity/dto/response/product-search-list-response-dto';
+
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+
+import { ErrorMessagingService } from './error-messaging.service';
+import { SuccessMessagingService } from './success-messaging.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +28,7 @@ export class ProductService {
 
   getProductList(httpParams: HttpParams): Observable<ProductSearchListResponseDto> {
 
-    const webApiUrl = UrlConst.PATH_API_FOLDER + UrlConst.PATH_PRODUCT_LISTING;
+    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PRODUCT_SEARCH;
     this.clearMessageProperty();
 
     return this.http.get<ProductSearchListResponseDto>(webApiUrl, { params: httpParams })
@@ -38,7 +42,7 @@ export class ProductService {
   }
 
   getProduct(productCode: string): Observable<ProductDto> {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + UrlConst.PATH_PRODUCT_REGISTERING;
+    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PRODUCT;
     this.clearMessageProperty();
 
     return this.http.get<ProductDto>(webApiUrl, { params: { productCode } })
@@ -51,7 +55,7 @@ export class ProductService {
   }
 
   createProduct(productDto: ProductDto): Observable<ProductDto> {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + UrlConst.PATH_PRODUCT_REGISTERING;
+    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PRODUCT;
     this.clearMessageProperty();
 
     return this.http.post<ProductDto>(webApiUrl, productDto)
@@ -68,7 +72,7 @@ export class ProductService {
   }
 
   updateProduct(productDto: ProductDto): Observable<ProductDto> {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + UrlConst.PATH_PRODUCT_REGISTERING;
+    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PRODUCT;
     this.clearMessageProperty();
 
     return this.http.put<ProductDto>(webApiUrl, productDto)
@@ -85,7 +89,7 @@ export class ProductService {
   }
 
   getProductStock(productCode: string): Observable<ProductStockDto> {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + UrlConst.PATH_PRODUCT_REGISTERING;
+    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PRODUCT;
     this.clearMessageProperty();
 
     return this.http.get<ProductStockDto>(webApiUrl)

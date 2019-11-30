@@ -1,12 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { of, Observable } from 'rxjs';
-import { HttpParams, HttpClient } from '@angular/common/http';
-import { SuccessMessagingService } from './success-messaging.service';
-import { ErrorMessagingService } from './error-messaging.service';
+import { ApiConst } from 'src/app/const/api-const';
 import { UrlConst } from 'src/app/const/url-const';
-import { PurchaseHistorySearchListResponseDto } from 'src/app/entity/dto/response/purchase-history-search-list-response-dto';
 import { PurchaseDto } from 'src/app/entity/dto/purchase-dto';
+import {
+  PurchaseHistorySearchListResponseDto
+} from 'src/app/entity/dto/response/purchase-history-search-list-response-dto';
+
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+import { ErrorMessagingService } from './error-messaging.service';
+import { SuccessMessagingService } from './success-messaging.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +29,7 @@ export class PurchaseService {
 
   getPurchaseHistoryList(httpParams: HttpParams): Observable<PurchaseHistorySearchListResponseDto> {
 
-    const webApiUrl = UrlConst.PATH_API_FOLDER + UrlConst.PATH_PURCHASE_HISTORY_LISTING;
+    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PURCHASE_HISTORY_SEARCH;
     this.clearMessageProperty();
 
     return this.http.get<PurchaseHistorySearchListResponseDto>(webApiUrl, { params: httpParams })

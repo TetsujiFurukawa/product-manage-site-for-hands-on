@@ -14,6 +14,7 @@ import { ErrorMessagingService } from './error-messaging.service';
 import { MenuListResponseDto } from 'src/app/entity/dto/response/menu-list-response-dto';
 import { SessionStrageService } from './session-strage.service';
 import { User } from 'src/app/entity/user';
+import { ApiConst } from 'src/app/const/api-const';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,8 @@ export class AccountService {
   ) { }
 
   public signIn(signInRequestDto: SignInRequestDto): Observable<SignInResponseDto> {
-    const webApiUrl = this.server + UrlConst.PATH_SIGN_IN;
+    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_SIGN_IN;
+
     const headers = new HttpHeaders(signInRequestDto ? {
       authorization: 'Basic ' + btoa(signInRequestDto.Username + ':' + signInRequestDto.Password)
     } : {});
@@ -43,7 +45,8 @@ export class AccountService {
   }
 
   public getMenu(): Observable<MenuListResponseDto[]> {
-    const webApiUrl = this.server + UrlConst.PATH_MENU;
+    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_MENU;
+
     return this.http.get<MenuListResponseDto[]>(webApiUrl)
       .pipe(
         catchError(error => {

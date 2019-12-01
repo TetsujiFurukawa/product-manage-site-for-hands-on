@@ -14,7 +14,7 @@ import { merge } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { PurchaseService } from 'src/app/service/common/purchase.service';
 import { PurchaseHistorySearchResponseDto } from 'src/app/entity/dto/response/purchase-history-search-response-dto';
-import { PurchaseHistoryListingSearchParams } from 'src/app/entity/purchase-history-listing-search-params';
+import { PurchaseHistoryListingSearchParams } from 'src/app/entity/dto/request/purchase-history-listing-search-params';
 import { MatDatePickerComponent } from '../../common/mat-date-picker/mat-date-picker.component';
 
 @Component({

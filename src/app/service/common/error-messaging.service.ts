@@ -37,6 +37,8 @@ export class ErrorMessagingService {
           this.setMessageProperty('errMessage.http.duplicateKeyException');
         } else if ('Exclusive error occurred.' === error.error.message) {
           this.setMessageProperty('errMessage.http.exclusiveProcessingException');
+        } else if ('There is no stock.' === error.error.message) {
+          this.setMessageProperty('errMessage.http.outOfStockException');
         } else {
           this.setMessageProperty('errMessage.http.internalServerError');
         }

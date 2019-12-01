@@ -2,7 +2,7 @@ import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { UrlConst } from 'src/app/const/url-const';
 import { ProductSearchResponseDto } from 'src/app/entity/dto/response/product-search-response-dto';
-import { ProductListingSearchParams } from 'src/app/entity/product-listing-search-params';
+import { ProductListingSearchParams } from 'src/app/entity/dto/request/product-listing-search-params';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
 import { AccountService } from 'src/app/service/common/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';

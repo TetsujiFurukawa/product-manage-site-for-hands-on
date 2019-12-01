@@ -108,6 +108,7 @@
         "productColor": "色",
         "productPurchaseUnitPrice": "購入単価",
         "productStockQuantity": "在庫数",
+        "productPurchaseName": "* 購入者",
         "productPurchaseQuantity": "* 購入数量",
         "productPurchaseAmount": "購入金額",
         "saveButton": "登録",
@@ -165,6 +166,7 @@
             "notFound": "ページがみつかりません。",
             "duplicateKeyException": "同一キーの情報がすでに登録されています。",
             "exclusiveProcessingException": "他ユーザーが同一データを変更しました、最新情報を取得してください。",
+            "outOfStockException": "在庫が不足しています。",
             "internalServerError": "サーバ内でエラーが発生しました。",
             "GenericError": "サーバとの通信に失敗しました。"
         }

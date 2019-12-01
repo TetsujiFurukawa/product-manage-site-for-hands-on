@@ -1,6 +1,8 @@
-export class PurchaseDto {
+export class PurchaseRequestDto {
 
   productCode: string;
+
+  productPurchaseName: string;
 
   productStockQuantity: number;
 

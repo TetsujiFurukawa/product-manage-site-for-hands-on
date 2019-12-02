@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 
 import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
+import { ProductCodeProductNameValidator } from 'src/app/validator/product-code-product-name-validator';
 
 export interface Genre {
   value: string;
@@ -70,7 +71,11 @@ export class DummyPurchasingPageComponent implements OnInit {
     productPurchaseQuantity: this.productPurchaseQuantity,
     productPurchaseAmount: this.productPurchaseAmount,
     productImage: this.productImage
+  }, {
+    validators: ProductCodeProductNameValidator.match
   });
+
+
 
   /** other informations */
   locale: string = this.accountService.getUser().userLocale;
@@ -108,7 +113,7 @@ export class DummyPurchasingPageComponent implements OnInit {
     });
   }
 
-  onBlur() {
+  onBlurProductCode() {
     if (this.productCode.value === '') {
       return;
     }
@@ -116,6 +121,13 @@ export class DummyPurchasingPageComponent implements OnInit {
     this.loadData();
   }
 
+  onProductPurchaseQuantity() {
+    const productPurchaseAmount = this.currencyToNumberPipe.parse(this.productPurchaseUnitPrice.value) *
+      this.currencyToNumberPipe.parse(this.productPurchaseQuantity.value);
+    this.productPurchaseAmount.setValue(this.currencyToNumberPipe.transform(String(productPurchaseAmount),
+      this.locale, this.currency));
+
+  }
 
   onKey() {
     console.log('onKey');
@@ -182,18 +194,18 @@ export class DummyPurchasingPageComponent implements OnInit {
     }
     this.productStockQuantity.setValue(this.currencyToNumberPipe.transform(String(purchaseResponseDto.productStockQuantity),
       this.locale, this.currency));
-    this.productPurchaseQuantity.setValue(0);
-    this.productPurchaseAmount.setValue(0);
+    this.productPurchaseQuantity.reset();
+    this.productPurchaseAmount.reset();
   }
 
   private clear() {
-    this.productName.setValue('');
-    this.productGenre.setValue('');
-    this.productSizeStandard.setValue('');
-    this.productPurchaseName.setValue('');
-    this.productPurchaseUnitPrice.setValue('');
-    this.productStockQuantity.setValue('');
-    this.productPurchaseQuantity.setValue('');
-    this.productPurchaseAmount.setValue('');
+    this.productName.reset();
+    this.productGenre.reset();
+    this.productSizeStandard.reset();
+    this.productPurchaseName.reset();
+    this.productPurchaseUnitPrice.reset();
+    this.productStockQuantity.reset();
+    this.productPurchaseQuantity.reset();
+    this.productPurchaseAmount.reset();
   }
 }

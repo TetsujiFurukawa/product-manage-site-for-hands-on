@@ -14,10 +14,13 @@
             <mat-form-field class="form-field">
               <input id="product-code" matInput type="text" formControlName="productCode"
                 placeholder="{{ 'dummyPurchasingPage.productCode' | translate }}"
-                matTooltip="{{ 'tooltip.registerValue.input.AlphaNumeric' | translate }}" maxlength=20 (blur)="onBlur()"
-                (keyup)="onKey($event)">
+                matTooltip="{{ 'tooltip.registerValue.input.alphaNumeric' | translate }}" maxlength=20
+                (blur)="onBlurProductCode()" (keyup)="onKey($event)">
               <mat-error *ngIf="productCode.hasError('required')">
                 {{'validationError.required'|translate}}
+              </mat-error>
+              <mat-error *ngIf="productCode.hasError('productNotExistError')">
+                {{'dummyPurchasingPage.validationError.productNotExistError'|translate}}
               </mat-error>
               <mat-error *ngIf="productCode.hasError('pattern')">
                 {{'validationError.pattern.singleByteAlphanumeric'|translate}}
@@ -48,7 +51,7 @@
           </div>
           <div class="registering-condition-wrapper margin-left-25px">
             <mat-form-field class="form-field">
-              <input id="product-unit-price" matInput type="text" appNumberInput
+              <input id="product-unit-price" class="align-right" matInput type="text" appNumberInput
                 formControlName="productPurchaseUnitPrice"
                 placeholder="{{ 'dummyPurchasingPage.productPurchaseUnitPrice' | translate }}" [attr.locale]='locale'
                 [attr.currency]="currency" [readonly]=true>
@@ -56,7 +59,7 @@
           </div>
           <div class="registering-condition-wrapper margin-left-25px">
             <mat-form-field class="form-field">
-              <input id="product-Stock-quantity" matInput type="text" appNumberInput
+              <input id="product-Stock-quantity" class="align-right" matInput type="text" appNumberInput
                 formControlName="productStockQuantity"
                 placeholder="{{ 'dummyPurchasingPage.productStockQuantity' | translate }}" [attr.locale]='locale'
                 [attr.currency]="currency" [readonly]=true>
@@ -65,20 +68,28 @@
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field width-40rem">
               <input id="product-Purchase-name" matInput type="text" formControlName="productPurchaseName"
-                placeholder="{{ 'dummyPurchasingPage.productPurchaseName' | translate }}" maxlength=50>
+                placeholder="{{ 'dummyPurchasingPage.productPurchaseName' | translate }}"
+                matTooltip="{{ 'dummyPurchasingPage.tooltip.purchaseName' | translate }}" maxlength=50>
+              <mat-error *ngIf="productPurchaseName.hasError('required')">
+                {{'validationError.required'|translate}}
+              </mat-error>
             </mat-form-field>
           </div>
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
-              <input id="product-purchase-quantity" matInput type="text" appNumberInput
+              <input id="product-purchase-quantity" class="align-right" matInput type="text" appNumberInput
                 formControlName="productPurchaseQuantity"
-                placeholder="{{ 'dummyPurchasingPage.productPurchaseQuantity' | translate }}" [attr.locale]='locale'
-                [attr.currency]="currency" maxlength=11>
+                placeholder="{{ 'dummyPurchasingPage.productPurchaseQuantity' | translate }}"
+                matTooltip="{{ 'tooltip.registerValue.input.numeric' | translate }}" [attr.locale]='locale'
+                [attr.currency]="currency" maxlength=11 (blur)='onProductPurchaseQuantity()'>
+              <mat-error *ngIf="productPurchaseQuantity.hasError('required')">
+                {{'validationError.required'|translate}}
+              </mat-error>
             </mat-form-field>
           </div>
           <div class="registering-condition-wrapper margin-left-25px">
             <mat-form-field class="form-field">
-              <input id="product-purchase-amount" matInput type="text" appNumberInput
+              <input id="product-purchase-amount" class="align-right" matInput type="text" appNumberInput
                 formControlName="productPurchaseAmount"
                 placeholder="{{ 'dummyPurchasingPage.productPurchaseAmount' | translate }}" [attr.locale]='locale'
                 [attr.currency]="currency" [readonly]=true>

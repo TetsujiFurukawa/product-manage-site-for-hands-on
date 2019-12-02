@@ -114,11 +114,15 @@
         "saveButton": "登録",
         "imageUploadButton": "画像のアップロード",
         "imageClearButton": "画像のクリア",
+        "validationError": {
+            "productNotExistError": "商品コードを再度入力してください。"
+        },
         "tooltip": {
             "returnButton": "商品一覧画面に戻ります。",
             "saveButton": "入力した内容を保存します。",
             "imageUploadButton": "アップロードする画像を選択します。",
-            "imageClearButton": "アップロード画像をクリアします。"
+            "imageClearButton": "アップロード画像をクリアします。",
+            "purchaseName": "購入者の氏名を入力します。"
         },
         "saveYesNoDialog": {
             "title": "保存の確認",
@@ -145,7 +149,7 @@
         },
         "registerValue": {
             "input": {
-                "AlphaNumeric": "半角の英数字を入力します。",
+                "alphaNumeric": "半角の英数字を入力します。",
                 "numeric": "数値を入力します。",
                 "all": "全角・半角英数記号を入力します。"
             },
@@ -164,6 +168,7 @@
             "badRequest": "入力情報が正しくありません。",
             "unAuthorized": "権限がありません。",
             "notFound": "ページがみつかりません。",
+            "datNotFoundException": "データが存在しません。",
             "duplicateKeyException": "同一キーの情報がすでに登録されています。",
             "exclusiveProcessingException": "他ユーザーが同一データを変更しました、最新情報を取得してください。",
             "outOfStockException": "在庫が不足しています。",

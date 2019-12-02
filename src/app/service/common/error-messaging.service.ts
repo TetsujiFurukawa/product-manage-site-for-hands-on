@@ -39,6 +39,8 @@ export class ErrorMessagingService {
           this.setMessageProperty('errMessage.http.exclusiveProcessingException');
         } else if ('There is no stock.' === error.error.message) {
           this.setMessageProperty('errMessage.http.outOfStockException');
+        } else if ('Data not found.' === error.error.message) {
+          this.setMessageProperty('errMessage.http.datNotFoundException');
         } else {
           this.setMessageProperty('errMessage.http.internalServerError');
         }

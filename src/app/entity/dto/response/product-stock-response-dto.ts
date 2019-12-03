@@ -1,4 +1,4 @@
-export class PurchaseResponseDto {
+export class ProductStockResponseDto {
 
   productCode: string;
 
@@ -11,8 +11,6 @@ export class PurchaseResponseDto {
   productSizeStandard: string;
 
   productColor: string;
-
-  productPurchaseUnitPrice: number;
 
   productStockQuantity: number;
 

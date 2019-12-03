@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { SessionStrageService } from './session-strage.service';
 import { ProductListingSearchParams } from 'src/app/entity/dto/request/product-listing-search-params';
 import { AppConst } from 'src/app/const/app-const';
-import { PurchaseHistoryListingSearchParams } from 'src/app/entity/dto/request/purchase-history-listing-search-params';
+import { ProductPurchaseHistoryListingSearchParams } from 'src/app/entity/dto/request/product-purchase-history-listing-search-params';
 
 @Injectable({
   providedIn: 'root'
@@ -26,12 +26,12 @@ export class SearchParamsService {
   }
 
   /** Purchase history */
-  setPurchaseHistoryListingSearchParam(purchaseHistoryListingSearchParams: PurchaseHistoryListingSearchParams): void {
+  setPurchaseHistoryListingSearchParam(purchaseHistoryListingSearchParams: ProductPurchaseHistoryListingSearchParams): void {
     SessionStrageService.setItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PURCHASE_HISTORY_LIST, purchaseHistoryListingSearchParams);
   }
 
-  getPurchaseHistoryListingSearchParam(purchaseHistoryListingSearchParams: PurchaseHistoryListingSearchParams)
-    : PurchaseHistoryListingSearchParams {
+  getPurchaseHistoryListingSearchParam(purchaseHistoryListingSearchParams: ProductPurchaseHistoryListingSearchParams)
+    : ProductPurchaseHistoryListingSearchParams {
     return SessionStrageService.getItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PURCHASE_HISTORY_LIST, purchaseHistoryListingSearchParams);
   }
 

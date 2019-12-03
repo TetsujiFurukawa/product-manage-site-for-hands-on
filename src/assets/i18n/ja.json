@@ -112,17 +112,38 @@
         "productPurchaseQuantity": "* 購入数量",
         "productPurchaseAmount": "購入金額",
         "saveButton": "登録",
-        "imageUploadButton": "画像のアップロード",
-        "imageClearButton": "画像のクリア",
+        "validationError": {
+            "productNotExistError": "商品コードを再度入力してください。"
+        },
+        "tooltip": {
+            "saveButton": "入力した内容を保存します。",
+            "purchaseName": "購入者の氏名を入力します。"
+        },
+        "saveYesNoDialog": {
+            "title": "保存の確認",
+            "message": "入力した内容を保存しますか？",
+            "captionYes": "はい",
+            "captionNo": "いいえ"
+        }
+    },
+    "stockRegisteringPage": {
+        "title": "在庫登録",
+        "productCode": "* 商品コード",
+        "productName": "商品名",
+        "productGenre": "ジャンル",
+        "productImage": "商品イメージ",
+        "productSizeStandard": "サイズ・規格",
+        "productColor": "色",
+        "productPurchaseUnitPrice": "購入単価",
+        "productStockQuantity": "在庫数",
+        "addStockQuantity": "* 在庫追加数",
+        "saveButton": "登録",
         "validationError": {
             "productNotExistError": "商品コードを再度入力してください。"
         },
         "tooltip": {
             "returnButton": "商品一覧画面に戻ります。",
-            "saveButton": "入力した内容を保存します。",
-            "imageUploadButton": "アップロードする画像を選択します。",
-            "imageClearButton": "アップロード画像をクリアします。",
-            "purchaseName": "購入者の氏名を入力します。"
+            "saveButton": "入力した内容を保存します。"
         },
         "saveYesNoDialog": {
             "title": "保存の確認",

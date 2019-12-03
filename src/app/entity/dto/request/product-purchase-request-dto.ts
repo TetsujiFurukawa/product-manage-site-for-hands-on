@@ -1,4 +1,4 @@
-export class PurchaseRequestDto {
+export class ProductPurchaseRequestDto {
 
   productCode: string;
 

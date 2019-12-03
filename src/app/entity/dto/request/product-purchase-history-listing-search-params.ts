@@ -1,6 +1,6 @@
 import { BaseSearchParams } from './base-search-params';
 
-export class PurchaseHistoryListingSearchParams extends BaseSearchParams {
+export class ProductPurchaseHistoryListingSearchParams extends BaseSearchParams {
   productPurchaseName: string;
   productPurchaseDateFrom: string;
   productPurchaseDateTo: string;

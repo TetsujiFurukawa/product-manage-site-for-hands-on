@@ -3,7 +3,7 @@ import { catchError, map } from 'rxjs/operators';
 import { ApiConst } from 'src/app/const/api-const';
 import { UrlConst } from 'src/app/const/url-const';
 import { ProductDto } from 'src/app/entity/dto/product-dto';
-import { PurchaseResponseDto } from 'src/app/entity/dto/response/purchase-response-dto';
+import { ProductPurchaseResponseDto } from 'src/app/entity/dto/response/product-purchase-response-dto';
 import {
   ProductSearchListResponseDto
 } from 'src/app/entity/dto/response/product-search-list-response-dto';

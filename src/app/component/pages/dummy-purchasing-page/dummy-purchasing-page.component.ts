@@ -1,14 +1,14 @@
 import { AppConst } from 'src/app/const/app-const';
 import { RegexConst } from 'src/app/const/regex-const';
 import {
-  PurchaseRequestDto as PurchaseRequestDto
-} from 'src/app/entity/dto/request/purchase-request-dto';
-import { PurchaseResponseDto } from 'src/app/entity/dto/response/purchase-response-dto';
+  ProductPurchaseRequestDto as ProductPurchaseRequestDto
+} from 'src/app/entity/dto/request/product-purchase-request-dto';
+import { ProductPurchaseResponseDto } from 'src/app/entity/dto/response/product-purchase-response-dto';
 import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
 import { AccountService } from 'src/app/service/common/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
-import { PurchaseService } from 'src/app/service/common/purchase.service';
+import { ProductPurchaseService } from 'src/app/service/common/product-purchase.service';
 
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
@@ -22,8 +22,6 @@ export interface Genre {
   value: string;
   viewValue: string;
 }
-const CHAR_NEW = '/new';
-
 @Component({
   selector: 'app-dummy-purchasing-page',
   templateUrl: './dummy-purchasing-page.component.html',
@@ -34,7 +32,7 @@ export class DummyPurchasingPageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
-    private purchaseService: PurchaseService,
+    private purchaseService: ProductPurchaseService,
     private accountService: AccountService,
     private dialog: MatDialog,
     private currencyToNumberPipe: CurrencyToNumberPipe,
@@ -107,7 +105,7 @@ export class DummyPurchasingPageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const purchaseRequestDto: PurchaseRequestDto = this.createPurchaseRequestDto();
+        const purchaseRequestDto: ProductPurchaseRequestDto = this.createPurchaseRequestDto();
         this.save(purchaseRequestDto);
       }
     });
@@ -146,25 +144,25 @@ export class DummyPurchasingPageComponent implements OnInit {
   private loadData() {
     this.loadingService.startLoading();
 
-    this.purchaseService.getPurchase(this.productCode.value)
+    this.purchaseService.getProductPurchase(this.productCode.value)
       .subscribe(data => {
         this.load(data);
         this.loadingService.stopLoading();
       });
   }
 
-  private save(purchaseRequestDto: PurchaseRequestDto) {
+  private save(purchaseRequestDto: ProductPurchaseRequestDto) {
     this.loadingService.startLoading();
 
-    this.purchaseService.createPurchase(purchaseRequestDto)
+    this.purchaseService.createProductPurchase(purchaseRequestDto)
       .subscribe(data => {
         this.extract(data);
         this.loadingService.stopLoading();
       });
   }
 
-  private createPurchaseRequestDto(): PurchaseRequestDto {
-    const purchaseRequestDto: PurchaseRequestDto = new PurchaseRequestDto();
+  private createPurchaseRequestDto(): ProductPurchaseRequestDto {
+    const purchaseRequestDto: ProductPurchaseRequestDto = new ProductPurchaseRequestDto();
     purchaseRequestDto.productCode = this.productCode.value;
     purchaseRequestDto.productPurchaseName = this.productPurchaseName.value;
     purchaseRequestDto.productStockQuantity = this.currencyToNumberPipe.parse(this.productStockQuantity.value);
@@ -173,7 +171,7 @@ export class DummyPurchasingPageComponent implements OnInit {
     return purchaseRequestDto;
   }
 
-  private load(purchaseResponseDto: PurchaseResponseDto) {
+  private load(purchaseResponseDto: ProductPurchaseResponseDto) {
     if (purchaseResponseDto === null) {
       return;
     }
@@ -188,7 +186,7 @@ export class DummyPurchasingPageComponent implements OnInit {
     this.productImage.setValue(purchaseResponseDto.productImage);
   }
 
-  private extract(purchaseResponseDto: PurchaseResponseDto) {
+  private extract(purchaseResponseDto: ProductPurchaseResponseDto) {
     if (purchaseResponseDto === null) {
       return;
     }

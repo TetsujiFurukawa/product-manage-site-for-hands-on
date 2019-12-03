@@ -12,9 +12,9 @@ import { UrlConst } from 'src/app/const/url-const';
 import { startWith, switchMap, map } from 'rxjs/operators';
 import { merge } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import { PurchaseService } from 'src/app/service/common/purchase.service';
-import { PurchaseHistorySearchResponseDto } from 'src/app/entity/dto/response/purchase-history-search-response-dto';
-import { PurchaseHistoryListingSearchParams } from 'src/app/entity/dto/request/purchase-history-listing-search-params';
+import { ProductPurchaseService } from 'src/app/service/common/product-purchase.service';
+import { ProductPurchaseHistorySearchResponseDto } from 'src/app/entity/dto/response/product-purchase-history-search-response-dto';
+import { ProductPurchaseHistoryListingSearchParams } from 'src/app/entity/dto/request/product-purchase-history-listing-search-params';
 import { MatDatePickerComponent } from '../../common/mat-date-picker/mat-date-picker.component';
 
 @Component({
@@ -28,7 +28,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
-    private purchaseService: PurchaseService,
+    private purchaseService: ProductPurchaseService,
     private accountService: AccountService,
     private searchParamsService: SearchParamsService,
     private router: Router,
@@ -80,7 +80,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
   ];
 
   // Search result
-  purchaseHistorySearchResponseDtos: PurchaseHistorySearchResponseDto[];
+  purchaseHistorySearchResponseDtos: ProductPurchaseHistorySearchResponseDto[];
   resultsLength = 0;
 
   // Loading and pagenation
@@ -103,15 +103,15 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
         startWith({}),
         switchMap(() => {
           this.loadingService.startLoading();
-          const purchaseHistoryListingSearchParams: PurchaseHistoryListingSearchParams = this.createSearchParams();
+          const purchaseHistoryListingSearchParams: ProductPurchaseHistoryListingSearchParams = this.createSearchParams();
           this.searchParamsService.setPurchaseHistoryListingSearchParam(purchaseHistoryListingSearchParams);
-          return this.purchaseService.getPurchaseHistoryList(this.createHttpParams(purchaseHistoryListingSearchParams));
+          return this.purchaseService.getProductPurchaseHistoryList(this.createHttpParams(purchaseHistoryListingSearchParams));
         }),
         map(data => {
           this.loadingService.stopLoading();
           this.resultsLength = data.resultsLength;
           this.paginator.pageIndex = data.pageIndex;
-          return data.purchaseHistorySearchResponseDtos;
+          return data.productPurchaseHistorySearchResponseDtos;
         })
       ).subscribe(data => this.purchaseHistorySearchResponseDtos = data);
   }
@@ -135,8 +135,8 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
     this.translateService.use(lang);
   }
 
-  private createSearchParams(): PurchaseHistoryListingSearchParams {
-    const purchaseHistoryListingSearchParams: PurchaseHistoryListingSearchParams = new PurchaseHistoryListingSearchParams();
+  private createSearchParams(): ProductPurchaseHistoryListingSearchParams {
+    const purchaseHistoryListingSearchParams: ProductPurchaseHistoryListingSearchParams = new ProductPurchaseHistoryListingSearchParams();
     purchaseHistoryListingSearchParams.productPurchaseName = this.productPurchaseName.value;
     purchaseHistoryListingSearchParams.productPurchaseDateFrom = this.productPurchaseDateFrom.value;
     purchaseHistoryListingSearchParams.productPurchaseDateTo = this.productPurchaseDateTo.value;
@@ -148,7 +148,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
     return purchaseHistoryListingSearchParams;
   }
 
-  private createHttpParams(purchaseHistoryListingSearchParams: PurchaseHistoryListingSearchParams) {
+  private createHttpParams(purchaseHistoryListingSearchParams: ProductPurchaseHistoryListingSearchParams) {
     const conditions: any = {
       productPurchaseName: purchaseHistoryListingSearchParams.productPurchaseName,
       productName: purchaseHistoryListingSearchParams.productName,

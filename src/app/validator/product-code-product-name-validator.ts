@@ -9,7 +9,6 @@ export class ProductCodeProductNameValidator {
     const productName = ac.get(PRODUCT_NAME).value;
 
     if ((productCode !== null) && (productName === null)) {
-      console.log(productName);
       ac.get(PRODUCT_CODE).setErrors({ productNotExistError: true });
     } else {
       ac.get(PRODUCT_CODE).setErrors(null);

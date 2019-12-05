@@ -12,7 +12,7 @@ export class CurrencyToNumberPipe implements PipeTransform {
     if (!value.toString().match(regexp)) {
       return value;
     }
-    return new CurrencyPipe(locale).transform(value, currency, '', '', locale);
+    return new CurrencyPipe(locale).transform(this.parse(value.toString()), currency, '', '', locale);
   }
 
   parse(value: any): any {

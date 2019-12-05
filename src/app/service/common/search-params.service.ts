@@ -25,17 +25,4 @@ export class SearchParamsService {
     SessionStrageService.removeItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST);
   }
 
-  /** Purchase history */
-  setPurchaseHistoryListingSearchParam(purchaseHistoryListingSearchParams: ProductPurchaseHistoryListingSearchParams): void {
-    SessionStrageService.setItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PURCHASE_HISTORY_LIST, purchaseHistoryListingSearchParams);
-  }
-
-  getPurchaseHistoryListingSearchParam(purchaseHistoryListingSearchParams: ProductPurchaseHistoryListingSearchParams)
-    : ProductPurchaseHistoryListingSearchParams {
-    return SessionStrageService.getItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PURCHASE_HISTORY_LIST, purchaseHistoryListingSearchParams);
-  }
-
-  removePurchaseHistoryListingSearchParam(): void {
-    SessionStrageService.removeItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PURCHASE_HISTORY_LIST);
-  }
 }

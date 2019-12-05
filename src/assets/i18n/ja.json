@@ -2,7 +2,13 @@
     "menu": {
         "purchase": "購入",
         "product": "商品",
-        "stock": "在庫"
+        "stock": "在庫",
+        "saveYesNoDialog": {
+            "title": "ログアウトの確認",
+            "message": "システムからログアウトしますか？",
+            "captionYes": "はい",
+            "captionNo": "いいえ"
+        }
     },
     "subMenu": {
         "purchase-history-listing": "購入履歴",
@@ -113,7 +119,8 @@
         "productPurchaseAmount": "購入金額",
         "saveButton": "登録",
         "validationError": {
-            "productNotExistError": "商品コードを再度入力してください。"
+            "productNotExistError": "商品コードを再度入力してください。",
+            "exceedStockError": "在庫数を超えています"
         },
         "tooltip": {
             "saveButton": "入力した内容を保存します。",

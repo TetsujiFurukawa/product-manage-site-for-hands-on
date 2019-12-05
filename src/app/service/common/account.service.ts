@@ -1,31 +1,25 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+import { ApiConst } from 'src/app/const/api-const';
 import { AppConst } from 'src/app/const/app-const';
 import { UrlConst } from 'src/app/const/url-const';
 import { SignInRequestDto } from 'src/app/entity/dto/request/sign-in-request-dto';
-import { SignInResponseDto } from 'src/app/entity/dto/response/sign-in-response-dto';
-import { environment } from 'src/environments/environment';
-
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-
-import { ErrorMessagingService } from './error-messaging.service';
 import { MenuListResponseDto } from 'src/app/entity/dto/response/menu-list-response-dto';
-import { SessionStrageService } from './session-strage.service';
+import { SignInResponseDto } from 'src/app/entity/dto/response/sign-in-response-dto';
 import { User } from 'src/app/entity/user';
-import { ApiConst } from 'src/app/const/api-const';
+import { ErrorMessagingService } from './error-messaging.service';
+import { SessionStrageService } from './session-strage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  private server = environment.production ? AppConst.URL_PROD_SERVER : AppConst.URL_DEV_SERVER;
 
   constructor(
     private http: HttpClient,
     private errorMessageService: ErrorMessagingService,
-    private readonly translateService: TranslateService,
   ) { }
 
   public signIn(signInRequestDto: SignInRequestDto): Observable<SignInResponseDto> {
@@ -62,6 +56,20 @@ export class AccountService {
 
   public setUser(user: User): void {
     SessionStrageService.setItem(AppConst.STRAGE_KEY_USER, user);
+  }
+
+  public removeUser(): void {
+    SessionStrageService.removeItem(AppConst.STRAGE_KEY_USER);
+  }
+
+  signOut(): Observable<any> {
+    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_SIGN_OUT;
+    return this.http.post(webApiUrl, {}).pipe(
+      map(res => {
+        this.removeUser();
+        return res;
+      })
+    );
   }
 
 }

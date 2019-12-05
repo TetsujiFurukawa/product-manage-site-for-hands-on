@@ -17,6 +17,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
 import { ProductCodeProductNameValidator } from 'src/app/validator/product-code-product-name-validator';
+import { PurchaseQuantityStockQuantityValidator } from 'src/app/validator/purchase-quantity-stock-quantity-validator';
 
 export interface Genre {
   value: string;
@@ -70,7 +71,10 @@ export class DummyPurchasingPageComponent implements OnInit {
     productPurchaseAmount: this.productPurchaseAmount,
     productImage: this.productImage
   }, {
-    validators: ProductCodeProductNameValidator.match
+    validators: [
+      ProductCodeProductNameValidator.match,
+      PurchaseQuantityStockQuantityValidator.match
+    ]
   });
 
 

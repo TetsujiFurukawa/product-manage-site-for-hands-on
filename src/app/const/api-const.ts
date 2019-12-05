@@ -2,6 +2,7 @@ export class ApiConst {
   static readonly PATH_API_FOLDER = '/api/';
 
   static readonly PATH_SIGN_IN = 'sign-in/v1';
+  static readonly PATH_SIGN_OUT = 'sign-out/v1';
   static readonly PATH_MENU = 'menu/v1';
   static readonly PATH_PRODUCT_SEARCH = 'product-search/v1';
   static readonly PATH_PRODUCT = 'product/v1';

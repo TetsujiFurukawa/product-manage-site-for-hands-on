@@ -104,7 +104,6 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
         switchMap(() => {
           this.loadingService.startLoading();
           const purchaseHistoryListingSearchParams: ProductPurchaseHistoryListingSearchParams = this.createSearchParams();
-          this.searchParamsService.setPurchaseHistoryListingSearchParam(purchaseHistoryListingSearchParams);
           return this.purchaseService.getProductPurchaseHistoryList(this.createHttpParams(purchaseHistoryListingSearchParams));
         }),
         map(data => {

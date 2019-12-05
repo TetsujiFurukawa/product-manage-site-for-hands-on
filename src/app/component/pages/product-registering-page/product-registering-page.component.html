@@ -39,8 +39,8 @@
               <mat-label>{{ 'productRegisteringPage.productGenre' | translate }}</mat-label>
               <mat-select formControlName="productGenre"
                 matTooltip="{{ 'tooltip.registerValue.pulldown' | translate }}">
-                <mat-option *ngFor="let genre of genres" [value]="genre.value">
-                  {{genre.viewValue}}
+                <mat-option *ngFor="let code of genres" [value]="code">
+                  {{ 'genre.' + code | translate }}
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="productGenre.hasError('required')">

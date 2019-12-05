@@ -18,11 +18,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
 import { ProductCodeProductNameValidator } from 'src/app/validator/product-code-product-name-validator';
 import { PurchaseQuantityStockQuantityValidator } from 'src/app/validator/purchase-quantity-stock-quantity-validator';
+import { ProductService } from 'src/app/service/common/product.service';
 
-export interface Genre {
-  value: string;
-  viewValue: string;
-}
 @Component({
   selector: 'app-dummy-purchasing-page',
   templateUrl: './dummy-purchasing-page.component.html',
@@ -33,6 +30,7 @@ export class DummyPurchasingPageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
+    private productService: ProductService,
     private purchaseService: ProductPurchaseService,
     private accountService: AccountService,
     private dialog: MatDialog,
@@ -77,19 +75,14 @@ export class DummyPurchasingPageComponent implements OnInit {
     ]
   });
 
-
-
   /** other informations */
   locale: string = this.accountService.getUser().userLocale;
   currency: string = this.accountService.getUser().userCurrency;
 
-  genres: Genre[] = [
-    { value: '靴・スニーカー', viewValue: '靴・スニーカー' },
-    { value: 'トップス', viewValue: 'トップス' },
-    { value: 'バッグ', viewValue: 'バッグ' }
-  ];
+  genres: number[];
 
   ngOnInit() {
+    this.loadData();
     this.setupLangage();
   }
 
@@ -120,7 +113,7 @@ export class DummyPurchasingPageComponent implements OnInit {
       return;
     }
     this.clear();
-    this.loadData();
+    this.loadProductData();
   }
 
   onProductPurchaseQuantity() {
@@ -139,13 +132,16 @@ export class DummyPurchasingPageComponent implements OnInit {
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------
+  private loadData() {
+    this.productService.getGenres().subscribe(data => this.genres = data);
+  }
   private setupLangage() {
     const lang = this.accountService.getUser().userLanguage;
     this.translateService.setDefaultLang(lang);
     this.translateService.use(lang);
   }
 
-  private loadData() {
+  private loadProductData() {
     this.loadingService.startLoading();
 
     this.purchaseService.getProductPurchase(this.productCode.value)

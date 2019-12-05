@@ -1,14 +1,16 @@
 import { AppConst } from 'src/app/const/app-const';
 import { RegexConst } from 'src/app/const/regex-const';
-import {
-  ProductPurchaseRequestDto as ProductPurchaseRequestDto
-} from 'src/app/entity/dto/request/product-purchase-request-dto';
-import { ProductPurchaseResponseDto } from 'src/app/entity/dto/response/product-purchase-response-dto';
+import { ProductStockRequestDto } from 'src/app/entity/dto/request/product-stock-request-dto';
+import { ProductStockResponseDto } from 'src/app/entity/dto/response/product-stock-response-dto';
 import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
 import { AccountService } from 'src/app/service/common/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
-import { ProductPurchaseService } from 'src/app/service/common/product-purchase.service';
+import { ProductStockService } from 'src/app/service/common/product-stock.service';
+import { ProductService } from 'src/app/service/common/product.service';
+import {
+  ProductCodeProductNameValidator
+} from 'src/app/validator/product-code-product-name-validator';
 
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
@@ -16,15 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 
 import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
-import { ProductCodeProductNameValidator } from 'src/app/validator/product-code-product-name-validator';
-import { ProductStockRequestDto } from 'src/app/entity/dto/request/product-stock-request-dto';
-import { ProductStockService } from 'src/app/service/common/product-stock.service';
-import { ProductStockResponseDto } from 'src/app/entity/dto/response/product-stock-response-dto';
 
-export interface Genre {
-  value: string;
-  viewValue: string;
-}
 @Component({
   selector: 'app-stock-registering-page',
   templateUrl: './stock-registering-page.component.html',
@@ -35,6 +29,7 @@ export class StockRegisteringPageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
+    private productService: ProductService,
     private productStockService: ProductStockService,
     private accountService: AccountService,
     private dialog: MatDialog,
@@ -69,19 +64,14 @@ export class StockRegisteringPageComponent implements OnInit {
     validators: ProductCodeProductNameValidator.match
   });
 
-
-
   /** other informations */
   locale: string = this.accountService.getUser().userLocale;
   currency: string = this.accountService.getUser().userCurrency;
 
-  genres: Genre[] = [
-    { value: '靴・スニーカー', viewValue: '靴・スニーカー' },
-    { value: 'トップス', viewValue: 'トップス' },
-    { value: 'バッグ', viewValue: 'バッグ' }
-  ];
+  genres: number[];
 
   ngOnInit() {
+    this.loadData();
     this.setupLangage();
   }
 
@@ -112,24 +102,27 @@ export class StockRegisteringPageComponent implements OnInit {
       return;
     }
     this.clear();
-    this.loadData();
+    this.loadProductData();
   }
 
   onKey() {
     console.log('onKey');
-
   }
 
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------
+  private loadData() {
+    this.productService.getGenres().subscribe(data => this.genres = data);
+  }
+
   private setupLangage() {
     const lang = this.accountService.getUser().userLanguage;
     this.translateService.setDefaultLang(lang);
     this.translateService.use(lang);
   }
 
-  private loadData() {
+  private loadProductData() {
     this.loadingService.startLoading();
 
     this.productStockService.getProductStock(this.productCode.value)

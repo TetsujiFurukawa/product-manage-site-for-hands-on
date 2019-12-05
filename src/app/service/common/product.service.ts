@@ -19,6 +19,7 @@ import { SuccessMessagingService } from './success-messaging.service';
   providedIn: 'root'
 })
 export class ProductService {
+
   constructor(
     private http: HttpClient,
     private successMessagingService: SuccessMessagingService,
@@ -88,6 +89,18 @@ export class ProductService {
       );
   }
 
+  getGenres(): Observable<number[]> {
+    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_GENRE;
+    this.clearMessageProperty();
+
+    return this.http.get<number[]>(webApiUrl)
+      .pipe(
+        catchError(error => {
+          this.errorMessageService.setupPageErrorMessageFromResponse(error);
+          return of(null as number[]);
+        })
+      );
+  }
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------

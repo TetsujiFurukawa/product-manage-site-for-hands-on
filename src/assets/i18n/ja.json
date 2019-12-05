@@ -159,6 +159,11 @@
             "captionNo": "いいえ"
         }
     },
+    "genre": {
+        "1": "靴・スニーカー",
+        "2": "トップス",
+        "3": "バッグ"
+    },
     "Items per page:": "件数：",
     "Next page": "次ページへ",
     "Previous page": "前ページへ",

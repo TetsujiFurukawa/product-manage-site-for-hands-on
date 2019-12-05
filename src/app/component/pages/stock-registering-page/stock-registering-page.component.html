@@ -36,9 +36,9 @@
                     <div class="registering-condition-wrapper margin-left-25px">
                         <mat-form-field>
                             <mat-label>{{ 'stockRegisteringPage.productGenre' | translate }}</mat-label>
-                            <mat-select formControlName="productGenre">
-                                <mat-option *ngFor="let genre of genres" [value]="genre.value">
-                                    {{genre.viewValue}}
+                            <mat-select formControlName="productGenre" [disabled]=true>
+                                <mat-option *ngFor="let code of genres" [value]="code">
+                                    {{ 'genre.' + code | translate }}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>

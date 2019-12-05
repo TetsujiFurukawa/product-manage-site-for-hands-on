@@ -16,10 +16,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
-export interface Genre {
-  value: string;
-  viewValue: string;
-}
 @Component({
   selector: 'app-product-listing-page',
   templateUrl: './product-listing-page.component.html',
@@ -61,11 +57,7 @@ export class ProductListingPageComponent implements OnInit {
   locale: string = this.accountService.getUser().userLocale;
   currency: string = this.accountService.getUser().userCurrency;
 
-  genres: Genre[] = [
-    { value: '1', viewValue: '靴・スニーカー' },
-    { value: '2', viewValue: 'トップス' },
-    { value: '3', viewValue: 'バッグ' }
-  ];
+  genres: number[];
 
   // Material table's header
   displayColumns: string[] = [
@@ -89,6 +81,7 @@ export class ProductListingPageComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) public paginator: MatPaginator;
 
   ngOnInit() {
+    this.loadData();
     this.setupLanguage();
     this.initSearchCriteria();
   }
@@ -131,6 +124,10 @@ export class ProductListingPageComponent implements OnInit {
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------
+  private loadData() {
+    this.productService.getGenres().subscribe(data => this.genres = data);
+  }
+
   private setupLanguage() {
     const lang = this.accountService.getUser().userLanguage;
     this.translateService.setDefaultLang(lang);

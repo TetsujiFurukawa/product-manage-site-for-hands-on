@@ -19,10 +19,6 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
 
-export interface Genre {
-  value: string;
-  viewValue: string;
-}
 const CHAR_NEW = '/new';
 
 @Component({
@@ -100,17 +96,14 @@ export class ProductRegisteringPageComponent implements OnInit {
   messagePropertytitle = 'productRegisteringPage.title.new';
   messagePropertySaveButton = 'productRegisteringPage.saveButton.new';
 
-  genres: Genre[] = [
-    { value: '靴・スニーカー', viewValue: '靴・スニーカー' },
-    { value: 'トップス', viewValue: 'トップス' },
-    { value: 'バッグ', viewValue: 'バッグ' }
-  ];
+  genres: number[];
 
   ngOnInit() {
+    this.loadData();
     this.setupLangage();
     if (!this.isNew) {
       this.setupButtonTextToEdit();
-      this.loadData();
+      this.loadProductData();
     }
   }
 
@@ -168,13 +161,17 @@ export class ProductRegisteringPageComponent implements OnInit {
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------
+  private loadData() {
+    this.productService.getGenres().subscribe(data => this.genres = data);
+  }
+
   private setupLangage() {
     const lang = this.accountService.getUser().userLanguage;
     this.translateService.setDefaultLang(lang);
     this.translateService.use(lang);
   }
 
-  private loadData() {
+  private loadProductData() {
     const productCode = this.route.snapshot.paramMap.get('productCode');
     this.loadingService.startLoading();
     this.productService.getProduct(productCode)

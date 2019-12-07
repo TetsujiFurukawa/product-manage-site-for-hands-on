@@ -326,10 +326,14 @@ registering-conditions .image-preview {
 }
 
 /* --------------------------------------------------------------------------------
- * Mat dialog.
+ * Material settings.
  * -------------------------------------------------------------------------------- */
 .mat-dialog-container {
   background-color: #ECEFF1;
   box-shadow: none;
   padding: 0 !important;
+}
+
+.mat-checkbox.mat-accent.mat-checkbox-checked .mat-checkbox-background {
+  background-color: #F99F48;
 }

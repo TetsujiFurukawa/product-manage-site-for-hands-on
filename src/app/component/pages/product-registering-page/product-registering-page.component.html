@@ -12,7 +12,7 @@
         <div class="registering-area-wrapper left">
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
-              <input id="product-code" matInput type="text" formControlName="productCode"
+              <input id="product-code" matInput type="text" formControlName="productCode" upperCase
                 placeholder="{{ 'productRegisteringPage.productCode' | translate }}"
                 matTooltip="{{ 'tooltip.registerValue.input.alphaNumeric' | translate }}" maxlength=20
                 [readonly]="!isNew">

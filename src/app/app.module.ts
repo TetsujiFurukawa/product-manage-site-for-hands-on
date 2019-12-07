@@ -41,6 +41,7 @@ import { CurrencyToNumberPipe } from './pipe/currency-to-number.pipe';
 import { NumberInputDirective } from './directive/number-input.directive';
 import { MatPaginatorI18nService } from './service/common/mat-paginator-i18n.service';
 import { MatPaginatorIntl } from '@angular/material/paginator';
+import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 
 // 他言語化の設定
 export function HttpLoaderFactory(http: HttpClient) {
@@ -84,8 +85,8 @@ registerLocaleData(localeJa);
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
-
+    }),
+    NgxUpperCaseDirectiveModule
   ],
   entryComponents: [
     YesNoDialogComponent

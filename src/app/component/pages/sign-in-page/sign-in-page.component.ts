@@ -7,16 +7,17 @@ import { AccountService } from 'src/app/service/common/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
 import { RoutingService } from 'src/app/service/common/routing.service';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 
 @Component({
   selector: 'app-sign-in-page',
   templateUrl: './sign-in-page.component.html',
   styleUrls: ['./sign-in-page.component.scss']
 })
-export class SignInPageComponent implements OnInit {
+export class SignInPageComponent implements OnInit, AfterViewChecked {
 
   // account
   signInUserAccount = new FormControl('', [
@@ -39,12 +40,17 @@ export class SignInPageComponent implements OnInit {
     private accountService: AccountService,
     private loadingService: LoadingService,
     private routingService: RoutingService,
+    private titleI18Service: TitleI18Service,
     public translateService: TranslateService
   ) { }
 
   ngOnInit() {
     // Sets default language to ja.
     this.setupLangage();
+  }
+
+  ngAfterViewChecked() {
+    this.titleI18Service.setTitle(UrlConst.PATH_SIGN_IN);
   }
 
   singnIn() {

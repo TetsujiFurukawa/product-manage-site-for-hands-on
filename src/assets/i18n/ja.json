@@ -31,7 +31,8 @@
         "dummy-purchasing": "購入登録(テスト用)",
         "product-listing": "商品一覧",
         "product-registering": "商品登録/編集",
-        "stock-registering": "在庫登録"
+        "stock-registering": "在庫登録",
+        "sign-in": "ログイン"
     },
     "signInPage": {
         "userAccount": "ユーザアカウント",

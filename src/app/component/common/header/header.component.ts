@@ -25,13 +25,11 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private accountService: AccountService,
-    // Usese router not ts but html.
-    public router: Router,
-    private routingService: RoutingService,
     private dialog: MatDialog,
     private loadingService: LoadingService,
     private searchParamsService: SearchParamsService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    public routingService: RoutingService
   ) { }
 
   ngOnInit() {

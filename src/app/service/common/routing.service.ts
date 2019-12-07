@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 export class RoutingService {
 
   constructor(
-    private router: Router
+    public router: Router
   ) { }
 
   /**

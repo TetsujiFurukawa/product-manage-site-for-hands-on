@@ -1,20 +1,23 @@
-import { Component, OnInit, ViewChild, QueryList, ViewChildren } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
-import { LoadingService } from 'src/app/service/common/loading.service';
-import { AccountService } from 'src/app/service/common/account.service';
-import { SearchParamsService } from 'src/app/service/common/search-params.service';
-import { Router } from '@angular/router';
-import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
-import { TranslateService } from '@ngx-translate/core';
-import { ProductSearchResponseDto } from 'src/app/entity/dto/response/product-search-response-dto';
-import { MatPaginator } from '@angular/material/paginator';
-import { UrlConst } from 'src/app/const/url-const';
-import { startWith, switchMap, map } from 'rxjs/operators';
 import { merge } from 'rxjs';
-import { HttpParams } from '@angular/common/http';
+import { map, startWith, switchMap } from 'rxjs/operators';
+import {
+  ProductPurchaseHistoryListingSearchParams
+} from 'src/app/entity/dto/request/product-purchase-history-listing-search-params';
+import {
+  ProductPurchaseHistorySearchResponseDto
+} from 'src/app/entity/dto/response/product-purchase-history-search-response-dto';
+import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
+import { AccountService } from 'src/app/service/common/account.service';
+import { LoadingService } from 'src/app/service/common/loading.service';
 import { ProductPurchaseService } from 'src/app/service/common/product-purchase.service';
-import { ProductPurchaseHistorySearchResponseDto } from 'src/app/entity/dto/response/product-purchase-history-search-response-dto';
-import { ProductPurchaseHistoryListingSearchParams } from 'src/app/entity/dto/request/product-purchase-history-listing-search-params';
+import { SearchParamsService } from 'src/app/service/common/search-params.service';
+
+import { HttpParams } from '@angular/common/http';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { TranslateService } from '@ngx-translate/core';
+
 import { MatDatePickerComponent } from '../../common/mat-date-picker/mat-date-picker.component';
 
 @Component({
@@ -31,7 +34,6 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
     private purchaseService: ProductPurchaseService,
     private accountService: AccountService,
     private searchParamsService: SearchParamsService,
-    private router: Router,
     public currencyToNumberPipe: CurrencyToNumberPipe,
     public translateService: TranslateService,
   ) { }
@@ -115,10 +117,6 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
       ).subscribe(data => this.purchaseHistorySearchResponseDtos = data);
   }
 
-  // onRowClicked(productResponseDto: ProductSearchResponseDto) {
-  //   this.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING, productResponseDto.productCode]);
-  // }
-
   onReceiveEventFromChildFrom(eventData: string) {
     this.productPurchaseDateFrom.setValue(eventData);
   }
@@ -158,7 +156,6 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
     if (purchaseHistoryListingSearchParams.productPurchaseDateFrom !== '') {
       const date = new Date(purchaseHistoryListingSearchParams.productPurchaseDateFrom);
       conditions.productPurchaseDateFrom = date.toDateString();
-      console.log('productPurchaseDateFrom:' + date.toDateString);
 
     }
     if (purchaseHistoryListingSearchParams.productPurchaseDateTo !== '') {

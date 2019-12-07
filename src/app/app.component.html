@@ -15,7 +15,8 @@
     <!-- Wrapper of body -->
     <div class="body-wrapper">
       <!-- Header -->
-      <app-header (sidenavToggle)="sidenav.toggle()" *ngIf="this.router.url!=='/' && this.router.url!=='/sign-in'">
+      <app-header (sidenavToggle)="sidenav.toggle()"
+        *ngIf="this.routingService.router.url!=='/' && this.routingService.router.url!=='/sign-in'">
       </app-header>
 
       <!-- Router -->

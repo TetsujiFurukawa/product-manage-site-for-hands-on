@@ -18,6 +18,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
+import { RoutingService } from 'src/app/service/common/routing.service';
 
 const CHAR_NEW = '/new';
 
@@ -33,7 +34,7 @@ export class ProductRegisteringPageComponent implements OnInit {
     private loadingService: LoadingService,
     private productService: ProductService,
     private accountService: AccountService,
-    private router: Router,
+    private routingService: RoutingService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private currencyToNumberPipe: CurrencyToNumberPipe,
@@ -41,7 +42,7 @@ export class ProductRegisteringPageComponent implements OnInit {
 
   ) { }
   // Called new or update?
-  isNew = this.router.url === '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW;
+  isNew = this.routingService.router.url === '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW;
 
   // Form controls
   productSeq = new FormControl('', []);
@@ -129,7 +130,7 @@ export class ProductRegisteringPageComponent implements OnInit {
   }
 
   onReturn() {
-    this.router.navigate([UrlConst.PATH_PRODUCT_LISTING]);
+    this.routingService.router.navigate([UrlConst.PATH_PRODUCT_LISTING]);
   }
 
   onSave() {
@@ -148,7 +149,7 @@ export class ProductRegisteringPageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const productDto: ProductDto = this.createDto();
+        const productDto: ProductDto = this.createDto(this.isNew);
         this.save(productDto);
       }
     });
@@ -205,9 +206,9 @@ export class ProductRegisteringPageComponent implements OnInit {
     this.messagePropertySaveButton = 'productRegisteringPage.saveButton.edit';
   }
 
-  private createDto(): ProductDto {
+  private createDto(isNew: boolean): ProductDto {
     const productDto: ProductDto = new ProductDto();
-    if (this.router.url !== '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW) {
+    if (!isNew) {
       productDto.productSeq = this.productSeq.value;
     }
     productDto.productCode = this.productCode.value;

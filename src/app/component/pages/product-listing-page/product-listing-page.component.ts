@@ -15,6 +15,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { RoutingService } from 'src/app/service/common/routing.service';
 
 @Component({
   selector: 'app-product-listing-page',
@@ -29,7 +30,7 @@ export class ProductListingPageComponent implements OnInit {
     private productService: ProductService,
     private accountService: AccountService,
     private searchParamsService: SearchParamsService,
-    private router: Router,
+    private routingService: RoutingService,
     public currencyToNumberPipe: CurrencyToNumberPipe,
     public translateService: TranslateService,
   ) { }
@@ -88,7 +89,7 @@ export class ProductListingPageComponent implements OnInit {
 
   onNew() {
     this.searchParamsService.removeProductListingSearchParam();
-    this.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING + '/new']);
+    this.routingService.navigate(UrlConst.PATH_PRODUCT_REGISTERING + '/new');
   }
 
   onClear() {
@@ -118,7 +119,7 @@ export class ProductListingPageComponent implements OnInit {
   }
 
   onRowClicked(productResponseDto: ProductSearchResponseDto) {
-    this.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING, productResponseDto.productCode]);
+    this.routingService.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING, productResponseDto.productCode]);
   }
 
   // --------------------------------------------------------------------------------

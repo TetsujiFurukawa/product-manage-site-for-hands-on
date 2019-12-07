@@ -19,6 +19,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { TranslateService } from '@ngx-translate/core';
 
 import { MatDatePickerComponent } from '../../common/mat-date-picker/mat-date-picker.component';
+import { TitleI18Service } from 'src/app/service/common/title-i18.service';
+import { UrlConst } from 'src/app/const/url-const';
 
 @Component({
   selector: 'app-purchase-history-listing-page',
@@ -34,6 +36,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
     private purchaseService: ProductPurchaseService,
     private accountService: AccountService,
     private searchParamsService: SearchParamsService,
+    private titleI18Service: TitleI18Service,
     public currencyToNumberPipe: CurrencyToNumberPipe,
     public translateService: TranslateService,
   ) { }
@@ -91,6 +94,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
 
   ngOnInit() {
     this.setupLanguage();
+    this.titleI18Service.setTitle(UrlConst.PATH_PURCHASE_HISTORY_LISTING);
   }
 
   onClear() {

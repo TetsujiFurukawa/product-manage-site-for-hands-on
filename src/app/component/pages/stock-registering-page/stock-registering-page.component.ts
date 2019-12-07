@@ -18,6 +18,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 
 import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
+import { TitleI18Service } from 'src/app/service/common/title-i18.service';
+import { UrlConst } from 'src/app/const/url-const';
 
 @Component({
   selector: 'app-stock-registering-page',
@@ -34,6 +36,7 @@ export class StockRegisteringPageComponent implements OnInit {
     private accountService: AccountService,
     private dialog: MatDialog,
     private currencyToNumberPipe: CurrencyToNumberPipe,
+    private titleI18Service: TitleI18Service,
     public translateService: TranslateService,
 
   ) { }
@@ -73,6 +76,7 @@ export class StockRegisteringPageComponent implements OnInit {
   ngOnInit() {
     this.loadData();
     this.setupLangage();
+    this.titleI18Service.setTitle(UrlConst.PATH_STOCK_REGISTERING);
   }
 
   onSave() {

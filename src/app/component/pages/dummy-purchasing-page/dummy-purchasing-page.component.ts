@@ -19,6 +19,8 @@ import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.c
 import { ProductCodeProductNameValidator } from 'src/app/validator/product-code-product-name-validator';
 import { PurchaseQuantityStockQuantityValidator } from 'src/app/validator/purchase-quantity-stock-quantity-validator';
 import { ProductService } from 'src/app/service/common/product.service';
+import { TitleI18Service } from 'src/app/service/common/title-i18.service';
+import { UrlConst } from 'src/app/const/url-const';
 
 @Component({
   selector: 'app-dummy-purchasing-page',
@@ -35,6 +37,7 @@ export class DummyPurchasingPageComponent implements OnInit {
     private accountService: AccountService,
     private dialog: MatDialog,
     private currencyToNumberPipe: CurrencyToNumberPipe,
+    private titleI18Service: TitleI18Service,
     public translateService: TranslateService,
 
   ) { }
@@ -84,6 +87,7 @@ export class DummyPurchasingPageComponent implements OnInit {
   ngOnInit() {
     this.loadData();
     this.setupLangage();
+    this.titleI18Service.setTitle(UrlConst.PATH_DUMMY_PURCHASING);
   }
 
   onSave() {

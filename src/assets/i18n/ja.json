@@ -25,6 +25,14 @@
         "product-listing": "商品一覧",
         "stock-registering": "在庫登録"
     },
+    "title": {
+        "system": "【Example Site】",
+        "purchase-history-listing": "購入履歴",
+        "dummy-purchasing": "購入登録(テスト用)",
+        "product-listing": "商品一覧",
+        "product-registering": "商品登録/編集",
+        "stock-registering": "在庫登録"
+    },
     "signInPage": {
         "userAccount": "ユーザアカウント",
         "userPassword": "パスワード",

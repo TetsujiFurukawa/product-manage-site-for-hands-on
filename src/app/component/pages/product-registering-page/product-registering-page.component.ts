@@ -19,6 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
 import { RoutingService } from 'src/app/service/common/routing.service';
+import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 
 const CHAR_NEW = '/new';
 
@@ -38,6 +39,7 @@ export class ProductRegisteringPageComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private currencyToNumberPipe: CurrencyToNumberPipe,
+    private titleI18Service: TitleI18Service,
     public translateService: TranslateService,
 
   ) { }
@@ -102,6 +104,7 @@ export class ProductRegisteringPageComponent implements OnInit {
   ngOnInit() {
     this.loadData();
     this.setupLangage();
+    this.titleI18Service.setTitle(UrlConst.PATH_PRODUCT_REGISTERING);
     if (!this.isNew) {
       this.setupButtonTextToEdit();
       this.loadProductData();

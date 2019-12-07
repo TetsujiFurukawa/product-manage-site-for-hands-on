@@ -1,21 +1,23 @@
 import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { UrlConst } from 'src/app/const/url-const';
+import {
+  ProductListingSearchParams
+} from 'src/app/entity/dto/request/product-listing-search-params';
 import { ProductSearchResponseDto } from 'src/app/entity/dto/response/product-search-response-dto';
-import { ProductListingSearchParams } from 'src/app/entity/dto/request/product-listing-search-params';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
 import { AccountService } from 'src/app/service/common/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
 import { ProductService } from 'src/app/service/common/product.service';
+import { RoutingService } from 'src/app/service/common/routing.service';
 import { SearchParamsService } from 'src/app/service/common/search-params.service';
+import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { RoutingService } from 'src/app/service/common/routing.service';
 
 @Component({
   selector: 'app-product-listing-page',
@@ -31,6 +33,7 @@ export class ProductListingPageComponent implements OnInit {
     private accountService: AccountService,
     private searchParamsService: SearchParamsService,
     private routingService: RoutingService,
+    private titleI18Service: TitleI18Service,
     public currencyToNumberPipe: CurrencyToNumberPipe,
     public translateService: TranslateService,
   ) { }
@@ -84,6 +87,7 @@ export class ProductListingPageComponent implements OnInit {
   ngOnInit() {
     this.loadData();
     this.setupLanguage();
+    this.titleI18Service.setTitle(UrlConst.PATH_PRODUCT_LISTING);
     this.initSearchCriteria();
   }
 

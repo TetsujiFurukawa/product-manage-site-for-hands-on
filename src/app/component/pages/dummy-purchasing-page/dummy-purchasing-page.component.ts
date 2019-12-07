@@ -10,7 +10,7 @@ import { AccountService } from 'src/app/service/common/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
 import { ProductPurchaseService } from 'src/app/service/common/product-purchase.service';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
@@ -27,7 +27,7 @@ import { UrlConst } from 'src/app/const/url-const';
   templateUrl: './dummy-purchasing-page.component.html',
   styleUrls: ['./dummy-purchasing-page.component.scss']
 })
-export class DummyPurchasingPageComponent implements OnInit {
+export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private formBuilder: FormBuilder,
@@ -87,7 +87,10 @@ export class DummyPurchasingPageComponent implements OnInit {
   ngOnInit() {
     this.loadData();
     this.setupLangage();
-    this.titleI18Service.setTitle(UrlConst.PATH_DUMMY_PURCHASING);
+  }
+
+  ngAfterViewChecked() {
+    this.titleI18Service.setTitle(UrlConst.PATH_PRODUCT_LISTING);
   }
 
   onSave() {

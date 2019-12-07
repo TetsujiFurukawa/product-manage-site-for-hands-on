@@ -1,5 +1,6 @@
 import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
+import { UrlConst } from 'src/app/const/url-const';
 import {
   ProductPurchaseHistoryListingSearchParams
 } from 'src/app/entity/dto/request/product-purchase-history-listing-search-params';
@@ -11,16 +12,17 @@ import { AccountService } from 'src/app/service/common/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
 import { ProductPurchaseService } from 'src/app/service/common/product-purchase.service';
 import { SearchParamsService } from 'src/app/service/common/search-params.service';
+import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import {
+  AfterViewChecked, Component, OnInit, QueryList, ViewChild, ViewChildren
+} from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { TranslateService } from '@ngx-translate/core';
 
 import { MatDatePickerComponent } from '../../common/mat-date-picker/mat-date-picker.component';
-import { TitleI18Service } from 'src/app/service/common/title-i18.service';
-import { UrlConst } from 'src/app/const/url-const';
 
 @Component({
   selector: 'app-purchase-history-listing-page',
@@ -28,7 +30,7 @@ import { UrlConst } from 'src/app/const/url-const';
   styleUrls: ['./purchase-history-listing-page.component.scss']
 })
 
-export class PurchaseHistoryListingPageComponent implements OnInit {
+export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private formBuilder: FormBuilder,
@@ -94,7 +96,10 @@ export class PurchaseHistoryListingPageComponent implements OnInit {
 
   ngOnInit() {
     this.setupLanguage();
-    this.titleI18Service.setTitle(UrlConst.PATH_PURCHASE_HISTORY_LISTING);
+  }
+
+  ngAfterViewChecked() {
+    this.titleI18Service.setTitle(UrlConst.PATH_PRODUCT_LISTING);
   }
 
   onClear() {

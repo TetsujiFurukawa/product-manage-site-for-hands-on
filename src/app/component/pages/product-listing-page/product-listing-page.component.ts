@@ -14,7 +14,7 @@ import { SearchParamsService } from 'src/app/service/common/search-params.servic
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { TranslateService } from '@ngx-translate/core';
@@ -24,8 +24,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './product-listing-page.component.html',
   styleUrls: ['./product-listing-page.component.scss']
 })
-export class ProductListingPageComponent implements OnInit {
-
+export class ProductListingPageComponent implements OnInit, AfterViewChecked {
   constructor(
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
@@ -87,8 +86,11 @@ export class ProductListingPageComponent implements OnInit {
   ngOnInit() {
     this.loadData();
     this.setupLanguage();
-    this.titleI18Service.setTitle(UrlConst.PATH_PRODUCT_LISTING);
     this.initSearchCriteria();
+  }
+
+  ngAfterViewChecked() {
+    this.titleI18Service.setTitle(UrlConst.PATH_PRODUCT_LISTING);
   }
 
   onNew() {

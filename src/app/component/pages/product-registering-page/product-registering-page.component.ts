@@ -7,19 +7,19 @@ import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
 import { AccountService } from 'src/app/service/common/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
 import { ProductService } from 'src/app/service/common/product.service';
+import { RoutingService } from 'src/app/service/common/routing.service';
+import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 import {
   EndOfSaleEndOfSaleDateValidator
 } from 'src/app/validator/end-of-sale-end-of-sale-date-validator';
 
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
-import { RoutingService } from 'src/app/service/common/routing.service';
-import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 
 const CHAR_NEW = '/new';
 
@@ -28,7 +28,7 @@ const CHAR_NEW = '/new';
   templateUrl: './product-registering-page.component.html',
   styleUrls: ['./product-registering-page.component.scss']
 })
-export class ProductRegisteringPageComponent implements OnInit {
+export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private formBuilder: FormBuilder,
@@ -104,11 +104,14 @@ export class ProductRegisteringPageComponent implements OnInit {
   ngOnInit() {
     this.loadData();
     this.setupLangage();
-    this.titleI18Service.setTitle(UrlConst.PATH_PRODUCT_REGISTERING);
     if (!this.isNew) {
       this.setupButtonTextToEdit();
       this.loadProductData();
     }
+  }
+
+  ngAfterViewChecked() {
+    this.titleI18Service.setTitle(UrlConst.PATH_PRODUCT_LISTING);
   }
 
   onFileSelected(files: File) {

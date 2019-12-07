@@ -12,7 +12,7 @@ import {
   ProductCodeProductNameValidator
 } from 'src/app/validator/product-code-product-name-validator';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
@@ -26,7 +26,7 @@ import { UrlConst } from 'src/app/const/url-const';
   templateUrl: './stock-registering-page.component.html',
   styleUrls: ['./stock-registering-page.component.scss']
 })
-export class StockRegisteringPageComponent implements OnInit {
+export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private formBuilder: FormBuilder,
@@ -76,6 +76,9 @@ export class StockRegisteringPageComponent implements OnInit {
   ngOnInit() {
     this.loadData();
     this.setupLangage();
+  }
+
+  ngAfterViewChecked() {
     this.titleI18Service.setTitle(UrlConst.PATH_STOCK_REGISTERING);
   }
 

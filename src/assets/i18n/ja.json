@@ -8,11 +8,20 @@
             "message": "システムからログアウトしますか？",
             "captionYes": "はい",
             "captionNo": "いいえ"
+        },
+        "tooltip": {
+            "subMenu": {
+                "purchase-history-listing": "購入履歴の一覧表示をおこないます。",
+                "dummy-purchasing": "購入データをテスト登録します。",
+                "product-listing": "商品の一覧表示と登録変更をおこないます。",
+                "stock-registering": "商品の在庫を登録します。"
+            },
+            "signOut": "システムからログアウトします。"
         }
     },
     "subMenu": {
         "purchase-history-listing": "購入履歴",
-        "dummy-purchasing": "購入登録(ダミー)",
+        "dummy-purchasing": "購入登録(テスト用)",
         "product-listing": "商品一覧",
         "stock-registering": "在庫登録"
     },

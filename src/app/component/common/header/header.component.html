@@ -16,7 +16,8 @@
             </button>
             <mat-menu #appMenu="matMenu">
               <ng-container *ngFor="let subMenuCode of item.subMenuCodeList">
-                <button mat-menu-item routerLink="/{{subMenuCode}}" class="sub-menu">
+                <button mat-menu-item matTooltip="{{ 'menu.tooltip.subMenu.' + subMenuCode | translate }}"
+                  routerLink="/{{subMenuCode}}" class="sub-menu">
                   {{'subMenu.' + subMenuCode | translate }}
                 </button>
               </ng-container>
@@ -24,7 +25,8 @@
           </ng-container>
         </div>
 
-        <button mat-button class="btnSignOut" (click)="onSignOut()">
+        <button mat-button class="btnSignOut" matTooltip="{{ 'menu.tooltip.signOut' | translate }}"
+          (click)="onSignOut()">
           <mat-icon>exit_to_app</mat-icon>
         </button>
       </mat-toolbar-row>

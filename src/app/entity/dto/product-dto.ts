@@ -1,6 +1,5 @@
 export class ProductDto {
-
-  productSeq: number;
+  productSeq: bigint;
 
   productName: string;
 
@@ -21,5 +20,4 @@ export class ProductDto {
   endOfSaleDate: Date;
 
   updateDate: Date;
-
 }

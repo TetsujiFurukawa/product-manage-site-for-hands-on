@@ -97,19 +97,16 @@ registerLocaleData(localeJa);
     }),
     NgxUpperCaseDirectiveModule
   ],
-  entryComponents: [
-    YesNoDialogComponent
+  entryComponents: [YesNoDialogComponent],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpXsrfInterceptor, multi: true },
+    CurrencyPipe,
+    CurrencyToNumberPipe,
+    // The locale to use for this system
+    { provide: LOCALE_ID, useValue: 'ja-JP' },
+    { provide: MatPaginatorIntl, useClass: MatPaginatorI18nService }
   ],
-  providers:
-    [
-      { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true },
-      { provide: HTTP_INTERCEPTORS, useClass: HttpXsrfInterceptor, multi: true },
-      CurrencyPipe,
-      CurrencyToNumberPipe,
-      // The locale to use for this system
-      { provide: LOCALE_ID, useValue: 'ja-JP' },
-      { provide: MatPaginatorIntl, useClass: MatPaginatorI18nService }
-    ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

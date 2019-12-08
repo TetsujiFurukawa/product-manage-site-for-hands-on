@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { SessionStrageService } from './session-strage.service';
 
-describe('SessionStrageService', () => {
+xdescribe('SessionStrageService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {

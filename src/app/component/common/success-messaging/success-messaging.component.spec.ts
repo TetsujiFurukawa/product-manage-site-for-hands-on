@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SuccessMessagingComponent } from './success-messaging.component';
 
-describe('SuccessMessagingComponent', () => {
+xdescribe('SuccessMessagingComponent', () => {
   let component: SuccessMessagingComponent;
   let fixture: ComponentFixture<SuccessMessagingComponent>;
 

@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { RoutingService } from './routing.service';
 
-describe('RoutingService', () => {
+xdescribe('RoutingService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {

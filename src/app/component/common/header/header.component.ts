@@ -20,7 +20,7 @@ import { YesNoDialogComponent } from '../yes-no-dialog/yes-no-dialog.component';
 })
 export class HeaderComponent implements OnInit {
 
-  // メニュー
+  // Menu response data
   menuListResponseDto: MenuListResponseDto[];
 
   constructor(
@@ -32,16 +32,31 @@ export class HeaderComponent implements OnInit {
     public routingService: RoutingService
   ) { }
 
+  /**
+   * on init
+   */
   ngOnInit() {
-    // メニューデータを取得する。
     this.getMenu();
   }
 
-  onToggleSidenav() {
+  /**
+   * Clicks toggle sidenav
+   */
+  clickToggleSidenav() {
     // TBD
   }
 
-  onSignOut() {
+  /**
+   * Clicks submenu
+   */
+  clickSubmenu() {
+    this.searchParamsService.removeProductListingSearchParam();
+  }
+
+  /**
+   * Clicks sign out
+   */
+  clickSignOut() {
     const dialogData: YesNoDialogData = {
       title: this.translateService.instant('menu.saveYesNoDialog.title'),
       message: this.translateService.instant('menu.saveYesNoDialog.message'),
@@ -60,11 +75,11 @@ export class HeaderComponent implements OnInit {
         this.signOut();
       }
     });
-
   }
-  /**
-   * Gets menu data in header.
-   */
+
+  // --------------------------------------------------------------------------------
+  // private methods
+  // --------------------------------------------------------------------------------
   private getMenu() {
     this.accountService.getMenu()
       .subscribe(menuListResponseDto => {
@@ -80,4 +95,5 @@ export class HeaderComponent implements OnInit {
       this.routingService.navigate(UrlConst.PATH_SIGN_IN);
     });
   }
+
 }

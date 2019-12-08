@@ -1,8 +1,11 @@
-import { Injectable } from '@angular/core';
-import { SessionStrageService } from './session-strage.service';
-import { ProductListingSearchParams } from 'src/app/entity/dto/request/product-listing-search-params';
 import { AppConst } from 'src/app/const/app-const';
-import { ProductPurchaseHistoryListingSearchParams } from 'src/app/entity/dto/request/product-purchase-history-listing-search-params';
+import {
+    ProductListingSearchParams
+} from 'src/app/entity/dto/request/product-listing-search-params';
+
+import { Injectable } from '@angular/core';
+
+import { SessionStrageService } from './session-strage.service';
 
 @Injectable({
   providedIn: 'root'

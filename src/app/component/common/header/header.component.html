@@ -2,7 +2,7 @@
   <header class="header">
     <mat-toolbar class="toolbar">
       <mat-toolbar-row class="toolbar-row">
-        <button mat-icon-button (click)="onToggleSidenav()">
+        <button mat-icon-button (click)="clickToggleSidenav()">
           <mat-icon>menu</mat-icon>
         </button>
         <button mat-button routerLink="/account-setting" class="menu">
@@ -17,7 +17,7 @@
             <mat-menu #appMenu="matMenu">
               <ng-container *ngFor="let subMenuCode of item.subMenuCodeList">
                 <button mat-menu-item matTooltip="{{ 'menu.tooltip.subMenu.' + subMenuCode | translate }}"
-                  routerLink="/{{subMenuCode}}" class="sub-menu">
+                  routerLink="/{{subMenuCode}}" class="sub-menu" (click)="clickSubmenu()">
                   {{'subMenu.' + subMenuCode | translate }}
                 </button>
               </ng-container>
@@ -26,7 +26,7 @@
         </div>
 
         <button mat-button class="btnSignOut" matTooltip="{{ 'menu.tooltip.signOut' | translate }}"
-          (click)="onSignOut()">
+          (click)="clickSignOut()">
           <mat-icon>exit_to_app</mat-icon>
         </button>
       </mat-toolbar-row>

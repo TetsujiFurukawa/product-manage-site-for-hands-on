@@ -27,6 +27,7 @@
     "ngx-upper-case-directive": "^1.0.3",
     "reset-css": "^4.0.1",
     "rxjs": "~6.5.3",
+    "serialize-javascript": "^2.1.1",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
   },

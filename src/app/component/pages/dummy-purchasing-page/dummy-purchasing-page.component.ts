@@ -6,9 +6,9 @@ import {
 import { ProductPurchaseResponseDto } from 'src/app/entity/dto/response/product-purchase-response-dto';
 import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
-import { AccountService } from 'src/app/service/common/account.service';
+import { AccountService } from 'src/app/service/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
-import { ProductPurchaseService } from 'src/app/service/common/product-purchase.service';
+import { ProductPurchaseService } from 'src/app/service/product-purchase.service';
 
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
@@ -18,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
 import { ProductCodeProductNameValidator } from 'src/app/validator/product-code-product-name-validator';
 import { PurchaseQuantityStockQuantityValidator } from 'src/app/validator/purchase-quantity-stock-quantity-validator';
-import { ProductService } from 'src/app/service/common/product.service';
+import { ProductService } from 'src/app/service/product.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 import { UrlConst } from 'src/app/const/url-const';
 

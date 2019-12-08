@@ -1,5 +1,13 @@
-import { HttpClient, HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
+
+import { CurrencyPipe, registerLocaleData } from '@angular/common';
+import {
+    HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpClientXsrfModule
+} from '@angular/common/http';
+import localeJa from '@angular/common/locales/ja';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -7,41 +15,42 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import {
+    ErrorMessagingComponent
+} from './component/common/error-messaging/error-messaging.component';
 import { FooterComponent } from './component/common/footer/footer.component';
 import { HeaderComponent } from './component/common/header/header.component';
+import { LoadingComponent } from './component/common/loading/loading.component';
+import {
+    MatDatePickerComponent
+} from './component/common/mat-date-picker/mat-date-picker.component';
 import { SidenavComponent } from './component/common/sidenav/sidenav.component';
 import {
-  DummyPurchasingPageComponent
+    SuccessMessagingComponent
+} from './component/common/success-messaging/success-messaging.component';
+import { YesNoDialogComponent } from './component/common/yes-no-dialog/yes-no-dialog.component';
+import {
+    DummyPurchasingPageComponent
 } from './component/pages/dummy-purchasing-page/dummy-purchasing-page.component';
 import {
-  ProductListingPageComponent
+    ProductListingPageComponent
 } from './component/pages/product-listing-page/product-listing-page.component';
 import {
-  ProductRegisteringPageComponent
+    ProductRegisteringPageComponent
 } from './component/pages/product-registering-page/product-registering-page.component';
 import {
-  PurchaseHistoryListingPageComponent
+    PurchaseHistoryListingPageComponent
 } from './component/pages/purchase-history-listing-page/purchase-history-listing-page.component';
 import { SignInPageComponent } from './component/pages/sign-in-page/sign-in-page.component';
 import {
-  StockRegisteringPageComponent
+    StockRegisteringPageComponent
 } from './component/pages/stock-registering-page/stock-registering-page.component';
-import { MaterialModule } from './utils/material/material.module';
-import { ReactiveFormsModule } from '@angular/forms';
-import { XhrInterceptor } from './intercepter/xhr-interceptor';
-import { ErrorMessagingComponent } from './component/common/error-messaging/error-messaging.component';
-import { HttpXsrfInterceptor } from './intercepter/http-xsrf-interceptor';
-import { LoadingComponent } from './component/common/loading/loading.component';
-import { YesNoDialogComponent } from './component/common/yes-no-dialog/yes-no-dialog.component';
-import { SuccessMessagingComponent } from './component/common/success-messaging/success-messaging.component';
-import { MatDatePickerComponent } from './component/common/mat-date-picker/mat-date-picker.component';
-import { registerLocaleData, CurrencyPipe } from '@angular/common';
-import localeJa from '@angular/common/locales/ja';
-import { CurrencyToNumberPipe } from './pipe/currency-to-number.pipe';
 import { NumberInputDirective } from './directive/number-input.directive';
+import { HttpXsrfInterceptor } from './intercepter/http-xsrf-interceptor';
+import { XhrInterceptor } from './intercepter/xhr-interceptor';
+import { CurrencyToNumberPipe } from './pipe/currency-to-number.pipe';
 import { MatPaginatorI18nService } from './service/common/mat-paginator-i18n.service';
-import { MatPaginatorIntl } from '@angular/material/paginator';
-import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
+import { MaterialModule } from './utils/material/material.module';
 
 // 他言語化の設定
 export function HttpLoaderFactory(http: HttpClient) {

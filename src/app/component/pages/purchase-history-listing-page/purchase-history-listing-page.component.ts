@@ -8,9 +8,9 @@ import {
   ProductPurchaseHistorySearchResponseDto
 } from 'src/app/entity/dto/response/product-purchase-history-search-response-dto';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
-import { AccountService } from 'src/app/service/common/account.service';
+import { AccountService } from 'src/app/service/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
-import { ProductPurchaseService } from 'src/app/service/common/product-purchase.service';
+import { ProductPurchaseService } from 'src/app/service/product-purchase.service';
 import { SearchParamsService } from 'src/app/service/common/search-params.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 

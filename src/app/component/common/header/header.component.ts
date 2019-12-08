@@ -2,7 +2,7 @@ import { AppConst } from 'src/app/const/app-const';
 import { UrlConst } from 'src/app/const/url-const';
 import { MenuListResponseDto } from 'src/app/entity/dto/response/menu-list-response-dto';
 import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
-import { AccountService } from 'src/app/service/common/account.service';
+import { AccountService } from 'src/app/service/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
 import { RoutingService } from 'src/app/service/common/routing.service';
 import { SearchParamsService } from 'src/app/service/common/search-params.service';

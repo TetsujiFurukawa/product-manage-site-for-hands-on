@@ -6,9 +6,9 @@ import {
 } from 'src/app/entity/dto/request/product-listing-search-params';
 import { ProductSearchResponseDto } from 'src/app/entity/dto/response/product-search-response-dto';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
-import { AccountService } from 'src/app/service/common/account.service';
+import { AccountService } from 'src/app/service/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
-import { ProductService } from 'src/app/service/common/product.service';
+import { ProductService } from 'src/app/service/product.service';
 import { RoutingService } from 'src/app/service/common/routing.service';
 import { SearchParamsService } from 'src/app/service/common/search-params.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';

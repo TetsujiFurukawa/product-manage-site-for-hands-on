@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SuccessMessagingService } from './success-messaging.service';
-import { ErrorMessagingService } from './error-messaging.service';
+import { ErrorMessagingService } from './common/error-messaging.service';
 import { UrlConst } from 'src/app/const/url-const';
 import { ApiConst } from 'src/app/const/api-const';
 import { ProductStockResponseDto } from 'src/app/entity/dto/response/product-stock-response-dto';
@@ -8,6 +7,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ProductStockRequestDto } from 'src/app/entity/dto/request/product-stock-request-dto';
+import { SuccessMessagingService } from './common/success-messaging.service';
 
 @Injectable({
   providedIn: 'root'

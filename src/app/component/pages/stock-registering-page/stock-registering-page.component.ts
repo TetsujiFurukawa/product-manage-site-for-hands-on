@@ -4,10 +4,10 @@ import { ProductStockRequestDto } from 'src/app/entity/dto/request/product-stock
 import { ProductStockResponseDto } from 'src/app/entity/dto/response/product-stock-response-dto';
 import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
-import { AccountService } from 'src/app/service/common/account.service';
+import { AccountService } from 'src/app/service/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
-import { ProductStockService } from 'src/app/service/common/product-stock.service';
-import { ProductService } from 'src/app/service/common/product.service';
+import { ProductStockService } from 'src/app/service/product-stock.service';
+import { ProductService } from 'src/app/service/product.service';
 import {
   ProductCodeProductNameValidator
 } from 'src/app/validator/product-code-product-name-validator';

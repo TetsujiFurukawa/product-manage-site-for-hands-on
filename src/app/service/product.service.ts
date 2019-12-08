@@ -3,17 +3,15 @@ import { catchError, map } from 'rxjs/operators';
 import { ApiConst } from 'src/app/const/api-const';
 import { UrlConst } from 'src/app/const/url-const';
 import { ProductDto } from 'src/app/entity/dto/product-dto';
-import { ProductPurchaseResponseDto } from 'src/app/entity/dto/response/product-purchase-response-dto';
 import {
   ProductSearchListResponseDto
 } from 'src/app/entity/dto/response/product-search-list-response-dto';
 
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 
-import { ErrorMessagingService } from './error-messaging.service';
-import { SuccessMessagingService } from './success-messaging.service';
+import { ErrorMessagingService } from './common/error-messaging.service';
+import { SuccessMessagingService } from './common/success-messaging.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +22,6 @@ export class ProductService {
     private http: HttpClient,
     private successMessagingService: SuccessMessagingService,
     private errorMessageService: ErrorMessagingService,
-    private readonly translateService: TranslateService,
   ) { }
 
   getProductList(httpParams: HttpParams): Observable<ProductSearchListResponseDto> {

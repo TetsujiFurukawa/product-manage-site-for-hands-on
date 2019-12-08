@@ -4,9 +4,9 @@ import { UrlConst } from 'src/app/const/url-const';
 import { ProductDto } from 'src/app/entity/dto/product-dto';
 import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
-import { AccountService } from 'src/app/service/common/account.service';
+import { AccountService } from 'src/app/service/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
-import { ProductService } from 'src/app/service/common/product.service';
+import { ProductService } from 'src/app/service/product.service';
 import { RoutingService } from 'src/app/service/common/routing.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 import {

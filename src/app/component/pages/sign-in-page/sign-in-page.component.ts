@@ -3,7 +3,7 @@ import { UrlConst } from 'src/app/const/url-const';
 import { SignInRequestDto } from 'src/app/entity/dto/request/sign-in-request-dto';
 import { SignInResponseDto } from 'src/app/entity/dto/response/sign-in-response-dto';
 import { User } from 'src/app/entity/user';
-import { AccountService } from 'src/app/service/common/account.service';
+import { AccountService } from 'src/app/service/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
 import { RoutingService } from 'src/app/service/common/routing.service';
 

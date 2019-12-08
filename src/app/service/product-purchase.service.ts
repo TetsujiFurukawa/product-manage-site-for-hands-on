@@ -10,8 +10,8 @@ import {
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { ErrorMessagingService } from './error-messaging.service';
-import { SuccessMessagingService } from './success-messaging.service';
+import { ErrorMessagingService } from './common/error-messaging.service';
+import { SuccessMessagingService } from './common/success-messaging.service';
 import { ProductPurchaseResponseDto } from 'src/app/entity/dto/response/product-purchase-response-dto';
 
 @Injectable({

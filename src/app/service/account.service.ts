@@ -9,8 +9,8 @@ import { SignInRequestDto } from 'src/app/entity/dto/request/sign-in-request-dto
 import { MenuListResponseDto } from 'src/app/entity/dto/response/menu-list-response-dto';
 import { SignInResponseDto } from 'src/app/entity/dto/response/sign-in-response-dto';
 import { User } from 'src/app/entity/user';
-import { ErrorMessagingService } from './error-messaging.service';
-import { SessionStrageService } from './session-strage.service';
+import { ErrorMessagingService } from './common/error-messaging.service';
+import { SessionStrageService } from './common/session-strage.service';
 
 @Injectable({
   providedIn: 'root'

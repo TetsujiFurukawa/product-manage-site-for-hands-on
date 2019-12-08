@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { AccountService } from './account.service';
+import { AccountService } from '../account.service';
 
 @Injectable({
   providedIn: 'root'

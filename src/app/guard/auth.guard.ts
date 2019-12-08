@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivate } from '@angular/router';
-import { AccountService } from '../service/common/account.service';
+import { AccountService } from '../service/account.service';
 import { RoutingService } from '../service/common/routing.service';
 import { AppConst } from '../const/app-const';
 import { UrlConst } from '../const/url-const';

@@ -27,13 +27,9 @@ export class AccountService {
    */
   signIn(signInRequestDto: SignInRequestDto): Observable<SignInResponseDto> {
     const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_SIGN_IN;
-    const headers = new HttpHeaders(
-      signInRequestDto
-        ? {
-            authorization: 'Basic ' + btoa(signInRequestDto.Username + ':' + signInRequestDto.Password)
-          }
-        : {}
-    );
+    const headers = new HttpHeaders({
+      authorization: 'Basic ' + btoa(signInRequestDto.Username + ':' + signInRequestDto.Password)
+    });
 
     return this.http
       .post<SignInResponseDto>(webApiUrl, signInRequestDto, { headers })

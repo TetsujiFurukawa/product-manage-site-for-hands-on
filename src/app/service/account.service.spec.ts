@@ -133,4 +133,50 @@ describe('AccountService', () => {
       req.flush(null);
     });
   });
+
+  describe('#getUser', () => {
+    it('should return expected user', () => {
+      const user: User = createUser();
+
+      accountService.setUser(user);
+      expect(accountService.getUser().userAccount).toEqual(user.userAccount);
+      expect(accountService.getUser().userCurrency).toEqual(user.userCurrency);
+      expect(accountService.getUser().userLanguage).toEqual(user.userLanguage);
+      expect(accountService.getUser().userLocale).toEqual(user.userLocale);
+      expect(accountService.getUser().userName).toEqual(user.userName);
+      expect(accountService.getUser().userTimezone).toEqual(user.userTimezone);
+    });
+  });
+
+  describe('#removeUser', () => {
+    it('should remove user', () => {
+      const user: User = createUser();
+
+      accountService.setUser(user);
+      expectUser(accountService, user);
+
+      accountService.removeUser();
+      expect(accountService.getUser()).toBeNull();
+    });
+  });
 });
+
+function createUser() {
+  const user: User = new User();
+  user.userAccount = 'userAccount';
+  user.userCurrency = 'JPY';
+  user.userLanguage = 'ja';
+  user.userLocale = 'js-JP';
+  user.userName = 'userName';
+  user.userTimezone = 'UTC';
+  return user;
+}
+
+function expectUser(accountService: AccountService, user: User) {
+  expect(accountService.getUser().userAccount).toEqual(user.userAccount);
+  expect(accountService.getUser().userCurrency).toEqual(user.userCurrency);
+  expect(accountService.getUser().userLanguage).toEqual(user.userLanguage);
+  expect(accountService.getUser().userLocale).toEqual(user.userLocale);
+  expect(accountService.getUser().userName).toEqual(user.userName);
+  expect(accountService.getUser().userTimezone).toEqual(user.userTimezone);
+}

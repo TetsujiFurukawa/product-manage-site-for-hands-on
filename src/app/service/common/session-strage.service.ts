@@ -4,8 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SessionStrageService {
-
-  constructor() { }
+  constructor() {}
 
   public static setItem<T>(key: string, t: T): void {
     sessionStorage.setItem(key, JSON.stringify(t));
@@ -18,5 +17,4 @@ export class SessionStrageService {
   public static removeItem(key: string) {
     sessionStorage.removeItem(key);
   }
-
 }

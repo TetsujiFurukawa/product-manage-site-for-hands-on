@@ -1,10 +1,13 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
+import { ApiConst } from '../const/api-const';
+import { UrlConst } from '../const/url-const';
+import { SignInRequestDto } from '../entity/dto/request/sign-in-request-dto';
+import { SignInResponseDto } from '../entity/dto/response/sign-in-response-dto';
 import { AccountService } from './account.service';
-import { ErrorMessagingService } from './common/error-messaging.service';
 
 describe('AccountService', () => {
   let httpClient: HttpClient;
@@ -15,71 +18,60 @@ describe('AccountService', () => {
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       imports: [HttpClientTestingModule],
-      providers: [AccountService, ErrorMessagingService]
+      providers: [AccountService]
     });
     httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get(HttpTestingController);
     accountService = TestBed.get(AccountService);
   });
 
-  it('should be created', () => {
-    const service: AccountService = TestBed.get(AccountService);
-    expect(service).toBeTruthy();
+  afterEach(() => {
+    // After every test, assert that there are no more pending requests.
+    httpTestingController.verify();
   });
 
-  // it('should be created', () => {
-  //   const expectedCompanyDto: CompanyDto = {
-  //     companySeq: BigInt('1'),
-  //     companyName: 'companyName',
-  //     companyKana: 'companyKana',
-  //     companyPostalCode: 'companyPostalCode',
-  //     companyAddress1: 'companyAddress1',
-  //     companyAddress2: 'companyAddress2',
-  //     companyAddress3: 'companyAddress3',
-  //     companyPhoneNumber: 'companyPhoneNumber',
-  //     personInChargeLastName: 'personInChargeLastName',
-  //     personInChargeFirstName: 'personInChargeFirstName',
-  //     departmentInCharge1: 'departmentInCharge1',
-  //     departmentInCharge2: 'departmentInCharge2',
-  //     departmentInCharge3: 'departmentInCharge3',
-  //     personInChargeEmailAddress: 'personInChargeEmailAddress',
-  //     deleted: false,
-  //     createUser: 'createUser',
-  //     createTime: new Date(),
-  //     updateUser: 'updateUser',
-  //     updateTime: new Date()
-  //   };
+  it('should be created', () => {
+    expect(accountService).toBeTruthy();
+  });
 
-  //   httpClientSpy.post.and.returnValue(asyncData(expectedCompanyDto));
+  describe('#signIn', () => {
+    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_SIGN_IN;
 
-  //   companyService
-  //     .createCompany(null)
-  //     .subscribe(companyDto => expect(companyDto).toEqual(expectedCompanyDto, 'expected companyDto'), fail);
-  //   expect(httpClientSpy.post.calls.count()).toBe(1, 'one call');
-  // });
+    it('should return expected response (called once)', () => {
+      const expectedSignInResponseDto: SignInResponseDto = new SignInResponseDto();
+      expectedSignInResponseDto.userAccount = 'userAccount';
+      expectedSignInResponseDto.userName = 'userName';
+      expectedSignInResponseDto.userLocale = 'ja-JP';
+      expectedSignInResponseDto.userLanguage = 'ja';
+      expectedSignInResponseDto.userTimezone = 'UTC';
+      expectedSignInResponseDto.userCurrency = 'JPY';
 
-  // it('can test HttpClient.get', () => {
-  //   const testData: Data = { name: 'Test Data' };
+      accountService
+        .signIn(new SignInRequestDto())
+        .subscribe(
+          signInResponseDto =>
+            expect(signInResponseDto).toEqual(expectedSignInResponseDto, 'should return expected response'),
+          fail
+        );
 
-  //   // Make an HTTP GET request
-  //   httpClient.get<Data>(testUrl).subscribe(data =>
-  //     // When observable resolves, result should match test data
-  //     expect(data).toEqual(testData)
-  //   );
+      const req = httpTestingController.expectOne(webApiUrl);
+      expect(req.request.method).toEqual('POST');
 
-  //   // The following `expectOne()` will match the request's URL.
-  //   // If no requests or multiple requests matched that URL
-  //   // `expectOne()` would throw.
-  //   const req = httpTestingController.expectOne('/data');
+      // Respond with the mock
+      req.flush(expectedSignInResponseDto);
+    });
 
-  //   // Assert that the request is a GET.
-  //   expect(req.request.method).toEqual('GET');
+    it('should return Unauthorized 401', () => {
+      const msg = 'Unauthorized 401';
+      accountService
+        .signIn(new SignInRequestDto())
+        .subscribe(signInResponseDto => expect(signInResponseDto).toBeNull('should return expected response'), fail);
 
-  //   // Respond with mock data, causing Observable to resolve.
-  //   // Subscribe callback asserts that correct data was returned.
-  //   req.flush(testData);
+      const req = httpTestingController.expectOne(webApiUrl);
+      expect(req.request.method).toEqual('POST');
 
-  //   // Finally, assert that there are no outstanding requests.
-  //   httpTestingController.verify();
-  // });
+      // Respond with the mock
+      req.flush(msg, { status: 401, statusText: 'Unauthorized 401' });
+    });
+  });
 });

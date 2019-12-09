@@ -25,7 +25,7 @@ export class AccountService {
    * @param signInRequestDto sign in request
    * @returns sign in response
    */
-  public signIn(signInRequestDto: SignInRequestDto): Observable<SignInResponseDto> {
+  signIn(signInRequestDto: SignInRequestDto): Observable<SignInResponseDto> {
     const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_SIGN_IN;
     const headers = new HttpHeaders(
       signInRequestDto
@@ -49,7 +49,7 @@ export class AccountService {
    * Gets menu
    * @returns menu response
    */
-  public getMenu(): Observable<MenuListResponseDto[]> {
+  getMenu(): Observable<MenuListResponseDto[]> {
     const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_MENU;
 
     return this.http.get<MenuListResponseDto[]>(webApiUrl).pipe(
@@ -58,29 +58,6 @@ export class AccountService {
         return of(null as MenuListResponseDto[]);
       })
     );
-  }
-
-  /**
-   * Gets user
-   * @returns user informations from session strage
-   */
-  public getUser(): User {
-    return SessionStrageService.getItem(AppConst.STRAGE_KEY_USER, new User());
-  }
-
-  /**
-   * Sets user
-   * @param user infomatios to save session strage
-   */
-  public setUser(user: User): void {
-    SessionStrageService.setItem(AppConst.STRAGE_KEY_USER, user);
-  }
-
-  /**
-   * Removes user
-   */
-  public removeUser(): void {
-    SessionStrageService.removeItem(AppConst.STRAGE_KEY_USER);
   }
 
   /**
@@ -95,5 +72,28 @@ export class AccountService {
         return;
       })
     );
+  }
+
+  /**
+   * Gets user
+   * @returns user informations from session strage
+   */
+  getUser(): User {
+    return SessionStrageService.getItem(AppConst.STRAGE_KEY_USER, new User());
+  }
+
+  /**
+   * Sets user
+   * @param user infomatios to save session strage
+   */
+  setUser(user: User): void {
+    SessionStrageService.setItem(AppConst.STRAGE_KEY_USER, user);
+  }
+
+  /**
+   * Removes user
+   */
+  removeUser(): void {
+    SessionStrageService.removeItem(AppConst.STRAGE_KEY_USER);
   }
 }

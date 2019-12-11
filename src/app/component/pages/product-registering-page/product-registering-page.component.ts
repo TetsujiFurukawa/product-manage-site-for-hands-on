@@ -6,11 +6,11 @@ import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
 import { AccountService } from 'src/app/service/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
-import { ProductService } from 'src/app/service/product.service';
 import { RoutingService } from 'src/app/service/common/routing.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
+import { ProductService } from 'src/app/service/product.service';
 import {
-  EndOfSaleEndOfSaleDateValidator
+    EndOfSaleEndOfSaleDateValidator
 } from 'src/app/validator/end-of-sale-end-of-sale-date-validator';
 
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
@@ -29,7 +29,6 @@ const CHAR_NEW = '/new';
   styleUrls: ['./product-registering-page.component.scss']
 })
 export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked {
-
   constructor(
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
@@ -40,18 +39,15 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     private dialog: MatDialog,
     private currencyToNumberPipe: CurrencyToNumberPipe,
     private titleI18Service: TitleI18Service,
-    public translateService: TranslateService,
-
-  ) { }
+    public translateService: TranslateService
+  ) {}
   // Called new or update?
   isNew = this.routingService.router.url === '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW;
 
   // Form controls
   productSeq = new FormControl('', []);
 
-  productCode = new FormControl('', [
-    Validators.required, Validators.pattern(RegexConst.SINGLE_BYTE_ALPHANUMERIC)
-  ]);
+  productCode = new FormControl('', [Validators.required, Validators.pattern(RegexConst.SINGLE_BYTE_ALPHANUMERIC)]);
 
   productName = new FormControl('', [Validators.required]);
 
@@ -62,7 +58,9 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   productColor = new FormControl('', []);
 
   productUnitPrice = new FormControl('', [
-    Validators.required, Validators.max(999999999), Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)
+    Validators.required,
+    Validators.max(999999999),
+    Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)
   ]);
 
   endOfSale = new FormControl(false, []);
@@ -77,19 +75,22 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   updateDate = new FormControl(null, []);
   updateUser = new FormControl('', []);
 
-  registeringForm = this.formBuilder.group({
-    productSeq: this.productSeq,
-    productCode: this.productCode,
-    productName: this.productName,
-    productGenre: this.productGenre,
-    productSizeStandard: this.productSizeStandard,
-    productColor: this.productColor,
-    productUnitPrice: this.productUnitPrice,
-    endOfSale: this.endOfSale,
-    endOfSaleDate: this.endOfSaleDate
-  }, {
-    validators: EndOfSaleEndOfSaleDateValidator.match
-  });
+  registeringForm = this.formBuilder.group(
+    {
+      productSeq: this.productSeq,
+      productCode: this.productCode,
+      productName: this.productName,
+      productGenre: this.productGenre,
+      productSizeStandard: this.productSizeStandard,
+      productColor: this.productColor,
+      productUnitPrice: this.productUnitPrice,
+      endOfSale: this.endOfSale,
+      endOfSaleDate: this.endOfSaleDate
+    },
+    {
+      validators: EndOfSaleEndOfSaleDateValidator.match
+    }
+  );
 
   /** other informations */
   locale: string = this.accountService.getUser().userLocale;
@@ -111,7 +112,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   }
 
   ngAfterViewChecked() {
-    this.titleI18Service.setTitle(UrlConst.PATH_PRODUCT_LISTING);
+    this.titleI18Service.setTitle(UrlConst.PATH_PRODUCT_REGISTERING);
   }
 
   onFileSelected(files: File) {
@@ -169,7 +170,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   // private methods
   // --------------------------------------------------------------------------------
   private loadData() {
-    this.productService.getGenres().subscribe(data => this.genres = data);
+    this.productService.getGenres().subscribe(data => (this.genres = data));
   }
 
   private setupLangage() {
@@ -181,11 +182,10 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   private loadProductData() {
     const productCode = this.route.snapshot.paramMap.get('productCode');
     this.loadingService.startLoading();
-    this.productService.getProduct(productCode)
-      .subscribe(data => {
-        this.extract(data);
-        this.loadingService.stopLoading();
-      });
+    this.productService.getProduct(productCode).subscribe(data => {
+      this.extract(data);
+      this.loadingService.stopLoading();
+    });
   }
 
   private save(productDto: ProductDto) {
@@ -193,17 +193,15 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
 
     if (productDto.productSeq === undefined || productDto.productSeq === null) {
       // Creates product.
-      this.productService.createProduct(productDto)
-        .subscribe(data => {
-          this.extract(data);
-          this.loadingService.stopLoading();
-        });
+      this.productService.createProduct(productDto).subscribe(data => {
+        this.extract(data);
+        this.loadingService.stopLoading();
+      });
     } else {
-      this.productService.updateProduct(productDto)
-        .subscribe(data => {
-          this.extract(data);
-          this.loadingService.stopLoading();
-        });
+      this.productService.updateProduct(productDto).subscribe(data => {
+        this.extract(data);
+        this.loadingService.stopLoading();
+      });
     }
   }
 
@@ -241,7 +239,9 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     this.productGenre.setValue(productDto.productGenre);
     this.productSizeStandard.setValue(productDto.productSizeStandard);
     this.productColor.setValue(productDto.productColor);
-    this.productUnitPrice.setValue(this.currencyToNumberPipe.transform(productDto.productUnitPrice.toString(), this.locale, this.currency));
+    this.productUnitPrice.setValue(
+      this.currencyToNumberPipe.transform(productDto.productUnitPrice.toString(), this.locale, this.currency)
+    );
     this.endOfSale.setValue(productDto.endOfSale);
     this.endOfSaleDate.setValue(productDto.endOfSaleDate);
     this.productImage.setValue(productDto.productImage);

@@ -6,11 +6,11 @@ import { User } from 'src/app/entity/user';
 import { AccountService } from 'src/app/service/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
 import { RoutingService } from 'src/app/service/common/routing.service';
+import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 
 @Component({
   selector: 'app-sign-in-page',
@@ -18,16 +18,11 @@ import { TitleI18Service } from 'src/app/service/common/title-i18.service';
   styleUrls: ['./sign-in-page.component.scss']
 })
 export class SignInPageComponent implements OnInit, AfterViewChecked {
-
   // account
-  signInUserAccount = new FormControl('', [
-    Validators.required
-  ]);
+  signInUserAccount = new FormControl('', [Validators.required]);
 
   // pwd
-  signInUserPassword = new FormControl('', [
-    Validators.required
-  ]);
+  signInUserPassword = new FormControl('', [Validators.required]);
 
   // form group setting
   signInForm = this.formBuilder.group({
@@ -42,7 +37,7 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
     private routingService: RoutingService,
     private titleI18Service: TitleI18Service,
     public translateService: TranslateService
-  ) { }
+  ) {}
 
   ngOnInit() {
     // Sets default language to ja.
@@ -76,7 +71,7 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
 
     // Signs in and gets response dto.
     const signInResponseDto: Observable<SignInResponseDto> = this.accountService.signIn(signInRequestDto);
-    signInResponseDto.subscribe((responseDto) => {
+    signInResponseDto.subscribe(responseDto => {
       if (responseDto != null) {
         // Sets account information.
         this.setUpUserAccount(responseDto);

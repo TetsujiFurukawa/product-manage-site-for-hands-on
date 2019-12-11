@@ -1,25 +1,25 @@
 import { AppConst } from 'src/app/const/app-const';
 import { RegexConst } from 'src/app/const/regex-const';
+import { UrlConst } from 'src/app/const/url-const';
 import { ProductStockRequestDto } from 'src/app/entity/dto/request/product-stock-request-dto';
 import { ProductStockResponseDto } from 'src/app/entity/dto/response/product-stock-response-dto';
 import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
 import { AccountService } from 'src/app/service/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
+import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 import { ProductStockService } from 'src/app/service/product-stock.service';
 import { ProductService } from 'src/app/service/product.service';
 import {
-  ProductCodeProductNameValidator
+    ProductCodeProductNameValidator
 } from 'src/app/validator/product-code-product-name-validator';
 
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 
 import { YesNoDialogComponent } from '../../common/yes-no-dialog/yes-no-dialog.component';
-import { TitleI18Service } from 'src/app/service/common/title-i18.service';
-import { UrlConst } from 'src/app/const/url-const';
 
 @Component({
   selector: 'app-stock-registering-page',
@@ -27,7 +27,6 @@ import { UrlConst } from 'src/app/const/url-const';
   styleUrls: ['./stock-registering-page.component.scss']
 })
 export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
-
   constructor(
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
@@ -37,35 +36,37 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     private dialog: MatDialog,
     private currencyToNumberPipe: CurrencyToNumberPipe,
     private titleI18Service: TitleI18Service,
-    public translateService: TranslateService,
-
-  ) { }
+    public translateService: TranslateService
+  ) {}
   // product code
-  productCode = new FormControl('', [
-    Validators.required, Validators.pattern(RegexConst.SINGLE_BYTE_ALPHANUMERIC)
-  ]);
+  productCode = new FormControl('', [Validators.required, Validators.pattern(RegexConst.SINGLE_BYTE_ALPHANUMERIC)]);
 
   productName = new FormControl('');
   productGenre = new FormControl('');
   productSizeStandard = new FormControl('');
   productStockQuantity = new FormControl('');
   addProductStockQuantity = new FormControl('', [
-    Validators.required, Validators.max(999999999), Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)
+    Validators.required,
+    Validators.max(999999999),
+    Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)
   ]);
   // product image
   productImage = new FormControl(null);
 
-  registeringForm = this.formBuilder.group({
-    productCode: this.productCode,
-    productName: this.productName,
-    productGenre: this.productGenre,
-    productSizeStandard: this.productSizeStandard,
-    productStockQuantity: this.productStockQuantity,
-    addProductStockQuantity: this.addProductStockQuantity,
-    productImage: this.productImage
-  }, {
-    validators: ProductCodeProductNameValidator.match
-  });
+  registeringForm = this.formBuilder.group(
+    {
+      productCode: this.productCode,
+      productName: this.productName,
+      productGenre: this.productGenre,
+      productSizeStandard: this.productSizeStandard,
+      productStockQuantity: this.productStockQuantity,
+      addProductStockQuantity: this.addProductStockQuantity,
+      productImage: this.productImage
+    },
+    {
+      validators: ProductCodeProductNameValidator.match
+    }
+  );
 
   /** other informations */
   locale: string = this.accountService.getUser().userLocale;
@@ -120,7 +121,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   // private methods
   // --------------------------------------------------------------------------------
   private loadData() {
-    this.productService.getGenres().subscribe(data => this.genres = data);
+    this.productService.getGenres().subscribe(data => (this.genres = data));
   }
 
   private setupLangage() {
@@ -132,28 +133,28 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   private loadProductData() {
     this.loadingService.startLoading();
 
-    this.productStockService.getProductStock(this.productCode.value)
-      .subscribe(data => {
-        this.load(data);
-        this.loadingService.stopLoading();
-      });
+    this.productStockService.getProductStock(this.productCode.value).subscribe(data => {
+      this.load(data);
+      this.loadingService.stopLoading();
+    });
   }
 
   private save(productStockRequestDto: ProductStockRequestDto) {
     this.loadingService.startLoading();
 
-    this.productStockService.updateProductStock(productStockRequestDto)
-      .subscribe(data => {
-        this.extract(data);
-        this.loadingService.stopLoading();
-      });
+    this.productStockService.updateProductStock(productStockRequestDto).subscribe(data => {
+      this.extract(data);
+      this.loadingService.stopLoading();
+    });
   }
 
   private createProductStockRequestDto(): ProductStockRequestDto {
     const productStockRequestDto: ProductStockRequestDto = new ProductStockRequestDto();
     productStockRequestDto.productCode = this.productCode.value;
     productStockRequestDto.productStockQuantity = this.currencyToNumberPipe.parse(this.productStockQuantity.value);
-    productStockRequestDto.addProductStockQuantity = this.currencyToNumberPipe.parse(this.addProductStockQuantity.value);
+    productStockRequestDto.addProductStockQuantity = this.currencyToNumberPipe.parse(
+      this.addProductStockQuantity.value
+    );
 
     return productStockRequestDto;
   }
@@ -166,8 +167,13 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     this.productName.setValue(productStockResponseDto.productName);
     this.productGenre.setValue(productStockResponseDto.productGenre);
     this.productSizeStandard.setValue(productStockResponseDto.productSizeStandard);
-    this.productStockQuantity.setValue(this.currencyToNumberPipe.transform(String(productStockResponseDto.productStockQuantity),
-      this.locale, this.currency));
+    this.productStockQuantity.setValue(
+      this.currencyToNumberPipe.transform(
+        String(productStockResponseDto.productStockQuantity),
+        this.locale,
+        this.currency
+      )
+    );
     this.productImage.setValue(productStockResponseDto.productImage);
   }
 
@@ -175,8 +181,13 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     if (productStockResponseDto === null) {
       return;
     }
-    this.productStockQuantity.setValue(this.currencyToNumberPipe.transform(String(productStockResponseDto.productStockQuantity),
-      this.locale, this.currency));
+    this.productStockQuantity.setValue(
+      this.currencyToNumberPipe.transform(
+        String(productStockResponseDto.productStockQuantity),
+        this.locale,
+        this.currency
+      )
+    );
     this.addProductStockQuantity.reset();
   }
 
@@ -188,5 +199,4 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     this.productStockQuantity.reset();
     this.addProductStockQuantity.reset();
   }
-
 }

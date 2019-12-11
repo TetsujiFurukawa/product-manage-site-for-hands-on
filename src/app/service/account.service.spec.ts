@@ -10,17 +10,23 @@ import { MenuListResponseDto } from '../entity/dto/response/menu-list-response-d
 import { SignInResponseDto } from '../entity/dto/response/sign-in-response-dto';
 import { User } from '../entity/user';
 import { AccountService } from './account.service';
+import { ErrorMessagingService } from './common/error-messaging.service';
 
 describe('AccountService', () => {
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
   let accountService: AccountService;
+  let errorMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setupPageErrorMessageFromResponse: jasmine.Spy };
 
   beforeEach(() => {
+    errorMessagingServiceSpy = jasmine.createSpyObj('ErrorMessagingService', [
+      'clearMessageProperty',
+      'setupPageErrorMessageFromResponse'
+    ]);
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       imports: [HttpClientTestingModule],
-      providers: [AccountService]
+      providers: [AccountService, { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }]
     });
     httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get(HttpTestingController);
@@ -41,7 +47,7 @@ describe('AccountService', () => {
   describe('#signIn', () => {
     const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_SIGN_IN;
 
-    it('should return expected response (called once)', () => {
+    it('should return expected response', () => {
       const expectedSignInResponseDto: SignInResponseDto = new SignInResponseDto();
       expectedSignInResponseDto.userAccount = 'userAccount';
       expectedSignInResponseDto.userName = 'userName';
@@ -50,13 +56,13 @@ describe('AccountService', () => {
       expectedSignInResponseDto.userTimezone = 'UTC';
       expectedSignInResponseDto.userCurrency = 'JPY';
 
-      accountService
-        .signIn(new SignInRequestDto())
-        .subscribe(
-          signInResponseDto =>
-            expect(signInResponseDto).toEqual(expectedSignInResponseDto, 'should return expected response'),
-          fail
+      accountService.signIn(new SignInRequestDto()).subscribe(signInResponseDto => {
+        expect(signInResponseDto).toEqual(expectedSignInResponseDto, 'should return expected response');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          0,
+          'setupPageErrorMessageFromResponse'
         );
+      }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('POST');
@@ -65,11 +71,15 @@ describe('AccountService', () => {
       req.flush(expectedSignInResponseDto);
     });
 
-    it('should return 401 Unauthorized', () => {
+    it('should return null 401 Unauthorized', () => {
       const msg = '401 Unauthorized';
-      accountService
-        .signIn(new SignInRequestDto())
-        .subscribe(signInResponseDto => expect(signInResponseDto).toBeNull(), fail);
+      accountService.signIn(new SignInRequestDto()).subscribe(signInResponseDto => {
+        expect(signInResponseDto).toBeNull();
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          1,
+          'setupPageErrorMessageFromResponse'
+        );
+      }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('POST');
@@ -82,19 +92,20 @@ describe('AccountService', () => {
   describe('#getMenu', () => {
     const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_MENU;
 
-    it('should return expected response (called once)', () => {
+    it('should return expected response', () => {
       const subMenuCodeList = new Array('subMenu1', 'subMenu2', 'subMenu3');
       const menuListResponseDto: MenuListResponseDto = new MenuListResponseDto();
       menuListResponseDto.menuCode = 'menu1';
       menuListResponseDto.subMenuCodeList = subMenuCodeList;
       const expectedMenuListResponseDto = Array(menuListResponseDto);
 
-      accountService
-        .getMenu()
-        .subscribe(
-          response => expect(response).toEqual(expectedMenuListResponseDto, 'should return expected response'),
-          fail
+      accountService.getMenu().subscribe(response => {
+        expect(response).toEqual(expectedMenuListResponseDto, 'should return expected response');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          0,
+          'setupPageErrorMessageFromResponse'
         );
+      }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('GET');
@@ -103,9 +114,15 @@ describe('AccountService', () => {
       req.flush(expectedMenuListResponseDto);
     });
 
-    it('should return 404 Not Found', () => {
+    it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      accountService.getMenu().subscribe(response => expect(response).toBeNull(), fail);
+      accountService.getMenu().subscribe(response => {
+        expect(response).toBeNull();
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          1,
+          'setupPageErrorMessageFromResponse'
+        );
+      }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('GET');
@@ -118,12 +135,16 @@ describe('AccountService', () => {
   describe('#signOut', () => {
     const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_SIGN_OUT;
 
-    it('should return expected response (called once)', () => {
+    it('should return expected response', () => {
       const user: User = new User();
       accountService.setUser(user);
 
       accountService.signOut().subscribe(response => {
         expect(accountService.getUser()).toBeNull();
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          0,
+          'setupPageErrorMessageFromResponse'
+        );
       });
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -135,7 +156,7 @@ describe('AccountService', () => {
   });
 
   describe('#getUser', () => {
-    it('should return expected user', () => {
+    it('should return expected data', () => {
       const user: User = createUser();
 
       accountService.setUser(user);

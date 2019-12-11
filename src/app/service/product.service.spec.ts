@@ -1,12 +1,307 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
+import { ApiConst } from '../const/api-const';
+import { UrlConst } from '../const/url-const';
+import { ProductDto } from '../entity/dto/product-dto';
+import {
+    ProductSearchListResponseDto
+} from '../entity/dto/response/product-search-list-response-dto';
+import { ProductSearchResponseDto } from '../entity/dto/response/product-search-response-dto';
+import { ErrorMessagingService } from './common/error-messaging.service';
+import { SuccessMessagingService } from './common/success-messaging.service';
 import { ProductService } from './product.service';
 
-xdescribe('ProductService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+describe('ProductService', () => {
+  let httpClient: HttpClient;
+  let httpTestingController: HttpTestingController;
+  let productService: ProductService;
+  let successMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setMessageProperty: jasmine.Spy };
+  let errorMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setupPageErrorMessageFromResponse: jasmine.Spy };
 
-  it('should be created', () => {
-    const service: ProductService = TestBed.get(ProductService);
-    expect(service).toBeTruthy();
+  beforeEach(() => {
+    successMessagingServiceSpy = jasmine.createSpyObj('SuccessMessagingService', [
+      'clearMessageProperty',
+      'setMessageProperty'
+    ]);
+    errorMessagingServiceSpy = jasmine.createSpyObj('ErrorMessagingService', [
+      'clearMessageProperty',
+      'setupPageErrorMessageFromResponse'
+    ]);
+    TestBed.configureTestingModule({
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [HttpClientTestingModule],
+      providers: [
+        ProductService,
+        { provide: SuccessMessagingService, useValue: successMessagingServiceSpy },
+        { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }
+      ]
+    });
+    httpClient = TestBed.get(HttpClient);
+    httpTestingController = TestBed.get(HttpTestingController);
+    productService = TestBed.get(ProductService);
+  });
+
+  afterEach(() => {
+    // After every test, assert that there are no more pending requests.
+    httpTestingController.verify();
+  });
+
+  describe('#constractor', () => {
+    it('should be created', () => {
+      expect(productService).toBeTruthy();
+    });
+  });
+
+  describe('#getProductList', () => {
+    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PRODUCT_SEARCH;
+
+    it('should return expected response', () => {
+      const productSearchResponseDto: ProductSearchResponseDto = new ProductSearchResponseDto();
+      productSearchResponseDto.endOfSale = false;
+      productSearchResponseDto.no = 1;
+      productSearchResponseDto.productCode = 'productCode';
+      productSearchResponseDto.productColor = 'productColor';
+      productSearchResponseDto.productGenre = '1';
+      productSearchResponseDto.productImageUrl = 'productImageUrl';
+      productSearchResponseDto.productName = 'productName';
+      productSearchResponseDto.productSizeStandard = 'productSizeStandard';
+      productSearchResponseDto.productStockQuantity = 1;
+      productSearchResponseDto.productUnitPrice = 1;
+
+      const expectedResponseDto: ProductSearchListResponseDto = new ProductSearchListResponseDto();
+      expectedResponseDto.productSearchResponseDtos = Array(productSearchResponseDto);
+      expectedResponseDto.pageIndex = 1;
+      expectedResponseDto.resultsLength = 1;
+
+      productService.getProductList(new HttpParams()).subscribe(responseDto => {
+        expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          0,
+          'setupPageErrorMessageFromResponse'
+        );
+      }, fail);
+
+      const req = httpTestingController.expectOne(webApiUrl);
+      expect(req.request.method).toEqual('GET');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+
+      // Respond with the mock
+      req.flush(expectedResponseDto);
+    });
+
+    it('should return null 404 Not Found', () => {
+      const msg = '404 Not Found';
+      productService.getProductList(new HttpParams()).subscribe(responseDto => {
+        expect(responseDto).toBeNull();
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          1,
+          'setupPageErrorMessageFromResponse'
+        );
+      }, fail);
+
+      const req = httpTestingController.expectOne(webApiUrl);
+      expect(req.request.method).toEqual('GET');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'one call');
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+
+      // Respond with the mock
+      req.flush(msg, { status: 404, statusText: '404 Not Found' });
+    });
+  });
+
+  describe('#getProductPurchase', () => {
+    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PRODUCT;
+
+    it('should return expected response', () => {
+      const expectedResponseDto: ProductDto = createProductDto();
+
+      productService.getProduct('productCode').subscribe(responseDto => {
+        expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          0,
+          'setupPageErrorMessageFromResponse'
+        );
+      }, fail);
+
+      const req = httpTestingController.expectOne(webApiUrl + '?productCode=productCode');
+      expect(req.request.method).toEqual('GET');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+
+      // Respond with the mock
+      req.flush(expectedResponseDto);
+    });
+
+    it('should return null 404 Not Found', () => {
+      const msg = '404 Not Found';
+      productService.getProduct('productCode').subscribe(responseDto => {
+        expect(responseDto).toBeNull();
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          1,
+          'setupPageErrorMessageFromResponse'
+        );
+      }, fail);
+
+      const req = httpTestingController.expectOne(webApiUrl + '?productCode=productCode');
+      expect(req.request.method).toEqual('GET');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'one call');
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+
+      // Respond with the mock
+      req.flush(msg, { status: 404, statusText: '404 Not Found' });
+    });
+  });
+
+  describe('#createProduct', () => {
+    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PRODUCT;
+
+    it('should return expected response', () => {
+      const expectedResponseDto: ProductDto = createProductDto();
+
+      productService.createProduct(new ProductDto()).subscribe(responseDto => {
+        expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
+        expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1, 'setMessageProperty');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          0,
+          'setupPageErrorMessageFromResponse'
+        );
+      }, fail);
+
+      const req = httpTestingController.expectOne(webApiUrl);
+      expect(req.request.method).toEqual('POST');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+
+      // Respond with the mock
+      req.flush(expectedResponseDto);
+    });
+
+    it('should return null 404 Not Found', () => {
+      const msg = '404 Not Found';
+      productService.createProduct(new ProductDto()).subscribe(responseDto => {
+        expect(responseDto).toBeNull();
+        expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0, 'setMessageProperty');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          1,
+          'setupPageErrorMessageFromResponse'
+        );
+      }, fail);
+
+      const req = httpTestingController.expectOne(webApiUrl);
+      expect(req.request.method).toEqual('POST');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+
+      // Respond with the mock
+      req.flush(msg, { status: 404, statusText: '404 Not Found' });
+    });
+  });
+
+  describe('#updateProduct', () => {
+    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PRODUCT;
+
+    it('should return expected response', () => {
+      const expectedResponseDto: ProductDto = createProductDto();
+
+      productService.updateProduct(new ProductDto()).subscribe(responseDto => {
+        expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
+        expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1, 'setMessageProperty');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          0,
+          'setupPageErrorMessageFromResponse'
+        );
+      }, fail);
+
+      const req = httpTestingController.expectOne(webApiUrl);
+      expect(req.request.method).toEqual('PUT');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+
+      // Respond with the mock
+      req.flush(expectedResponseDto);
+    });
+
+    it('should return null 404 Not Found', () => {
+      const msg = '404 Not Found';
+      productService.updateProduct(new ProductDto()).subscribe(responseDto => {
+        expect(responseDto).toBeNull();
+        expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0, 'setMessageProperty');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          1,
+          'setupPageErrorMessageFromResponse'
+        );
+      }, fail);
+
+      const req = httpTestingController.expectOne(webApiUrl);
+      expect(req.request.method).toEqual('PUT');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+
+      // Respond with the mock
+      req.flush(msg, { status: 404, statusText: '404 Not Found' });
+    });
+  });
+
+  describe('#getGenres', () => {
+    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_GENRE;
+
+    it('should return expected response', () => {
+      const expectedResponseDto: number[] = Array(1, 2, 3);
+
+      productService.getGenres().subscribe(responseDto => {
+        expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          0,
+          'setupPageErrorMessageFromResponse'
+        );
+      }, fail);
+
+      const req = httpTestingController.expectOne(webApiUrl);
+      expect(req.request.method).toEqual('GET');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+
+      // Respond with the mock
+      req.flush(expectedResponseDto);
+    });
+
+    it('should return null 404 Not Found', () => {
+      const msg = '404 Not Found';
+      productService.getGenres().subscribe(responseDto => {
+        expect(responseDto).toBeNull();
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          1,
+          'setupPageErrorMessageFromResponse'
+        );
+      }, fail);
+
+      const req = httpTestingController.expectOne(webApiUrl);
+      expect(req.request.method).toEqual('GET');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'one call');
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+
+      // Respond with the mock
+      req.flush(msg, { status: 404, statusText: '404 Not Found' });
+    });
   });
 });
+
+function createProductDto() {
+  const expectedResponseDto: ProductDto = new ProductDto();
+  expectedResponseDto.endOfSale = false;
+  expectedResponseDto.endOfSaleDate = new Date();
+  expectedResponseDto.productCode = 'productCode';
+  expectedResponseDto.productColor = 'productColor';
+  expectedResponseDto.productGenre = '1';
+  expectedResponseDto.productImage = 'productImage';
+  expectedResponseDto.productName = 'productName';
+  expectedResponseDto.productSeq = 1;
+  expectedResponseDto.productSizeStandard = 'productSizeStandard';
+  expectedResponseDto.productUnitPrice = 1;
+  expectedResponseDto.updateDate = new Date();
+  return expectedResponseDto;
+}

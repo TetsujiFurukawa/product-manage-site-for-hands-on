@@ -2,21 +2,21 @@ import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { UrlConst } from 'src/app/const/url-const';
 import {
-  ProductPurchaseHistoryListingSearchParams
+    ProductPurchaseHistoryListingSearchParams
 } from 'src/app/entity/dto/request/product-purchase-history-listing-search-params';
 import {
-  ProductPurchaseHistorySearchResponseDto
+    ProductPurchaseHistorySearchResponseDto
 } from 'src/app/entity/dto/response/product-purchase-history-search-response-dto';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
 import { AccountService } from 'src/app/service/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
-import { ProductPurchaseService } from 'src/app/service/product-purchase.service';
 import { SearchParamsService } from 'src/app/service/common/search-params.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
+import { ProductPurchaseService } from 'src/app/service/product-purchase.service';
 
 import { HttpParams } from '@angular/common/http';
 import {
-  AfterViewChecked, Component, OnInit, QueryList, ViewChild, ViewChildren
+    AfterViewChecked, Component, OnInit, QueryList, ViewChild, ViewChildren
 } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -29,9 +29,7 @@ import { MatDatePickerComponent } from '../../common/mat-date-picker/mat-date-pi
   templateUrl: './purchase-history-listing-page.component.html',
   styleUrls: ['./purchase-history-listing-page.component.scss']
 })
-
 export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChecked {
-
   constructor(
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
@@ -40,8 +38,8 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
     private searchParamsService: SearchParamsService,
     private titleI18Service: TitleI18Service,
     public currencyToNumberPipe: CurrencyToNumberPipe,
-    public translateService: TranslateService,
-  ) { }
+    public translateService: TranslateService
+  ) {}
 
   // product purchase name
   productPurchaseName = new FormControl('', []);
@@ -72,7 +70,6 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
   currency: string = this.accountService.getUser().userCurrency;
   timezone: string = this.accountService.getUser().userTimezone;
 
-
   // Material table's header
   displayColumns: string[] = [
     'No',
@@ -99,7 +96,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
   }
 
   ngAfterViewChecked() {
-    this.titleI18Service.setTitle(UrlConst.PATH_PRODUCT_LISTING);
+    this.titleI18Service.setTitle(UrlConst.PATH_PURCHASE_HISTORY_LISTING);
   }
 
   onClear() {
@@ -115,7 +112,9 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
         switchMap(() => {
           this.loadingService.startLoading();
           const purchaseHistoryListingSearchParams: ProductPurchaseHistoryListingSearchParams = this.createSearchParams();
-          return this.purchaseService.getProductPurchaseHistoryList(this.createHttpParams(purchaseHistoryListingSearchParams));
+          return this.purchaseService.getProductPurchaseHistoryList(
+            this.createHttpParams(purchaseHistoryListingSearchParams)
+          );
         }),
         map(data => {
           this.loadingService.stopLoading();
@@ -123,7 +122,8 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
           this.paginator.pageIndex = data.pageIndex;
           return data.productPurchaseHistorySearchResponseDtos;
         })
-      ).subscribe(data => this.purchaseHistorySearchResponseDtos = data);
+      )
+      .subscribe(data => (this.purchaseHistorySearchResponseDtos = data));
   }
 
   onReceiveEventFromChildFrom(eventData: string) {
@@ -165,7 +165,6 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
     if (purchaseHistoryListingSearchParams.productPurchaseDateFrom !== '') {
       const date = new Date(purchaseHistoryListingSearchParams.productPurchaseDateFrom);
       conditions.productPurchaseDateFrom = date.toDateString();
-
     }
     if (purchaseHistoryListingSearchParams.productPurchaseDateTo !== '') {
       const date = new Date(purchaseHistoryListingSearchParams.productPurchaseDateTo);
@@ -190,6 +189,4 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
     this.purchaseHistorySearchResponseDtos = null;
     this.resultsLength = 0;
   }
-
-
 }

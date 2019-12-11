@@ -62,19 +62,19 @@ describe('ProductPurchaseService', () => {
     const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PURCHASE_HISTORY_SEARCH;
 
     it('should return expected response', () => {
-      const productPurchaseHistorySearchResponseDto: ProductPurchaseHistorySearchResponseDto = new ProductPurchaseHistorySearchResponseDto();
-      productPurchaseHistorySearchResponseDto.no = 1;
-      productPurchaseHistorySearchResponseDto.productCode = 'productCode';
-      productPurchaseHistorySearchResponseDto.productImageUrl = 'productImageUrl';
-      productPurchaseHistorySearchResponseDto.productName = 'productName';
-      productPurchaseHistorySearchResponseDto.productPurchaseAmount = 1;
-      productPurchaseHistorySearchResponseDto.productPurchaseDate = new Date();
-      productPurchaseHistorySearchResponseDto.productPurchaseName = 'productPurchaseName';
-      productPurchaseHistorySearchResponseDto.productPurchaseQuantity = 1;
-      productPurchaseHistorySearchResponseDto.productPurchaseUnitPrice = 1;
+      const productPurchaseResponseDto: ProductPurchaseHistorySearchResponseDto = new ProductPurchaseHistorySearchResponseDto();
+      productPurchaseResponseDto.no = 1;
+      productPurchaseResponseDto.productCode = 'productCode';
+      productPurchaseResponseDto.productImageUrl = 'productImageUrl';
+      productPurchaseResponseDto.productName = 'productName';
+      productPurchaseResponseDto.productPurchaseAmount = 1;
+      productPurchaseResponseDto.productPurchaseDate = new Date();
+      productPurchaseResponseDto.productPurchaseName = 'productPurchaseName';
+      productPurchaseResponseDto.productPurchaseQuantity = 1;
+      productPurchaseResponseDto.productPurchaseUnitPrice = 1;
 
       const expectedResponseDto: ProductPurchaseHistorySearchListResponseDto = new ProductPurchaseHistorySearchListResponseDto();
-      expectedResponseDto.productPurchaseHistorySearchResponseDtos = Array(productPurchaseHistorySearchResponseDto);
+      expectedResponseDto.productPurchaseHistorySearchResponseDtos = Array(productPurchaseResponseDto);
       expectedResponseDto.pageIndex = 1;
       expectedResponseDto.resultsLength = 1;
 

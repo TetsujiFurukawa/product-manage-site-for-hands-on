@@ -14,7 +14,7 @@ import { ProductStockService } from './product-stock.service';
 describe('ProductStockService', () => {
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
-  let productStockService: ProductStockService;
+  let service: ProductStockService;
   let successMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setMessageProperty: jasmine.Spy };
   let errorMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setupPageErrorMessageFromResponse: jasmine.Spy };
 
@@ -38,7 +38,7 @@ describe('ProductStockService', () => {
     });
     httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get(HttpTestingController);
-    productStockService = TestBed.get(ProductStockService);
+    service = TestBed.get(ProductStockService);
   });
 
   afterEach(() => {
@@ -48,7 +48,7 @@ describe('ProductStockService', () => {
 
   describe('#constractor', () => {
     it('should be created', () => {
-      expect(productStockService).toBeTruthy();
+      expect(service).toBeTruthy();
     });
   });
 
@@ -65,7 +65,7 @@ describe('ProductStockService', () => {
       expectedResponseDto.productSizeStandard = 'productSizeStandard';
       expectedResponseDto.productStockQuantity = 1;
 
-      productStockService.getProductStock('productCode').subscribe(responseDto => {
+      service.getProductStock('productCode').subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
           0,
@@ -84,7 +84,7 @@ describe('ProductStockService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      productStockService.getProductStock('productCode').subscribe(responseDto => {
+      service.getProductStock('productCode').subscribe(responseDto => {
         expect(responseDto).toBeNull();
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
           1,
@@ -115,7 +115,7 @@ describe('ProductStockService', () => {
       expectedResponseDto.productSizeStandard = 'productSizeStandard';
       expectedResponseDto.productStockQuantity = 1;
 
-      productStockService.updateProductStock(new ProductStockRequestDto()).subscribe(responseDto => {
+      service.updateProductStock(new ProductStockRequestDto()).subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
         expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1, 'setMessageProperty');
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
@@ -135,7 +135,7 @@ describe('ProductStockService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      productStockService.updateProductStock(new ProductStockRequestDto()).subscribe(responseDto => {
+      service.updateProductStock(new ProductStockRequestDto()).subscribe(responseDto => {
         expect(responseDto).toBeNull();
         expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0, 'setMessageProperty');
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(

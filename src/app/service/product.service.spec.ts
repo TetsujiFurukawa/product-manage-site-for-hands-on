@@ -17,7 +17,7 @@ import { ProductService } from './product.service';
 describe('ProductService', () => {
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
-  let productService: ProductService;
+  let service: ProductService;
   let successMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setMessageProperty: jasmine.Spy };
   let errorMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setupPageErrorMessageFromResponse: jasmine.Spy };
 
@@ -41,7 +41,7 @@ describe('ProductService', () => {
     });
     httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get(HttpTestingController);
-    productService = TestBed.get(ProductService);
+    service = TestBed.get(ProductService);
   });
 
   afterEach(() => {
@@ -51,7 +51,7 @@ describe('ProductService', () => {
 
   describe('#constractor', () => {
     it('should be created', () => {
-      expect(productService).toBeTruthy();
+      expect(service).toBeTruthy();
     });
   });
 
@@ -76,7 +76,7 @@ describe('ProductService', () => {
       expectedResponseDto.pageIndex = 1;
       expectedResponseDto.resultsLength = 1;
 
-      productService.getProductList(new HttpParams()).subscribe(responseDto => {
+      service.getProductList(new HttpParams()).subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
           0,
@@ -95,7 +95,7 @@ describe('ProductService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      productService.getProductList(new HttpParams()).subscribe(responseDto => {
+      service.getProductList(new HttpParams()).subscribe(responseDto => {
         expect(responseDto).toBeNull();
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
           1,
@@ -119,7 +119,7 @@ describe('ProductService', () => {
     it('should return expected response', () => {
       const expectedResponseDto: ProductDto = createProductDto();
 
-      productService.getProduct('productCode').subscribe(responseDto => {
+      service.getProduct('productCode').subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
           0,
@@ -138,7 +138,7 @@ describe('ProductService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      productService.getProduct('productCode').subscribe(responseDto => {
+      service.getProduct('productCode').subscribe(responseDto => {
         expect(responseDto).toBeNull();
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
           1,
@@ -162,7 +162,7 @@ describe('ProductService', () => {
     it('should return expected response', () => {
       const expectedResponseDto: ProductDto = createProductDto();
 
-      productService.createProduct(new ProductDto()).subscribe(responseDto => {
+      service.createProduct(new ProductDto()).subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
         expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1, 'setMessageProperty');
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
@@ -182,7 +182,7 @@ describe('ProductService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      productService.createProduct(new ProductDto()).subscribe(responseDto => {
+      service.createProduct(new ProductDto()).subscribe(responseDto => {
         expect(responseDto).toBeNull();
         expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0, 'setMessageProperty');
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
@@ -207,7 +207,7 @@ describe('ProductService', () => {
     it('should return expected response', () => {
       const expectedResponseDto: ProductDto = createProductDto();
 
-      productService.updateProduct(new ProductDto()).subscribe(responseDto => {
+      service.updateProduct(new ProductDto()).subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
         expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1, 'setMessageProperty');
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
@@ -227,7 +227,7 @@ describe('ProductService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      productService.updateProduct(new ProductDto()).subscribe(responseDto => {
+      service.updateProduct(new ProductDto()).subscribe(responseDto => {
         expect(responseDto).toBeNull();
         expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0, 'setMessageProperty');
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
@@ -252,7 +252,7 @@ describe('ProductService', () => {
     it('should return expected response', () => {
       const expectedResponseDto: number[] = Array(1, 2, 3);
 
-      productService.getGenres().subscribe(responseDto => {
+      service.getGenres().subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
           0,
@@ -271,7 +271,7 @@ describe('ProductService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      productService.getGenres().subscribe(responseDto => {
+      service.getGenres().subscribe(responseDto => {
         expect(responseDto).toBeNull();
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
           1,

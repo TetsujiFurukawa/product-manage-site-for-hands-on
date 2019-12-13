@@ -15,7 +15,7 @@ import { ErrorMessagingService } from './common/error-messaging.service';
 describe('AccountService', () => {
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
-  let accountService: AccountService;
+  let service: AccountService;
   let errorMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setupPageErrorMessageFromResponse: jasmine.Spy };
 
   beforeEach(() => {
@@ -30,7 +30,7 @@ describe('AccountService', () => {
     });
     httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get(HttpTestingController);
-    accountService = TestBed.get(AccountService);
+    service = TestBed.get(AccountService);
   });
 
   afterEach(() => {
@@ -40,7 +40,7 @@ describe('AccountService', () => {
 
   describe('#constractor', () => {
     it('should be created', () => {
-      expect(accountService).toBeTruthy();
+      expect(service).toBeTruthy();
     });
   });
 
@@ -56,7 +56,7 @@ describe('AccountService', () => {
       expectedSignInResponseDto.userTimezone = 'UTC';
       expectedSignInResponseDto.userCurrency = 'JPY';
 
-      accountService.signIn(new SignInRequestDto()).subscribe(signInResponseDto => {
+      service.signIn(new SignInRequestDto()).subscribe(signInResponseDto => {
         expect(signInResponseDto).toEqual(expectedSignInResponseDto, 'should return expected response');
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
           0,
@@ -73,7 +73,7 @@ describe('AccountService', () => {
 
     it('should return null 401 Unauthorized', () => {
       const msg = '401 Unauthorized';
-      accountService.signIn(new SignInRequestDto()).subscribe(signInResponseDto => {
+      service.signIn(new SignInRequestDto()).subscribe(signInResponseDto => {
         expect(signInResponseDto).toBeNull();
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
           1,
@@ -99,7 +99,7 @@ describe('AccountService', () => {
       menuListResponseDto.subMenuCodeList = subMenuCodeList;
       const expectedMenuListResponseDto = Array(menuListResponseDto);
 
-      accountService.getMenu().subscribe(response => {
+      service.getMenu().subscribe(response => {
         expect(response).toEqual(expectedMenuListResponseDto, 'should return expected response');
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
           0,
@@ -116,7 +116,7 @@ describe('AccountService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      accountService.getMenu().subscribe(response => {
+      service.getMenu().subscribe(response => {
         expect(response).toBeNull();
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
           1,
@@ -137,10 +137,10 @@ describe('AccountService', () => {
 
     it('should return expected response', () => {
       const user: User = new User();
-      accountService.setUser(user);
+      service.setUser(user);
 
-      accountService.signOut().subscribe(response => {
-        expect(accountService.getUser()).toBeNull();
+      service.signOut().subscribe(response => {
+        expect(service.getUser()).toBeNull();
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
           0,
           'setupPageErrorMessageFromResponse'
@@ -159,13 +159,13 @@ describe('AccountService', () => {
     it('should return expected data', () => {
       const user: User = createUser();
 
-      accountService.setUser(user);
-      expect(accountService.getUser().userAccount).toEqual(user.userAccount);
-      expect(accountService.getUser().userCurrency).toEqual(user.userCurrency);
-      expect(accountService.getUser().userLanguage).toEqual(user.userLanguage);
-      expect(accountService.getUser().userLocale).toEqual(user.userLocale);
-      expect(accountService.getUser().userName).toEqual(user.userName);
-      expect(accountService.getUser().userTimezone).toEqual(user.userTimezone);
+      service.setUser(user);
+      expect(service.getUser().userAccount).toEqual(user.userAccount);
+      expect(service.getUser().userCurrency).toEqual(user.userCurrency);
+      expect(service.getUser().userLanguage).toEqual(user.userLanguage);
+      expect(service.getUser().userLocale).toEqual(user.userLocale);
+      expect(service.getUser().userName).toEqual(user.userName);
+      expect(service.getUser().userTimezone).toEqual(user.userTimezone);
     });
   });
 
@@ -173,11 +173,11 @@ describe('AccountService', () => {
     it('should remove user', () => {
       const user: User = createUser();
 
-      accountService.setUser(user);
-      expectUser(accountService, user);
+      service.setUser(user);
+      expectUser(service, user);
 
-      accountService.removeUser();
-      expect(accountService.getUser()).toBeNull();
+      service.removeUser();
+      expect(service.getUser()).toBeNull();
     });
   });
 });

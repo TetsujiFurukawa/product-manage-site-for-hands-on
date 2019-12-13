@@ -20,7 +20,7 @@ import { ProductPurchaseService } from './product-purchase.service';
 describe('ProductPurchaseService', () => {
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
-  let productPurchaseService: ProductPurchaseService;
+  let service: ProductPurchaseService;
   let successMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setMessageProperty: jasmine.Spy };
   let errorMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setupPageErrorMessageFromResponse: jasmine.Spy };
 
@@ -44,7 +44,7 @@ describe('ProductPurchaseService', () => {
     });
     httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get(HttpTestingController);
-    productPurchaseService = TestBed.get(ProductPurchaseService);
+    service = TestBed.get(ProductPurchaseService);
   });
 
   afterEach(() => {
@@ -54,7 +54,7 @@ describe('ProductPurchaseService', () => {
 
   describe('#constractor', () => {
     it('should be created', () => {
-      expect(productPurchaseService).toBeTruthy();
+      expect(service).toBeTruthy();
     });
   });
 
@@ -78,7 +78,7 @@ describe('ProductPurchaseService', () => {
       expectedResponseDto.pageIndex = 1;
       expectedResponseDto.resultsLength = 1;
 
-      productPurchaseService.getProductPurchaseHistoryList(new HttpParams()).subscribe(responseDto => {
+      service.getProductPurchaseHistoryList(new HttpParams()).subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
           0,
@@ -97,7 +97,7 @@ describe('ProductPurchaseService', () => {
 
     it('should return null 500 Internal Server Error', () => {
       const msg = '500 Internal Server Error';
-      productPurchaseService.getProductPurchaseHistoryList(new HttpParams()).subscribe(responseDto => {
+      service.getProductPurchaseHistoryList(new HttpParams()).subscribe(responseDto => {
         expect(responseDto).toBeNull();
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
           1,
@@ -129,7 +129,7 @@ describe('ProductPurchaseService', () => {
       expectedResponseDto.productSizeStandard = 'productSizeStandard';
       expectedResponseDto.productStockQuantity = 1;
 
-      productPurchaseService.getProductPurchase('productCode').subscribe(responseDto => {
+      service.getProductPurchase('productCode').subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
           0,
@@ -148,7 +148,7 @@ describe('ProductPurchaseService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      productPurchaseService.getProductPurchase('productCode').subscribe(responseDto => {
+      service.getProductPurchase('productCode').subscribe(responseDto => {
         expect(responseDto).toBeNull();
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
           1,
@@ -181,7 +181,7 @@ describe('ProductPurchaseService', () => {
       expectedResponseDto.productSizeStandard = 'productSizeStandard';
       expectedResponseDto.productStockQuantity = 1;
 
-      productPurchaseService.createProductPurchase(new ProductPurchaseRequestDto()).subscribe(responseDto => {
+      service.createProductPurchase(new ProductPurchaseRequestDto()).subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
         expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1, 'setMessageProperty');
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
@@ -201,7 +201,7 @@ describe('ProductPurchaseService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      productPurchaseService.createProductPurchase(new ProductPurchaseRequestDto()).subscribe(responseDto => {
+      service.createProductPurchase(new ProductPurchaseRequestDto()).subscribe(responseDto => {
         expect(responseDto).toBeNull();
         expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0, 'setMessageProperty');
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(

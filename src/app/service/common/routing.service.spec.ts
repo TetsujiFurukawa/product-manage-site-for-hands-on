@@ -14,8 +14,7 @@ describe('RoutingService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [RouterTestingModule],
-      providers: [RoutingService]
+      imports: [RouterTestingModule]
     });
     service = TestBed.get(RoutingService);
     router = TestBed.get(Router);

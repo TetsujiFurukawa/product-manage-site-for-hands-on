@@ -26,7 +26,7 @@ describe('MatPaginatorI18nService', () => {
           }
         })
       ],
-      providers: [MatPaginatorI18nService, TranslateService]
+      providers: [TranslateService]
     });
     service = TestBed.get(MatPaginatorI18nService);
     translate = TestBed.get(TranslateService);
@@ -45,11 +45,14 @@ describe('MatPaginatorI18nService', () => {
   });
 
   describe('#getRangeLabel', () => {
-    it('should return 1,0,1', () => {
+    it('should return 0,0,0', () => {
+      expect(service.getRangeLabel(0, 0, 0)).toBe('0 / 0');
+    });
+    it('should return 0,0,1', () => {
       expect(service.getRangeLabel(0, 0, 1)).toBe('0 / 1');
     });
-    it('should return 1,1,0', () => {
-      expect(service.getRangeLabel(0, 0, 0)).toBe('0 / 0');
+    it('should return 1,10,1', () => {
+      expect(service.getRangeLabel(1, 10, 1)).toBe('11 – 20 / 1');
     });
     it('should return 0,10,1', () => {
       expect(service.getRangeLabel(0, 10, 1)).toBe('1 – 1 / 1');

@@ -9,7 +9,7 @@ import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-transla
 import { MatPaginatorI18nService } from './mat-paginator-i18n.service';
 
 describe('MatPaginatorI18nService', () => {
-  let matPaginatorI18nService: MatPaginatorI18nService;
+  let service: MatPaginatorI18nService;
   let translate: TranslateService;
   let http: HttpTestingController;
 
@@ -28,15 +28,17 @@ describe('MatPaginatorI18nService', () => {
       ],
       providers: [MatPaginatorI18nService, TranslateService]
     });
-    matPaginatorI18nService = TestBed.get(MatPaginatorI18nService);
+    service = TestBed.get(MatPaginatorI18nService);
     translate = TestBed.get(TranslateService);
     http = TestBed.get(HttpTestingController);
   });
 
   describe('#constractor', () => {
     it('should be created', () => {
-      expect(matPaginatorI18nService).toBeTruthy();
-      expect(matPaginatorI18nService.getAndInitTranslations).not.toBeNull();
+      spyOn(translate.onLangChange, 'emit').and.callThrough();
+      expect(service).toBeTruthy();
+      expect(service.getAndInitTranslations).not.toBeNull();
+
       translate.onLangChange.emit();
       expect(translate.onLangChange.emit).toHaveBeenCalled();
     });
@@ -44,33 +46,33 @@ describe('MatPaginatorI18nService', () => {
 
   describe('#getRangeLabel', () => {
     it('should return 1,0,1', () => {
-      expect(matPaginatorI18nService.getRangeLabel(0, 0, 1)).toBe('0 / 1');
+      expect(service.getRangeLabel(0, 0, 1)).toBe('0 / 1');
     });
     it('should return 1,1,0', () => {
-      expect(matPaginatorI18nService.getRangeLabel(0, 0, 0)).toBe('0 / 0');
+      expect(service.getRangeLabel(0, 0, 0)).toBe('0 / 0');
     });
     it('should return 0,10,1', () => {
-      expect(matPaginatorI18nService.getRangeLabel(0, 10, 1)).toBe('1 – 1 / 1');
+      expect(service.getRangeLabel(0, 10, 1)).toBe('1 – 1 / 1');
     });
     it('should return 0,50,1', () => {
-      expect(matPaginatorI18nService.getRangeLabel(0, 50, 1)).toBe('1 – 1 / 1');
+      expect(service.getRangeLabel(0, 50, 1)).toBe('1 – 1 / 1');
     });
     it('should return 1,10,20', () => {
-      expect(matPaginatorI18nService.getRangeLabel(1, 10, 20)).toBe('11 – 20 / 20');
+      expect(service.getRangeLabel(1, 10, 20)).toBe('11 – 20 / 20');
     });
     it('should return 1,50,100', () => {
-      expect(matPaginatorI18nService.getRangeLabel(1, 50, 100)).toBe('51 – 100 / 100');
+      expect(service.getRangeLabel(1, 50, 100)).toBe('51 – 100 / 100');
     });
   });
 
   describe('#getAndInitTranslations', () => {
     it('should set pagenator labels', () => {
-      matPaginatorI18nService.getAndInitTranslations();
-      expect(matPaginatorI18nService.itemsPerPageLabel).toBe('Items per page:');
-      expect(matPaginatorI18nService.nextPageLabel).toBe('Next page');
-      expect(matPaginatorI18nService.previousPageLabel).toBe('Previous page');
-      expect(matPaginatorI18nService.firstPageLabel).toBe('First page');
-      expect(matPaginatorI18nService.lastPageLabel).toBe('Last page');
+      service.getAndInitTranslations();
+      expect(service.itemsPerPageLabel).toBe('Items per page:');
+      expect(service.nextPageLabel).toBe('Next page');
+      expect(service.previousPageLabel).toBe('Previous page');
+      expect(service.firstPageLabel).toBe('First page');
+      expect(service.lastPageLabel).toBe('Last page');
     });
   });
 });

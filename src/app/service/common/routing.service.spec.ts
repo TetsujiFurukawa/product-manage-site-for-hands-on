@@ -1,12 +1,37 @@
+import { UrlConst } from 'src/app/const/url-const';
+
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { RoutingService } from './routing.service';
 
-xdescribe('RoutingService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+describe('RoutingService', () => {
+  let router: Router;
+  let service: RoutingService;
 
-  it('should be created', () => {
-    const service: RoutingService = TestBed.get(RoutingService);
-    expect(service).toBeTruthy();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [RouterTestingModule],
+      providers: [RoutingService]
+    });
+    service = TestBed.get(RoutingService);
+    router = TestBed.get(Router);
+  });
+
+  describe('#constractor', () => {
+    it('should be created', () => {
+      expect(service).toBeTruthy();
+    });
+  });
+
+  describe('#navigate', () => {
+    it('should be navigated', () => {
+      spyOn(router, 'navigate');
+      service.navigate(UrlConst.PATH_SIGN_IN);
+      expect(router.navigate).toHaveBeenCalledWith(['/' + UrlConst.PATH_SIGN_IN]);
+    });
   });
 });

@@ -8,13 +8,11 @@ import {
 } from './purchase-quantity-stock-quantity-validator';
 
 const PRODUCT_PURCHASE_QUANTITY = 'productPurchaseQuantity';
-let currencyToNumberPipe: CurrencyToNumberPipe;
 describe('PurchaseQuantityStockQuantityValidator', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [PurchaseQuantityStockQuantityValidator, CurrencyToNumberPipe]
     });
-    currencyToNumberPipe = TestBed.get(CurrencyToNumberPipe);
   });
 
   describe('#match', () => {

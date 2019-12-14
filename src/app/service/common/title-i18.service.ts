@@ -1,18 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+
 import { AccountService } from '../account.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TitleI18Service {
-
-  constructor(
-    private accountService: AccountService,
-    private translateService: TranslateService,
-    private title: Title,
-  ) { }
+  constructor(private accountService: AccountService, private translateService: TranslateService, public title: Title) {}
 
   public setTitle(subTitle: string) {
     this.setupLangage();
@@ -29,5 +25,4 @@ export class TitleI18Service {
     this.translateService.setDefaultLang(lang);
     this.translateService.use(lang);
   }
-
 }

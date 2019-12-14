@@ -2,11 +2,45 @@ import { TestBed } from '@angular/core/testing';
 
 import { SuccessMessagingService } from './success-messaging.service';
 
-xdescribe('SuccessMessagingService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+describe('SuccessMessagingService', () => {
+  let service: SuccessMessagingService;
 
-  it('should be created', () => {
-    const service: SuccessMessagingService = TestBed.get(SuccessMessagingService);
-    expect(service).toBeTruthy();
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.get(SuccessMessagingService);
+  });
+
+  describe('#constractor', () => {
+    it('should be created', () => {
+      expect(service).toBeTruthy();
+    });
+  });
+
+  describe('#setMessageProperty,#getMessageProperty', () => {
+    it('should set property', () => {
+      const expectedValue = 'messageProperty';
+      service.setMessageProperty(expectedValue);
+      expect(service.getMessageProperty()).toEqual(expectedValue);
+    });
+  });
+
+  describe('#clearMessageProperty', () => {
+    it('should clear value', () => {
+      const expectedValue = 'messageProperty';
+      service.setMessageProperty(expectedValue);
+      service.clearMessageProperty();
+      expect(service.getMessageProperty()).toEqual('');
+    });
+  });
+
+  describe('#hideStart', () => {
+    it('should hide', () => {
+      jasmine.clock().install();
+      const initialValue = 'messageProperty';
+      service.setMessageProperty(initialValue);
+      jasmine.clock().tick(5000);
+      expect(service.getMessageProperty()).toEqual('');
+      jasmine.clock().uninstall();
+    });
   });
 });

@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 
-const INTERVAL_TIME = 8000;
+const INTERVAL_TIME = 5000;
 
 @Injectable({
   providedIn: 'root'
 })
 export class SuccessMessagingService {
-
   private messageProperty: string;
 
-  constructor() { }
+  constructor() {}
 
   public getMessageProperty(): string {
     return this.messageProperty;
@@ -29,5 +28,4 @@ export class SuccessMessagingService {
       this.clearMessageProperty();
     }, INTERVAL_TIME);
   }
-
 }

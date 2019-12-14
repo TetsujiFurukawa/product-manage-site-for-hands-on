@@ -1,12 +1,12 @@
-import { Pipe, PipeTransform } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
+import { Pipe, PipeTransform } from '@angular/core';
+
 import { RegexConst } from '../const/regex-const';
 
 @Pipe({
   name: 'currencyToNumber'
 })
 export class CurrencyToNumberPipe implements PipeTransform {
-
   transform(value: any, locale: string, currency: string): any {
     const regexp = new RegExp(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD);
     if (!value.toString().match(regexp)) {
@@ -16,7 +16,6 @@ export class CurrencyToNumberPipe implements PipeTransform {
   }
 
   parse(value: any): any {
-    return value.replace(/,/g, '');
+    return value.toString().replace(/,/g, '');
   }
-
 }

@@ -13,6 +13,16 @@ describe('EndOfSaleEndOfSaleDateValidator', () => {
   });
 
   describe('#match', () => {
+    it('should not have error', () => {
+      const formBuilder: FormBuilder = new FormBuilder();
+      const testingForm: FormGroup = formBuilder.group({
+        endOfSale: new FormControl(false),
+        endOfSaleDate: new FormControl(null)
+      });
+      EndOfSaleEndOfSaleDateValidator.match(testingForm);
+      expect(testingForm.get(END_OF_SALE_DATE).getError('required')).toBeNull();
+    });
+
     it('should have error', () => {
       const formBuilder: FormBuilder = new FormBuilder();
       const testingForm: FormGroup = formBuilder.group({
@@ -20,7 +30,7 @@ describe('EndOfSaleEndOfSaleDateValidator', () => {
         endOfSaleDate: new FormControl(null)
       });
       EndOfSaleEndOfSaleDateValidator.match(testingForm);
-      expect(testingForm.get(END_OF_SALE_DATE).getError).toBeTruthy();
+      expect(testingForm.get(END_OF_SALE_DATE).getError('required')).toBeTruthy();
     });
   });
 });

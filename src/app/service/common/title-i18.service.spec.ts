@@ -1,4 +1,3 @@
-import { Observable, of } from 'rxjs';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { User } from 'src/app/entity/user';
 

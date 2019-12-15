@@ -10,7 +10,7 @@ export class ProductCodeProductNameValidator {
     if (productCode !== null && productName === null) {
       ac.get(PRODUCT_CODE).setErrors({ productNotExistError: true });
     } else {
-      ac.get(PRODUCT_CODE).setErrors({});
+      ac.get(PRODUCT_CODE).setErrors(null);
     }
   }
 }

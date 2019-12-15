@@ -52,11 +52,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   productPurchaseName = new FormControl('', [Validators.required]);
   productPurchaseUnitPrice = new FormControl('');
   productStockQuantity = new FormControl('');
-  productPurchaseQuantity = new FormControl('', [
-    Validators.required,
-    Validators.max(999999999),
-    Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)
-  ]);
+  productPurchaseQuantity = new FormControl('', [Validators.required, Validators.max(999999999), Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)]);
   productPurchaseAmount = new FormControl('');
 
   // product image
@@ -126,12 +122,8 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   }
 
   onProductPurchaseQuantity() {
-    const productPurchaseAmount =
-      this.currencyToNumberPipe.parse(this.productPurchaseUnitPrice.value) *
-      this.currencyToNumberPipe.parse(this.productPurchaseQuantity.value);
-    this.productPurchaseAmount.setValue(
-      this.currencyToNumberPipe.transform(String(productPurchaseAmount), this.locale, this.currency)
-    );
+    const productPurchaseAmount = this.currencyToNumberPipe.parse(this.productPurchaseUnitPrice.value) * this.currencyToNumberPipe.parse(this.productPurchaseQuantity.value);
+    this.productPurchaseAmount.setValue(this.currencyToNumberPipe.transform(String(productPurchaseAmount), this.locale, this.currency));
   }
 
   onKey() {
@@ -186,16 +178,8 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     this.productName.setValue(purchaseResponseDto.productName);
     this.productGenre.setValue(purchaseResponseDto.productGenre);
     this.productSizeStandard.setValue(purchaseResponseDto.productSizeStandard);
-    this.productPurchaseUnitPrice.setValue(
-      this.currencyToNumberPipe.transform(
-        String(purchaseResponseDto.productPurchaseUnitPrice),
-        this.locale,
-        this.currency
-      )
-    );
-    this.productStockQuantity.setValue(
-      this.currencyToNumberPipe.transform(String(purchaseResponseDto.productStockQuantity), this.locale, this.currency)
-    );
+    this.productPurchaseUnitPrice.setValue(this.currencyToNumberPipe.transform(String(purchaseResponseDto.productPurchaseUnitPrice), this.locale, this.currency));
+    this.productStockQuantity.setValue(this.currencyToNumberPipe.transform(String(purchaseResponseDto.productStockQuantity), this.locale, this.currency));
     this.productImage.setValue(purchaseResponseDto.productImage);
   }
 
@@ -203,9 +187,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     if (purchaseResponseDto === null) {
       return;
     }
-    this.productStockQuantity.setValue(
-      this.currencyToNumberPipe.transform(String(purchaseResponseDto.productStockQuantity), this.locale, this.currency)
-    );
+    this.productStockQuantity.setValue(this.currencyToNumberPipe.transform(String(purchaseResponseDto.productStockQuantity), this.locale, this.currency));
     this.productPurchaseQuantity.reset();
     this.productPurchaseAmount.reset();
   }

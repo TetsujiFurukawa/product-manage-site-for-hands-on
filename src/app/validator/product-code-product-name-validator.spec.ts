@@ -30,7 +30,7 @@ describe('ProductCodeProductNameValidator', () => {
         productName: new FormControl('productName')
       });
       ProductCodeProductNameValidator.match(testingForm);
-      expect(testingForm.get(PRODUCT_CODE).getError('productNotExistError')).toBeUndefined();
+      expect(testingForm.get(PRODUCT_CODE).getError('productNotExistError')).toBeNull();
     });
   });
 });

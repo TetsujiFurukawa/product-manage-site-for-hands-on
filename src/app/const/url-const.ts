@@ -1,5 +1,4 @@
 export class UrlConst {
-
   static readonly PATH_SIGN_IN = 'sign-in';
   static readonly PATH_MENU = 'menu';
   static readonly PATH_PRODUCT_LISTING = 'product-listing';
@@ -9,5 +8,4 @@ export class UrlConst {
   static readonly PATH_DUMMY_PURCHASING = 'dummy-purchasing';
 
   static readonly PATH_API_FOLDER = '/api/';
-
 }

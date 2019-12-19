@@ -1,16 +1,20 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 
 import { FooterComponent } from './footer.component';
+import { NO_ERRORS_SCHEMA, DebugElement } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
-xdescribe('FooterComponent', () => {
+describe('FooterComponent', () => {
   let component: FooterComponent;
   let fixture: ComponentFixture<FooterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FooterComponent ]
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [RouterTestingModule],
+      declarations: [FooterComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +23,10 @@ xdescribe('FooterComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe('#constractor', () => {
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
   });
+
 });

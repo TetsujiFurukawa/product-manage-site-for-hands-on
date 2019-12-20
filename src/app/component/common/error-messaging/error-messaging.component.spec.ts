@@ -12,9 +12,10 @@ import { By } from '@angular/platform-browser';
 describe('ErrorMessagingComponent', () => {
   let component: ErrorMessagingComponent;
   let fixture: ComponentFixture<ErrorMessagingComponent>;
-  const errorMessagingServiceSpy = jasmine.createSpyObj('ErrorMessagingService', ['clearMessageProperty', 'getMessageProperty']);
+  let errorMessagingServiceSpy: { clearMessageProperty: jasmine.Spy, getMessageProperty: jasmine.Spy };
 
   beforeEach(async(() => {
+    errorMessagingServiceSpy = jasmine.createSpyObj('ErrorMessagingService', ['clearMessageProperty', 'getMessageProperty']);
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       imports: [

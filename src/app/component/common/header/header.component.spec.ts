@@ -1,50 +1,41 @@
+import { of } from 'rxjs';
+import { HttpLoaderFactory } from 'src/app/app.module';
+import { UrlConst } from 'src/app/const/url-const';
+import { MenuListResponseDto } from 'src/app/entity/dto/response/menu-list-response-dto';
+import { AccountService } from 'src/app/service/account.service';
+import { RoutingService } from 'src/app/service/common/routing.service';
+import { SearchParamsService } from 'src/app/service/common/search-params.service';
+
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { HeaderComponent } from './header.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
-import { HttpLoaderFactory } from 'src/app/app.module';
-import { HttpClient } from '@angular/common/http';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AccountService } from 'src/app/service/account.service';
-import { MenuListResponseDto } from 'src/app/entity/dto/response/menu-list-response-dto';
-import { of } from 'rxjs';
 
-// xdescribe('HeaderComponent', () => {
-//   let component: HeaderComponent;
-//   let fixture: ComponentFixture<HeaderComponent>;
-
-//   beforeEach(async(() => {
-//     TestBed.configureTestingModule({
-//       declarations: [ HeaderComponent ]
-//     })
-//     .compileComponents();
-//   }));
-
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(HeaderComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
-
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-// });
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
-  let accountServiceSpy: { getMenu: jasmine.Spy };
+  let accountServiceSpy: { getMenu: jasmine.Spy; signOut: jasmine.Spy };
+  let matDialogSpy: { open: jasmine.Spy };
+  let searchParamsServiceSpy: { removeProductListingSearchParam: jasmine.Spy };
+  let router: Router;
 
   beforeEach(async(() => {
-    accountServiceSpy = jasmine.createSpyObj('AccountService', ['getMenu']);
+    accountServiceSpy = jasmine.createSpyObj('AccountService', ['getMenu', 'signOut']);
+    matDialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
+    searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', ['removeProductListingSearchParam']);
 
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       imports: [
+        BrowserAnimationsModule,
         MatMenuModule,
         MatDialogModule,
         RouterTestingModule,
@@ -59,12 +50,13 @@ describe('HeaderComponent', () => {
       ],
       providers: [
         TranslateService,
-        MatDialog,
+        { provide: MatDialog, useValue: matDialogSpy },
         { provide: AccountService, useValue: accountServiceSpy },
+        { provide: SearchParamsService, useValue: searchParamsServiceSpy }
       ],
       declarations: [HeaderComponent]
-    })
-      .compileComponents();
+    }).compileComponents();
+    router = TestBed.get(Router);
   }));
 
   beforeEach(() => {
@@ -91,6 +83,35 @@ describe('HeaderComponent', () => {
     });
   });
 
+  describe('#clickToggleSidenav', () => {
+    it('should show side navi', () => {
+      component.clickToggleSidenav();
+    });
+  });
+  describe('#clickSubmenu', () => {
+    it('should remove search param', () => {
+      component.clickSubmenu();
+      expect(searchParamsServiceSpy.removeProductListingSearchParam.calls.count()).toBe(1, 'one call');
+    });
+  });
+  describe('#clickSignOut', () => {
+    it('should sign out', async(() => {
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) });
+      accountServiceSpy.signOut.and.returnValue(of(null));
+      spyOn(router, 'navigate');
+      component.clickSignOut();
+      expect(matDialogSpy.open.calls.count()).toBe(1, 'one call');
+      expect(accountServiceSpy.signOut.calls.count()).toBe(1, 'one call');
+      expect(router.navigate).toHaveBeenCalledWith(['/' + UrlConst.PATH_SIGN_IN]);
+    }));
+
+    it('should not sign out', () => {
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) });
+      component.clickSignOut();
+      expect(matDialogSpy.open.calls.count()).toBe(1, 'one call');
+      expect(accountServiceSpy.signOut.calls.count()).toBe(0, 'no call');
+    });
+  });
 });
 
 function createExpectedMenuDto() {
@@ -103,4 +124,3 @@ function createExpectedMenuDto() {
   const expetedMenuListResponseDtos: MenuListResponseDto[] = Array(menuListResponseDto1, menuListResponseDto2);
   return expetedMenuListResponseDtos;
 }
-

@@ -1,16 +1,19 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { LoadingComponent } from './loading.component';
 
-xdescribe('LoadingComponent', () => {
+describe('LoadingComponent', () => {
   let component: LoadingComponent;
   let fixture: ComponentFixture<LoadingComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoadingComponent ]
-    })
-    .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [BrowserAnimationsModule],
+      declarations: [LoadingComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

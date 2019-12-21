@@ -95,7 +95,8 @@
             <app-mat-date-picker *ngIf="endOfSale.value" [locale]='locale'
               placeholder="{{ 'productRegisteringPage.endOfSaleDate' | translate }}"
               matTooltip="{{ 'productRegisteringPage.tooltip.endOfSaleDate' | translate }}" [isBlank]=false
-              [required]=true (event)=" onReceiveEventFromChild($event)"></app-mat-date-picker>
+              [required]=true [initialValue]="endOfSaleDate.value" (event)=" onReceiveEventFromChild($event)">
+            </app-mat-date-picker>
           </div>
         </div>
         <div class="registering-area-wrapper right">

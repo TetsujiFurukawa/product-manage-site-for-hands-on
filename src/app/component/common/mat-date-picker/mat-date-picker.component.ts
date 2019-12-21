@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
@@ -9,27 +9,23 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
   styleUrls: ['./mat-date-picker.component.scss']
 })
 export class MatDatePickerComponent implements OnInit {
-
   @Input() isBlank: boolean;
   @Input() required: boolean;
   @Input() locale: string;
   @Input() placeholder: string;
+  @Input() initialValue: string;
   @Output() event = new EventEmitter<string>();
 
   date = new FormControl('');
-
   myForm = this.formBuilder.group({
-    date: this.date,
+    date: this.date
   });
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private adapter: DateAdapter<any>
-  ) { }
+  constructor(private formBuilder: FormBuilder, private adapter: DateAdapter<any>) {}
 
   ngOnInit() {
     this.adapter.setLocale(this.locale);
-    this.event.emit(this.date.value);
+    // this.event.emit(this.date.value);
     this.setupDatevalue();
     this.setupValidators();
   }
@@ -38,7 +34,7 @@ export class MatDatePickerComponent implements OnInit {
     this.setupDatevalue();
   }
 
-  private addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+  addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
     this.event.emit(this.date.value);
   }
 
@@ -46,7 +42,7 @@ export class MatDatePickerComponent implements OnInit {
     if (this.isBlank) {
       this.date.setValue('');
     } else {
-      this.date.setValue(new Date());
+      this.date.setValue(new Date(this.initialValue));
     }
   }
 
@@ -55,5 +51,4 @@ export class MatDatePickerComponent implements OnInit {
       this.date.setValidators([Validators.required]);
     }
   }
-
 }

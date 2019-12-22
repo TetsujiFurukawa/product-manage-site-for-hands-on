@@ -36,7 +36,7 @@
           <div class="registering-condition-wrapper margin-left-25px">
             <mat-form-field>
               <mat-label>{{ 'dummyPurchasingPage.productGenre' | translate }}</mat-label>
-              <mat-select formControlName="productGenre" [attr.disabled]=true>
+              <mat-select id="product-genre" formControlName="productGenre" [attr.disabled]=true>
                 <mat-option *ngFor="let code of genres" [value]="code">
                   {{ 'genre.' + code | translate }}
                 </mat-option>

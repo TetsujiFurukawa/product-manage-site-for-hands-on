@@ -94,6 +94,17 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   }
 
   /**
+   * Blurs product code
+   */
+  blurProductCode(): void {
+    if (this.productCode.value === '') {
+      return;
+    }
+    this.clear();
+    this.loadProductData();
+  }
+
+  /**
    * Clicks save button
    */
   clickSaveButton() {
@@ -116,17 +127,6 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
         this.createProductPurchase(purchaseRequestDto);
       }
     });
-  }
-
-  /**
-   * Blurs product code
-   */
-  blurProductCode(): void {
-    if (this.productCode.value === '') {
-      return;
-    }
-    this.clear();
-    this.loadProductData();
   }
 
   /**
@@ -186,7 +186,6 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     if (productPurchaseResponseDto === null) {
       return;
     }
-    this.productCode.setValue(productPurchaseResponseDto.productCode);
     this.productName.setValue(productPurchaseResponseDto.productName);
     this.productGenre.setValue(productPurchaseResponseDto.productGenre);
     this.productSizeStandard.setValue(productPurchaseResponseDto.productSizeStandard);

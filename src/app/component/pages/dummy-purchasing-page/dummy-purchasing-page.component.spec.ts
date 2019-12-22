@@ -1,4 +1,5 @@
 import { TranslateTestingModule } from 'ngx-translate-testing';
+import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 import { of } from 'rxjs';
 import {
     ProductPurchaseResponseDto
@@ -25,6 +26,23 @@ import { DummyPurchasingPageComponent } from './dummy-purchasing-page.component'
 
 describe('DummyPurchasingPageComponent', () => {
   const expectedGenres = Array(1, 2, 3);
+  const user: User = new User();
+  user.userAccount = 'userAccount';
+  user.userCurrency = 'JPY';
+  user.userLanguage = 'ja';
+  user.userLocale = 'ja-JP';
+  user.userName = 'userName';
+  user.userTimezone = 'UTC';
+  const expectedResponseDto: ProductPurchaseResponseDto = new ProductPurchaseResponseDto();
+  expectedResponseDto.productCode = 'ABCD1234';
+  expectedResponseDto.productColor = 'productColor';
+  expectedResponseDto.productGenre = '1';
+  expectedResponseDto.productImage = 'productImage';
+  expectedResponseDto.productName = 'productName';
+  expectedResponseDto.productPurchaseUnitPrice = 1000;
+  expectedResponseDto.productSizeStandard = 'productSizeStandard';
+  expectedResponseDto.productStockQuantity = 2000;
+
   let component: DummyPurchasingPageComponent;
   let fixture: ComponentFixture<DummyPurchasingPageComponent>;
   let accountServiceSpy: { getUser: jasmine.Spy };
@@ -43,6 +61,7 @@ describe('DummyPurchasingPageComponent', () => {
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       imports: [
+        NgxUpperCaseDirectiveModule,
         HttpClientTestingModule,
         RouterTestingModule,
         TranslateTestingModule.withTranslations({ ja: require('src/assets/i18n/ja.json') }),
@@ -66,8 +85,8 @@ describe('DummyPurchasingPageComponent', () => {
     }).compileComponents();
   }));
 
-  beforeEach(() => {
-    accountServiceSpy.getUser.and.returnValue(createUser);
+  beforeEach(async () => {
+    accountServiceSpy.getUser.and.returnValue(user);
     productServiceSpy.getGenres.and.returnValue(of(expectedGenres));
     fixture = TestBed.createComponent(DummyPurchasingPageComponent);
     component = fixture.componentInstance;
@@ -96,6 +115,34 @@ describe('DummyPurchasingPageComponent', () => {
     });
   });
 
+  describe('#blurProductCode', () => {
+    it('no product code', async () => {
+      component.productCode.setValue('');
+      component.blurProductCode();
+      expect(productPurchaseServiceSpy.getProductPurchase.calls.count()).toEqual(0);
+    });
+    it('no load data', async () => {
+      component.productCode.setValue('test01');
+      productPurchaseServiceSpy.getProductPurchase.and.returnValue(of(null));
+      component.blurProductCode();
+      expect(productPurchaseServiceSpy.getProductPurchase.calls.count()).toEqual(1);
+    });
+    it('should load data', async () => {
+      component.productCode.setValue('ABCD1234');
+
+      productPurchaseServiceSpy.getProductPurchase.and.returnValue(of(expectedResponseDto));
+      component.blurProductCode();
+
+      expect(component.productGenre.value).toEqual(expectedResponseDto.productGenre);
+      expect(component.productImage.value).toEqual(expectedResponseDto.productImage);
+      expect(component.productName.value).toEqual(expectedResponseDto.productName);
+      expect(component.productPurchaseUnitPrice.value).toEqual('1,000');
+      expect(component.productSizeStandard.value).toEqual(expectedResponseDto.productSizeStandard);
+      expect(component.productStockQuantity.value).toEqual('2,000');
+      expect(productPurchaseServiceSpy.getProductPurchase.calls.count()).toBe(1);
+    });
+  });
+
   describe('#clickSaveButton', () => {
     it('should create data but no response', async () => {
       matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) });
@@ -104,24 +151,11 @@ describe('DummyPurchasingPageComponent', () => {
       expect(productPurchaseServiceSpy.createProductPurchase.calls.count()).toEqual(1);
     });
     it('should create data', async () => {
-      component.currency = 'JPY';
-      component.locale = 'ja-JP';
       matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) });
-      const expectedResponseDto: ProductPurchaseResponseDto = new ProductPurchaseResponseDto();
-
-      expectedResponseDto.productCode = 'productCode';
-      expectedResponseDto.productColor = 'productColor';
-      expectedResponseDto.productGenre = '1';
-      expectedResponseDto.productImage = 'productImage';
-      expectedResponseDto.productName = 'productName';
-      expectedResponseDto.productPurchaseUnitPrice = 1000;
-      expectedResponseDto.productSizeStandard = 'productSizeStandard';
-      expectedResponseDto.productStockQuantity = 1000;
-
       productPurchaseServiceSpy.createProductPurchase.and.returnValue(of(expectedResponseDto));
       component.clickSaveButton();
       expect(productPurchaseServiceSpy.createProductPurchase.calls.count()).toEqual(1);
-      expect(component.productStockQuantity.value).toEqual('1,000');
+      expect(component.productStockQuantity.value).toEqual('2,000');
       expect(component.productPurchaseQuantity.value).toBeNull();
       expect(component.productPurchaseAmount.value).toBeNull();
     });
@@ -133,54 +167,8 @@ describe('DummyPurchasingPageComponent', () => {
     });
   });
 
-  describe('#blurProductCode', () => {
-    it('no product code', async () => {
-      component.productCode.setValue('');
-      component.blurProductCode();
-      expect(productPurchaseServiceSpy.getProductPurchase.calls.count()).toEqual(0);
-    });
-    it('no load data', async () => {
-      component.currency = 'JPY';
-      component.locale = 'ja-JP';
-      component.productCode.setValue('test01');
-      productPurchaseServiceSpy.getProductPurchase.and.returnValue(of(null));
-      component.blurProductCode();
-      expect(productPurchaseServiceSpy.getProductPurchase.calls.count()).toEqual(1);
-    });
-
-    it('should load data', async () => {
-      component.currency = 'JPY';
-      component.locale = 'ja-JP';
-      component.productCode.setValue('test01');
-      const expectedResponseDto: ProductPurchaseResponseDto = new ProductPurchaseResponseDto();
-
-      expectedResponseDto.productCode = 'productCode';
-      expectedResponseDto.productColor = 'productColor';
-      expectedResponseDto.productGenre = '1';
-      expectedResponseDto.productImage = 'productImage';
-      expectedResponseDto.productName = 'productName';
-      expectedResponseDto.productPurchaseUnitPrice = 1000;
-      expectedResponseDto.productSizeStandard = 'productSizeStandard';
-      expectedResponseDto.productStockQuantity = 2000;
-
-      productPurchaseServiceSpy.getProductPurchase.and.returnValue(of(expectedResponseDto));
-      component.blurProductCode();
-
-      expect(component.productCode.value).toEqual(expectedResponseDto.productCode);
-      expect(component.productGenre.value).toEqual(expectedResponseDto.productGenre);
-      expect(component.productImage.value).toEqual(expectedResponseDto.productImage);
-      expect(component.productName.value).toEqual(expectedResponseDto.productName);
-      expect(component.productPurchaseUnitPrice.value).toEqual('1,000');
-      expect(component.productSizeStandard.value).toEqual(expectedResponseDto.productSizeStandard);
-      expect(component.productStockQuantity.value).toEqual('2,000');
-      expect(productPurchaseServiceSpy.getProductPurchase.calls.count()).toBe(1);
-    });
-  });
-
   describe('#blurProductPurchaseQuantity', () => {
     it('should return formated value', () => {
-      component.currency = 'JPY';
-      component.locale = 'ja-JP';
       component.productPurchaseUnitPrice.setValue(2);
       component.productPurchaseQuantity.setValue(111111111);
       component.blurProductPurchaseQuantity();
@@ -193,15 +181,34 @@ describe('DummyPurchasingPageComponent', () => {
       component.onKey();
     });
   });
-});
 
-function createUser() {
-  const user: User = new User();
-  user.userAccount = 'userAccount';
-  user.userCurrency = 'JPY';
-  user.userLanguage = 'ja';
-  user.userLocale = 'ja-JP';
-  user.userName = 'userName';
-  user.userTimezone = 'UTC';
-  return user;
-}
+  // --------------------------------------------------------------------------------
+  // DOM test cases
+  // --------------------------------------------------------------------------------
+  describe('input test', () => {
+    it('product code', () => {
+      productPurchaseServiceSpy.getProductPurchase.and.returnValue(of(expectedResponseDto));
+
+      const nativeElement = fixture.nativeElement;
+      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-code');
+      htmlInputElement.value = 'abcd1234';
+      htmlInputElement.dispatchEvent(new Event('input'));
+      htmlInputElement.dispatchEvent(new Event('blur'));
+      fixture.detectChanges();
+
+      const hTMLSelectElement: HTMLSelectElement = nativeElement.querySelector('#product-genre');
+      console.log('hTMLSelectElement:' + hTMLSelectElement.selectedIndex);
+
+      expect(htmlInputElement.placeholder).toContain('商品コード');
+      expect(component.productCode.value).toEqual('ABCD1234');
+      expect(nativeElement.querySelector('#product-name').value).toEqual('productName');
+      // expect(nativeElement.querySelector('#product-genre').value).toEqual('1');
+      expect(nativeElement.querySelector('#product-size-standard').value).toEqual('productSizeStandard');
+      expect(nativeElement.querySelector('#product-unit-price').value).toEqual('1,000');
+      expect(nativeElement.querySelector('#product-Stock-quantity').value).toEqual('2,000');
+      expect(nativeElement.querySelector('#product-Purchase-name').value).toEqual('');
+      expect(nativeElement.querySelector('#product-purchase-quantity').value).toEqual('');
+      expect(nativeElement.querySelector('#product-purchase-amount').value).toEqual('');
+    });
+  });
+});

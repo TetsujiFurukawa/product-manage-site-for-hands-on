@@ -1,18 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ErrorMessagingComponent } from './error-messaging.component';
-import { NO_ERRORS_SCHEMA, DebugElement } from '@angular/core';
-import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';
+import { ErrorMessagingService } from 'src/app/service/common/error-messaging.service';
+
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ErrorMessagingService } from 'src/app/service/common/error-messaging.service';
-import { By } from '@angular/platform-browser';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+
+import { ErrorMessagingComponent } from './error-messaging.component';
 
 describe('ErrorMessagingComponent', () => {
   let component: ErrorMessagingComponent;
   let fixture: ComponentFixture<ErrorMessagingComponent>;
-  let errorMessagingServiceSpy: { clearMessageProperty: jasmine.Spy, getMessageProperty: jasmine.Spy };
+  let errorMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; getMessageProperty: jasmine.Spy };
 
   beforeEach(async(() => {
     errorMessagingServiceSpy = jasmine.createSpyObj('ErrorMessagingService', ['clearMessageProperty', 'getMessageProperty']);
@@ -28,12 +28,9 @@ describe('ErrorMessagingComponent', () => {
           }
         })
       ],
-      providers: [TranslateService,
-        { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }],
+      providers: [TranslateService, { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }],
       declarations: [ErrorMessagingComponent]
-    })
-      .compileComponents();
-
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -58,12 +55,9 @@ describe('ErrorMessagingComponent', () => {
       const errorMessage = 'error';
       errorMessagingServiceSpy.getMessageProperty.and.returnValue(errorMessage);
       fixture.detectChanges();
-
-      const debugElement: DebugElement = fixture.debugElement;
-      const queriedElement = debugElement.query(By.css('p'));
-      const hTMLParagraphElement: HTMLParagraphElement = queriedElement.nativeElement;
+      const nativeElement = fixture.nativeElement;
+      const hTMLParagraphElement: HTMLParagraphElement = nativeElement.querySelector('p');
       expect(hTMLParagraphElement.innerText).toEqual(errorMessage);
-
     });
   });
 });

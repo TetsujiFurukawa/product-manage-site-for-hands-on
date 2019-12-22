@@ -36,7 +36,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
     private productService: ProductService,
-    private purchaseService: ProductPurchaseService,
+    private productPurchaseService: ProductPurchaseService,
     private accountService: AccountService,
     private dialog: MatDialog,
     private currencyToNumberPipe: CurrencyToNumberPipe,
@@ -82,16 +82,25 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
 
   genres: number[];
 
+  /**
+   * on init
+   */
   ngOnInit() {
     this.loadData();
     this.setupLangage();
   }
 
+  /**
+   * after view checked
+   */
   ngAfterViewChecked() {
     this.titleI18Service.setTitle(UrlConst.PATH_DUMMY_PURCHASING);
   }
 
-  onSave() {
+  /**
+   * Clicks save button
+   */
+  clickSaveButton() {
     const dialogData: YesNoDialogData = {
       title: this.translateService.instant('productRegisteringPage.saveYesNoDialog.title'),
       message: this.translateService.instant('productRegisteringPage.saveYesNoDialog.message'),
@@ -108,12 +117,15 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const purchaseRequestDto: ProductPurchaseRequestDto = this.createPurchaseRequestDto();
-        this.save(purchaseRequestDto);
+        this.createProductPurchase(purchaseRequestDto);
       }
     });
   }
 
-  onBlurProductCode() {
+  /**
+   * Blurs product code
+   */
+  blurProductCode(): void {
     if (this.productCode.value === '') {
       return;
     }
@@ -121,11 +133,15 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     this.loadProductData();
   }
 
-  onProductPurchaseQuantity() {
+  /**
+   * Blurs product purchase quantity
+   */
+  blurProductPurchaseQuantity(): void {
     const productPurchaseAmount = this.currencyToNumberPipe.parse(this.productPurchaseUnitPrice.value) * this.currencyToNumberPipe.parse(this.productPurchaseQuantity.value);
     this.productPurchaseAmount.setValue(this.currencyToNumberPipe.transform(String(productPurchaseAmount), this.locale, this.currency));
   }
 
+  // TODO
   onKey() {
     console.log('onKey');
   }
@@ -145,16 +161,16 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   private loadProductData() {
     this.loadingService.startLoading();
 
-    this.purchaseService.getProductPurchase(this.productCode.value).subscribe(data => {
+    this.productPurchaseService.getProductPurchase(this.productCode.value).subscribe(data => {
       this.load(data);
       this.loadingService.stopLoading();
     });
   }
 
-  private save(purchaseRequestDto: ProductPurchaseRequestDto) {
+  private createProductPurchase(purchaseRequestDto: ProductPurchaseRequestDto) {
     this.loadingService.startLoading();
 
-    this.purchaseService.createProductPurchase(purchaseRequestDto).subscribe(data => {
+    this.productPurchaseService.createProductPurchase(purchaseRequestDto).subscribe(data => {
       this.extract(data);
       this.loadingService.stopLoading();
     });

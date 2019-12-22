@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { FooterComponent } from './footer.component';
-import { NO_ERRORS_SCHEMA, DebugElement } from '@angular/core';
-import { RouterTestingModule } from '@angular/router/testing';
 
 describe('FooterComponent', () => {
   let component: FooterComponent;
@@ -13,8 +13,7 @@ describe('FooterComponent', () => {
       schemas: [NO_ERRORS_SCHEMA],
       imports: [RouterTestingModule],
       declarations: [FooterComponent]
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -28,5 +27,4 @@ describe('FooterComponent', () => {
       expect(component).toBeTruthy();
     });
   });
-
 });

@@ -15,7 +15,7 @@
               <input id="product-code" matInput type="text" formControlName="productCode" upperCase
                 placeholder="{{ 'dummyPurchasingPage.productCode' | translate }}"
                 matTooltip="{{ 'tooltip.registerValue.input.alphaNumeric' | translate }}" maxlength=20
-                (blur)="onBlurProductCode()" (keyup)="onKey($event)">
+                (blur)="blurProductCode()" (keyup)="onKey($event)">
               <mat-error *ngIf="productCode.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
@@ -81,7 +81,7 @@
                 formControlName="productPurchaseQuantity"
                 placeholder="{{ 'dummyPurchasingPage.productPurchaseQuantity' | translate }}"
                 matTooltip="{{ 'tooltip.registerValue.input.numeric' | translate }}" [attr.locale]='locale'
-                [attr.currency]="currency" maxlength=11 (blur)='onProductPurchaseQuantity()'>
+                [attr.currency]="currency" maxlength=11 (blur)='blurProductPurchaseQuantity()'>
               <mat-error *ngIf="productPurchaseQuantity.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
@@ -109,7 +109,7 @@
   </div>
   <div class="registering-functions">
     <div class="registering-functions-wrapper">
-      <button mat-raised-button id="saveBtn" class="mat-raised-button active" type="button" (click)="onSave()"
+      <button mat-raised-button id="saveBtn" class="mat-raised-button active" type="button" (click)="clickSaveButton()"
         [attr.disabled]="!registeringForm.valid"
         matTooltip="{{ 'dummyPurchasingPage.tooltip.saveButton' | translate }}">{{ 'dummyPurchasingPage.saveButton' | translate }}</button>
     </div>

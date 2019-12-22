@@ -36,7 +36,7 @@
           <div class="registering-condition-wrapper margin-left-25px">
             <mat-form-field>
               <mat-label>{{ 'dummyPurchasingPage.productGenre' | translate }}</mat-label>
-              <mat-select formControlName="productGenre" [disabled]=true>
+              <mat-select formControlName="productGenre" [attr.disabled]=true>
                 <mat-option *ngFor="let code of genres" [value]="code">
                   {{ 'genre.' + code | translate }}
                 </mat-option>
@@ -110,7 +110,7 @@
   <div class="registering-functions">
     <div class="registering-functions-wrapper">
       <button mat-raised-button id="saveBtn" class="mat-raised-button active" type="button" (click)="onSave()"
-        [disabled]="!registeringForm.valid"
+        [attr.disabled]="!registeringForm.valid"
         matTooltip="{{ 'dummyPurchasingPage.tooltip.saveButton' | translate }}">{{ 'dummyPurchasingPage.saveButton' | translate }}</button>
     </div>
   </div>

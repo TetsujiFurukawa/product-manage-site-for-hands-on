@@ -8,9 +8,8 @@ xdescribe('ProductRegisteringPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProductRegisteringPageComponent ]
-    })
-    .compileComponents();
+      declarations: [ProductRegisteringPageComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -43,9 +43,8 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     private titleI18Service: TitleI18Service,
     public translateService: TranslateService
   ) {}
-  // product code
-  productCode = new FormControl('', [Validators.required, Validators.pattern(RegexConst.SINGLE_BYTE_ALPHANUMERIC)]);
 
+  productCode = new FormControl('', [Validators.required, Validators.pattern(RegexConst.SINGLE_BYTE_ALPHANUMERIC)]);
   productName = new FormControl('');
   productGenre = new FormControl('');
   productSizeStandard = new FormControl('');
@@ -54,8 +53,6 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   productStockQuantity = new FormControl('');
   productPurchaseQuantity = new FormControl('', [Validators.required, Validators.max(999999999), Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)]);
   productPurchaseAmount = new FormControl('');
-
-  // product image
   productImage = new FormControl(null);
 
   registeringForm = this.formBuilder.group(
@@ -79,7 +76,6 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   /** other informations */
   locale: string = this.accountService.getUser().userLocale;
   currency: string = this.accountService.getUser().userCurrency;
-
   genres: number[];
 
   /**
@@ -167,43 +163,43 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  private createProductPurchase(purchaseRequestDto: ProductPurchaseRequestDto) {
+  private createProductPurchase(productPurchaseRequestDto: ProductPurchaseRequestDto) {
     this.loadingService.startLoading();
 
-    this.productPurchaseService.createProductPurchase(purchaseRequestDto).subscribe(data => {
+    this.productPurchaseService.createProductPurchase(productPurchaseRequestDto).subscribe(data => {
       this.extract(data);
       this.loadingService.stopLoading();
     });
   }
 
   private createPurchaseRequestDto(): ProductPurchaseRequestDto {
-    const purchaseRequestDto: ProductPurchaseRequestDto = new ProductPurchaseRequestDto();
-    purchaseRequestDto.productCode = this.productCode.value;
-    purchaseRequestDto.productPurchaseName = this.productPurchaseName.value;
-    purchaseRequestDto.productStockQuantity = this.currencyToNumberPipe.parse(this.productStockQuantity.value);
-    purchaseRequestDto.productPurchaseQuantity = this.currencyToNumberPipe.parse(this.productPurchaseQuantity.value);
+    const productPurchaseRequestDto: ProductPurchaseRequestDto = new ProductPurchaseRequestDto();
+    productPurchaseRequestDto.productCode = this.productCode.value;
+    productPurchaseRequestDto.productPurchaseName = this.productPurchaseName.value;
+    productPurchaseRequestDto.productStockQuantity = this.currencyToNumberPipe.parse(this.productStockQuantity.value);
+    productPurchaseRequestDto.productPurchaseQuantity = this.currencyToNumberPipe.parse(this.productPurchaseQuantity.value);
 
-    return purchaseRequestDto;
+    return productPurchaseRequestDto;
   }
 
-  private load(purchaseResponseDto: ProductPurchaseResponseDto) {
-    if (purchaseResponseDto === null) {
+  private load(productPurchaseResponseDto: ProductPurchaseResponseDto) {
+    if (productPurchaseResponseDto === null) {
       return;
     }
-    this.productCode.setValue(purchaseResponseDto.productCode);
-    this.productName.setValue(purchaseResponseDto.productName);
-    this.productGenre.setValue(purchaseResponseDto.productGenre);
-    this.productSizeStandard.setValue(purchaseResponseDto.productSizeStandard);
-    this.productPurchaseUnitPrice.setValue(this.currencyToNumberPipe.transform(String(purchaseResponseDto.productPurchaseUnitPrice), this.locale, this.currency));
-    this.productStockQuantity.setValue(this.currencyToNumberPipe.transform(String(purchaseResponseDto.productStockQuantity), this.locale, this.currency));
-    this.productImage.setValue(purchaseResponseDto.productImage);
+    this.productCode.setValue(productPurchaseResponseDto.productCode);
+    this.productName.setValue(productPurchaseResponseDto.productName);
+    this.productGenre.setValue(productPurchaseResponseDto.productGenre);
+    this.productSizeStandard.setValue(productPurchaseResponseDto.productSizeStandard);
+    this.productPurchaseUnitPrice.setValue(this.currencyToNumberPipe.transform(String(productPurchaseResponseDto.productPurchaseUnitPrice), this.locale, this.currency));
+    this.productStockQuantity.setValue(this.currencyToNumberPipe.transform(String(productPurchaseResponseDto.productStockQuantity), this.locale, this.currency));
+    this.productImage.setValue(productPurchaseResponseDto.productImage);
   }
 
-  private extract(purchaseResponseDto: ProductPurchaseResponseDto) {
-    if (purchaseResponseDto === null) {
+  private extract(productPurchaseResponseDto: ProductPurchaseResponseDto) {
+    if (productPurchaseResponseDto === null) {
       return;
     }
-    this.productStockQuantity.setValue(this.currencyToNumberPipe.transform(String(purchaseResponseDto.productStockQuantity), this.locale, this.currency));
+    this.productStockQuantity.setValue(this.currencyToNumberPipe.transform(String(productPurchaseResponseDto.productStockQuantity), this.locale, this.currency));
     this.productPurchaseQuantity.reset();
     this.productPurchaseAmount.reset();
   }

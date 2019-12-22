@@ -97,11 +97,33 @@ describe('DummyPurchasingPageComponent', () => {
   });
 
   describe('#clickSaveButton', () => {
-    it('should create data', async () => {
+    it('should create data but no response', async () => {
       matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) });
       productPurchaseServiceSpy.createProductPurchase.and.returnValue(of(null));
       component.clickSaveButton();
       expect(productPurchaseServiceSpy.createProductPurchase.calls.count()).toEqual(1);
+    });
+    it('should create data', async () => {
+      component.currency = 'JPY';
+      component.locale = 'ja-JP';
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) });
+      const expectedResponseDto: ProductPurchaseResponseDto = new ProductPurchaseResponseDto();
+
+      expectedResponseDto.productCode = 'productCode';
+      expectedResponseDto.productColor = 'productColor';
+      expectedResponseDto.productGenre = '1';
+      expectedResponseDto.productImage = 'productImage';
+      expectedResponseDto.productName = 'productName';
+      expectedResponseDto.productPurchaseUnitPrice = 1000;
+      expectedResponseDto.productSizeStandard = 'productSizeStandard';
+      expectedResponseDto.productStockQuantity = 1000;
+
+      productPurchaseServiceSpy.createProductPurchase.and.returnValue(of(expectedResponseDto));
+      component.clickSaveButton();
+      expect(productPurchaseServiceSpy.createProductPurchase.calls.count()).toEqual(1);
+      expect(component.productStockQuantity.value).toEqual('1,000');
+      expect(component.productPurchaseQuantity.value).toBeNull();
+      expect(component.productPurchaseAmount.value).toBeNull();
     });
     it('should not create data', () => {
       matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) });
@@ -113,13 +135,17 @@ describe('DummyPurchasingPageComponent', () => {
 
   describe('#blurProductCode', () => {
     it('no product code', async () => {
+      component.productCode.setValue('');
       component.blurProductCode();
       expect(productPurchaseServiceSpy.getProductPurchase.calls.count()).toEqual(0);
     });
-    it('should not load data', async () => {
+    it('no load data', async () => {
+      component.currency = 'JPY';
+      component.locale = 'ja-JP';
+      component.productCode.setValue('test01');
       productPurchaseServiceSpy.getProductPurchase.and.returnValue(of(null));
       component.blurProductCode();
-      expect(productPurchaseServiceSpy.getProductPurchase.calls.count()).toEqual(0);
+      expect(productPurchaseServiceSpy.getProductPurchase.calls.count()).toEqual(1);
     });
 
     it('should load data', async () => {

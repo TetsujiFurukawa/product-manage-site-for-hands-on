@@ -100,8 +100,8 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     if (this.productCode.value === '') {
       return;
     }
-    this.clear();
-    this.loadProductData();
+    this.resetProductPurchaseControls();
+    this.getProductPurchase();
   }
 
   /**
@@ -154,11 +154,11 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     this.translateService.use(lang);
   }
 
-  private loadProductData() {
+  private getProductPurchase() {
     this.loadingService.startLoading();
 
     this.productPurchaseService.getProductPurchase(this.productCode.value).subscribe(data => {
-      this.load(data);
+      this.extractGetProductPurchaseResponse(data);
       this.loadingService.stopLoading();
     });
   }
@@ -167,7 +167,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     this.loadingService.startLoading();
 
     this.productPurchaseService.createProductPurchase(productPurchaseRequestDto).subscribe(data => {
-      this.extract(data);
+      this.extractCreateProductPurchaseResponse(data);
       this.loadingService.stopLoading();
     });
   }
@@ -182,7 +182,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     return productPurchaseRequestDto;
   }
 
-  private load(productPurchaseResponseDto: ProductPurchaseResponseDto) {
+  private extractGetProductPurchaseResponse(productPurchaseResponseDto: ProductPurchaseResponseDto) {
     if (productPurchaseResponseDto === null) {
       return;
     }
@@ -194,7 +194,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     this.productImage.setValue(productPurchaseResponseDto.productImage);
   }
 
-  private extract(productPurchaseResponseDto: ProductPurchaseResponseDto) {
+  private extractCreateProductPurchaseResponse(productPurchaseResponseDto: ProductPurchaseResponseDto) {
     if (productPurchaseResponseDto === null) {
       return;
     }
@@ -203,7 +203,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     this.productPurchaseAmount.reset();
   }
 
-  private clear() {
+  private resetProductPurchaseControls() {
     this.productName.reset();
     this.productGenre.reset();
     this.productSizeStandard.reset();

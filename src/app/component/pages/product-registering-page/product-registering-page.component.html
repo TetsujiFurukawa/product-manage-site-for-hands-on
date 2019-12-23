@@ -104,11 +104,11 @@
           <img src="../../../../assets/images/no_image.png" class="image-preview" *ngIf="!productImage.value" />
           <img [src]="productImage.value" class="image-preview" *ngIf="productImage.value" />
           <button mat-raised-button id="fileInput" class="mat-raised-button" type="button" (click)="fileInput.click()"
-            [attr.disabled]="productImage.value"
+            [disabled]="productImage.value"
             matTooltip="{{ 'productRegisteringPage.tooltip.imageUploadButton' | translate }}">{{ 'productRegisteringPage.imageUploadButton' | translate }}</button>
           <input hidden (change)="onFileSelected(fileInput.files)" #fileInput type="file" accept='image/*'>
           <button mat-raised-button id="clear" class="mat-raised-button" type="button" (click)="onClear()"
-            [attr.disabled]="!productImage.value"
+            [disabled]="!productImage.value"
             matTooltip="{{ 'productRegisteringPage.tooltip.imageClearButton' | translate }}">{{ 'productRegisteringPage.imageClearButton' | translate }}</button>
         </div>
       </form>
@@ -119,7 +119,7 @@
       <button mat-raised-button id="clearBtn" class="mat-raised-button" type="button" (click)="onReturn()"
         matTooltip="{{ 'productRegisteringPage.tooltip.returnButton' | translate }}">{{ 'productRegisteringPage.returnButton' | translate }}</button>
       <button mat-raised-button id="saveBtn" class="mat-raised-button active" type="button" (click)="onSave()"
-        [attr.disabled]="!registeringForm.valid"
+        [disabled]="!registeringForm.valid"
         matTooltip="{{ 'productRegisteringPage.tooltip.saveButton' | translate }}">{{ messagePropertySaveButton | translate }}</button>
     </div>
   </div>

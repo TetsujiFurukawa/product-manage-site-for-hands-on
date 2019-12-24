@@ -10,7 +10,7 @@ import { RoutingService } from 'src/app/service/common/routing.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 import { ProductService } from 'src/app/service/product.service';
 import {
-    EndOfSaleEndOfSaleDateValidator
+  EndOfSaleEndOfSaleDateValidator
 } from 'src/app/validator/end-of-sale-end-of-sale-date-validator';
 
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
@@ -40,7 +40,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     private currencyToNumberPipe: CurrencyToNumberPipe,
     private titleI18Service: TitleI18Service,
     public translateService: TranslateService
-  ) {}
+  ) { }
   // Called new or update?
   isNew = this.routingService.router.url === '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW;
 
@@ -100,7 +100,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   messagePropertytitle = 'productRegisteringPage.title.new';
   messagePropertySaveButton = 'productRegisteringPage.saveButton.new';
 
-  genres: number[];
+  genres: string[];
 
   ngOnInit() {
     this.loadData();

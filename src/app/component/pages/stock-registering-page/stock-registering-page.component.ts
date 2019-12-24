@@ -11,7 +11,7 @@ import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 import { ProductStockService } from 'src/app/service/product-stock.service';
 import { ProductService } from 'src/app/service/product.service';
 import {
-    ProductCodeProductNameValidator
+  ProductCodeProductNameValidator
 } from 'src/app/validator/product-code-product-name-validator';
 
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
@@ -37,7 +37,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     private currencyToNumberPipe: CurrencyToNumberPipe,
     private titleI18Service: TitleI18Service,
     public translateService: TranslateService
-  ) {}
+  ) { }
   // product code
   productCode = new FormControl('', [Validators.required, Validators.pattern(RegexConst.SINGLE_BYTE_ALPHANUMERIC)]);
 
@@ -68,7 +68,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   locale: string = this.accountService.getUser().userLocale;
   currency: string = this.accountService.getUser().userCurrency;
 
-  genres: number[];
+  genres: string[];
 
   ngOnInit() {
     this.loadData();

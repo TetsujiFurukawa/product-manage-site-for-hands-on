@@ -2,7 +2,7 @@ import { TranslateTestingModule } from 'ngx-translate-testing';
 import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 import { of } from 'rxjs';
 import {
-    ProductPurchaseResponseDto
+  ProductPurchaseResponseDto
 } from 'src/app/entity/dto/response/product-purchase-response-dto';
 import { User } from 'src/app/entity/user';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
@@ -25,7 +25,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { DummyPurchasingPageComponent } from './dummy-purchasing-page.component';
 
 describe('DummyPurchasingPageComponent', () => {
-  const expectedGenres = Array(1, 2, 3);
+  const expectedGenres = Array('1', '2', '3');
   const user: User = new User();
   user.userAccount = 'userAccount';
   user.userCurrency = 'JPY';
@@ -87,7 +87,7 @@ describe('DummyPurchasingPageComponent', () => {
     }).compileComponents();
   }));
 
-  beforeEach(async () => {
+  beforeEach(() => {
     accountServiceSpy.getUser.and.returnValue(user);
     productServiceSpy.getGenres.and.returnValue(of(expectedGenres));
     fixture = TestBed.createComponent(DummyPurchasingPageComponent);
@@ -135,13 +135,15 @@ describe('DummyPurchasingPageComponent', () => {
       productPurchaseServiceSpy.getProductPurchase.and.returnValue(of(expectedResponseDto));
       component.blurProductCode();
 
-      expect(component.productGenre.value).toEqual(expectedResponseDto.productGenre);
-      expect(component.productImage.value).toEqual(expectedResponseDto.productImage);
-      expect(component.productName.value).toEqual(expectedResponseDto.productName);
-      expect(component.productPurchaseUnitPrice.value).toEqual('1,000');
-      expect(component.productSizeStandard.value).toEqual(expectedResponseDto.productSizeStandard);
-      expect(component.productStockQuantity.value).toEqual('2,000');
-      expect(productPurchaseServiceSpy.getProductPurchase.calls.count()).toBe(1);
+      fixture.whenStable().then(() => {
+        expect(component.productGenre.value).toEqual(expectedResponseDto.productGenre);
+        expect(component.productImage.value).toEqual(expectedResponseDto.productImage);
+        expect(component.productName.value).toEqual(expectedResponseDto.productName);
+        expect(component.productPurchaseUnitPrice.value).toEqual('1,000');
+        expect(component.productSizeStandard.value).toEqual(expectedResponseDto.productSizeStandard);
+        expect(component.productStockQuantity.value).toEqual('2,000');
+        expect(productPurchaseServiceSpy.getProductPurchase.calls.count()).toBe(1);
+      });
     });
   });
 
@@ -187,7 +189,55 @@ describe('DummyPurchasingPageComponent', () => {
   // --------------------------------------------------------------------------------
   // DOM test cases
   // --------------------------------------------------------------------------------
-  describe('input test', () => {
+  describe('DOM placeholder', () => {
+    it('product code', () => {
+      const nativeElement = fixture.nativeElement;
+      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-code');
+      expect(htmlInputElement.placeholder).toContain('商品コード');
+    });
+    it('product name', () => {
+      const nativeElement = fixture.nativeElement;
+      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-name');
+      expect(htmlInputElement.placeholder).toContain('商品名');
+    });
+    it('product name', () => {
+      const nativeElement = fixture.nativeElement;
+      const hTMLLabelElement: HTMLLabelElement = nativeElement.querySelector('#product-genre-label');
+      expect(hTMLLabelElement.innerText).toContain('ジャンル');
+    });
+    it('product name', () => {
+      const nativeElement = fixture.nativeElement;
+      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-size-standard');
+      expect(htmlInputElement.placeholder).toContain('サイズ・規格');
+    });
+    it('product name', () => {
+      const nativeElement = fixture.nativeElement;
+      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-unit-price');
+      expect(htmlInputElement.placeholder).toContain('購入単価');
+    });
+    it('product name', () => {
+      const nativeElement = fixture.nativeElement;
+      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-Stock-quantity');
+      expect(htmlInputElement.placeholder).toContain('在庫数');
+    });
+    it('product name', () => {
+      const nativeElement = fixture.nativeElement;
+      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-Purchase-name');
+      expect(htmlInputElement.placeholder).toContain('購入者');
+    });
+    it('product name', () => {
+      const nativeElement = fixture.nativeElement;
+      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-purchase-quantity');
+      expect(htmlInputElement.placeholder).toContain('購入数量');
+    });
+    it('product name', () => {
+      const nativeElement = fixture.nativeElement;
+      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-purchase-amount');
+      expect(htmlInputElement.placeholder).toContain('購入金額');
+    });
+  });
+
+  describe('DOM input test', () => {
     it('product code', () => {
       const expectedValue = 'PRODUCTCODE0001';
       component.productCode.setValue(expectedValue);
@@ -196,23 +246,35 @@ describe('DummyPurchasingPageComponent', () => {
       const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-code');
       fixture.detectChanges();
 
-      expect(htmlInputElement.placeholder).toContain('商品コード');
       expect(htmlInputElement.value).toEqual(expectedValue);
     });
-    it('product name', () => {
-      const expectedValue = 'PRODUCT_NAME0001';
-      component.productName.setValue(expectedValue);
+    it('product purchase name', () => {
+      const expectedValue = 'PRODUCT_PURCHASE_NAME0001';
+      component.productPurchaseName.setValue(expectedValue);
 
       const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-name');
+      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-Purchase-name');
       fixture.detectChanges();
 
-      expect(htmlInputElement.placeholder).toContain('商品名');
+      expect(htmlInputElement.value).toEqual(expectedValue);
+    });
+    it('product purchase quantity', () => {
+      const expectedValue = '123';
+      component.productPurchaseQuantity.setValue(expectedValue);
+
+      const nativeElement = fixture.nativeElement;
+      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-purchase-quantity');
+      fixture.detectChanges();
+
       expect(htmlInputElement.value).toEqual(expectedValue);
     });
 
-    it('input product code and input purchase quantlty', () => {
+    it('Enter product code and system gets product purchase data then display screen', () => {
       productPurchaseServiceSpy.getProductPurchase.and.returnValue(of(expectedResponseDto));
+
+      component.productPurchaseName.setValue('The value to be reset');
+      component.productPurchaseQuantity.setValue('123');
+      component.productPurchaseAmount.setValue('456');
 
       const nativeElement = fixture.nativeElement;
       const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-code');
@@ -220,14 +282,10 @@ describe('DummyPurchasingPageComponent', () => {
       htmlInputElement.dispatchEvent(new Event('input'));
       htmlInputElement.dispatchEvent(new Event('blur'));
       fixture.detectChanges();
-
-      const hTMLSelectElement: HTMLSelectElement = nativeElement.querySelector('mat-select');
-      console.log('hTMLSelectElement:' + hTMLSelectElement.innerText.toString());
-
       expect(htmlInputElement.placeholder).toContain('商品コード');
       expect(component.productCode.value).toEqual('ABCD1234');
       expect(nativeElement.querySelector('#product-name').value).toEqual('productName');
-      // expect(nativeElement.querySelector('#product-genre').value).toEqual('1');
+      expect(nativeElement.querySelector('#product-genre').innerText).toContain('靴・スニーカー');
       expect(nativeElement.querySelector('#product-size-standard').value).toEqual('productSizeStandard');
       expect(nativeElement.querySelector('#product-unit-price').value).toEqual('1,000');
       expect(nativeElement.querySelector('#product-Stock-quantity').value).toEqual('2,000');

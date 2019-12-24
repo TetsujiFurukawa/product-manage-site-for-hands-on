@@ -7,7 +7,7 @@ import { ApiConst } from '../const/api-const';
 import { UrlConst } from '../const/url-const';
 import { ProductDto } from '../entity/dto/product-dto';
 import {
-    ProductSearchListResponseDto
+  ProductSearchListResponseDto
 } from '../entity/dto/response/product-search-list-response-dto';
 import { ProductSearchResponseDto } from '../entity/dto/response/product-search-response-dto';
 import { ErrorMessagingService } from './common/error-messaging.service';
@@ -250,7 +250,7 @@ describe('ProductService', () => {
     const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_GENRE;
 
     it('should return expected response', () => {
-      const expectedResponseDto: number[] = Array(1, 2, 3);
+      const expectedResponseDto: string[] = Array('1', '2', '3');
 
       service.getGenres().subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');

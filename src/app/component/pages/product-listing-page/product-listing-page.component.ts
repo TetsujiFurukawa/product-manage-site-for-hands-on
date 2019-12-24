@@ -60,7 +60,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
   locale: string = this.accountService.getUser().userLocale;
   currency: string = this.accountService.getUser().userCurrency;
 
-  genres: number[];
+  genres: string[];
 
   // Material table's header
   displayColumns: string[] = [

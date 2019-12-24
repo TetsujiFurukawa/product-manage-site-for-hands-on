@@ -4,7 +4,7 @@ import { ApiConst } from 'src/app/const/api-const';
 import { UrlConst } from 'src/app/const/url-const';
 import { ProductDto } from 'src/app/entity/dto/product-dto';
 import {
-    ProductSearchListResponseDto
+  ProductSearchListResponseDto
 } from 'src/app/entity/dto/response/product-search-list-response-dto';
 
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -21,7 +21,7 @@ export class ProductService {
     private http: HttpClient,
     private successMessagingService: SuccessMessagingService,
     private errorMessageService: ErrorMessagingService
-  ) {}
+  ) { }
 
   /**
    * Gets product list
@@ -107,14 +107,14 @@ export class ProductService {
    * Gets genres
    * @returns genres
    */
-  getGenres(): Observable<number[]> {
+  getGenres(): Observable<string[]> {
     const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_GENRE;
     this.clearMessageProperty();
 
-    return this.http.get<number[]>(webApiUrl).pipe(
+    return this.http.get<string[]>(webApiUrl).pipe(
       catchError(error => {
         this.errorMessageService.setupPageErrorMessageFromResponse(error);
-        return of(null as number[]);
+        return of(null as string[]);
       })
     );
   }

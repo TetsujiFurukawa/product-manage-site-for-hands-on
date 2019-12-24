@@ -3,7 +3,7 @@ import { RegexConst } from 'src/app/const/regex-const';
 import { UrlConst } from 'src/app/const/url-const';
 import { ProductPurchaseRequestDto } from 'src/app/entity/dto/request/product-purchase-request-dto';
 import {
-  ProductPurchaseResponseDto
+    ProductPurchaseResponseDto
 } from 'src/app/entity/dto/response/product-purchase-response-dto';
 import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
@@ -13,10 +13,10 @@ import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 import { ProductPurchaseService } from 'src/app/service/product-purchase.service';
 import { ProductService } from 'src/app/service/product.service';
 import {
-  ProductCodeProductNameValidator
+    ProductCodeProductNameValidator
 } from 'src/app/validator/product-code-product-name-validator';
 import {
-  PurchaseQuantityStockQuantityValidator
+    PurchaseQuantityStockQuantityValidator
 } from 'src/app/validator/purchase-quantity-stock-quantity-validator';
 
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
@@ -42,9 +42,9 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     private currencyToNumberPipe: CurrencyToNumberPipe,
     private titleI18Service: TitleI18Service,
     public translateService: TranslateService
-  ) { }
+  ) {}
 
-  productCode = new FormControl('', [Validators.required, Validators.pattern(RegexConst.SINGLE_BYTE_ALPHANUMERIC)]);
+  productCode = new FormControl('');
   productName = new FormControl('');
   productGenre = new FormControl('');
   productSizeStandard = new FormControl('');

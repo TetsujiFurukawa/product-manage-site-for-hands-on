@@ -16,14 +16,8 @@
                 placeholder="{{ 'dummyPurchasingPage.productCode' | translate }}"
                 matTooltip="{{ 'tooltip.registerValue.input.alphaNumeric' | translate }}" maxlength=20
                 (blur)="blurProductCode()" (keyup)="onKey($event)">
-              <mat-error *ngIf="productCode.hasError('required')">
-                {{'validationError.required'|translate}}
-              </mat-error>
-              <mat-error *ngIf="productCode.hasError('productNotExistError')">
+              <mat-error class="validation-error" *ngIf="productCode.hasError('productNotExistError')">
                 {{'dummyPurchasingPage.validationError.productNotExistError'|translate}}
-              </mat-error>
-              <mat-error *ngIf="productCode.hasError('pattern')">
-                {{'validationError.pattern.singleByteAlphanumeric'|translate}}
               </mat-error>
             </mat-form-field>
           </div>
@@ -70,7 +64,7 @@
               <input id="product-Purchase-name" matInput type="text" formControlName="productPurchaseName"
                 placeholder="{{ 'dummyPurchasingPage.productPurchaseName' | translate }}"
                 matTooltip="{{ 'dummyPurchasingPage.tooltip.purchaseName' | translate }}" maxlength=50>
-              <mat-error *ngIf="productPurchaseName.hasError('required')">
+              <mat-error class="validation-error" *ngIf="productPurchaseName.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
             </mat-form-field>
@@ -82,11 +76,15 @@
                 placeholder="{{ 'dummyPurchasingPage.productPurchaseQuantity' | translate }}"
                 matTooltip="{{ 'tooltip.registerValue.input.numeric' | translate }}" [attr.locale]='locale'
                 [attr.currency]="currency" maxlength=11 (blur)='blurProductPurchaseQuantity()'>
-              <mat-error *ngIf="productPurchaseQuantity.hasError('required')">
+              <mat-error class="validation-error" *ngIf="productPurchaseQuantity.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
-              <mat-error *ngIf="productPurchaseQuantity.hasError('exceedStockError')">
+              <mat-error class="validation-error" *ngIf="productPurchaseQuantity.hasError('exceedStockError')">
                 {{'dummyPurchasingPage.validationError.exceedStockError'|translate}}
+              </mat-error>
+              <mat-error class="validation-error" class="validation-error"
+                *ngIf="productPurchaseQuantity.hasError('pattern')">
+                {{'validationError.pattern.halfWidthNumericComma'|translate}}
               </mat-error>
             </mat-form-field>
           </div>

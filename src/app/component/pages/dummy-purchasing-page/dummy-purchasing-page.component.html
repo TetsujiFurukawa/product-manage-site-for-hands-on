@@ -53,7 +53,7 @@
           </div>
           <div class="registering-condition-wrapper margin-left-25px">
             <mat-form-field class="form-field">
-              <input id="product-Stock-quantity" class="align-right" matInput type="text" appNumberInput
+              <input id="product-stock-quantity" class="align-right" matInput type="text" appNumberInput
                 formControlName="productStockQuantity"
                 placeholder="{{ 'dummyPurchasingPage.productStockQuantity' | translate }}" [attr.locale]='locale'
                 [attr.currency]="currency" [readonly]=true>
@@ -82,8 +82,7 @@
               <mat-error class="validation-error" *ngIf="productPurchaseQuantity.hasError('exceedStockError')">
                 {{'dummyPurchasingPage.validationError.exceedStockError'|translate}}
               </mat-error>
-              <mat-error class="validation-error" class="validation-error"
-                *ngIf="productPurchaseQuantity.hasError('pattern')">
+              <mat-error class="validation-error" *ngIf="productPurchaseQuantity.hasError('pattern')">
                 {{'validationError.pattern.halfWidthNumericComma'|translate}}
               </mat-error>
             </mat-form-field>
@@ -100,7 +99,7 @@
         <div class="registering-area-wrapper right">
           <p>{{ 'dummyPurchasingPage.productImage' | translate }}</p>
           <img src="../../../../assets/images/no_image.png" class="image-preview" *ngIf="!productImage.value" />
-          <img [src]="productImage.value" class="image-preview" *ngIf="productImage.value" />
+          <img id="product-image" [src]="productImage.value" class="image-preview" *ngIf="productImage.value" />
         </div>
       </form>
     </div>

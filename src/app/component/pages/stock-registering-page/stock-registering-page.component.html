@@ -15,7 +15,7 @@
                             <input id="product-code" matInput type="text" formControlName="productCode" upperCase
                                 placeholder="{{ 'stockRegisteringPage.productCode' | translate }}"
                                 matTooltip="{{ 'tooltip.registerValue.input.alphaNumeric' | translate }}" maxlength=20
-                                (blur)="onBlurProductCode()" (keyup)="onKey($event)">
+                                (blur)="blurProductCode()" (keyup)="onKey($event)">
                             <mat-error *ngIf="productCode.hasError('required')">
                                 {{'validationError.required'|translate}}
                             </mat-error>
@@ -35,8 +35,9 @@
                     </div>
                     <div class="registering-condition-wrapper margin-left-25px">
                         <mat-form-field>
-                            <mat-label>{{ 'stockRegisteringPage.productGenre' | translate }}</mat-label>
-                            <mat-select formControlName="productGenre" [disabled]=true>
+                            <mat-label id="product-genre-label">{{ 'stockRegisteringPage.productGenre' | translate }}
+                            </mat-label>
+                            <mat-select id="product-genre" formControlName="productGenre" [disabled]=true>
                                 <mat-option *ngFor="let code of genres" [value]="code">
                                     {{ 'genre.' + code | translate }}
                                 </mat-option>
@@ -52,7 +53,7 @@
                     </div>
                     <div class="registering-condition-wrapper margin-left-25px">
                         <mat-form-field class="form-field">
-                            <input id="product-Stock-quantity" class="align-right" matInput type="text" appNumberInput
+                            <input id="product-stock-quantity" class="align-right" matInput type="text" appNumberInput
                                 formControlName="productStockQuantity"
                                 placeholder="{{ 'stockRegisteringPage.productStockQuantity' | translate }}"
                                 [attr.locale]='locale' [attr.currency]="currency" [readonly]=true>
@@ -60,13 +61,16 @@
                     </div>
                     <div class="registering-condition-wrapper">
                         <mat-form-field class="form-field">
-                            <input id="product-add-stock-quantity" class="align-right" matInput type="text"
+                            <input id="add-product-stock-quantity" class="align-right" matInput type="text"
                                 appNumberInput formControlName="addProductStockQuantity"
                                 placeholder="{{ 'stockRegisteringPage.addStockQuantity' | translate }}"
                                 matTooltip="{{ 'tooltip.registerValue.input.numeric' | translate }}"
                                 [attr.locale]='locale' [attr.currency]="currency" maxlength=11>
-                            <mat-error *ngIf="addProductStockQuantity.hasError('required')">
+                            <mat-error class="validation-error" *ngIf="addProductStockQuantity.hasError('required')">
                                 {{'validationError.required'|translate}}
+                            </mat-error>
+                            <mat-error class="validation-error" *ngIf="addProductStockQuantity.hasError('pattern')">
+                                {{'validationError.pattern.halfWidthNumericComma'|translate}}
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -75,15 +79,16 @@
                     <p>{{ 'stockRegisteringPage.productImage' | translate }}</p>
                     <img src="../../../../assets/images/no_image.png" class="image-preview"
                         *ngIf="!productImage.value" />
-                    <img [src]="productImage.value" class="image-preview" *ngIf="productImage.value" />
+                    <img id="product-image" [src]="productImage.value" class="image-preview"
+                        *ngIf="productImage.value" />
                 </div>
             </form>
         </div>
     </div>
     <div class="registering-functions">
         <div class="registering-functions-wrapper">
-            <button mat-raised-button id="saveBtn" class="mat-raised-button active" type="button" (click)="onSave()"
-                [disabled]="!registeringForm.valid"
+            <button mat-raised-button id="saveBtn" class="mat-raised-button active" type="button"
+                (click)="clickSaveButton()" [disabled]="!registeringForm.valid"
                 matTooltip="{{ 'stockRegisteringPage.tooltip.saveButton' | translate }}">{{ 'stockRegisteringPage.saveButton' | translate }}</button>
         </div>
     </div>

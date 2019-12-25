@@ -271,6 +271,23 @@ describe('StockRegisteringPageComponent', () => {
       const validationError = nativeElement.querySelector('.validation-error');
       expect(validationError).toBeTruthy();
     });
+    it('ProductCodeProductNameValidator(product code)', () => {
+      productStockServiceSpy.getProductStock.and.returnValue(of(null));
+
+      const expectedValue = 'PRODUCTCODE0001';
+      const nativeElement = fixture.nativeElement;
+      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-code');
+      htmlInputElement.value = expectedValue;
+      htmlInputElement.dispatchEvent(new Event('input'));
+      htmlInputElement.dispatchEvent(new Event('blur'));
+      fixture.detectChanges();
+
+      expect(htmlInputElement.value).toEqual(expectedValue);
+      fixture.whenStable().then(() => {
+        const validationError = nativeElement.querySelector('.validation-error');
+        expect(validationError).toBeTruthy();
+      });
+    });
   });
 
   describe('DOM output test', () => {

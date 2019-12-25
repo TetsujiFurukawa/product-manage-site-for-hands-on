@@ -38,15 +38,13 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     private titleI18Service: TitleI18Service,
     public translateService: TranslateService
   ) {}
-  // product code
-  productCode = new FormControl('', [Validators.required, Validators.pattern(RegexConst.SINGLE_BYTE_ALPHANUMERIC)]);
 
+  productCode = new FormControl('');
   productName = new FormControl('');
   productGenre = new FormControl('');
   productSizeStandard = new FormControl('');
   productStockQuantity = new FormControl('');
   addProductStockQuantity = new FormControl('', [Validators.required, Validators.max(999999999), Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)]);
-  // product image
   productImage = new FormControl(null);
 
   registeringForm = this.formBuilder.group(

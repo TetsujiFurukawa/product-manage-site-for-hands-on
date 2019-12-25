@@ -10,7 +10,7 @@ import { RoutingService } from 'src/app/service/common/routing.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 import { ProductService } from 'src/app/service/product.service';
 import {
-  EndOfSaleEndOfSaleDateValidator
+    EndOfSaleEndOfSaleDateValidator
 } from 'src/app/validator/end-of-sale-end-of-sale-date-validator';
 
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
@@ -40,40 +40,19 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     private currencyToNumberPipe: CurrencyToNumberPipe,
     private titleI18Service: TitleI18Service,
     public translateService: TranslateService
-  ) { }
-  // Called new or update?
-  isNew = this.routingService.router.url === '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW;
+  ) {}
 
-  // Form controls
-  productSeq = new FormControl('', []);
-
+  productSeq = new FormControl('');
   productCode = new FormControl('', [Validators.required, Validators.pattern(RegexConst.SINGLE_BYTE_ALPHANUMERIC)]);
-
   productName = new FormControl('', [Validators.required]);
-
   productGenre = new FormControl('', [Validators.required]);
-
   productSizeStandard = new FormControl('', [Validators.required]);
-
-  productColor = new FormControl('', []);
-
-  productUnitPrice = new FormControl('', [
-    Validators.required,
-    Validators.max(999999999),
-    Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)
-  ]);
-
-  endOfSale = new FormControl(false, []);
-  endOfSaleDate = new FormControl('', []);
-
-  // product image
-  productImage = new FormControl(null, []);
-
-  // Other informations
-  enterDate = new FormControl(null, []);
-  enterUser = new FormControl('', []);
-  updateDate = new FormControl(null, []);
-  updateUser = new FormControl('', []);
+  productColor = new FormControl('');
+  productUnitPrice = new FormControl('', [Validators.required, Validators.max(999999999), Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)]);
+  endOfSale = new FormControl(false);
+  endOfSaleDate = new FormControl('');
+  productImage = new FormControl(null);
+  updateDate = new FormControl(null);
 
   registeringForm = this.formBuilder.group(
     {
@@ -85,7 +64,9 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
       productColor: this.productColor,
       productUnitPrice: this.productUnitPrice,
       endOfSale: this.endOfSale,
-      endOfSaleDate: this.endOfSaleDate
+      endOfSaleDate: this.endOfSaleDate,
+      productImage: this.productImage,
+      updateDate: this.updateDate
     },
     {
       validators: EndOfSaleEndOfSaleDateValidator.match
@@ -96,35 +77,44 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   locale: string = this.accountService.getUser().userLocale;
   currency: string = this.accountService.getUser().userCurrency;
 
-  /** caption of buttons */
+  genres: string[];
+
+  /** Called new or update? */
+  isNew = this.routingService.router.url === '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW;
   messagePropertytitle = 'productRegisteringPage.title.new';
   messagePropertySaveButton = 'productRegisteringPage.saveButton.new';
 
-  genres: string[];
-
+  /**
+   * on init
+   */
   ngOnInit() {
     this.loadData();
     this.setupLangage();
     if (!this.isNew) {
       this.setupButtonTextToEdit();
-      this.loadProductData();
+      this.getProduct();
     }
   }
 
+  /**
+   * after view checked
+   */
   ngAfterViewChecked() {
     this.titleI18Service.setTitle(UrlConst.PATH_PRODUCT_REGISTERING);
   }
 
-  onFileSelected(files: File) {
+  /**
+   * Clicks product image button
+   * @param files image file
+   */
+  clickProductImageButton(files: File) {
     if (files.size === 0) {
       return;
     }
-
     const mimeType = files[0].type;
     if (mimeType.match(/image\/*/) == null) {
       return;
     }
-
     const reader = new FileReader();
     reader.readAsDataURL(files[0]);
     reader.onload = (e: any) => {
@@ -132,15 +122,24 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     };
   }
 
-  onClear() {
+  /**
+   * Clicks clear button
+   */
+  clickClearButton() {
     this.productImage.setValue(null);
   }
 
-  onReturn() {
+  /**
+   * Clicks return button
+   */
+  clickReturnButton() {
     this.routingService.router.navigate([UrlConst.PATH_PRODUCT_LISTING]);
   }
 
-  onSave() {
+  /**
+   * Clicks save button
+   */
+  clickSaveButton() {
     const dialogData: YesNoDialogData = {
       title: this.translateService.instant('productRegisteringPage.saveYesNoDialog.title'),
       message: this.translateService.instant('productRegisteringPage.saveYesNoDialog.message'),
@@ -156,13 +155,13 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const productDto: ProductDto = this.createDto(this.isNew);
-        this.save(productDto);
+        const productDto: ProductDto = this.createProductRegisterRequestDto(this.isNew);
+        this.registerProduct(productDto);
       }
     });
   }
 
-  onReceiveEventFromChild(eventData: string) {
+  receivedEventFromChild(eventData: string) {
     this.endOfSaleDate.setValue(eventData);
   }
 
@@ -179,27 +178,27 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     this.translateService.use(lang);
   }
 
-  private loadProductData() {
+  private getProduct() {
     const productCode = this.route.snapshot.paramMap.get('productCode');
     this.loadingService.startLoading();
     this.productService.getProduct(productCode).subscribe(data => {
-      this.extract(data);
+      this.extractGetProductResponse(data);
       this.loadingService.stopLoading();
     });
   }
 
-  private save(productDto: ProductDto) {
+  private registerProduct(productDto: ProductDto) {
     this.loadingService.startLoading();
 
     if (productDto.productSeq === undefined || productDto.productSeq === null) {
       // Creates product.
       this.productService.createProduct(productDto).subscribe(data => {
-        this.extract(data);
+        this.extractGetProductResponse(data);
         this.loadingService.stopLoading();
       });
     } else {
       this.productService.updateProduct(productDto).subscribe(data => {
-        this.extract(data);
+        this.extractGetProductResponse(data);
         this.loadingService.stopLoading();
       });
     }
@@ -210,7 +209,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     this.messagePropertySaveButton = 'productRegisteringPage.saveButton.edit';
   }
 
-  private createDto(isNew: boolean): ProductDto {
+  private createProductRegisterRequestDto(isNew: boolean): ProductDto {
     const productDto: ProductDto = new ProductDto();
     if (!isNew) {
       productDto.productSeq = this.productSeq.value;
@@ -229,7 +228,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     return productDto;
   }
 
-  private extract(productDto: ProductDto) {
+  private extractGetProductResponse(productDto: ProductDto) {
     if (productDto === null) {
       return;
     }
@@ -239,9 +238,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     this.productGenre.setValue(productDto.productGenre);
     this.productSizeStandard.setValue(productDto.productSizeStandard);
     this.productColor.setValue(productDto.productColor);
-    this.productUnitPrice.setValue(
-      this.currencyToNumberPipe.transform(productDto.productUnitPrice.toString(), this.locale, this.currency)
-    );
+    this.productUnitPrice.setValue(this.currencyToNumberPipe.transform(productDto.productUnitPrice.toString(), this.locale, this.currency));
     this.endOfSale.setValue(productDto.endOfSale);
     this.endOfSaleDate.setValue(productDto.endOfSaleDate);
     this.productImage.setValue(productDto.productImage);

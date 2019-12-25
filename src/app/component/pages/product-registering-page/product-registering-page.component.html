@@ -16,10 +16,10 @@
                 placeholder="{{ 'productRegisteringPage.productCode' | translate }}"
                 matTooltip="{{ 'tooltip.registerValue.input.alphaNumeric' | translate }}" maxlength=20
                 [readonly]="!isNew">
-              <mat-error *ngIf="productCode.hasError('required')">
+              <mat-error class="validation-error" *ngIf="productCode.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
-              <mat-error *ngIf="productCode.hasError('pattern')">
+              <mat-error class="validation-error" *ngIf="productCode.hasError('pattern')">
                 {{'validationError.pattern.singleByteAlphanumeric'|translate}}
               </mat-error>
             </mat-form-field>
@@ -29,7 +29,7 @@
               <input id="product-name" matInput type="text" formControlName="productName"
                 placeholder="{{ 'productRegisteringPage.productName' | translate }}"
                 matTooltip="{{ 'tooltip.registerValue.all' | translate }}" maxlength=50>
-              <mat-error *ngIf="productName.hasError('required')">
+              <mat-error class="validation-error" *ngIf="productName.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
             </mat-form-field>
@@ -43,7 +43,7 @@
                   {{ 'genre.' + code | translate }}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="productGenre.hasError('required')">
+              <mat-error class="validation-error" *ngIf="productGenre.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
             </mat-form-field>
@@ -53,7 +53,7 @@
               <input id="product-size-standard" matInput type="text" formControlName="productSizeStandard"
                 placeholder="{{ 'productRegisteringPage.productSizeStandard' | translate }}"
                 matTooltip="{{ 'tooltip.registerValue.input.all' | translate }}" maxlength=50>
-              <mat-error *ngIf="productSizeStandard.hasError('required')">
+              <mat-error class="validation-error" *ngIf="productSizeStandard.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
             </mat-form-field>
@@ -63,7 +63,7 @@
               <input id="product-color" matInput type="text" formControlName="productColor"
                 placeholder="{{ 'productRegisteringPage.productColor' | translate }}"
                 matTooltip="{{ 'tooltip.registerValue.input.all' | translate }}" maxlength=20>
-              <mat-error *ngIf="productColor.hasError('required')">
+              <mat-error class="validation-error" *ngIf="productColor.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
             </mat-form-field>
@@ -74,13 +74,13 @@
                 placeholder="{{ 'productRegisteringPage.productUnitPrice' | translate }}"
                 matTooltip="{{ 'tooltip.registerValue.input.numeric' | translate }}" maxlength=11 [attr.locale]='locale'
                 [attr.currency]="currency">
-              <mat-error *ngIf="productUnitPrice.hasError('required')">
+              <mat-error class="validation-error" *ngIf="productUnitPrice.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
-              <mat-error *ngIf="productUnitPrice.hasError('max')">
+              <mat-error class="validation-error" *ngIf="productUnitPrice.hasError('max')">
                 {{'validationError.maxlength9'|translate}}
               </mat-error>
-              <mat-error *ngIf="productUnitPrice.hasError('pattern')">
+              <mat-error class="validation-error" *ngIf="productUnitPrice.hasError('pattern')">
                 {{'validationError.pattern.halfWidthNumericComma'|translate}}
               </mat-error>
             </mat-form-field>

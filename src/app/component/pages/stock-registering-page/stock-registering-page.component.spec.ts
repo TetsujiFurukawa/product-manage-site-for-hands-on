@@ -23,27 +23,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { StockRegisteringPageComponent } from './stock-registering-page.component';
 
-xdescribe('StockRegisteringPageComponent', () => {
-  let component: StockRegisteringPageComponent;
-  let fixture: ComponentFixture<StockRegisteringPageComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [StockRegisteringPageComponent]
-    }).compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(StockRegisteringPageComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
-
 describe('StockRegisteringPageComponent', () => {
   const expectedGenres = Array('1', '2', '3');
   const user: User = new User();

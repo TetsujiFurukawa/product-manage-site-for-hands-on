@@ -8,42 +8,25 @@ import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
 import { AccountService } from 'src/app/service/account.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 import { ProductService } from 'src/app/service/product.service';
+import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
 
 import { CurrencyPipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TypeofExpr } from '@angular/compiler';
+import { Component, NO_ERRORS_SCHEMA, Type } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ProductRegisteringPageComponent } from './product-registering-page.component';
-
-// xdescribe('ProductRegisteringPageComponent', () => {
-//   let component: ProductRegisteringPageComponent;
-//   let fixture: ComponentFixture<ProductRegisteringPageComponent>;
-
-//   beforeEach(async(() => {
-//     TestBed.configureTestingModule({
-//       declarations: [ProductRegisteringPageComponent]
-//     }).compileComponents();
-//   }));
-
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(ProductRegisteringPageComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
-
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-// });
 
 describe('ProductRegisteringPageComponent', () => {
   const CHAR_NEW = '/new';
@@ -93,6 +76,7 @@ describe('ProductRegisteringPageComponent', () => {
         MatInputModule,
         MatSelectModule,
         MatCheckboxModule,
+        MatDatepickerModule,
         MatDialogModule,
         BrowserAnimationsModule,
         ReactiveFormsModule
@@ -142,87 +126,115 @@ describe('ProductRegisteringPageComponent', () => {
     });
   });
 
-  // describe('#clickSaveButton', () => {
-  //   it('should updatedata but no response', async () => {
-  //     matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) });
-  //     productStockServiceSpy.updateProductStock.and.returnValue(of(null));
-  //     component.clickSaveButton();
-  //     expect(productStockServiceSpy.updateProductStock.calls.count()).toEqual(1);
-  //   });
-  //   it('should updatedata', async () => {
-  //     matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) });
-  //     productStockServiceSpy.updateProductStock.and.returnValue(of(expectedResponseDto));
-  //     component.clickSaveButton();
-  //     expect(productStockServiceSpy.updateProductStock.calls.count()).toEqual(1);
-  //     expect(component.productStockQuantity.value).toEqual('2,000');
-  //     expect(component.addProductStockQuantity.value).toBeNull();
-  //   });
-  //   it('should not update data', () => {
-  //     matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) });
-  //     productStockServiceSpy.updateProductStock.and.returnValue(of(null));
-  //     component.clickSaveButton();
-  //     expect(productStockServiceSpy.updateProductStock.calls.count()).toEqual(0);
-  //   });
-  // });
+  describe('#clickSaveButton', () => {
+    it('should crete data but no response', async () => {
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) });
+      productServiceSpy.createProduct.and.returnValue(of(null));
+      component.clickSaveButton();
+      expect(productServiceSpy.createProduct.calls.count()).toEqual(1);
+    });
+    it('should create data', async () => {
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) });
+      productServiceSpy.createProduct.and.returnValue(of(expectedResponseDto));
+      component.clickSaveButton();
+      expect(productServiceSpy.createProduct.calls.count()).toEqual(1);
+      expect(component.productSeq.value).toEqual(expectedResponseDto.productSeq);
+      expect(component.productCode.value).toEqual(expectedResponseDto.productCode);
+      expect(component.productName.value).toEqual(expectedResponseDto.productName);
+      expect(component.productGenre.value).toEqual(expectedResponseDto.productGenre);
+      expect(component.productSizeStandard.value).toEqual(expectedResponseDto.productSizeStandard);
+      expect(component.productColor.value).toEqual(expectedResponseDto.productColor);
+      expect(component.productUnitPrice.value).toEqual('1,000');
+      expect(component.endOfSale.value).toEqual(expectedResponseDto.endOfSale);
+      expect(component.endOfSaleDate.value).toEqual(expectedResponseDto.endOfSaleDate);
+      expect(component.productImage.value).toEqual(expectedResponseDto.productImage);
+      expect(component.updateDate.value).toEqual(expectedResponseDto.updateDate);
+    });
+    it('should not create data', () => {
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) });
+      productServiceSpy.createProduct.and.returnValue(of(null));
+      component.clickSaveButton();
+      expect(productServiceSpy.createProduct.calls.count()).toEqual(0);
+    });
+  });
 
   // --------------------------------------------------------------------------------
   // DOM test cases
   // --------------------------------------------------------------------------------
-  xdescribe('DOM placeholder', () => {
+  describe('DOM placeholder', () => {
     it('product code', () => {
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-code');
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-code');
       expect(htmlInputElement.placeholder).toContain('商品コード');
     });
     it('product name', () => {
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-name');
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-name');
       expect(htmlInputElement.placeholder).toContain('商品名');
     });
     it('product genre', () => {
-      const nativeElement = fixture.nativeElement;
-      const hTMLLabelElement: HTMLLabelElement = nativeElement.querySelector('#product-genre-label');
+      const hTMLLabelElement: HTMLLabelElement = fixture.nativeElement.querySelector('#product-genre-label');
       expect(hTMLLabelElement.innerText).toContain('ジャンル');
     });
     it('product size standard', () => {
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-size-standard');
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-size-standard');
       expect(htmlInputElement.placeholder).toContain('サイズ・規格');
     });
-    it('product stock quantity', () => {
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-stock-quantity');
-      expect(htmlInputElement.placeholder).toContain('在庫数');
+    it('product color', () => {
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-color');
+      expect(htmlInputElement.placeholder).toContain('色');
     });
-    it('product add stock quantity', () => {
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#add-product-stock-quantity');
-      expect(htmlInputElement.placeholder).toContain('在庫追加数');
+    it('product unit price', () => {
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-unit-price');
+      expect(htmlInputElement.placeholder).toContain('単価');
+    });
+    it('product end of sale', () => {
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#end-of-sale');
+      expect(htmlInputElement.innerText).toContain('終了');
+    });
+    it('product end of sale date', async () => {
+      const htmlInputElement: HTMLElement = fixture.nativeElement.querySelector('#end-of-sale label');
+      // Clicks checkbox's label
+      htmlInputElement.click();
+      fixture.detectChanges();
+
+      fixture.whenStable().then(() => {
+        const htmlInputElement2: HTMLInputElement = fixture.nativeElement.querySelector('#end-of-sale-date');
+        expect(htmlInputElement2.placeholder).toContain('販売終了日');
+      });
     });
   });
 
-  xdescribe('DOM input test', () => {
+  describe('DOM input test', () => {
     it('product code', () => {
       const expectedValue = 'PRODUCTCODE0001';
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-code');
-      htmlInputElement.value = expectedValue;
-      htmlInputElement.dispatchEvent(new Event('input'));
-      htmlInputElement.dispatchEvent(new Event('blur'));
-      fixture.detectChanges();
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedValue);
 
       expect(component.productCode.value).toEqual(expectedValue);
     });
-    it('product add stock quantity', () => {
-      const expectedValue = '123';
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#add-product-stock-quantity');
-      htmlInputElement.value = expectedValue;
-      htmlInputElement.dispatchEvent(new Event('input'));
-      htmlInputElement.dispatchEvent(new Event('blur'));
-      fixture.detectChanges();
+    it('product name', () => {
+      const expectedValue = 'productName';
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', expectedValue);
 
-      // expect(component.addProductStockQuantity.value).toEqual(expectedValue);
+      expect(component.productName.value).toEqual(expectedValue);
+    });
+    it('product genre', () => {
+      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(fixture, '#product-genre', '.product-genre-option', 0);
+      // const nativeElement = fixture.nativeElement;
+      // const htmlInputElement: HTMLSelectElement = nativeElement.querySelector('#product-genre');
+      // htmlInputElement.click();
+      // htmlInputElement.dispatchEvent(new Event('change'));
+      // fixture.detectChanges();
+
+      // const selectOptions = fixture.debugElement.queryAll(By.css('.product-genre-option'));
+      // selectOptions[0].nativeElement.click();
+      // fixture.detectChanges();
+
+      expect(component.productGenre.value).toEqual('1');
+    });
+    it('product size standard', () => {
+      const expectedValue = 'productSizeStandard';
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-size-standard', expectedValue);
+
+      expect(component.productSizeStandard.value).toEqual(expectedValue);
     });
   });
 
@@ -306,3 +318,21 @@ describe('ProductRegisteringPageComponent', () => {
     });
   });
 });
+
+// <T>(component: Type<T>):
+// function setupValueOfHTMLInputElement<F extends ComponentFixture<C>, C>(component: Type<C>, fixture: F, setupValue: string, querySelector: string) {
+//   const nativeElement = fixture.nativeElement;
+//   const htmlInputElement: HTMLInputElement = nativeElement.querySelector(querySelector);
+//   htmlInputElement.value = setupValue;
+//   htmlInputElement.dispatchEvent(new Event('input'));
+//   htmlInputElement.dispatchEvent(new Event('blur'));
+//   fixture.detectChanges();
+// }
+// function setupValueOfHTMLInputElement2<C>(fixture: ComponentFixture<C>, setupValue: string, querySelector: string) {
+//   const nativeElement = fixture.nativeElement;
+//   const htmlInputElement: HTMLInputElement = nativeElement.querySelector(querySelector);
+//   htmlInputElement.value = setupValue;
+//   htmlInputElement.dispatchEvent(new Event('input'));
+//   htmlInputElement.dispatchEvent(new Event('blur'));
+//   fixture.detectChanges();
+// }

@@ -36,10 +36,10 @@
           </div>
           <div class="registering-condition-wrapper">
             <mat-form-field>
-              <mat-label>{{ 'productRegisteringPage.productGenre' | translate }}</mat-label>
-              <mat-select formControlName="productGenre"
+              <mat-label id="product-genre-label">{{ 'productRegisteringPage.productGenre' | translate }}</mat-label>
+              <mat-select id="product-genre" formControlName="productGenre"
                 matTooltip="{{ 'tooltip.registerValue.pulldown' | translate }}">
-                <mat-option *ngFor="let code of genres" [value]="code">
+                <mat-option class="product-genre-option" *ngFor="let code of genres" [value]="code">
                   {{ 'genre.' + code | translate }}
                 </mat-option>
               </mat-select>
@@ -92,7 +92,7 @@
             </mat-checkbox>
           </div>
           <div class="registering-condition-wrapper">
-            <app-mat-date-picker *ngIf="endOfSale.value" [locale]='locale'
+            <app-mat-date-picker id="end-of-sale-date" *ngIf="endOfSale.value" [locale]='locale'
               placeholder="{{ 'productRegisteringPage.endOfSaleDate' | translate }}"
               matTooltip="{{ 'productRegisteringPage.tooltip.endOfSaleDate' | translate }}" [isBlank]=false
               [required]=true [initialValue]="endOfSaleDate.value" (event)=" receivedEventFromChild($event)">
@@ -102,7 +102,7 @@
         <div class="registering-area-wrapper right">
           <p>{{ 'productRegisteringPage.productImage' | translate }}</p>
           <img src="../../../../assets/images/no_image.png" class="image-preview" *ngIf="!productImage.value" />
-          <img [src]="productImage.value" class="image-preview" *ngIf="productImage.value" />
+          <img id="product-image" [src]="productImage.value" class="image-preview" *ngIf="productImage.value" />
           <button mat-raised-button id="fileInput" class="mat-raised-button" type="button" (click)="fileInput.click()"
             [disabled]="productImage.value"
             matTooltip="{{ 'productRegisteringPage.tooltip.imageUploadButton' | translate }}">{{ 'productRegisteringPage.imageUploadButton' | translate }}</button>

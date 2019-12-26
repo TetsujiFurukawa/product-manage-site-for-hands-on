@@ -19,22 +19,12 @@ describe('ProductStockService', () => {
   let errorMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setupPageErrorMessageFromResponse: jasmine.Spy };
 
   beforeEach(() => {
-    successMessagingServiceSpy = jasmine.createSpyObj('SuccessMessagingService', [
-      'clearMessageProperty',
-      'setMessageProperty'
-    ]);
-    errorMessagingServiceSpy = jasmine.createSpyObj('ErrorMessagingService', [
-      'clearMessageProperty',
-      'setupPageErrorMessageFromResponse'
-    ]);
+    successMessagingServiceSpy = jasmine.createSpyObj('SuccessMessagingService', ['clearMessageProperty', 'setMessageProperty']);
+    errorMessagingServiceSpy = jasmine.createSpyObj('ErrorMessagingService', ['clearMessageProperty', 'setupPageErrorMessageFromResponse']);
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       imports: [HttpClientTestingModule],
-      providers: [
-        ProductStockService,
-        { provide: SuccessMessagingService, useValue: successMessagingServiceSpy },
-        { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }
-      ]
+      providers: [ProductStockService, { provide: SuccessMessagingService, useValue: successMessagingServiceSpy }, { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }]
     });
     httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get(HttpTestingController);
@@ -67,10 +57,7 @@ describe('ProductStockService', () => {
 
       service.getProductStock('productCode').subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          0,
-          'setupPageErrorMessageFromResponse'
-        );
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0, 'setupPageErrorMessageFromResponse');
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl + '?productCode=productCode');
@@ -86,10 +73,7 @@ describe('ProductStockService', () => {
       const msg = '404 Not Found';
       service.getProductStock('productCode').subscribe(responseDto => {
         expect(responseDto).toBeNull();
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          1,
-          'setupPageErrorMessageFromResponse'
-        );
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1, 'setupPageErrorMessageFromResponse');
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl + '?productCode=productCode');
@@ -118,10 +102,7 @@ describe('ProductStockService', () => {
       service.updateProductStock(new ProductStockRequestDto()).subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
         expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1, 'setMessageProperty');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          0,
-          'setupPageErrorMessageFromResponse'
-        );
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0, 'setupPageErrorMessageFromResponse');
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -138,10 +119,7 @@ describe('ProductStockService', () => {
       service.updateProductStock(new ProductStockRequestDto()).subscribe(responseDto => {
         expect(responseDto).toBeNull();
         expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0, 'setMessageProperty');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          1,
-          'setupPageErrorMessageFromResponse'
-        );
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1, 'setupPageErrorMessageFromResponse');
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);

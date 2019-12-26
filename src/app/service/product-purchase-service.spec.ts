@@ -25,22 +25,12 @@ describe('ProductPurchaseService', () => {
   let errorMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setupPageErrorMessageFromResponse: jasmine.Spy };
 
   beforeEach(() => {
-    successMessagingServiceSpy = jasmine.createSpyObj('SuccessMessagingService', [
-      'clearMessageProperty',
-      'setMessageProperty'
-    ]);
-    errorMessagingServiceSpy = jasmine.createSpyObj('ErrorMessagingService', [
-      'clearMessageProperty',
-      'setupPageErrorMessageFromResponse'
-    ]);
+    successMessagingServiceSpy = jasmine.createSpyObj('SuccessMessagingService', ['clearMessageProperty', 'setMessageProperty']);
+    errorMessagingServiceSpy = jasmine.createSpyObj('ErrorMessagingService', ['clearMessageProperty', 'setupPageErrorMessageFromResponse']);
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       imports: [HttpClientTestingModule],
-      providers: [
-        ProductPurchaseService,
-        { provide: SuccessMessagingService, useValue: successMessagingServiceSpy },
-        { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }
-      ]
+      providers: [ProductPurchaseService, { provide: SuccessMessagingService, useValue: successMessagingServiceSpy }, { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }]
     });
     httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get(HttpTestingController);
@@ -80,10 +70,7 @@ describe('ProductPurchaseService', () => {
 
       service.getProductPurchaseHistoryList(new HttpParams()).subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          0,
-          'setupPageErrorMessageFromResponse'
-        );
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0, 'setupPageErrorMessageFromResponse');
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -99,10 +86,7 @@ describe('ProductPurchaseService', () => {
       const msg = '500 Internal Server Error';
       service.getProductPurchaseHistoryList(new HttpParams()).subscribe(responseDto => {
         expect(responseDto).toBeNull();
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          1,
-          'setupPageErrorMessageFromResponse'
-        );
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1, 'setupPageErrorMessageFromResponse');
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -131,10 +115,7 @@ describe('ProductPurchaseService', () => {
 
       service.getProductPurchase('productCode').subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          0,
-          'setupPageErrorMessageFromResponse'
-        );
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0, 'setupPageErrorMessageFromResponse');
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl + '?productCode=productCode');
@@ -150,10 +131,7 @@ describe('ProductPurchaseService', () => {
       const msg = '404 Not Found';
       service.getProductPurchase('productCode').subscribe(responseDto => {
         expect(responseDto).toBeNull();
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          1,
-          'setupPageErrorMessageFromResponse'
-        );
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1, 'setupPageErrorMessageFromResponse');
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl + '?productCode=productCode');
@@ -184,10 +162,7 @@ describe('ProductPurchaseService', () => {
       service.createProductPurchase(new ProductPurchaseRequestDto()).subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
         expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1, 'setMessageProperty');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          0,
-          'setupPageErrorMessageFromResponse'
-        );
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0, 'setupPageErrorMessageFromResponse');
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -204,10 +179,7 @@ describe('ProductPurchaseService', () => {
       service.createProductPurchase(new ProductPurchaseRequestDto()).subscribe(responseDto => {
         expect(responseDto).toBeNull();
         expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0, 'setMessageProperty');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          1,
-          'setupPageErrorMessageFromResponse'
-        );
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1, 'setupPageErrorMessageFromResponse');
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);

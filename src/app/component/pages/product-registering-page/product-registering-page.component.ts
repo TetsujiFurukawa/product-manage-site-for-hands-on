@@ -107,8 +107,8 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
    * Clicks product image button
    * @param files image file
    */
-  clickProductImageButton(files: File) {
-    if (files.size === 0) {
+  clickProductImageButton(files: File[]) {
+    if (files.length === 0) {
       return;
     }
     const mimeType = files[0].type;
@@ -190,7 +190,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   private registerProduct(productDto: ProductDto) {
     this.loadingService.startLoading();
 
-    if (productDto.productSeq === undefined || productDto.productSeq === null) {
+    if (productDto.productSeq === null) {
       // Creates product.
       this.productService.createProduct(productDto).subscribe(data => {
         this.extractGetProductResponse(data);
@@ -213,6 +213,8 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     const productDto: ProductDto = new ProductDto();
     if (!isNew) {
       productDto.productSeq = this.productSeq.value;
+    } else {
+      productDto.productSeq = null;
     }
     productDto.productCode = this.productCode.value;
     productDto.productName = this.productName.value;

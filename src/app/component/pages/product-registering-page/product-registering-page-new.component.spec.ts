@@ -57,6 +57,7 @@ describe('ProductRegisteringPageComponent', () => {
   let productServiceSpy: { getGenres: jasmine.Spy; getProduct: jasmine.Spy; createProduct: jasmine.Spy; updateProduct: jasmine.Spy };
   let titleI18ServiceSpy: { setTitle: jasmine.Spy };
   let matDialogSpy: { open: jasmine.Spy };
+  let router: Router;
 
   beforeEach(async(() => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
@@ -88,10 +89,11 @@ describe('ProductRegisteringPageComponent', () => {
         { provide: ProductService, useValue: productServiceSpy },
         { provide: TitleI18Service, useValue: titleI18ServiceSpy },
         { provide: ActivatedRoute, useValue: { snapshot: { paramMap: convertToParamMap({ productCode: 'ABCD1234' }) } } },
-        { provide: Router, useValue: { url: '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW } }
+        { provide: Router, useValue: { url: '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW, navigate(): void {} } }
       ],
       declarations: [ProductRegisteringPageComponent]
     }).compileComponents();
+    router = TestBed.get(Router);
   }));
 
   beforeEach(() => {
@@ -124,8 +126,163 @@ describe('ProductRegisteringPageComponent', () => {
     });
   });
 
+  describe('#clickProductImageButton', () => {
+    it('should return', () => {
+      component.clickProductImageButton(Array());
+      fixture.detectChanges();
+
+      expect(component.productImage.value).toBeNull();
+    });
+    it('should return when not images', () => {
+      const content = 'data:image/jpeg;base64,/9j/4QAYRXh';
+      const data = new Blob([content]);
+      const arrayOfBlob = new Array<Blob>();
+      arrayOfBlob.push(data);
+      const imageFile = new File(arrayOfBlob, 'test01.zip', { type: 'application/zip' });
+
+      component.clickProductImageButton(Array(imageFile));
+      fixture.detectChanges();
+
+      expect(component.productImage.value).toBeNull();
+    });
+    it('should load image', () => {
+      const mockFileReader: any = {
+        target: { result: '' },
+        readAsDataURL: blobInput => {},
+        onload: () => {}
+      };
+      spyOn<any>(window, 'FileReader').and.returnValue(mockFileReader);
+      spyOn<any>(mockFileReader, 'readAsDataURL').and.callFake(blobInput => {
+        mockFileReader.onload({ target: { result: expectedResponseDto.productImage } });
+      });
+      // mockFileReader.onload.calls.argsFor(0)[1]('onload');
+
+      // const mockFileReader = {
+      //   result: '',
+      //   readAsDataURL: blobInput => {
+      //     console.log('readAsDataURL');
+      //   },
+      //   onload: () => {
+      //     console.log('onload');
+      //     return { result: 'data:image/jpeg;base64,/9j/4QAYRXh' };
+      //   }
+      // };
+
+      // spyOn<any>(window, 'FileReader').and.returnValue(mockFileReader);
+      // spyOn<any>(mockFileReader, 'readAsDataURL').and.callFake(blobInput => {
+      //   console.log('readAsDataURL:' + blobInput.toString());
+      //   mockFileReader.result = 'data:image/jpeg;base64,/9j/4QAYRXh';
+      //   mockFileReader.onload();
+      // });
+      // spyOn<any>(mockFileReader, 'onload').and.callFake(blobInput => {
+      //   console.log('onload:' + blobInput.toString());
+      //   return { result: 'data:image/jpeg;base64,/9j/4QAYRXh' };
+      // });
+
+      // const eventListener = jasmine.createSpy();
+      // const dummyFileReader: any = {
+      //   addEventListener: eventListener
+      //   // readAsDataURL: blobInput => {}
+      //   // onload: () => {}
+      // };
+
+      // spyOn(window as any, 'FileReader').and.returnValue(dummyFileReader);
+      // const reader = new FileReader();
+      // // tslint:disable-next-line: only-arrow-functions
+      // reader.addEventListener('load', function(e: any) {
+      //   expect(e.target.result).toEqual('url');
+      //   done();
+      //   console.log('e:' + e.target.result);
+      // });
+
+      // expect(eventListener.calls.mostRecent().args[0]).toEqual('load');
+      // const onloadHandler = eventListener.calls.mostRecent().args[1];
+      // const event = { target: { result: 'url' } };
+      // onloadHandler(event);
+
+      // // tslint:disable-next-line: prefer-const
+      // let mockFileReader: any = {
+      //   target: { result: '' },
+      //   readAsDataURL: blobInput => {},
+      //   onload: () => {}
+      // };
+      // spyOn(window as any, 'FileReader').and.returnValue(mockFileReader);
+      // spyOn(mockFileReader as FileReader, 'readAsDataURL').and.callFake(blobInput => {
+      //   console.log('mockFileReader:' + blobInput);
+      //   mockFileReader.onload({ target: { result: 'data:image/jpeg;base64,/9j/4QAYRXh' } });
+      // });
+      // spyOn(mockFileReader as FileReader, 'onload').and.returnValue({ target: { result: 'data:image/jpeg;base64,/9j/4QAYRXh' } });
+
+      // spyOn(window as any, 'FileReader').and.returnValue({
+      //   readAsDataURL(e) {
+      //     console.log('readAsDataURL' + e);
+      //   },
+
+      //   onload() {
+      //     console.log('onload');
+      //     return of({ target: { result: 'data:image/jpeg;base64,/9j/4QAYRXh' } });
+      //   }
+      // });
+
+      // spyOn(window as any, 'FileReader').and.returnValue({
+      //   readAsDataURL(e) {
+      //     console.log('readAsDataURL' + e);
+      //     this.onload({
+      //       target: {
+      //         result: 'data:image/jpeg;base64,/9j/4QAYRXh'
+      //       }
+      //     });
+      //   }
+      // });
+
+      const content = 'data:image/jpeg;base64,/9j/4QAYRXh';
+      const data = new Blob([content]);
+      const arrayOfBlob = new Array<Blob>();
+      arrayOfBlob.push(data);
+      const imageFile = new File(arrayOfBlob, 'test01.img', { type: 'application/image' });
+
+      component.clickProductImageButton(Array(imageFile));
+      fixture.detectChanges();
+
+      // fixture.whenStable().then(() => {
+      //   fixture.detectChanges();
+      //   console.log('aaabbb');
+      // });
+
+      // const mockFileReader = {
+      //   target: { result: '' },
+      //   readAsDataURL: blobInput => {},
+      //   onload: (e: any) => {}
+      // };
+      // spyOn(window, 'FileReader').and.callThrough();
+      // spyOn(mockFileReader, 'readAsDataURL').and.callFake(blobInput => {
+      //   mockFileReader.onload({ target: { result: 'data:image/jpeg;base64,/9j/4QAYRXh' } });
+      // });
+      // spyOn(window, 'FileReader').and.returnValue({onload: function() {},readAsDataURL:function() {}});
+      // { url: '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW, navigate(): void {} }
+
+      // component.productImage.setValue(expectedResponseDto.productImage);
+      // component.clickClearButton();
+      // expect(component.productImage.value).toBeNull();
+    });
+  });
+  describe('#clickClearButton', () => {
+    it('should clear', () => {
+      component.productImage.setValue(expectedResponseDto.productImage);
+      component.clickClearButton();
+      expect(component.productImage.value).toBeNull();
+    });
+  });
+  describe('#clickReturnButton', () => {
+    it('should return', () => {
+      spyOn(router, 'navigate').and.callThrough();
+      component.clickReturnButton();
+      expect(router.navigate).toHaveBeenCalledWith([UrlConst.PATH_PRODUCT_LISTING]);
+    });
+  });
+
   describe('#clickSaveButton', () => {
-    it('should crete data but no response', async () => {
+    it('should crete data but response is null', async () => {
       matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) });
       productServiceSpy.createProduct.and.returnValue(of(null));
       component.clickSaveButton();
@@ -313,7 +470,7 @@ describe('ProductRegisteringPageComponent', () => {
 
       // tslint:disable-next-line: no-string-literal
       const productStockRequestDto: ProductDto = component['createProductRegisterRequestDto'](true);
-      expect(productStockRequestDto.productSeq).toBeUndefined();
+      expect(productStockRequestDto.productSeq).toBeNull();
       expect(productStockRequestDto.productName).toEqual(expectedResponseDto.productName);
       expect(productStockRequestDto.productGenre).toEqual('1');
       expect(productStockRequestDto.productSizeStandard).toEqual(expectedResponseDto.productSizeStandard);

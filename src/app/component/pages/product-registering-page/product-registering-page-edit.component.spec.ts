@@ -15,6 +15,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -24,29 +25,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { ProductRegisteringPageComponent } from './product-registering-page.component';
 
-// xdescribe('ProductRegisteringPageComponent', () => {
-//   let component: ProductRegisteringPageComponent;
-//   let fixture: ComponentFixture<ProductRegisteringPageComponent>;
-
-//   beforeEach(async(() => {
-//     TestBed.configureTestingModule({
-//       declarations: [ProductRegisteringPageComponent]
-//     }).compileComponents();
-//   }));
-
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(ProductRegisteringPageComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
-
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-// });
-
-xdescribe('ProductRegisteringPageComponent', () => {
-  const CHAR_NEW = '/new';
+describe('ProductRegisteringPageComponent', () => {
   const expectedGenres = Array('1', '2', '3');
   const user: User = new User();
   user.userAccount = 'userAccount';
@@ -94,6 +73,7 @@ xdescribe('ProductRegisteringPageComponent', () => {
         MatInputModule,
         MatSelectModule,
         MatCheckboxModule,
+        MatDatepickerModule,
         MatDialogModule,
         BrowserAnimationsModule,
         ReactiveFormsModule
@@ -106,7 +86,8 @@ xdescribe('ProductRegisteringPageComponent', () => {
         { provide: AccountService, useValue: accountServiceSpy },
         { provide: ProductService, useValue: productServiceSpy },
         { provide: TitleI18Service, useValue: titleI18ServiceSpy },
-        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: convertToParamMap({ productCode: 'ABCD1234' }) } } }
+        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: convertToParamMap({ productCode: 'ABCD1234' }) } } },
+        { provide: Router, useValue: { url: '/' + UrlConst.PATH_PRODUCT_REGISTERING + '/:123456', navigate(): void {} } }
       ],
       declarations: [ProductRegisteringPageComponent]
     }).compileComponents();
@@ -117,202 +98,48 @@ xdescribe('ProductRegisteringPageComponent', () => {
     accountServiceSpy.getUser.and.returnValue(user);
     productServiceSpy.getGenres.and.returnValue(of(expectedGenres));
     productServiceSpy.getProduct.and.returnValue(of(expectedResponseDto));
-
     fixture = TestBed.createComponent(ProductRegisteringPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  describe('#constractor', () => {
-    it('should create', () => {
-      productServiceSpy.getGenres.and.returnValue(of(expectedGenres));
-      productServiceSpy.getProduct.and.returnValue(of(expectedResponseDto));
-      spyOnProperty(router, 'url', 'get').and.returnValue('/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW);
-      expect(component).toBeTruthy();
-    });
-  });
-
   describe('#ngOnInit', () => {
     it('should init create screen', () => {
-      productServiceSpy.getGenres.and.returnValue(of(expectedGenres));
-      spyOnProperty(router, 'url', 'get').and.returnValue('/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW);
-      // productServiceSpy.getProduct.and.returnValue(of(expectedResponseDto));
-      // component.ngOnInit();
       expect(productServiceSpy.getGenres.calls.count()).toEqual(1);
       expect(component.genres).toEqual(expectedGenres);
-
       expect(productServiceSpy.getProduct.calls.count()).toEqual(1);
-    });
-  });
-
-  xdescribe('#ngAfterViewChecked', () => {
-    it('should set title', () => {
-      component.ngAfterViewChecked();
-      expect(titleI18ServiceSpy.setTitle.calls.count()).toBeGreaterThan(1);
-    });
-  });
-
-  // describe('#clickSaveButton', () => {
-  //   it('should updatedata but no response', async () => {
-  //     matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) });
-  //     productStockServiceSpy.updateProductStock.and.returnValue(of(null));
-  //     component.clickSaveButton();
-  //     expect(productStockServiceSpy.updateProductStock.calls.count()).toEqual(1);
-  //   });
-  //   it('should updatedata', async () => {
-  //     matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) });
-  //     productStockServiceSpy.updateProductStock.and.returnValue(of(expectedResponseDto));
-  //     component.clickSaveButton();
-  //     expect(productStockServiceSpy.updateProductStock.calls.count()).toEqual(1);
-  //     expect(component.productStockQuantity.value).toEqual('2,000');
-  //     expect(component.addProductStockQuantity.value).toBeNull();
-  //   });
-  //   it('should not update data', () => {
-  //     matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) });
-  //     productStockServiceSpy.updateProductStock.and.returnValue(of(null));
-  //     component.clickSaveButton();
-  //     expect(productStockServiceSpy.updateProductStock.calls.count()).toEqual(0);
-  //   });
-  // });
-
-  // --------------------------------------------------------------------------------
-  // DOM test cases
-  // --------------------------------------------------------------------------------
-  xdescribe('DOM placeholder', () => {
-    it('product code', () => {
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-code');
-      expect(htmlInputElement.placeholder).toContain('商品コード');
-    });
-    it('product name', () => {
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-name');
-      expect(htmlInputElement.placeholder).toContain('商品名');
-    });
-    it('product genre', () => {
-      const nativeElement = fixture.nativeElement;
-      const hTMLLabelElement: HTMLLabelElement = nativeElement.querySelector('#product-genre-label');
-      expect(hTMLLabelElement.innerText).toContain('ジャンル');
-    });
-    it('product size standard', () => {
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-size-standard');
-      expect(htmlInputElement.placeholder).toContain('サイズ・規格');
-    });
-    it('product stock quantity', () => {
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-stock-quantity');
-      expect(htmlInputElement.placeholder).toContain('在庫数');
-    });
-    it('product add stock quantity', () => {
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#add-product-stock-quantity');
-      expect(htmlInputElement.placeholder).toContain('在庫追加数');
-    });
-  });
-
-  xdescribe('DOM input test', () => {
-    it('product code', () => {
-      const expectedValue = 'PRODUCTCODE0001';
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-code');
-      htmlInputElement.value = expectedValue;
-      htmlInputElement.dispatchEvent(new Event('input'));
-      htmlInputElement.dispatchEvent(new Event('blur'));
-      fixture.detectChanges();
-
-      expect(component.productCode.value).toEqual(expectedValue);
-    });
-    it('product add stock quantity', () => {
-      const expectedValue = '123';
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#add-product-stock-quantity');
-      htmlInputElement.value = expectedValue;
-      htmlInputElement.dispatchEvent(new Event('input'));
-      htmlInputElement.dispatchEvent(new Event('blur'));
-      fixture.detectChanges();
-
-      // expect(component.addProductStockQuantity.value).toEqual(expectedValue);
-    });
-  });
-
-  xdescribe('DOM input validation test', () => {
-    it('add product stock quantity', () => {
-      const expectedValue = 'あいう';
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#add-product-stock-quantity');
-      htmlInputElement.value = expectedValue;
-      htmlInputElement.dispatchEvent(new Event('input'));
-      htmlInputElement.dispatchEvent(new Event('blur'));
-      fixture.detectChanges();
-
-      expect(htmlInputElement.value).toEqual(expectedValue);
-      const validationError = nativeElement.querySelector('.validation-error');
-      expect(validationError).toBeTruthy();
-    });
-    it('EndOfSaleEndOfSaleDateValidator', () => {
-      // productStockServiceSpy.getProductStock.and.returnValue(of(null));
-
-      const expectedValue = 'PRODUCTCODE0001';
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-code');
-      htmlInputElement.value = expectedValue;
-      htmlInputElement.dispatchEvent(new Event('input'));
-      htmlInputElement.dispatchEvent(new Event('blur'));
-      fixture.detectChanges();
-
-      expect(htmlInputElement.value).toEqual(expectedValue);
-      fixture.whenStable().then(() => {
-        const validationError = nativeElement.querySelector('.validation-error');
-        expect(validationError).toBeTruthy();
-      });
-    });
-  });
-
-  xdescribe('DOM output test', () => {
-    it('Should Enter product code and get product stock data then display screen', () => {
-      productServiceSpy.getProduct.and.returnValue(of(expectedResponseDto));
-
-      const nativeElement = fixture.nativeElement;
-      let htmlInputElement: HTMLInputElement = nativeElement.querySelector('#add-product-stock-quantity');
-      htmlInputElement.value = '123';
-      htmlInputElement.dispatchEvent(new Event('input'));
-
-      htmlInputElement = nativeElement.querySelector('#product-code');
-      htmlInputElement.value = 'abcd1234';
-      htmlInputElement.dispatchEvent(new Event('input'));
-      htmlInputElement.dispatchEvent(new Event('blur'));
-      fixture.detectChanges();
-
-      expect(htmlInputElement.placeholder).toContain('商品コード');
+      expect(component.productSeq.value).toEqual(expectedResponseDto.productSeq);
       expect(component.productCode.value).toEqual(expectedResponseDto.productCode);
-      expect(nativeElement.querySelector('#product-name').value).toEqual(expectedResponseDto.productName);
-      expect(nativeElement.querySelector('#product-genre').innerText).toContain('靴・スニーカー');
-      expect(nativeElement.querySelector('#product-size-standard').value).toEqual(expectedResponseDto.productSizeStandard);
-      expect(nativeElement.querySelector('#product-stock-quantity').value).toEqual('2,000');
-      expect(nativeElement.querySelector('#product-image').src).toEqual(expectedResponseDto.productImage);
-      expect(nativeElement.querySelector('#add-product-stock-quantity').value).toEqual('');
+      expect(component.productName.value).toEqual(expectedResponseDto.productName);
+      expect(component.productGenre.value).toEqual(expectedResponseDto.productGenre);
+      expect(component.productSizeStandard.value).toEqual(expectedResponseDto.productSizeStandard);
+      expect(component.productColor.value).toEqual(expectedResponseDto.productColor);
+      expect(component.productUnitPrice.value).toEqual('1,000');
+      expect(component.endOfSale.value).toEqual(expectedResponseDto.endOfSale);
+      expect(component.endOfSaleDate.value).toEqual(expectedResponseDto.endOfSaleDate);
+      expect(component.productImage.value).toEqual(expectedResponseDto.productImage);
+      expect(component.updateDate.value).toEqual(expectedResponseDto.updateDate);
     });
+  });
 
-    it('Should Enter input and create product stock request dto', () => {
-      const nativeElement = fixture.nativeElement;
-      let htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-code');
-      htmlInputElement.value = 'ABCD1234';
-      htmlInputElement.dispatchEvent(new Event('input'));
-
-      htmlInputElement = nativeElement.querySelector('#product-stock-quantity');
-      htmlInputElement.value = '1,111';
-      htmlInputElement.dispatchEvent(new Event('input'));
-
-      htmlInputElement = nativeElement.querySelector('#add-product-stock-quantity');
-      htmlInputElement.value = '123';
-      htmlInputElement.dispatchEvent(new Event('input'));
-
-      // tslint:disable-next-line: no-string-literal
-      const productStockRequestDto: ProductDto = component['createProductStockRequestDto']();
-      expect(productStockRequestDto.productCode).toEqual('ABCD1234');
-      // expect(productStockRequestDto.productStockQuantity.toString()).toEqual('1111');
-      // expect(productStockRequestDto.addProductStockQuantity.toString()).toEqual('123');
+  describe('#clickSaveButton', () => {
+    it('should update data', async () => {
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) });
+      productServiceSpy.updateProduct.and.returnValue(of(expectedResponseDto));
+      component.clickSaveButton();
+      expect(productServiceSpy.createProduct.calls.count()).toEqual(0);
+      expect(productServiceSpy.updateProduct.calls.count()).toEqual(1);
+      expect(component.productSeq.value).toEqual(expectedResponseDto.productSeq);
+      expect(component.productCode.value).toEqual(expectedResponseDto.productCode);
+      expect(component.productName.value).toEqual(expectedResponseDto.productName);
+      expect(component.productGenre.value).toEqual(expectedResponseDto.productGenre);
+      expect(component.productSizeStandard.value).toEqual(expectedResponseDto.productSizeStandard);
+      expect(component.productColor.value).toEqual(expectedResponseDto.productColor);
+      expect(component.productUnitPrice.value).toEqual('1,000');
+      expect(component.endOfSale.value).toEqual(expectedResponseDto.endOfSale);
+      expect(component.endOfSaleDate.value).toEqual(expectedResponseDto.endOfSaleDate);
+      expect(component.productImage.value).toEqual(expectedResponseDto.productImage);
+      expect(component.updateDate.value).toEqual(expectedResponseDto.updateDate);
     });
   });
 });

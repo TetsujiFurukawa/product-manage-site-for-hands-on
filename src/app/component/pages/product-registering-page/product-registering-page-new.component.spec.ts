@@ -266,6 +266,7 @@ describe('ProductRegisteringPageComponent', () => {
       // expect(component.productImage.value).toBeNull();
     });
   });
+
   describe('#clickClearButton', () => {
     it('should clear', () => {
       component.productImage.setValue(expectedResponseDto.productImage);
@@ -273,6 +274,7 @@ describe('ProductRegisteringPageComponent', () => {
       expect(component.productImage.value).toBeNull();
     });
   });
+
   describe('#clickReturnButton', () => {
     it('should return', () => {
       spyOn(router, 'navigate').and.callThrough();
@@ -317,6 +319,11 @@ describe('ProductRegisteringPageComponent', () => {
   // DOM test cases
   // --------------------------------------------------------------------------------
   describe('DOM placeholder', () => {
+    it('title', () => {
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#title');
+      expect(htmlInputElement.innerText).toContain('商品登録');
+    });
+
     it('product code', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-code');
       expect(htmlInputElement.placeholder).toContain('商品コード');
@@ -355,6 +362,11 @@ describe('ProductRegisteringPageComponent', () => {
         const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#end-of-sale-date');
         expect(htmlInputElement.placeholder).toContain('販売終了日');
       });
+    });
+
+    it('saveBtn', () => {
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#saveBtn');
+      expect(htmlInputElement.innerText).toContain('登録');
     });
   });
 

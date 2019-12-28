@@ -142,4 +142,18 @@ describe('ProductRegisteringPageComponent', () => {
       expect(component.updateDate.value).toEqual(expectedResponseDto.updateDate);
     });
   });
+
+  // --------------------------------------------------------------------------------
+  // DOM test cases
+  // --------------------------------------------------------------------------------
+  describe('DOM placeholder', () => {
+    it('title', () => {
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#title');
+      expect(htmlInputElement.innerText).toContain('商品更新');
+    });
+    it('saveBtn', () => {
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#saveBtn');
+      expect(htmlInputElement.innerText).toContain('更新');
+    });
+  });
 });

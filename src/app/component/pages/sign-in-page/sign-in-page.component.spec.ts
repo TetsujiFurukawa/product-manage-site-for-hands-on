@@ -7,12 +7,12 @@ import { User } from 'src/app/entity/user';
 import { AccountService } from 'src/app/service/account.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
+import { MaterialModule } from 'src/app/utils/material/material.module';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -55,7 +55,7 @@ describe('SignInPageComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         TranslateTestingModule.withTranslations({ ja: require('src/assets/i18n/ja.json') }),
-        MatInputModule,
+        MaterialModule,
         BrowserAnimationsModule,
         ReactiveFormsModule
       ],

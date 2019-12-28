@@ -2,19 +2,19 @@ import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { UrlConst } from 'src/app/const/url-const';
 import {
-  ProductListingSearchParams
+    ProductListingSearchParams
 } from 'src/app/entity/dto/request/product-listing-search-params';
 import { ProductSearchResponseDto } from 'src/app/entity/dto/response/product-search-response-dto';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
 import { AccountService } from 'src/app/service/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
-import { ProductService } from 'src/app/service/product.service';
 import { RoutingService } from 'src/app/service/common/routing.service';
 import { SearchParamsService } from 'src/app/service/common/search-params.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
+import { ProductService } from 'src/app/service/product.service';
 
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
+import { AfterViewChecked, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { TranslateService } from '@ngx-translate/core';
@@ -34,19 +34,12 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
     private routingService: RoutingService,
     private titleI18Service: TitleI18Service,
     public currencyToNumberPipe: CurrencyToNumberPipe,
-    public translateService: TranslateService,
-  ) { }
+    public translateService: TranslateService
+  ) {}
 
-  // product name
   productName = new FormControl('', []);
-
-  // product code
   productCode = new FormControl('', []);
-
-  // product genre
   productGenre = new FormControl('', []);
-
-  // End of sale
   endOfSale = new FormControl(false, []);
 
   searchForm = this.formBuilder.group({
@@ -63,18 +56,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
   genres: string[];
 
   // Material table's header
-  displayColumns: string[] = [
-    'No',
-    'productName',
-    'productCode',
-    'productGenre',
-    'productImage',
-    'productSizeStandard',
-    'productColor',
-    'productUnitPrice',
-    'productStockQuantity',
-    'endOfSale'
-  ];
+  displayColumns: string[] = ['No', 'productName', 'productCode', 'productGenre', 'productImage', 'productSizeStandard', 'productColor', 'productUnitPrice', 'productStockQuantity', 'endOfSale'];
 
   // Search result
   productSearchResponseDtos: ProductSearchResponseDto[];
@@ -121,7 +103,8 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
           this.paginator.pageIndex = data.pageIndex;
           return data.productSearchResponseDtos;
         })
-      ).subscribe(data => this.productSearchResponseDtos = data);
+      )
+      .subscribe(data => (this.productSearchResponseDtos = data));
   }
 
   onRowClicked(productResponseDto: ProductSearchResponseDto) {
@@ -132,7 +115,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
   // private methods
   // --------------------------------------------------------------------------------
   private loadData() {
-    this.productService.getGenres().subscribe(data => this.genres = data);
+    this.productService.getGenres().subscribe(data => (this.genres = data));
   }
 
   private setupLanguage() {

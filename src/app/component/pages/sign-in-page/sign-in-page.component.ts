@@ -18,13 +18,9 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./sign-in-page.component.scss']
 })
 export class SignInPageComponent implements OnInit, AfterViewChecked {
-  // account
   signInUserAccount = new FormControl('', [Validators.required]);
-
-  // pwd
   signInUserPassword = new FormControl('', [Validators.required]);
 
-  // form group setting
   signInForm = this.formBuilder.group({
     signInUserAccount: this.signInUserAccount,
     signInUserPassword: this.signInUserPassword
@@ -39,16 +35,25 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
     public translateService: TranslateService
   ) {}
 
+  /**
+   * on init
+   */
   ngOnInit() {
     // Sets default language to ja.
     this.setupLangage();
   }
 
+  /**
+   * after view checked
+   */
   ngAfterViewChecked() {
     this.titleI18Service.setTitle(UrlConst.PATH_SIGN_IN);
   }
 
-  singnIn() {
+  /**
+   * Clicks sign in button
+   */
+  clickSignInButton() {
     // Creates request dto.
     const signInRequestDto = this.createSignInRequestDto();
 

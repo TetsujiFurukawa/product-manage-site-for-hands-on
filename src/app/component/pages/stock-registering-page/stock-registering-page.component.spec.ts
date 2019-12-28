@@ -177,6 +177,11 @@ describe('StockRegisteringPageComponent', () => {
   // DOM test cases
   // --------------------------------------------------------------------------------
   describe('DOM placeholder', () => {
+    it('title', () => {
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#title');
+      expect(htmlInputElement.innerText).toContain('在庫登録');
+    });
+
     it('product code', () => {
       const nativeElement = fixture.nativeElement;
       const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-code');
@@ -206,6 +211,11 @@ describe('StockRegisteringPageComponent', () => {
       const nativeElement = fixture.nativeElement;
       const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#add-product-stock-quantity');
       expect(htmlInputElement.placeholder).toContain('在庫追加数');
+    });
+
+    it('saveBtn', () => {
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#saveBtn');
+      expect(htmlInputElement.innerText).toContain('登録');
     });
   });
 

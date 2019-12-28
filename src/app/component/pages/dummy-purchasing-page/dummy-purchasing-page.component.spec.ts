@@ -191,6 +191,11 @@ describe('DummyPurchasingPageComponent', () => {
   // DOM test cases
   // --------------------------------------------------------------------------------
   describe('DOM placeholder', () => {
+    it('title', () => {
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#title');
+      expect(htmlInputElement.innerText).toContain('購入ダミー');
+    });
+
     it('product code', () => {
       const nativeElement = fixture.nativeElement;
       const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-code');
@@ -235,6 +240,11 @@ describe('DummyPurchasingPageComponent', () => {
       const nativeElement = fixture.nativeElement;
       const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-purchase-amount');
       expect(htmlInputElement.placeholder).toContain('購入金額');
+    });
+
+    it('saveBtn', () => {
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#saveBtn');
+      expect(htmlInputElement.innerText).toContain('登録');
     });
   });
 

@@ -25,10 +25,11 @@
       </div>
       <div class="search-condition-wrapper">
         <mat-form-field>
-          <mat-label>{{ 'productListingPage.productGenre' | translate }}</mat-label>
-          <mat-select formControlName="productGenre" matTooltip="{{ 'tooltip.searchCriteria.pullDown' | translate }}">
+          <mat-label id="product-genre-label">{{ 'productListingPage.productGenre' | translate }}</mat-label>
+          <mat-select id="product-genre" formControlName="productGenre"
+            matTooltip="{{ 'tooltip.searchCriteria.pullDown' | translate }}">
             <mat-option></mat-option>
-            <mat-option *ngFor="let code of genres" [value]="code">
+            <mat-option class="product-genre-option" *ngFor="let code of genres" [value]="code">
               {{ 'genre.' + code | translate }}
             </mat-option>
           </mat-select>
@@ -49,13 +50,14 @@
       <mat-paginator [length]="resultsLength" [pageSize]="50" [pageSizeOptions]="[10, 50, 100]"></mat-paginator>
     </div>
     <div class="search-functions-buttons">
-      <button mat-raised-button id="newBtn" class="mat-raised-button" type="button" (click)="onNew()"
+      <button mat-raised-button id="newBtn" class="mat-raised-button" type="button" (click)="clickNewButton()"
         matTooltip="{{ 'productListingPage.tooltip.newBtn' | translate }}">{{ 'productListingPage.newButton' | translate }}</button>
 
-      <button mat-raised-button id="clearBtn" class="mat-raised-button" type="button" (click)="onClear()"
+      <button mat-raised-button id="clearBtn" class="mat-raised-button" type="button" (click)="clickClearButton()"
         matTooltip="{{ 'tooltip.searchBtn.clearBtn' | translate }}">{{ 'productListingPage.clearButton' | translate }}</button>
 
-      <button mat-raised-button id="searchBtn" class="mat-raised-button active" type="button" (click)="onSearch()"
+      <button mat-raised-button id="searchBtn" class="mat-raised-button active" type="button"
+        (click)="clickSearchButton()"
         matTooltip="{{ 'tooltip.searchBtn.searchBtn' | translate }}">{{ 'productListingPage.searchButton' | translate }}</button>
     </div>
   </div>
@@ -118,7 +120,7 @@
           {{ "productListingPage.endOfSaleValue." + element.endOfSale | translate}} </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayColumns;" (click)="onRowClicked(row)"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayColumns;" (click)="clickListRow(row)"></tr>
     </table>
   </div>
 </section>

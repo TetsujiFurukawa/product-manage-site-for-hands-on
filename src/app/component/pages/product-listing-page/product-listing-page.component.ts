@@ -75,18 +75,18 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
     this.titleI18Service.setTitle(UrlConst.PATH_PRODUCT_LISTING);
   }
 
-  onNew() {
+  clickNewButton() {
     this.searchParamsService.removeProductListingSearchParam();
     this.routingService.navigate(UrlConst.PATH_PRODUCT_REGISTERING + '/new');
   }
 
-  onClear() {
+  clickClearButton() {
     this.searchParamsService.removeProductListingSearchParam();
     this.clearSearchCondition();
     this.clearSearchResultList();
   }
 
-  onSearch() {
+  clickSearchButton() {
     merge(this.paginator.page)
       .pipe(
         startWith({}),
@@ -107,7 +107,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
       .subscribe(data => (this.productSearchResponseDtos = data));
   }
 
-  onRowClicked(productResponseDto: ProductSearchResponseDto) {
+  clickListRow(productResponseDto: ProductSearchResponseDto) {
     this.routingService.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING, productResponseDto.productCode]);
   }
 
@@ -127,7 +127,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
   private initSearchCriteria() {
     let productListingSearchParams: ProductListingSearchParams = new ProductListingSearchParams();
     productListingSearchParams = this.searchParamsService.getProductListingSearchParam(productListingSearchParams);
-    if (productListingSearchParams !== null) {
+    if (productListingSearchParams !== null && productListingSearchParams !== undefined) {
       if (productListingSearchParams.productName !== undefined) {
         this.productName.setValue(productListingSearchParams.productName);
       }
@@ -144,7 +144,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
         this.paginator._changePageSize(productListingSearchParams.pageSize);
       }, 0);
       this.endOfSale.setValue(productListingSearchParams.endOfSale);
-      this.onSearch();
+      this.clickSearchButton();
     }
   }
 

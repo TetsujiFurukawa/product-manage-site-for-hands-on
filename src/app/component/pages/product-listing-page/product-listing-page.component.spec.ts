@@ -1,6 +1,7 @@
 import { TranslateTestingModule } from 'ngx-translate-testing';
 import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 import { of } from 'rxjs';
+import { UrlConst } from 'src/app/const/url-const';
 import {
     ProductListingSearchParams
 } from 'src/app/entity/dto/request/product-listing-search-params';
@@ -14,6 +15,7 @@ import { AccountService } from 'src/app/service/account.service';
 import { SearchParamsService } from 'src/app/service/common/search-params.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 import { ProductService } from 'src/app/service/product.service';
+import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
 import { MaterialModule } from 'src/app/utils/material/material.module';
 
 import { CurrencyPipe } from '@angular/common';
@@ -32,27 +34,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { ProductListingPageComponent } from './product-listing-page.component';
 
-// xdescribe('ProductListingPageComponent', () => {
-//   let component: ProductListingPageComponent;
-//   let fixture: ComponentFixture<ProductListingPageComponent>;
-
-//   beforeEach(async(() => {
-//     TestBed.configureTestingModule({
-//       declarations: [ ProductListingPageComponent ]
-//     })
-//     .compileComponents();
-//   }));
-
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(ProductListingPageComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
-
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-// });
 describe('ProductListingPageComponent', () => {
   const expectedGenres = Array('1', '2', '3');
   const user: User = new User();
@@ -63,24 +44,13 @@ describe('ProductListingPageComponent', () => {
   user.userName = 'userName';
   user.userTimezone = 'UTC';
 
-  const expectedSearchParams = new ProductListingSearchParams();
-  expectedSearchParams.endOfSale = true;
-  expectedSearchParams.pageIndex = 1;
-  expectedSearchParams.pageSize = 50;
-  expectedSearchParams.productCode = 'productCode';
-  expectedSearchParams.productGenre = 'productGenre';
-  expectedSearchParams.productName = 'productName';
-
-  // const conditions = {
-  //   productName: expectedSearchParams.productName,
-  //   productCode: expectedSearchParams.productCode,
-  //   productGenre: expectedSearchParams.productGenre,
-  //   endOfSale: expectedSearchParams.endOfSale,
-  //   pageSize: expectedSearchParams.pageSize,
-  //   pageIndex: expectedSearchParams.pageIndex
-  // };
-  // const paramsOptions = { fromObject: conditions } as any;
-  // const expectedHttpSearchParams = new HttpParams(paramsOptions);
+  const expectedProductListingSearchParams = new ProductListingSearchParams();
+  expectedProductListingSearchParams.endOfSale = true;
+  expectedProductListingSearchParams.pageIndex = 1;
+  expectedProductListingSearchParams.pageSize = 50;
+  expectedProductListingSearchParams.productCode = 'productCode';
+  expectedProductListingSearchParams.productGenre = '1';
+  expectedProductListingSearchParams.productName = 'productName';
 
   const expectedProductSearchListResponseDto: ProductSearchListResponseDto = new ProductSearchListResponseDto();
   const productSearchResponseDto: ProductSearchResponseDto[] = [
@@ -102,16 +72,16 @@ describe('ProductListingPageComponent', () => {
   let component: ProductListingPageComponent;
   let fixture: ComponentFixture<ProductListingPageComponent>;
   let accountServiceSpy: { getUser: jasmine.Spy };
-  let productServiceSpy: { getGenres: jasmine.Spy; getProduct: jasmine.Spy; createProduct: jasmine.Spy; updateProduct: jasmine.Spy };
+  let productServiceSpy: { getGenres: jasmine.Spy; getProductList: jasmine.Spy };
   let titleI18ServiceSpy: { setTitle: jasmine.Spy };
-  let searchParamsServiceSpy: { getProductListingSearchParam: jasmine.spy };
+  let searchParamsServiceSpy: { getProductListingSearchParam: jasmine.Spy; removeProductListingSearchParam: jasmine.Spy; setProductListingSearchParam: jasmine.Spy };
   let router: Router;
 
   beforeEach(async(() => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
-    productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres', 'getProduct', 'createProduct', 'updateProduct']);
+    productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres', 'getProductList']);
     titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);
-    searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', ['getProductListingSearchParam']);
+    searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', ['getProductListingSearchParam', 'removeProductListingSearchParam', 'setProductListingSearchParam']);
 
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
@@ -155,108 +125,178 @@ describe('ProductListingPageComponent', () => {
   describe('#ngOnInit', () => {
     it('should not init search criteria', () => {
       searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(null);
+      component.ngOnInit();
     });
     it('should init search criteria', () => {
-      searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(expectedSearchParams);
+      searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(expectedProductListingSearchParams);
+      component.ngOnInit();
 
-      expect(component.productName.value).toEqual(expectedSearchParams.productName);
-      expect(component.productCode.value).toEqual(expectedSearchParams.productCode);
-      expect(component.productGenre.value).toEqual(expectedSearchParams.productGenre);
-      expect(component.endOfSale.value).toEqual(expectedSearchParams.endOfSale);
-      expect(component.paginator.pageIndex).toEqual(expectedSearchParams.pageIndex);
-      expect(component.paginator.pageSize).toEqual(expectedSearchParams.pageSize);
+      expect(component.productName.value).toEqual(expectedProductListingSearchParams.productName);
+      expect(component.productCode.value).toEqual(expectedProductListingSearchParams.productCode);
+      expect(component.productGenre.value).toEqual(expectedProductListingSearchParams.productGenre);
+      expect(component.endOfSale.value).toEqual(expectedProductListingSearchParams.endOfSale);
+      expect(component.paginator.pageIndex).toEqual(expectedProductListingSearchParams.pageIndex);
+      expect(component.paginator.pageSize).toEqual(expectedProductListingSearchParams.pageSize);
+    });
+
+    it('should init search criteria partly undefined', () => {
+      const expectedProductListingSearchParamsUndefine = new ProductListingSearchParams();
+      expectedProductListingSearchParamsUndefine.endOfSale = true;
+      expectedProductListingSearchParamsUndefine.pageIndex = 1;
+      expectedProductListingSearchParamsUndefine.pageSize = 50;
+      searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(expectedProductListingSearchParamsUndefine);
+      component.ngOnInit();
+
+      expect(component.productName.value).toEqual('');
+      expect(component.productCode.value).toEqual('');
+      expect(component.productGenre.value).toEqual('');
+      expect(component.endOfSale.value).toEqual(expectedProductListingSearchParams.endOfSale);
+      expect(component.paginator.pageIndex).toEqual(expectedProductListingSearchParams.pageIndex);
+      expect(component.paginator.pageSize).toEqual(expectedProductListingSearchParams.pageSize);
     });
   });
 
   describe('#ngAfterViewChecked', () => {
     it('should set title', () => {
+      searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(null);
       component.ngAfterViewChecked();
       expect(titleI18ServiceSpy.setTitle.calls.count()).toBeGreaterThan(1);
     });
   });
 
-  // describe('#singnIn', () => {
-  //   it('should not sign in', () => {
-  //     accountServiceSpy.signIn.and.returnValue(of(null));
-  //     component.clickSignInButton();
-  //     expect(accountServiceSpy.setUser.calls.count()).toEqual(0);
-  //   });
+  describe('clicks new button', () => {
+    it('should move to new page', () => {
+      searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(null);
+      spyOn(router, 'navigate').and.callThrough();
+      component.clickNewButton();
+      expect(searchParamsServiceSpy.removeProductListingSearchParam.calls.count()).toEqual(1);
+      expect(router.navigate).toHaveBeenCalledWith(['/' + UrlConst.PATH_PRODUCT_REGISTERING + '/new']);
+    });
+  });
 
-  //   it('should sign in', () => {
-  //     accountServiceSpy.signIn.and.returnValue(of(expectedResponseDto));
-  //     spyOn(router, 'navigate');
+  describe('clicks clear button', () => {
+    it('should clear', () => {
+      component.productName.setValue('productName');
+      component.productCode.setValue('productCode');
+      component.productGenre.setValue('1');
+      component.endOfSale.setValue(true);
 
-  //     component.clickSignInButton();
+      component.clickClearButton();
 
-  //     expect(accountServiceSpy.setUser.calls.count()).toEqual(1);
-  //     expect(router.navigate).toHaveBeenCalledWith(['/' + UrlConst.PATH_PRODUCT_LISTING]);
-  //   });
-  // });
+      expect(searchParamsServiceSpy.removeProductListingSearchParam.calls.count()).toEqual(1);
+      expect(component.productName.value).toEqual('');
+    });
+  });
 
+  describe('clicks clear button', () => {
+    it('should search', () => {
+      productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
+      component.clickSearchButton();
+
+      expect(productServiceSpy.getProductList.calls.count()).toEqual(1);
+      expect(component.productSearchResponseDtos).toEqual(expectedProductSearchListResponseDto.productSearchResponseDtos);
+    });
+  });
+
+  describe('clicks list row', () => {
+    it('should move to new page', () => {
+      const expectedProductSearchResponseDto: ProductSearchResponseDto = expectedProductSearchListResponseDto.productSearchResponseDtos[0];
+      spyOn(router, 'navigate').and.callThrough();
+      component.clickListRow(expectedProductSearchResponseDto);
+
+      expect(router.navigate).toHaveBeenCalledTimes(1);
+    });
+  });
   // --------------------------------------------------------------------------------
   // DOM test cases
   // --------------------------------------------------------------------------------
-  // describe('DOM placeholder', () => {
-  //   it('title', () => {
-  //     const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('.sign-in-title');
-  //     expect(htmlInputElement.innerText).toContain('EXAPMLE SITE');
-  //   });
+  describe('DOM placeholder', () => {
+    it('title', () => {
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#title');
+      expect(htmlInputElement.innerText).toContain('商品一覧');
+    });
 
-  //   it('signin user account', () => {
-  //     const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#signin-user-account');
-  //     expect(htmlInputElement.placeholder).toContain('ユーザアカウント');
-  //   });
-  //   it('signin user password', () => {
-  //     const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#signin-user-password');
-  //     expect(htmlInputElement.placeholder).toContain('パスワード');
-  //   });
-  //   it('saveBtn', () => {
-  //     const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#signInBtn');
-  //     expect(htmlInputElement.innerText).toContain('サインイン');
-  //   });
-  // });
+    it('product name', () => {
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-name');
+      expect(htmlInputElement.placeholder).toContain('商品名');
+    });
+    it('product code', () => {
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-code');
+      expect(htmlInputElement.placeholder).toContain('商品コード');
+    });
+    it('product genre', () => {
+      const hTMLLabelElement: HTMLLabelElement = fixture.nativeElement.querySelector('#product-genre-label');
+      expect(hTMLLabelElement.innerText).toContain('ジャンル');
+    });
+    it('end of sale', () => {
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#end-of-sale');
+      expect(htmlInputElement.innerText).toContain('販売終了');
+    });
 
-  // describe('DOM input test', () => {
-  //   it('signin user account', () => {
-  //     const expectedValue = expectedResponseDto.userAccount;
-  //     HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-account', expectedValue);
-  //     expect(component.signInUserAccount.value).toEqual(expectedValue);
-  //   });
-  //   it('signin user password', () => {
-  //     const expectedValue = 'productName';
-  //     HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-password', expectedValue);
-  //     expect(component.signInUserPassword.value).toEqual(expectedValue);
-  //   });
-  // });
+    it('new button', () => {
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#newBtn');
+      expect(htmlInputElement.innerText).toContain('新規');
+    });
+    it('clear button', () => {
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#clearBtn');
+      expect(htmlInputElement.innerText).toContain('クリア');
+    });
+    it('search button', () => {
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#searchBtn');
+      expect(htmlInputElement.innerText).toContain('検索');
+    });
+  });
 
-  // describe('DOM input validation test', () => {
-  //   it('signin user account', () => {
-  //     const expectedValue = '';
-  //     HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-account', expectedValue);
-  //     const validationError = fixture.nativeElement.querySelector('.validation-error');
-  //     expect(validationError).toBeTruthy();
-  //   });
-  //   it('signin user password', () => {
-  //     const expectedValue = '';
-  //     HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-password', expectedValue);
-  //     const validationError = fixture.nativeElement.querySelector('.validation-error');
-  //     expect(validationError).toBeTruthy();
-  //   });
-  // });
+  describe('DOM input test', () => {
+    it('product name', () => {
+      const expectedValue = expectedProductListingSearchParams.productName;
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', expectedValue);
+      expect(component.productName.value).toEqual(expectedValue);
+    });
+    it('product code', () => {
+      const expectedValue = expectedProductListingSearchParams.productCode;
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedValue);
+      expect(component.productCode.value).toEqual(expectedValue.toUpperCase());
+    });
+    it('product genre', () => {
+      const expectedValue = expectedProductListingSearchParams.productGenre;
+      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(fixture, '#product-genre', '.product-genre-option', 0);
+      expect(component.productGenre.value).toEqual(expectedValue);
+    });
+    it('end of sale', () => {
+      // Clicks checkbox's label
+      HtmlElementUtility.clickHtmlElement<typeof component>(fixture, '#end-of-sale label');
+      expect(component.endOfSale.value).toEqual(true);
+    });
+  });
 
-  // describe('DOM input test', () => {
-  //   it('Should Enter input and create request dto', () => {
-  //     let expectedValue = expectedSearchParams.Username;
-  //     HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-account', expectedValue);
+  describe('DOM input test', () => {
+    it('Should Enter input and create request dto / http params', () => {
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', expectedProductListingSearchParams.productName);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedProductListingSearchParams.productCode);
+      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(fixture, '#product-genre', '.product-genre-option', 0);
+      HtmlElementUtility.clickHtmlElement<typeof component>(fixture, '#end-of-sale label');
 
-  //     expectedValue = expectedSearchParams.Password;
-  //     HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-password', expectedValue);
+      fixture.detectChanges();
+      // tslint:disable-next-line: no-string-literal
+      const actualProductListingSearchParams: ProductListingSearchParams = component['createSearchParams']();
 
-  //     // tslint:disable-next-line: no-string-literal
-  //     const signInRequestDto: SignInRequestDto = component['createSignInRequestDto']();
+      expect(actualProductListingSearchParams.productName).toEqual(expectedProductListingSearchParams.productName);
+      expect(actualProductListingSearchParams.productCode).toEqual(expectedProductListingSearchParams.productCode.toUpperCase());
+      expect(actualProductListingSearchParams.productGenre).toEqual('1');
+      expect(actualProductListingSearchParams.endOfSale).toEqual(true);
+      expect(actualProductListingSearchParams.pageIndex).toEqual(0);
+      expect(actualProductListingSearchParams.pageSize).toEqual(50);
 
-  //     expect(signInRequestDto.Username).toEqual(expectedSearchParams.Username);
-  //     expect(signInRequestDto.Password).toEqual(expectedSearchParams.Password);
-  //   });
-  // });
+      // testing http params part
+      // tslint:disable-next-line: no-string-literal
+      const actualHttpParams: HttpParams = component['createHttpParams'](actualProductListingSearchParams);
+      expect(actualHttpParams.get('productName')).toEqual(expectedProductListingSearchParams.productName);
+      expect(actualHttpParams.get('productCode')).toEqual(expectedProductListingSearchParams.productCode.toUpperCase());
+      expect(actualHttpParams.get('productGenre')).toEqual('1');
+      expect(actualHttpParams.get('endOfSale')).toBeTruthy();
+      expect(actualHttpParams.get('pageSize').toString()).toEqual('50');
+      expect(actualHttpParams.get('pageIndex').toString()).toEqual('0');
+    });
+  });
 });

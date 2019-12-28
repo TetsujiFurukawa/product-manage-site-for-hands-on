@@ -2,9 +2,6 @@ import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { UrlConst } from 'src/app/const/url-const';
 import {
-    ProductPurchaseHistoryListingSearchParams
-} from 'src/app/entity/dto/request/product-purchase-history-listing-search-params';
-import {
     ProductPurchaseHistorySearchResponseDto
 } from 'src/app/entity/dto/response/product-purchase-history-search-response-dto';
 import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
@@ -33,7 +30,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
   constructor(
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
-    private purchaseService: ProductPurchaseService,
+    private productPurchaseService: ProductPurchaseService,
     private accountService: AccountService,
     private searchParamsService: SearchParamsService,
     private titleI18Service: TitleI18Service,
@@ -41,19 +38,10 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
     public translateService: TranslateService
   ) {}
 
-  // product purchase name
   productPurchaseName = new FormControl('', []);
-
-  // product purchase date from
   productPurchaseDateFrom = new FormControl('', []);
-
-  // product purchase date to
   productPurchaseDateTo = new FormControl('', []);
-
-  // product name
   productName = new FormControl('', []);
-
-  // product code
   productCode = new FormControl('', []);
 
   searchForm = this.formBuilder.group({
@@ -91,30 +79,40 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
   @ViewChild(MatPaginator, { static: true }) public paginator: MatPaginator;
   @ViewChildren(MatDatePickerComponent) matDatePickerComponents!: QueryList<MatDatePickerComponent>;
 
+  /**
+   * on init
+   */
   ngOnInit() {
     this.setupLanguage();
   }
 
+  /**
+   * after view checked
+   */
   ngAfterViewChecked() {
     this.titleI18Service.setTitle(UrlConst.PATH_PURCHASE_HISTORY_LISTING);
   }
 
-  onClear() {
+  /**
+   * Clicks clear button
+   */
+  clickClearButton() {
     this.searchParamsService.removeProductListingSearchParam();
     this.clearSearchCondition();
     this.clearSearchResultList();
   }
 
-  onSearch() {
+  /**
+   * Clicks search button
+   */
+  clickSearchButton() {
     merge(this.paginator.page)
       .pipe(
         startWith({}),
         switchMap(() => {
           this.loadingService.startLoading();
-          const purchaseHistoryListingSearchParams: ProductPurchaseHistoryListingSearchParams = this.createSearchParams();
-          return this.purchaseService.getProductPurchaseHistoryList(
-            this.createHttpParams(purchaseHistoryListingSearchParams)
-          );
+          // const purchaseHistoryListingSearchParams: ProductPurchaseHistoryListingSearchParams = this.createSearchParams();
+          return this.productPurchaseService.getProductPurchaseHistoryList(this.createHttpParams());
         }),
         map(data => {
           this.loadingService.stopLoading();
@@ -126,10 +124,19 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
       .subscribe(data => (this.purchaseHistorySearchResponseDtos = data));
   }
 
-  onReceiveEventFromChildFrom(eventData: string) {
+  /**
+   * Received event from child from
+   * @param eventData event data
+   */
+  receivedEventFromChildFrom(eventData: string) {
     this.productPurchaseDateFrom.setValue(eventData);
   }
-  onReceiveEventFromChildTo(eventData: string) {
+
+  /**
+   * Received event from child to
+   * @param eventData event data
+   */
+  receivedEventFromChildTo(eventData: string) {
     this.productPurchaseDateTo.setValue(eventData);
   }
   // --------------------------------------------------------------------------------
@@ -141,33 +148,20 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
     this.translateService.use(lang);
   }
 
-  private createSearchParams(): ProductPurchaseHistoryListingSearchParams {
-    const purchaseHistoryListingSearchParams: ProductPurchaseHistoryListingSearchParams = new ProductPurchaseHistoryListingSearchParams();
-    purchaseHistoryListingSearchParams.productPurchaseName = this.productPurchaseName.value;
-    purchaseHistoryListingSearchParams.productPurchaseDateFrom = this.productPurchaseDateFrom.value;
-    purchaseHistoryListingSearchParams.productPurchaseDateTo = this.productPurchaseDateTo.value;
-    purchaseHistoryListingSearchParams.productName = this.productName.value;
-    purchaseHistoryListingSearchParams.productCode = this.productCode.value;
-    purchaseHistoryListingSearchParams.pageSize = this.paginator.pageSize;
-    purchaseHistoryListingSearchParams.pageIndex = this.paginator.pageIndex;
-
-    return purchaseHistoryListingSearchParams;
-  }
-
-  private createHttpParams(purchaseHistoryListingSearchParams: ProductPurchaseHistoryListingSearchParams) {
+  private createHttpParams() {
     const conditions: any = {
-      productPurchaseName: purchaseHistoryListingSearchParams.productPurchaseName,
-      productName: purchaseHistoryListingSearchParams.productName,
-      productCode: purchaseHistoryListingSearchParams.productCode,
-      pageSize: purchaseHistoryListingSearchParams.pageSize,
-      pageIndex: purchaseHistoryListingSearchParams.pageIndex
+      productPurchaseName: this.productPurchaseName.value,
+      productName: this.productName.value,
+      productCode: this.productCode.value,
+      pageSize: this.paginator.pageSize,
+      pageIndex: this.paginator.pageIndex
     };
-    if (purchaseHistoryListingSearchParams.productPurchaseDateFrom !== '') {
-      const date = new Date(purchaseHistoryListingSearchParams.productPurchaseDateFrom);
+    if (this.productPurchaseDateFrom.value !== '') {
+      const date = new Date(this.productPurchaseDateFrom.value);
       conditions.productPurchaseDateFrom = date.toDateString();
     }
-    if (purchaseHistoryListingSearchParams.productPurchaseDateTo !== '') {
-      const date = new Date(purchaseHistoryListingSearchParams.productPurchaseDateTo);
+    if (this.productPurchaseDateTo.value !== '') {
+      const date = new Date(this.productPurchaseDateTo.value);
       conditions.productPurchaseDateTo = date.toDateString();
     }
 

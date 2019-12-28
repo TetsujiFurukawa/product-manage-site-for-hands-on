@@ -16,12 +16,12 @@
       </div>
       <div class="search-condition-wrapper">
         <div id="searchCondition2">
-          <app-mat-date-picker [locale]='locale' class="mat-date-from"
+          <app-mat-date-picker id="product-purchase-date-from" [locale]='locale' class="mat-date-from"
             placeholder="{{ 'PurchaseHistoryListingPage.productPurchaseDateFrom' | translate }}" [isBlank]=true
-            [required]=false (event)=" onReceiveEventFromChildFrom($event)"></app-mat-date-picker>
-          <app-mat-date-picker [locale]='locale' class="mat-date-to"
+            [required]=false (event)=" receivedEventFromChildFrom($event)"></app-mat-date-picker>
+          <app-mat-date-picker id="product-purchase-date-to" [locale]='locale' class="mat-date-to"
             placeholder="{{ 'PurchaseHistoryListingPage.productPurchaseDateTo' | translate }}" [isBlank]=true
-            [required]=false (event)=" onReceiveEventFromChildTo($event)"></app-mat-date-picker>
+            [required]=false (event)=" receivedEventFromChildTo($event)"></app-mat-date-picker>
         </div>
       </div>
       <div class="search-condition-wrapper">
@@ -49,9 +49,10 @@
       <mat-paginator [length]="resultsLength" [pageSize]="50" [pageSizeOptions]="[10, 50, 100]"></mat-paginator>
     </div>
     <div class="search-functions-buttons">
-      <button mat-raised-button id="clearBtn" class="mat-raised-button" type="button" (click)="onClear()"
+      <button mat-raised-button id="clearBtn" class="mat-raised-button" type="button" (click)="clickClearButton()"
         matTooltip="{{ 'tooltip.searchBtn.clearBtn' | translate }}">{{ 'PurchaseHistoryListingPage.clearButton' | translate }}</button>
-      <button mat-raised-button id="searchBtn" class="mat-raised-button active" type="button" (click)="onSearch()"
+      <button mat-raised-button id="searchBtn" class="mat-raised-button active" type="button"
+        (click)="clickSearchButton()"
         matTooltip="{{ 'tooltip.searchBtn.searchBtn' | translate }}">{{ 'PurchaseHistoryListingPage.searchButton' | translate }}</button>
     </div>
   </div>

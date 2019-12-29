@@ -23,8 +23,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { HAMMER_LOADER } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { PurchaseHistoryListingPageComponent } from './purchase-history-listing-page.component';
@@ -70,7 +70,6 @@ describe('PurchaseHistoryListingPageComponent', () => {
   let titleI18ServiceSpy: { setTitle: jasmine.Spy };
   let searchParamsServiceSpy: { getProductListingSearchParam: jasmine.Spy; removeProductListingSearchParam: jasmine.Spy; setProductListingSearchParam: jasmine.Spy };
   let productPurchaseServiceSpy: { getProductPurchaseHistoryList: jasmine.Spy };
-  let router: Router;
 
   beforeEach(async(() => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
@@ -94,6 +93,10 @@ describe('PurchaseHistoryListingPageComponent', () => {
         FormBuilder,
         CurrencyToNumberPipe,
         CurrencyPipe,
+        {
+          provide: HAMMER_LOADER,
+          useValue: () => new Promise(() => {})
+        },
         { provide: AccountService, useValue: accountServiceSpy },
         { provide: ProductService, useValue: productServiceSpy },
         { provide: TitleI18Service, useValue: titleI18ServiceSpy },
@@ -102,7 +105,6 @@ describe('PurchaseHistoryListingPageComponent', () => {
       ],
       declarations: [PurchaseHistoryListingPageComponent, CurrencyToNumberPipe]
     }).compileComponents();
-    router = TestBed.get(Router);
   }));
 
   beforeEach(() => {
@@ -130,25 +132,6 @@ describe('PurchaseHistoryListingPageComponent', () => {
       searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(null);
       component.ngAfterViewChecked();
       expect(titleI18ServiceSpy.setTitle.calls.count()).toBeGreaterThan(1);
-    });
-  });
-
-  describe('#clickClearButton', () => {
-    it('should clear', () => {
-      component.productPurchaseName.setValue(expectedSearchParamsProductPurchaseName);
-      component.productPurchaseDateFrom.setValue(expectedSearchParamsProductPurchaseDateFrom);
-      component.productPurchaseDateTo.setValue(expectedSearchParamsProductPurchaseDateTo);
-      component.productName.setValue(expectedSearchParamsProductName);
-      component.productCode.setValue(expectedSearchParamsProductCode);
-
-      component.clickClearButton();
-
-      expect(searchParamsServiceSpy.removeProductListingSearchParam.calls.count()).toEqual(1);
-      expect(component.productPurchaseName.value).toEqual('');
-      expect(component.productPurchaseDateFrom.value).toEqual('');
-      expect(component.productPurchaseDateTo.value).toEqual('');
-      expect(component.productName.value).toEqual('');
-      expect(component.productCode.value).toEqual('');
     });
   });
 
@@ -232,7 +215,7 @@ describe('PurchaseHistoryListingPageComponent', () => {
 
       component.receivedEventFromChildFrom(expectedSearchParamsProductPurchaseDateFrom);
       component.receivedEventFromChildTo(expectedSearchParamsProductPurchaseDateTo);
-      fixture.detectChanges();
+      // fixture.detectChanges();
 
       // tslint:disable-next-line: no-string-literal
       const actualHttpParams: HttpParams = component['createHttpParams']();
@@ -250,7 +233,7 @@ describe('PurchaseHistoryListingPageComponent', () => {
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', expectedSearchParamsProductName);
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedSearchParamsProductCode);
 
-      fixture.detectChanges();
+      // fixture.detectChanges();
 
       // tslint:disable-next-line: no-string-literal
       const actualHttpParams: HttpParams = component['createHttpParams']();

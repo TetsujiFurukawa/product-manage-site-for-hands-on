@@ -156,11 +156,11 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
       pageSize: this.paginator.pageSize,
       pageIndex: this.paginator.pageIndex
     };
-    if (this.productPurchaseDateFrom.value !== '') {
+    if (this.productPurchaseDateFrom.value !== '' && this.productPurchaseDateFrom.value !== null) {
       const date = new Date(this.productPurchaseDateFrom.value);
       conditions.productPurchaseDateFrom = date.toDateString();
     }
-    if (this.productPurchaseDateTo.value !== '') {
+    if (this.productPurchaseDateTo.value !== '' && this.productPurchaseDateTo.value !== null) {
       const date = new Date(this.productPurchaseDateTo.value);
       conditions.productPurchaseDateTo = date.toDateString();
     }

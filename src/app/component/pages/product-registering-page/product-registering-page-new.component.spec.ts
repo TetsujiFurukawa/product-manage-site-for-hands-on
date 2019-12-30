@@ -15,7 +15,7 @@ import { CurrencyPipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
@@ -98,13 +98,13 @@ describe('ProductRegisteringPageComponent', () => {
     fixture.detectChanges();
   });
 
-  describe('#constractor', () => {
+  xdescribe('#constractor', () => {
     it('should create', () => {
       expect(component).toBeTruthy();
     });
   });
 
-  describe('#ngOnInit', () => {
+  xdescribe('#ngOnInit', () => {
     it('should init create screen', () => {
       expect(productServiceSpy.getGenres.calls.count()).toEqual(1);
       expect(component.genres).toEqual(expectedGenres);
@@ -112,14 +112,14 @@ describe('ProductRegisteringPageComponent', () => {
     });
   });
 
-  describe('#ngAfterViewChecked', () => {
+  xdescribe('#ngAfterViewChecked', () => {
     it('should set title', () => {
       component.ngAfterViewChecked();
       expect(titleI18ServiceSpy.setTitle.calls.count()).toBeGreaterThan(1);
     });
   });
 
-  describe('#clickProductImageButton', () => {
+  xdescribe('#clickProductImageButton', () => {
     it('should return', () => {
       component.clickProductImageButton(Array());
       fixture.detectChanges();
@@ -138,16 +138,26 @@ describe('ProductRegisteringPageComponent', () => {
 
       expect(component.productImage.value).toBeNull();
     });
-    it('should load image', () => {
-      const mockFileReader: any = {
-        target: { result: '' },
-        readAsDataURL: blobInput => {},
-        onload: () => {}
-      };
-      spyOn<any>(window, 'FileReader').and.returnValue(mockFileReader);
-      spyOn<any>(mockFileReader, 'readAsDataURL').and.callFake(blobInput => {
-        mockFileReader.onload({ target: { result: expectedResponseDto.productImage } });
-      });
+    it('should load image', async () => {
+      // const mockFileReader: any = {
+      //   target: { result: '' },
+      //   readAsDataURL: blobInput => {},
+      //   onload: () => {}
+      // };
+
+      // const mockReader: { readAsDataURL: jasmine.Spy; onload: jasmine.Spy } = jasmine.createSpyObj('FileReader', ['readAsDataURL', 'onload']);
+      // spyOn<any>(window, 'FileReader').and.returnValue(mockReader);
+
+      // mockReader.readAsDataURL.and.callThrough();
+      // mockReader.onload.and.returnValue({ target: { result: expectedResponseDto.productImage } });
+
+      // spyOn<any>(mockReader, 'readAsDataURL').and.callThrough();
+      // spyOn<any>(mockReader, 'onload').and.returnValue({ target: { result: expectedResponseDto.productImage } });
+
+      // spyOn<any>(mockFileReader, 'readAsDataURL').and.callFake(blobInput => {
+      //   mockFileReader.onload(of({ target: { result: expectedResponseDto.productImage } }));
+      // });
+
       // mockFileReader.onload.calls.argsFor(0)[1]('onload');
 
       // const mockFileReader = {
@@ -228,6 +238,24 @@ describe('ProductRegisteringPageComponent', () => {
       //   }
       // });
 
+      const mockFileReader: any = {
+        readAsDataURL: blobInput => {},
+        onload: () => {}
+      };
+
+      const eventListener = jasmine.createSpy();
+
+      // spyOn<any>(component.fileReader, 'FileReader').and.returnValue(mockFileReader);
+      spyOn(component.fileReader, 'readAsDataURL');
+      spyOn(component.fileReader, 'onload').and.returnValue(
+        of({
+          target: { result: expectedResponseDto.productImage }
+        })
+      );
+      // spyOn<any>(component.fileReader, 'readAsDataURL').and.returnValue(null);
+      // spyOn<any>(component.fileReader, 'onload').and.returnValue({ target: { result: expectedResponseDto.productImage } });
+
+      spyOn(component.productImage, 'setValue');
       const content = 'data:image/jpeg;base64,/9j/4QAYRXh';
       const data = new Blob([content]);
       const arrayOfBlob = new Array<Blob>();
@@ -235,12 +263,14 @@ describe('ProductRegisteringPageComponent', () => {
       const imageFile = new File(arrayOfBlob, 'test01.img', { type: 'application/image' });
 
       component.clickProductImageButton(Array(imageFile));
+      component.fileReader.dispatchEvent(new Event('onload'));
       fixture.detectChanges();
 
-      // fixture.whenStable().then(() => {
-      //   fixture.detectChanges();
-      //   console.log('aaabbb');
-      // });
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        console.log('aaabbb');
+        expect(FileReader).toHaveBeenCalled();
+      });
 
       // const mockFileReader = {
       //   target: { result: '' },
@@ -260,7 +290,36 @@ describe('ProductRegisteringPageComponent', () => {
     });
   });
 
-  describe('#clickClearButton', () => {
+  it('test', () => {
+    const eventListener = jasmine.createSpy();
+    const dummyFileReader = { addEventListener: eventListener };
+
+    spyOn<any>(window, 'FileReader').and.returnValue(dummyFileReader);
+    const reader = new FileReader();
+    // tslint:disable-next-line: only-arrow-functions
+    reader.addEventListener('onload', function(e: any) {
+      expect(e.target.result).toEqual('url');
+      // done();
+    });
+
+    expect(eventListener.calls.mostRecent().args[0]).toEqual('onload');
+    const onloadHandler = eventListener.calls.mostRecent().args[1];
+    const event = { target: { result: 'url' } };
+    onloadHandler(event);
+
+    spyOn(component.productImage, 'setValue');
+    const content = 'data:image/jpeg;base64,/9j/4QAYRXh';
+    const data = new Blob([content]);
+    const arrayOfBlob = new Array<Blob>();
+    arrayOfBlob.push(data);
+    const imageFile = new File(arrayOfBlob, 'test01.img', { type: 'application/image' });
+
+    component.clickProductImageButton(Array(imageFile));
+    component.fileReader.dispatchEvent(new Event('onload'));
+    fixture.detectChanges();
+  });
+
+  xdescribe('#clickClearButton', () => {
     it('should clear', () => {
       component.productImage.setValue(expectedResponseDto.productImage);
       component.clickClearButton();
@@ -268,7 +327,7 @@ describe('ProductRegisteringPageComponent', () => {
     });
   });
 
-  describe('#clickReturnButton', () => {
+  xdescribe('#clickReturnButton', () => {
     it('should return', () => {
       spyOn(router, 'navigate').and.callThrough();
       component.clickReturnButton();
@@ -276,7 +335,7 @@ describe('ProductRegisteringPageComponent', () => {
     });
   });
 
-  describe('#clickSaveButton', () => {
+  xdescribe('#clickSaveButton', () => {
     it('should crete data but response is null', async () => {
       matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) });
       productServiceSpy.createProduct.and.returnValue(of(null));
@@ -311,7 +370,7 @@ describe('ProductRegisteringPageComponent', () => {
   // --------------------------------------------------------------------------------
   // DOM test cases
   // --------------------------------------------------------------------------------
-  describe('DOM placeholder', () => {
+  xdescribe('DOM placeholder', () => {
     it('title', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#title');
       expect(htmlInputElement.innerText).toContain('商品登録');
@@ -363,7 +422,7 @@ describe('ProductRegisteringPageComponent', () => {
     });
   });
 
-  describe('DOM input test', () => {
+  xdescribe('DOM input test', () => {
     it('product code', () => {
       const expectedValue = 'PRODUCTCODE0001';
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedValue);
@@ -400,7 +459,7 @@ describe('ProductRegisteringPageComponent', () => {
     });
   });
 
-  describe('DOM input validation test', () => {
+  xdescribe('DOM input validation test', () => {
     it('product code', () => {
       const expectedValue = 'PRODUCT_';
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedValue);
@@ -449,7 +508,7 @@ describe('ProductRegisteringPageComponent', () => {
     });
   });
 
-  describe('DOM input/output test', () => {
+  xdescribe('DOM input/output test', () => {
     it('Should Enter input and create product register request dto', () => {
       let expectedValue = expectedResponseDto.productCode;
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedValue);

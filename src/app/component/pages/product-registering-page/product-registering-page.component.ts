@@ -78,6 +78,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   currency: string = this.accountService.getUser().userCurrency;
 
   genres: string[];
+  fileReader: FileReader = new FileReader();
 
   /** Called new or update? */
   isNew = this.routingService.router.url === '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW;
@@ -115,9 +116,8 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     if (mimeType.match(/image\/*/) == null) {
       return;
     }
-    const reader = new FileReader();
-    reader.readAsDataURL(files[0]);
-    reader.onload = (e: any) => {
+    this.fileReader.readAsDataURL(files[0]);
+    this.fileReader.onload = (e: any) => {
       this.productImage.setValue(e.target.result);
     };
   }

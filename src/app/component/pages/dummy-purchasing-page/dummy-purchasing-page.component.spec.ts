@@ -134,7 +134,7 @@ describe('DummyPurchasingPageComponent', () => {
       component.blurProductCode();
 
       fixture.whenStable().then(() => {
-        expect(component.productGenre.value).toEqual(expectedResponseDto.productGenre);
+        expect(component.productGenre.value).toEqual('靴・スニーカー');
         expect(component.productImage.value).toEqual(expectedResponseDto.productImage);
         expect(component.productName.value).toEqual(expectedResponseDto.productName);
         expect(component.productPurchaseUnitPrice.value).toEqual('1,000');
@@ -205,8 +205,8 @@ describe('DummyPurchasingPageComponent', () => {
     });
     it('product genre', () => {
       const nativeElement = fixture.nativeElement;
-      const hTMLLabelElement: HTMLLabelElement = nativeElement.querySelector('#product-genre-label');
-      expect(hTMLLabelElement.innerText).toContain('ジャンル');
+      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-genre');
+      expect(htmlInputElement.placeholder).toContain('ジャンル');
     });
     it('product size standard', () => {
       const nativeElement = fixture.nativeElement;
@@ -378,7 +378,7 @@ describe('DummyPurchasingPageComponent', () => {
       expect(htmlInputElement.placeholder).toContain('商品コード');
       expect(component.productCode.value).toEqual(expectedResponseDto.productCode);
       expect(nativeElement.querySelector('#product-name').value).toEqual(expectedResponseDto.productName);
-      expect(nativeElement.querySelector('#product-genre').innerText).toContain('靴・スニーカー');
+      expect(nativeElement.querySelector('#product-genre').value).toEqual('靴・スニーカー');
       expect(nativeElement.querySelector('#product-size-standard').value).toEqual(expectedResponseDto.productSizeStandard);
       expect(nativeElement.querySelector('#product-unit-price').value).toEqual('1,000');
       expect(nativeElement.querySelector('#product-stock-quantity').value).toEqual('2,000');

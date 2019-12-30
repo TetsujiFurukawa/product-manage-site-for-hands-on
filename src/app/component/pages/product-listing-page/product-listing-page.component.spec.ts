@@ -230,15 +230,15 @@ describe('ProductListingPageComponent', () => {
     });
 
     it('new button', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#newBtn');
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#new-button');
       expect(htmlInputElement.innerText).toContain('新規');
     });
     it('clear button', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#clearBtn');
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#clear-button');
       expect(htmlInputElement.innerText).toContain('クリア');
     });
     it('search button', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#searchBtn');
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#search-button');
       expect(htmlInputElement.innerText).toContain('検索');
     });
   });

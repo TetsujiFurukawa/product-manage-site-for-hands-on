@@ -145,7 +145,7 @@ describe('ProductRegisteringPageComponent', () => {
       expect(htmlInputElement.innerText).toContain('商品更新');
     });
     it('saveBtn', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#saveBtn');
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#save-button');
       expect(htmlInputElement.innerText).toContain('更新');
     });
   });

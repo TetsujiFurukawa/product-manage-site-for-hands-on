@@ -211,7 +211,7 @@ describe('StockRegisteringPageComponent', () => {
     });
 
     it('saveBtn', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#saveBtn');
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#save-button');
       expect(htmlInputElement.innerText).toContain('登録');
     });
   });

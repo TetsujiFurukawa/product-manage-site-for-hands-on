@@ -13,7 +13,7 @@ import {
     EndOfSaleEndOfSaleDateValidator
 } from 'src/app/validator/end-of-sale-end-of-sale-date-validator';
 
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -78,6 +78,8 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   currency: string = this.accountService.getUser().userCurrency;
 
   genres: string[];
+
+  @ViewChild('fileInputElement', { static: true }) public fileInputElement: ElementRef;
   fileReader: FileReader = new FileReader();
 
   /** Called new or update? */
@@ -126,6 +128,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
    * Clicks clear button
    */
   clickClearButton() {
+    this.fileInputElement.nativeElement.value = '';
     this.productImage.setValue(null);
   }
 

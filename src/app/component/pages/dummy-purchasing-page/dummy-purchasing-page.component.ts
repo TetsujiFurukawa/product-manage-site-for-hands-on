@@ -187,7 +187,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
       return;
     }
     this.productName.setValue(productPurchaseResponseDto.productName);
-    this.productGenre.setValue(productPurchaseResponseDto.productGenre);
+    this.productGenre.setValue(this.translateService.instant('genre.' + productPurchaseResponseDto.productGenre));
     this.productSizeStandard.setValue(productPurchaseResponseDto.productSizeStandard);
     this.productPurchaseUnitPrice.setValue(this.currencyToNumberPipe.transform(String(productPurchaseResponseDto.productPurchaseUnitPrice), this.locale, this.currency));
     this.productStockQuantity.setValue(this.currencyToNumberPipe.transform(String(productPurchaseResponseDto.productStockQuantity), this.locale, this.currency));

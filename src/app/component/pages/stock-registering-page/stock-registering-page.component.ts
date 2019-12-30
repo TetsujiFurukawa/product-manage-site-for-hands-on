@@ -169,7 +169,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
       return;
     }
     this.productName.setValue(productStockResponseDto.productName);
-    this.productGenre.setValue(productStockResponseDto.productGenre);
+    this.productGenre.setValue(this.translateService.instant('genre.' + productStockResponseDto.productGenre));
     this.productSizeStandard.setValue(productStockResponseDto.productSizeStandard);
     this.productStockQuantity.setValue(this.currencyToNumberPipe.transform(String(productStockResponseDto.productStockQuantity), this.locale, this.currency));
     this.productImage.setValue(productStockResponseDto.productImage);

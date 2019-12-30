@@ -121,12 +121,6 @@ describe('PurchaseHistoryListingPageComponent', () => {
     });
   });
 
-  describe('#ngOnInit', () => {
-    it('should init', () => {
-      component.ngOnInit();
-    });
-  });
-
   describe('#ngAfterViewChecked', () => {
     it('should set title', () => {
       searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(null);

@@ -121,7 +121,10 @@ describe('ProductListingPageComponent', () => {
   describe('#ngOnInit', () => {
     it('should not init search criteria', () => {
       searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(null);
+      spyOn(component, 'clickSearchButton').and.callThrough();
       component.ngOnInit();
+
+      expect(component.clickSearchButton).toHaveBeenCalledTimes(0);
     });
     it('should init search criteria', () => {
       searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(expectedProductListingSearchParams);
@@ -163,7 +166,7 @@ describe('ProductListingPageComponent', () => {
   describe('clicks new button', () => {
     it('should move to new page', () => {
       searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(null);
-      spyOn(router, 'navigate').and.callThrough();
+      spyOn(router, 'navigate').and.returnValue(null);
       component.clickNewButton();
       expect(searchParamsServiceSpy.removeProductListingSearchParam.calls.count()).toEqual(1);
       expect(router.navigate).toHaveBeenCalledWith(['/' + UrlConst.PATH_PRODUCT_REGISTERING + '/new']);
@@ -197,7 +200,7 @@ describe('ProductListingPageComponent', () => {
   describe('clicks list row', () => {
     it('should move to new page', () => {
       const expectedProductSearchResponseDto: ProductSearchResponseDto = expectedProductSearchListResponseDto.productSearchResponseDtos[0];
-      spyOn(router, 'navigate').and.callThrough();
+      spyOn(router, 'navigate').and.returnValue(null);
       component.clickListRow(expectedProductSearchResponseDto);
 
       expect(router.navigate).toHaveBeenCalledTimes(1);

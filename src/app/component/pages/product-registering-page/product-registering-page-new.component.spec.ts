@@ -175,7 +175,7 @@ describe('ProductRegisteringPageComponent', () => {
 
   describe('#clickReturnButton', () => {
     it('should return', () => {
-      spyOn(router, 'navigate').and.callThrough();
+      spyOn(router, 'navigate').and.returnValue(null);
       component.clickReturnButton();
       expect(router.navigate).toHaveBeenCalledWith([UrlConst.PATH_PRODUCT_LISTING]);
     });
@@ -250,7 +250,7 @@ describe('ProductRegisteringPageComponent', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#end-of-sale');
       expect(htmlInputElement.innerText).toContain('終了');
     });
-    it('product end of sale date', async () => {
+    it('product end of sale date', () => {
       const htmlElement: HTMLElement = fixture.nativeElement.querySelector('#end-of-sale label');
       // Clicks checkbox's label
       htmlElement.click();
@@ -260,6 +260,7 @@ describe('ProductRegisteringPageComponent', () => {
         const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#end-of-sale-date');
         expect(htmlInputElement.placeholder).toContain('販売終了日');
       });
+      expect(component.endOfSale.value).toBeTruthy();
     });
 
     it('saveBtn', () => {
@@ -407,6 +408,7 @@ describe('ProductRegisteringPageComponent', () => {
         expect(fixture.nativeElement.querySelector('#end-of-sale-input').checked).toBeTruthy();
         expect(fixture.nativeElement.querySelector('#product-image').src).toEqual(expectedResponseDto.productImage);
       });
+      expect(component).toBeTruthy();
     });
   });
 });

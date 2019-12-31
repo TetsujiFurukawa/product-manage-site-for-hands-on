@@ -11,6 +11,7 @@ import { AccountService } from 'src/app/service/account.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 import { ProductPurchaseService } from 'src/app/service/product-purchase.service';
 import { ProductService } from 'src/app/service/product.service';
+import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
 import { MaterialModule } from 'src/app/utils/material/material.module';
 
 import { CurrencyPipe } from '@angular/common';
@@ -194,48 +195,39 @@ describe('DummyPurchasingPageComponent', () => {
     });
 
     it('product code', () => {
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-code');
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-code');
       expect(htmlInputElement.placeholder).toContain('商品コード');
     });
     it('product name', () => {
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-name');
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-name');
       expect(htmlInputElement.placeholder).toContain('商品名');
     });
     it('product genre', () => {
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-genre');
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-genre');
       expect(htmlInputElement.placeholder).toContain('ジャンル');
     });
     it('product size standard', () => {
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-size-standard');
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-size-standard');
       expect(htmlInputElement.placeholder).toContain('サイズ・規格');
     });
     it('product unit price', () => {
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-unit-price');
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-unit-price');
       expect(htmlInputElement.placeholder).toContain('購入単価');
     });
     it('product Stock quantity', () => {
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-stock-quantity');
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-stock-quantity');
       expect(htmlInputElement.placeholder).toContain('在庫数');
     });
     it('product Purchase name', () => {
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-Purchase-name');
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-Purchase-name');
       expect(htmlInputElement.placeholder).toContain('購入者');
     });
     it('product purchase quantity', () => {
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-purchase-quantity');
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-purchase-quantity');
       expect(htmlInputElement.placeholder).toContain('購入数量');
     });
     it('product purchase amount', () => {
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-purchase-amount');
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-purchase-amount');
       expect(htmlInputElement.placeholder).toContain('購入金額');
     });
 
@@ -250,34 +242,19 @@ describe('DummyPurchasingPageComponent', () => {
       productPurchaseServiceSpy.getProductPurchase.and.returnValue(of(expectedResponseDto));
 
       const expectedValue = 'PRODUCTCODE0001';
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-code');
-      htmlInputElement.value = expectedValue;
-      htmlInputElement.dispatchEvent(new Event('input'));
-      htmlInputElement.dispatchEvent(new Event('blur'));
-      fixture.detectChanges();
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'PRODUCTCODE0001');
 
       expect(component.productCode.value).toEqual(expectedValue);
     });
     it('product purchase name', () => {
       const expectedValue = 'PRODUCT_PURCHASE_NAME0001';
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-Purchase-name');
-      htmlInputElement.value = expectedValue;
-      htmlInputElement.dispatchEvent(new Event('input'));
-      htmlInputElement.dispatchEvent(new Event('blur'));
-      fixture.detectChanges();
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-Purchase-name', expectedValue);
 
       expect(component.productPurchaseName.value).toEqual(expectedValue);
     });
     it('product purchase quantity', () => {
       const expectedValue = '123';
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-purchase-quantity');
-      htmlInputElement.value = expectedValue;
-      htmlInputElement.dispatchEvent(new Event('input'));
-      htmlInputElement.dispatchEvent(new Event('blur'));
-      fixture.detectChanges();
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-purchase-quantity', expectedValue);
 
       expect(component.productPurchaseQuantity.value).toEqual(expectedValue);
     });
@@ -285,68 +262,31 @@ describe('DummyPurchasingPageComponent', () => {
 
   describe('DOM input validation test', () => {
     it('product purchase name', () => {
-      const expectedValue = '';
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-Purchase-name');
-      htmlInputElement.value = 'not null value';
-      htmlInputElement.value = expectedValue;
-      htmlInputElement.dispatchEvent(new Event('input'));
-      htmlInputElement.dispatchEvent(new Event('blur'));
-      fixture.detectChanges();
-
-      expect(htmlInputElement.value).toEqual(expectedValue);
-      const validationError = nativeElement.querySelector('.validation-error');
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-Purchase-name', '');
+      const validationError = fixture.nativeElement.querySelector('.validation-error');
       expect(validationError).toBeTruthy();
     });
     it('product purchase quantity', () => {
-      const expectedValue = 'あいう';
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-purchase-quantity');
-      htmlInputElement.value = expectedValue;
-      htmlInputElement.dispatchEvent(new Event('input'));
-      htmlInputElement.dispatchEvent(new Event('blur'));
-      fixture.detectChanges();
-
-      expect(htmlInputElement.value).toEqual(expectedValue);
-      const validationError = nativeElement.querySelector('.validation-error');
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-purchase-quantity', 'あいう');
+      const validationError = fixture.nativeElement.querySelector('.validation-error');
       expect(validationError).toBeTruthy();
     });
     it('ProductCodeProductNameValidator(product code)', () => {
       productPurchaseServiceSpy.getProductPurchase.and.returnValue(of(null));
 
-      const expectedValue = 'PRODUCTCODE0001';
-      const nativeElement = fixture.nativeElement;
-      const htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-code');
-      htmlInputElement.value = expectedValue;
-      htmlInputElement.dispatchEvent(new Event('input'));
-      htmlInputElement.dispatchEvent(new Event('blur'));
-      fixture.detectChanges();
-
-      expect(htmlInputElement.value).toEqual(expectedValue);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'PRODUCTCODE0001');
       fixture.whenStable().then(() => {
-        const validationError = nativeElement.querySelector('.validation-error');
+        const validationError = fixture.nativeElement.querySelector('.validation-error');
         expect(validationError).toBeTruthy();
       });
     });
     it('PurchaseQuantityStockQuantityValidator', () => {
       productPurchaseServiceSpy.getProductPurchase.and.returnValue(of(expectedResponseDto));
 
-      const nativeElement = fixture.nativeElement;
-      let htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-code');
-      htmlInputElement.value = 'PRODUCTCODE0001';
-      htmlInputElement.dispatchEvent(new Event('input'));
-      htmlInputElement.dispatchEvent(new Event('blur'));
-
-      const expectedValue = '2001';
-      htmlInputElement = nativeElement.querySelector('#product-purchase-quantity');
-      htmlInputElement.value = expectedValue;
-      htmlInputElement.dispatchEvent(new Event('input'));
-      htmlInputElement.dispatchEvent(new Event('blur'));
-      fixture.detectChanges();
-
-      expect(htmlInputElement.value).toEqual(expectedValue);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'PRODUCTCODE0001');
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-purchase-quantity', '2001');
       fixture.whenStable().then(() => {
-        const validationError = nativeElement.querySelector('.validation-error');
+        const validationError = fixture.nativeElement.querySelector('.validation-error');
         expect(validationError).toBeTruthy();
       });
     });
@@ -356,58 +296,32 @@ describe('DummyPurchasingPageComponent', () => {
     it('Should Enter product code and get product purchase data then display screen', () => {
       productPurchaseServiceSpy.getProductPurchase.and.returnValue(of(expectedResponseDto));
 
-      const nativeElement = fixture.nativeElement;
-      let htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-Purchase-name');
-      htmlInputElement.value = 'The value to be reset';
-      htmlInputElement.dispatchEvent(new Event('input'));
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-Purchase-name', 'The value to be reset');
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-purchase-quantity', '123');
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-purchase-amount', '456');
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'abcd1234');
 
-      htmlInputElement = nativeElement.querySelector('#product-purchase-quantity');
-      htmlInputElement.value = '123';
-      htmlInputElement.dispatchEvent(new Event('input'));
-
-      htmlInputElement = nativeElement.querySelector('#product-purchase-amount');
-      htmlInputElement.value = '456';
-      htmlInputElement.dispatchEvent(new Event('input'));
-
-      htmlInputElement = nativeElement.querySelector('#product-code');
-      htmlInputElement.value = 'abcd1234';
-      htmlInputElement.dispatchEvent(new Event('input'));
-      htmlInputElement.dispatchEvent(new Event('blur'));
-      fixture.detectChanges();
-
-      expect(htmlInputElement.placeholder).toContain('商品コード');
-      expect(component.productCode.value).toEqual(expectedResponseDto.productCode);
-      expect(nativeElement.querySelector('#product-name').value).toEqual(expectedResponseDto.productName);
-      expect(nativeElement.querySelector('#product-genre').value).toEqual('靴・スニーカー');
-      expect(nativeElement.querySelector('#product-size-standard').value).toEqual(expectedResponseDto.productSizeStandard);
-      expect(nativeElement.querySelector('#product-unit-price').value).toEqual('1,000');
-      expect(nativeElement.querySelector('#product-stock-quantity').value).toEqual('2,000');
-      expect(nativeElement.querySelector('#product-image').src).toEqual(expectedResponseDto.productImage);
-      expect(nativeElement.querySelector('#product-Purchase-name').value).toEqual('');
-      expect(nativeElement.querySelector('#product-purchase-quantity').value).toEqual('');
-      expect(nativeElement.querySelector('#product-purchase-amount').value).toEqual('');
+      expect(fixture.nativeElement.querySelector('#product-code').value).toEqual(expectedResponseDto.productCode);
+      expect(fixture.nativeElement.querySelector('#product-name').value).toEqual(expectedResponseDto.productName);
+      expect(fixture.nativeElement.querySelector('#product-genre').value).toEqual('靴・スニーカー');
+      expect(fixture.nativeElement.querySelector('#product-size-standard').value).toEqual(expectedResponseDto.productSizeStandard);
+      expect(fixture.nativeElement.querySelector('#product-unit-price').value).toEqual('1,000');
+      expect(fixture.nativeElement.querySelector('#product-stock-quantity').value).toEqual('2,000');
+      expect(fixture.nativeElement.querySelector('#product-image').src).toEqual(expectedResponseDto.productImage);
+      expect(fixture.nativeElement.querySelector('#product-Purchase-name').value).toEqual('');
+      expect(fixture.nativeElement.querySelector('#product-purchase-quantity').value).toEqual('');
+      expect(fixture.nativeElement.querySelector('#product-purchase-amount').value).toEqual('');
     });
 
     it('Should Enter input and create purchase request dto', () => {
-      const nativeElement = fixture.nativeElement;
-      let htmlInputElement: HTMLInputElement = nativeElement.querySelector('#product-code');
-      htmlInputElement.value = 'ABCD1234';
-      htmlInputElement.dispatchEvent(new Event('input'));
-
-      htmlInputElement = nativeElement.querySelector('#product-Purchase-name');
-      htmlInputElement.value = 'productPurchaseName';
-      htmlInputElement.dispatchEvent(new Event('input'));
-
-      htmlInputElement = nativeElement.querySelector('#product-stock-quantity');
-      htmlInputElement.value = '1,111';
-      htmlInputElement.dispatchEvent(new Event('input'));
-
-      htmlInputElement = nativeElement.querySelector('#product-purchase-quantity');
-      htmlInputElement.value = '1';
-      htmlInputElement.dispatchEvent(new Event('input'));
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'ABCD1234');
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-Purchase-name', 'productPurchaseName');
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-stock-quantity', '1,111');
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-purchase-quantity', '1');
 
       // tslint:disable-next-line: no-string-literal
       const productPurchaseRequestDto: ProductPurchaseRequestDto = component['createPurchaseRequestDto']();
+
       expect(productPurchaseRequestDto.productCode).toEqual('ABCD1234');
       expect(productPurchaseRequestDto.productPurchaseName).toEqual('productPurchaseName');
       expect(productPurchaseRequestDto.productStockQuantity.toString()).toEqual('1111');

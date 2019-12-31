@@ -309,43 +309,34 @@ describe('ProductRegisteringPageComponent', () => {
   describe('DOM input validation test', () => {
     it('product code', () => {
       const expectedValue = 'PRODUCT_';
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedValue);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'PRODUCT_');
       const validationError = fixture.nativeElement.querySelector('.validation-error');
       expect(validationError).toBeTruthy();
     });
     it('product name', () => {
       const expectedValue = '';
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', expectedValue);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', '');
       const validationError = fixture.nativeElement.querySelector('.validation-error');
       expect(validationError).toBeTruthy();
     });
     it('product size standard', () => {
       const expectedValue = '';
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-size-standard', expectedValue);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-size-standard', '');
       const validationError = fixture.nativeElement.querySelector('.validation-error');
       expect(validationError).toBeTruthy();
     });
     it('product unit price', () => {
       const expectedValue = '';
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-unit-price', expectedValue);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-unit-price', '');
       const validationError = fixture.nativeElement.querySelector('.validation-error');
       expect(validationError).toBeTruthy();
     });
     it('EndOfSaleEndOfSaleDateValidator', async () => {
-      let expectedValue = 'PRODUCTCODE0001';
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedValue);
-
-      expectedValue = 'productName';
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', expectedValue);
-
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'PRODUCTCODE0001');
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', 'productName');
       HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(fixture, '#product-genre', '.product-genre-option', 0);
-
-      expectedValue = 'productSizeStandard';
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-size-standard', expectedValue);
-
-      expectedValue = '12345';
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-unit-price', expectedValue);
-
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-size-standard', 'productSizeStandard');
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-unit-price', '12345');
       // Clicks checkbox's label
       HtmlElementUtility.clickHtmlElement<typeof component>(fixture, '#end-of-sale label');
       component.receivedEventFromChild(null);
@@ -357,23 +348,12 @@ describe('ProductRegisteringPageComponent', () => {
 
   describe('DOM input/output test', () => {
     it('Should Enter input and create product register request dto', () => {
-      let expectedValue = expectedResponseDto.productCode;
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedValue);
-
-      expectedValue = expectedResponseDto.productName;
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', expectedValue);
-
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedResponseDto.productCode);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', expectedResponseDto.productName);
       HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(fixture, '#product-genre', '.product-genre-option', 0);
-
-      expectedValue = expectedResponseDto.productSizeStandard;
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-size-standard', expectedValue);
-
-      expectedValue = expectedResponseDto.productColor;
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-color', expectedValue);
-
-      expectedValue = expectedResponseDto.productUnitPrice.toString();
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-unit-price', expectedValue);
-
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-size-standard', expectedResponseDto.productSizeStandard);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-color', expectedResponseDto.productColor);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-unit-price', expectedResponseDto.productUnitPrice.toString());
       // Clicks checkbox's label
       HtmlElementUtility.clickHtmlElement<typeof component>(fixture, '#end-of-sale label');
       component.receivedEventFromChild(expectedResponseDto.endOfSaleDate.toString());
@@ -381,6 +361,7 @@ describe('ProductRegisteringPageComponent', () => {
 
       // tslint:disable-next-line: no-string-literal
       const productStockRequestDto: ProductDto = component['createProductRegisterRequestDto'](true);
+
       expect(productStockRequestDto.productSeq).toBeNull();
       expect(productStockRequestDto.productName).toEqual(expectedResponseDto.productName);
       expect(productStockRequestDto.productGenre).toEqual('1');
@@ -388,8 +369,6 @@ describe('ProductRegisteringPageComponent', () => {
       expect(productStockRequestDto.productColor).toEqual(expectedResponseDto.productColor);
       expect(productStockRequestDto.endOfSale).toBeTruthy();
       expect(productStockRequestDto.endOfSaleDate.toString()).toEqual(expectedResponseDto.endOfSaleDate.toString());
-      // TODO
-      // expect(productStockRequestDto.productImage).toEqual(expectedResponseDto.productImage);
       expect(productStockRequestDto.updateDate).toBeNull();
     });
     it('Should Enter product code and get product stock data then display screen', () => {

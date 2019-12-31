@@ -140,14 +140,12 @@ describe('SignInPageComponent', () => {
 
   describe('DOM input validation test', () => {
     it('signin user account', () => {
-      const expectedValue = '';
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-account', expectedValue);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-account', '');
       const validationError = fixture.nativeElement.querySelector('.validation-error');
       expect(validationError).toBeTruthy();
     });
     it('signin user password', () => {
-      const expectedValue = '';
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-password', expectedValue);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-password', '');
       const validationError = fixture.nativeElement.querySelector('.validation-error');
       expect(validationError).toBeTruthy();
     });
@@ -155,11 +153,8 @@ describe('SignInPageComponent', () => {
 
   describe('DOM input test', () => {
     it('Should Enter input and create request dto', () => {
-      let expectedValue = expectedRequestDto.Username;
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-account', expectedValue);
-
-      expectedValue = expectedRequestDto.Password;
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-password', expectedValue);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-account', expectedRequestDto.Username);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-password', expectedRequestDto.Password);
 
       // tslint:disable-next-line: no-string-literal
       const signInRequestDto: SignInRequestDto = component['createSignInRequestDto']();

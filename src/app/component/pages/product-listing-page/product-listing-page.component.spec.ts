@@ -258,9 +258,8 @@ describe('ProductListingPageComponent', () => {
       expect(component.productCode.value).toEqual(expectedValue.toUpperCase());
     });
     it('product genre', () => {
-      const expectedValue = expectedProductListingSearchParams.productGenre;
       HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(fixture, '#product-genre', '.product-genre-option', 0);
-      expect(component.productGenre.value).toEqual(expectedValue);
+      expect(component.productGenre.value).toEqual(expectedProductListingSearchParams.productGenre);
     });
     it('end of sale', () => {
       // Clicks checkbox's label
@@ -290,6 +289,7 @@ describe('ProductListingPageComponent', () => {
       // testing http params part
       // tslint:disable-next-line: no-string-literal
       const actualHttpParams: HttpParams = component['createHttpParams'](actualProductListingSearchParams);
+
       expect(actualHttpParams.get('productName')).toEqual(expectedProductListingSearchParams.productName);
       expect(actualHttpParams.get('productCode')).toEqual(expectedProductListingSearchParams.productCode.toUpperCase());
       expect(actualHttpParams.get('productGenre')).toEqual('1');

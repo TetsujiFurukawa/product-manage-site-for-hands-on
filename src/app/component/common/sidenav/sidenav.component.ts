@@ -27,8 +27,6 @@ export class SidenavComponent implements OnInit {
    * on init
    */
   ngOnInit() {
-    console.log('url:' + this.routingService.router.url);
-    // if (this.routingService.router.url !== '/' && this.routingService.router.url !== '/sign-in') {
     this.getMenu();
     // }
   }
@@ -40,7 +38,10 @@ export class SidenavComponent implements OnInit {
     this.searchParamsService.removeProductListingSearchParam();
   }
 
-  public onSidenavClose() {
+  /**
+   * Sidenavs closed
+   */
+  public sidenavClosed() {
     this.sidenavClose.emit();
   }
   // --------------------------------------------------------------------------------

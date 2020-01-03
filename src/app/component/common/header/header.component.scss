@@ -26,29 +26,19 @@
   opacity: 0.7;
 }
 
-.btnSignOut {
+.menu.btnSystemName {
+  padding-left: 10px;
+}
+
+.menu.btnSignOut {
+  text-align: right;
+  padding-right: 10px;
   margin-right: 0;
   right: 0;
   position: absolute;
   height: 50px;
 }
 
-// .toolbar:hover {
-//   opacity: 0.9;
-// }
-
-// .header ul {
-//   color: #ffffff;
-//   font-size: 1.4rem;
-//   list-style-type: none;
-// }
-
-.header ul li {
-  padding: 15px 30px 15px 10px;
-  display: inline-block;
-}
-
-.header ul li:hover {
-  opacity: 0.9;
-  cursor: pointer;
+.header .btnSidenav {
+  display: none;
 }

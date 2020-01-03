@@ -1,5 +1,6 @@
 {
   "menu": {
+    "home": "ホーム",
     "purchase": "購入",
     "product": "商品",
     "stock": "在庫",
@@ -10,6 +11,7 @@
       "captionNo": "いいえ"
     },
     "tooltip": {
+      "home": "ホーム画面へ戻ります。",
       "subMenu": {
         "purchase-history-listing": "購入履歴の一覧表示をおこないます。",
         "dummy-purchasing": "購入データをテスト登録します。",

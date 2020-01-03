@@ -3,7 +3,8 @@
 
   <!-- Side navigation -->
   <mat-sidenav #sidenav mode="side">
-    <app-sidenav (sidenavClose)="sidenav.close()"></app-sidenav>
+    <app-sidenav (sidenavClose)="sidenav.close()"
+      *ngIf="this.routingService.router.url!=='/' && this.routingService.router.url!=='/sign-in'"></app-sidenav>
   </mat-sidenav>
 
   <!-- Main contents -->

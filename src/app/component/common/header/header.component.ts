@@ -7,7 +7,7 @@ import { LoadingService } from 'src/app/service/common/loading.service';
 import { RoutingService } from 'src/app/service/common/routing.service';
 import { SearchParamsService } from 'src/app/service/common/search-params.service';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -19,6 +19,9 @@ import { YesNoDialogComponent } from '../yes-no-dialog/yes-no-dialog.component';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  // Clicks sidenav and throw event
+  @Output() sidenavToggle = new EventEmitter();
+  urlHome: string = UrlConst.PATH_PRODUCT_LISTING;
 
   // Menu response data
   menuListResponseDto: MenuListResponseDto[];
@@ -30,7 +33,7 @@ export class HeaderComponent implements OnInit {
     private searchParamsService: SearchParamsService,
     private translateService: TranslateService,
     public routingService: RoutingService
-  ) { }
+  ) {}
 
   /**
    * on init
@@ -43,7 +46,7 @@ export class HeaderComponent implements OnInit {
    * Clicks toggle sidenav
    */
   clickToggleSidenav() {
-    // TBD
+    this.sidenavToggle.emit();
   }
 
   /**
@@ -81,10 +84,9 @@ export class HeaderComponent implements OnInit {
   // private methods
   // --------------------------------------------------------------------------------
   private getMenu() {
-    this.accountService.getMenu()
-      .subscribe(menuListResponseDto => {
-        this.menuListResponseDto = menuListResponseDto;
-      });
+    this.accountService.getMenu().subscribe(menuListResponseDto => {
+      this.menuListResponseDto = menuListResponseDto;
+    });
   }
 
   private signOut() {
@@ -95,5 +97,4 @@ export class HeaderComponent implements OnInit {
       this.routingService.navigate(UrlConst.PATH_SIGN_IN);
     });
   }
-
 }

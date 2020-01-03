@@ -12,7 +12,6 @@ body {
   font-family: "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
 }
 
-/* footer */
 .body-wrapper {
   min-height: 95vh;
   /* ↑ Fallback of calc() for unsupported browsers */
@@ -23,10 +22,10 @@ body {
 }
 
 footer {
-  height: 30px;
+  height: 20px;
   width: 100%;
   text-align: center;
-  padding-top: 5px;
+  padding-top: 10px;
   position: absolute;
   bottom: 0;
   background-color: #ECEFF1;
@@ -195,6 +194,7 @@ footer {
  * -------------------------------------------------------------------------------- */
 .registering-page {
   margin: 50px auto 10px;
+  padding-bottom: 25px;
 }
 
 .registering-page .registering-title {
@@ -212,7 +212,6 @@ footer {
 
 .registering-conditions {
   height: 520px;
-  /* margin: 0 auto 10px; */
   background-color: #ffffff;
 }
 

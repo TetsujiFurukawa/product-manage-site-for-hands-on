@@ -1,6 +1,5 @@
 <mat-nav-list>
-  <mat-list-item routerLink="/{{urlHome}}" (click)="onSidenavClose()"
-    matTooltip="{{ 'menu.tooltip.home' | translate }}">
+  <mat-list-item routerLink="/{{urlHome}}" (click)="sidenavClosed()" matTooltip="{{ 'menu.tooltip.home' | translate }}">
     <mat-icon>home</mat-icon>{{ 'menu.home' | translate }}
   </mat-list-item>
 

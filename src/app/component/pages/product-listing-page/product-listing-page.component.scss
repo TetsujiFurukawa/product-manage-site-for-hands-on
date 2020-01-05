@@ -96,3 +96,31 @@
   max-width: 50px;
   max-height: 30px;
 }
+
+/* --------------------------------------------------------------------------------
+ * Smart Phones and tablets settings.
+ * -------------------------------------------------------------------------------- */
+@media(max-width:768px) {
+
+  .search-results .results .width-no,
+  .search-results .results .width-product-name,
+  .search-results .results .width-product-code,
+  .search-results .results .width-product-genre,
+  .search-results .results .width-product-image,
+  .search-results .results .width-product-size,
+  .search-results .results .width-product-color,
+  .search-results .results .width-product-unit-price,
+  .search-results .results .width-product-stock,
+  .search-results .results td.width-endOfSale {
+    margin: 0 0 0 10px;
+    padding: 0;
+    text-align: right;
+    max-width: 95%;
+    width: 95%;
+  }
+
+  .search-results .results .width-product-image {
+    height: 30px;
+  }
+
+}

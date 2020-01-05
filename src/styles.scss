@@ -70,7 +70,7 @@ footer {
   opacity: 0.8;
 }
 
-.search-condition-wrapper {
+.search-criteria-wrapper {
   display: table-cell;
 }
 
@@ -335,4 +335,91 @@ registering-conditions .image-preview {
 
 .mat-checkbox.mat-accent.mat-checkbox-checked .mat-checkbox-background {
   background-color: #F99F48;
+}
+
+/* --------------------------------------------------------------------------------
+ * Smart Phones and tablets settings.
+ * -------------------------------------------------------------------------------- */
+@media(max-width:768px) {
+  .body-wrapper {
+    padding-bottom: 30px;
+  }
+
+  .Listing-page h1 {
+    text-align: center;
+  }
+
+  .search-criteria,
+  .search-criteria-wrapper {
+    display: block;
+  }
+
+  .search-criteria {
+    height: 170px;
+    text-align: center;
+  }
+
+  .search-functions,
+  .search-functions-paginator,
+  .search-functions-buttons {
+    padding: 0;
+    margin: 0;
+    display: block;
+  }
+
+  .search-functions {
+    height: 160px;
+    margin-bottom: 0 auto 5px;
+    text-align: center;
+  }
+
+  .search-functions-paginator {
+    width: 100%;
+  }
+
+  .search-functions .mat-paginator-container {
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    min-height: 30px;
+  }
+
+  .search-functions .mat-raised-button {
+    margin-bottom: 0 0 1px;
+    width: 100%;
+  }
+
+  .search-results .results thead {
+    display: none;
+  }
+
+  .search-results tbody {
+    overflow: hidden;
+    height: auto;
+  }
+
+  .search-results .results tr {
+    border-bottom: 2px solid #F2F2F2;
+    display: block;
+    height: 210px;
+  }
+
+  .search-results .results td {
+    padding: 0 10px;
+    margin: 0;
+    display: block;
+    height: 2rem;
+    text-align: right;
+    border-bottom: 0;
+  }
+
+  .search-results .results td:before {
+    content: attr(data-label);
+    float: left;
+  }
+
+  .search-results .results td:first-child {
+    margin-top: 5px !important;
+  }
+
 }

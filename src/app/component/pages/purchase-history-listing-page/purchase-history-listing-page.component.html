@@ -5,7 +5,7 @@
   <app-error-messaging></app-error-messaging>
   <form class="search-form" [formGroup]="searchForm">
     <div class="search-criteria">
-      <div class="search-condition-wrapper">
+      <div class="search-criteria-wrapper">
         <div id="searchCondition1">
           <mat-form-field class="form-field">
             <input id="product-purchase-name" matInput type="text" formControlName="productPurchaseName"
@@ -14,7 +14,7 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="search-condition-wrapper">
+      <div class="search-criteria-wrapper">
         <div id="searchCondition2">
           <app-mat-date-picker id="product-purchase-date-from" [locale]='locale' class="mat-date-from"
             placeholder="{{ 'PurchaseHistoryListingPage.productPurchaseDateFrom' | translate }}" [isBlank]=true
@@ -24,7 +24,7 @@
             [required]=false (event)=" receivedEventFromChildTo($event)"></app-mat-date-picker>
         </div>
       </div>
-      <div class="search-condition-wrapper">
+      <div class="search-criteria-wrapper">
         <div id="searchCondition3">
           <mat-form-field class="form-field">
             <input id="product-name" matInput type="text" formControlName="productName"
@@ -33,7 +33,7 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="search-condition-wrapper">
+      <div class="search-criteria-wrapper">
         <div id="searchCondition4">
           <mat-form-field class="form-field">
             <input id="product-code" matInput type="text" formControlName="productCode" upperCase

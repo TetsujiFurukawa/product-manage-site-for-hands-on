@@ -56,7 +56,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
   genres: string[];
 
   // Material table's header
-  displayColumns: string[] = ['No', 'productName', 'productCode', 'productGenre', 'productImage', 'productSizeStandard', 'productColor', 'productUnitPrice', 'productStockQuantity', 'endOfSale'];
+  displayColumns: string[] = ['no', 'productName', 'productCode', 'productGenre', 'productImage', 'productSizeStandard', 'productColor', 'productUnitPrice', 'productStockQuantity', 'endOfSale'];
 
   // Search result
   productSearchResponseDtos: ProductSearchResponseDto[];

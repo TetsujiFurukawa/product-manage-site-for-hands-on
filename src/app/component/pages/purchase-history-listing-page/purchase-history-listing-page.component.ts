@@ -60,7 +60,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
 
   // Material table's header
   displayColumns: string[] = [
-    'No',
+    'no',
     'productName',
     'productCode',
     'productPurchaseName',

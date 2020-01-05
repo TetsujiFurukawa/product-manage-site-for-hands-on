@@ -187,6 +187,7 @@ footer {
 
 .search-results .results tr:hover {
   background-color: rgb(213, 238, 255, 0.1);
+  cursor: pointer;
 }
 
 /* --------------------------------------------------------------------------------
@@ -359,6 +360,11 @@ registering-conditions .image-preview {
     text-align: center;
   }
 
+  .search-criteria .mat-date-from .mat-form-field,
+  .search-criteria .mat-date-to .mat-form-field {
+    width: 95px;
+  }
+
   .search-functions,
   .search-functions-paginator,
   .search-functions-buttons {
@@ -368,7 +374,7 @@ registering-conditions .image-preview {
   }
 
   .search-functions {
-    height: 160px;
+    height: auto;
     margin-bottom: 0 auto 5px;
     text-align: center;
   }

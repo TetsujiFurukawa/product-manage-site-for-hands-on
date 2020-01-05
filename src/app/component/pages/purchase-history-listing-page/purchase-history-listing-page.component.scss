@@ -6,7 +6,7 @@
 }
 
 #searchCondition2 {
-  display: table;
+  display: inline-table;
   table-layout: fixed;
   border-collapse: separate;
   border-spacing: 10px 0;
@@ -104,4 +104,38 @@
 .search-results table img {
   max-width: 50px;
   max-height: 30px;
+}
+
+/* --------------------------------------------------------------------------------
+ * Smart Phones and tablets settings.
+ * -------------------------------------------------------------------------------- */
+@media(max-width:768px) {
+  .search-criteria {
+    height: 200px;
+    text-align: center;
+  }
+
+  .search-results .results tr {
+    height: 190px;
+  }
+
+  .search-results .results .width-no,
+  .search-results .results .width-product-name,
+  .search-results .results .width-product-code,
+  .search-results .results .width-product-purchase-name,
+  .search-results .results .width-product-image,
+  .search-results .results .width-product-purchase-date,
+  .search-results .results .width-product-purchase-unit-price,
+  .search-results .results .width-product-purchase-quantity,
+  .search-results .results .width-product-purchase-amount {
+    margin: 0 0 0 10px;
+    padding: 0;
+    text-align: right;
+    max-width: 95%;
+    width: 95%;
+  }
+
+  .search-results .results .width-product-image {
+    height: 30px;
+  }
 }

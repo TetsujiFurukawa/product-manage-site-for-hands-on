@@ -33,7 +33,7 @@
   width: 200px;
 }
 
-.sign-in-page .mat-raised-button {
+.sign-in-page .raised-button {
   margin: 50px auto 50px;
   width: 200px;
   border-radius: 2px;
@@ -44,10 +44,10 @@
   box-shadow: none;
 }
 
-.sign-in-page .mat-raised-button:hover {
+.sign-in-page .raised-button:hover {
   opacity: 0.8;
 }
 
-.sign-in-page .mat-raised-button:disabled {
+.sign-in-page .raised-button:disabled {
   opacity: 0.4;
 }

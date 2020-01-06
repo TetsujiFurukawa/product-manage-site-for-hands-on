@@ -74,13 +74,13 @@ footer {
   display: table-cell;
 }
 
-.search-criteria .mat-form-field {
+.search-criteria .form-field {
   margin: 0 auto 0;
   width: 200px;
 }
 
-.search-criteria .mat-date-from .mat-form-field,
-.search-criteria .mat-date-to .mat-form-field {
+.search-criteria .date-from .form-field,
+.search-criteria .date-to .form-field {
   width: 100px;
 }
 
@@ -110,7 +110,7 @@ footer {
   background-color: #ECEFF1;
 }
 
-.search-functions .mat-raised-button {
+.search-functions .raised-button {
   margin-right: 10px;
   width: 200px;
   border-radius: 2px;
@@ -121,11 +121,11 @@ footer {
   box-shadow: none;
 }
 
-.search-functions .mat-raised-button:hover {
+.search-functions .raised-button:hover {
   opacity: 0.8;
 }
 
-.search-functions .mat-raised-button.active {
+.search-functions .raised-button.active {
   background-color: #F99F48;
   color: #ffffff;
 }
@@ -152,6 +152,8 @@ footer {
 
 .search-results tbody {
   overflow-y: scroll;
+  height: 55vh;
+  /* ↑ Fallback of calc() for unsupported browsers */
   height: calc(100vh - 310px);
 }
 
@@ -232,24 +234,18 @@ footer {
   padding-top: 20px;
 }
 
-.registering-conditions .mat-raised-button:hover {
+.registering-conditions .raised-button:hover {
   opacity: 0.8;
 }
 
-registering-conditions form {
+.registering-conditions .registering-form {
   display: table;
   table-layout: fixed;
-}
-
-registering-conditions .image-preview {
-  width: 200px;
-  height: auto;
 }
 
 .registering-area-wrapper {
   vertical-align: top;
   display: table-cell;
-
 }
 
 .registering-area-wrapper.left {
@@ -257,8 +253,7 @@ registering-conditions .image-preview {
   width: 500px;
 }
 
-.registering-area-wrapper.right,
-.registering-area-wrapper img {
+.registering-area-wrapper.right {
   width: 270px;
   text-align: right;
 }
@@ -276,12 +271,12 @@ registering-conditions .image-preview {
   margin: 10px auto 0;
 }
 
-.registering-conditions .mat-form-field {
+.registering-conditions .form-field {
   width: 20rem;
   font-size: 1.4rem;
 }
 
-.registering-conditions .mat-form-field.width-40rem {
+.registering-conditions .form-field.width-wide {
   width: 40rem;
 }
 
@@ -296,8 +291,8 @@ registering-conditions .image-preview {
   text-align: right;
 }
 
-.registering-area-wrapper .mat-raised-button,
-.registering-functions .mat-raised-button {
+.registering-area-wrapper .raised-button,
+.registering-functions .raised-button {
   width: 200px;
   border-radius: 2px;
   background-color: #78BBE6;
@@ -308,25 +303,25 @@ registering-conditions .image-preview {
   margin-left: 18px;
 }
 
-.registering-area-wrapper .mat-raised-button {
+.registering-area-wrapper .raised-button {
   margin-top: 10px;
 }
 
-.registering-functions .mat-raised-button:hover {
+.registering-functions .raised-button:hover {
   opacity: 0.8;
 }
 
-.registering-functions .mat-raised-button.active {
+.registering-functions .raised-button.active {
   background-color: #F99F48;
   color: #ffffff;
 }
 
-.registering-functions .mat-raised-button:disabled {
+.registering-functions .raised-button:disabled {
   opacity: 0.4;
 }
 
 /* --------------------------------------------------------------------------------
- * Material settings.
+ * Other Material settings.
  * -------------------------------------------------------------------------------- */
 .mat-dialog-container {
   background-color: #ECEFF1;
@@ -346,6 +341,7 @@ registering-conditions .image-preview {
     padding-bottom: 30px;
   }
 
+  /* ---------- Listing page ---------- */
   .Listing-page h1 {
     text-align: center;
   }
@@ -360,8 +356,8 @@ registering-conditions .image-preview {
     text-align: center;
   }
 
-  .search-criteria .mat-date-from .mat-form-field,
-  .search-criteria .mat-date-to .mat-form-field {
+  .search-criteria .date-from .form-field,
+  .search-criteria .date-to .form-field {
     width: 95px;
   }
 
@@ -390,7 +386,7 @@ registering-conditions .image-preview {
     min-height: 30px;
   }
 
-  .search-functions .mat-raised-button {
+  .search-functions .raised-button {
     margin-bottom: 0 0 1px;
     width: 100%;
   }
@@ -426,6 +422,64 @@ registering-conditions .image-preview {
 
   .search-results .results td:first-child {
     margin-top: 5px !important;
+  }
+
+  /* ---------- Registering page ---------- */
+  .registering-page {
+    padding-bottom: 30px;
+    text-align: center;
+  }
+
+  .registering-conditions .registering-form,
+  .registering-area-wrapper {
+    display: block;
+  }
+
+  .registering-title-wrapper,
+  .registering-conditions-wrapper,
+  .registering-condition-wrapper,
+  .registering-functions-wrapper,
+  .registering-area-wrapper.left,
+  .registering-area-wrapper.right,
+  .registering-area-wrapper img,
+  .registering-area-wrapper .raised-button,
+  .registering-functions .raised-button,
+  .registering-conditions p {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: center;
+  }
+
+  .registering-conditions {
+    height: auto;
+  }
+
+  .registering-conditions .registering-conditions-wrapper {
+    padding-bottom: 0;
+  }
+
+  .registering-conditions .registering-condition-wrapper {
+    margin: 0;
+    padding: 0;
+  }
+
+  .registering-conditions .form-field {
+    font-size: 1.2rem;
+  }
+
+  .registering-conditions .form-field.width-wide {
+    width: 200px;
+  }
+
+  .registering-area-wrapper .raised-button {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .registering-functions-wrapper {
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
 }

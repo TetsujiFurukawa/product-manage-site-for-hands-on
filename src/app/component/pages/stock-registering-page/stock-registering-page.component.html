@@ -22,7 +22,7 @@
                         </mat-form-field>
                     </div>
                     <div class="registering-condition-wrapper margin-left-25px">
-                        <mat-form-field class="form-field width-40rem">
+                        <mat-form-field class="form-field width-wide">
                             <input id="product-name" matInput type="text" formControlName="productName"
                                 placeholder="{{ 'stockRegisteringPage.productName' | translate }}" [readonly]=true>
                         </mat-form-field>
@@ -34,7 +34,7 @@
                         </mat-form-field>
                     </div>
                     <div class="registering-condition-wrapper margin-left-25px">
-                        <mat-form-field class="form-field width-40rem">
+                        <mat-form-field class="form-field width-wide">
                             <input id="product-size-standard" matInput type="text" formControlName="productSizeStandard"
                                 placeholder="{{ 'stockRegisteringPage.productSizeStandard' | translate }}"
                                 [readonly]=true>
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="registering-area-wrapper right">
-                    <p>{{ 'stockRegisteringPage.productImage' | translate }}</p>
+                    <p class="form-field">{{ 'stockRegisteringPage.productImage' | translate }}</p>
                     <img src="../../../../assets/images/no_image.png" class="image-preview"
                         *ngIf="!productImage.value" />
                     <img id="product-image" [src]="productImage.value" class="image-preview"
@@ -76,7 +76,7 @@
     </div>
     <div class="registering-functions">
         <div class="registering-functions-wrapper">
-            <button mat-raised-button id="save-button" class="mat-raised-button active" type="button"
+            <button mat-raised-button id="save-button" class="raised-button active" type="button"
                 (click)="clickSaveButton()" [disabled]="!registeringForm.valid"
                 matTooltip="{{ 'stockRegisteringPage.tooltip.saveButton' | translate }}">{{ 'stockRegisteringPage.saveButton' | translate }}</button>
         </div>

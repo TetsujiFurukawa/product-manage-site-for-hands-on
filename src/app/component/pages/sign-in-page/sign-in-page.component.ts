@@ -1,3 +1,6 @@
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { UrlConst } from 'src/app/const/url-const';
 import { SignInRequestDto } from 'src/app/entity/dto/request/sign-in-request-dto';
@@ -8,9 +11,6 @@ import { LoadingService } from 'src/app/service/common/loading.service';
 import { RoutingService } from 'src/app/service/common/routing.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sign-in-page',
@@ -33,7 +33,7 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
     private routingService: RoutingService,
     private titleI18Service: TitleI18Service,
     public translateService: TranslateService
-  ) {}
+  ) { }
 
   /**
    * on init
@@ -66,8 +66,17 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
   // --------------------------------------------------------------------------------
   private setupLangage() {
     // Setups language using browser settings.
-    this.translateService.setDefaultLang(navigator.language);
-    this.translateService.use(navigator.language);
+    this.translateService.setDefaultLang(this.getLangage(navigator.language));
+    this.translateService.use(this.getLangage(navigator.language));
+  }
+
+  private getLangage(locale: string): string {
+    const CHAR_HYPHEN = '-';
+    if (locale.indexOf(CHAR_HYPHEN) > 0) {
+      const lang: string[] = locale.split(CHAR_HYPHEN);
+      return lang[0];
+    }
+    return locale;
   }
 
   private signIn(signInRequestDto: SignInRequestDto) {

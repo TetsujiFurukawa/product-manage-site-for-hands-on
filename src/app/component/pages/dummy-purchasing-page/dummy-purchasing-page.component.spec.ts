@@ -134,14 +134,12 @@ describe('DummyPurchasingPageComponent', () => {
       productPurchaseServiceSpy.getProductPurchase.and.returnValue(of(expectedResponseDto));
       component.blurProductCode();
 
-      fixture.whenStable().then(() => {
-        expect(component.productGenre.value).toEqual('靴・スニーカー');
-        expect(component.productImage.value).toEqual(expectedResponseDto.productImage);
-        expect(component.productName.value).toEqual(expectedResponseDto.productName);
-        expect(component.productPurchaseUnitPrice.value).toEqual('1,000');
-        expect(component.productSizeStandard.value).toEqual(expectedResponseDto.productSizeStandard);
-        expect(component.productStockQuantity.value).toEqual('2,000');
-      });
+      expect(component.productGenre.value).toEqual('靴・スニーカー');
+      expect(component.productImage.value).toEqual(expectedResponseDto.productImage);
+      expect(component.productName.value).toEqual(expectedResponseDto.productName);
+      expect(component.productPurchaseUnitPrice.value).toEqual('1,000');
+      expect(component.productSizeStandard.value).toEqual(expectedResponseDto.productSizeStandard);
+      expect(component.productStockQuantity.value).toEqual('2,000');
       expect(productPurchaseServiceSpy.getProductPurchase.calls.count()).toBe(1);
     });
   });
@@ -275,20 +273,16 @@ describe('DummyPurchasingPageComponent', () => {
       productPurchaseServiceSpy.getProductPurchase.and.returnValue(of(null));
 
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'PRODUCTCODE0001');
-      fixture.whenStable().then(() => {
-        const validationError = fixture.nativeElement.querySelector('.validation-error');
-        expect(validationError).toBeTruthy();
-      });
+      const validationError = fixture.nativeElement.querySelector('.validation-error');
+      expect(validationError).toBeTruthy();
     });
     it('PurchaseQuantityStockQuantityValidator', () => {
       productPurchaseServiceSpy.getProductPurchase.and.returnValue(of(expectedResponseDto));
 
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'PRODUCTCODE0001');
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-purchase-quantity', '2001');
-      fixture.whenStable().then(() => {
-        const validationError = fixture.nativeElement.querySelector('.validation-error');
-        expect(validationError).toBeTruthy();
-      });
+      const validationError = fixture.nativeElement.querySelector('.validation-error');
+      expect(validationError).toBeTruthy();
     });
   });
 

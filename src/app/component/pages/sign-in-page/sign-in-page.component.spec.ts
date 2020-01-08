@@ -69,10 +69,15 @@ describe('SignInPageComponent', () => {
     fixture = TestBed.createComponent(SignInPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    setNavigatorLanguage('ja');
   });
 
   describe('#constractor', () => {
-    it('should create', () => {
+    it('should create when navigator.langage returns ja', () => {
+      expect(component).toBeTruthy();
+    });
+    it('should create when navigator.langage returns ja-JP', () => {
+      setNavigatorLanguage('ja-jp');
       expect(component).toBeTruthy();
     });
   });
@@ -164,3 +169,14 @@ describe('SignInPageComponent', () => {
     });
   });
 });
+
+function setNavigatorLanguage(language: string) {
+  // tslint:disable-next-line: no-string-literal
+  window.navigator['__defineGetter__'](
+    'language',
+    // tslint:disable-next-line: only-arrow-functions
+    function() {
+      return language;
+    }
+  );
+}

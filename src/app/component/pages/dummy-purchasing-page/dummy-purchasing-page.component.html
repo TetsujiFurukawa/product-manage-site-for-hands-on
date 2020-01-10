@@ -41,7 +41,7 @@
           </div>
           <div class="registering-condition-wrapper margin-left-25px">
             <mat-form-field class="form-field">
-              <input id="product-unit-price" class="align-right" matInput type="text" appNumberInput
+              <input id="product-unit-price" class="align-right" matInput type="text" appCurrencyCommaInput
                 formControlName="productPurchaseUnitPrice"
                 placeholder="{{ 'dummyPurchasingPage.productPurchaseUnitPrice' | translate }}" [attr.locale]='locale'
                 [attr.currency]="currency" [readonly]=true>
@@ -49,7 +49,7 @@
           </div>
           <div class="registering-condition-wrapper margin-left-25px">
             <mat-form-field class="form-field">
-              <input id="product-stock-quantity" class="align-right" matInput type="text" appNumberInput
+              <input id="product-stock-quantity" class="align-right" matInput type="text" appCurrencyCommaInput
                 formControlName="productStockQuantity"
                 placeholder="{{ 'dummyPurchasingPage.productStockQuantity' | translate }}" [attr.locale]='locale'
                 [attr.currency]="currency" [readonly]=true>
@@ -67,7 +67,7 @@
           </div>
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
-              <input id="product-purchase-quantity" class="align-right" matInput type="text" appNumberInput
+              <input id="product-purchase-quantity" class="align-right" matInput type="text" appCurrencyCommaInput
                 formControlName="productPurchaseQuantity"
                 placeholder="{{ 'dummyPurchasingPage.productPurchaseQuantity' | translate }}"
                 matTooltip="{{ 'tooltip.registerValue.input.numeric' | translate }}" [attr.locale]='locale'
@@ -85,7 +85,7 @@
           </div>
           <div class="registering-condition-wrapper margin-left-25px">
             <mat-form-field class="form-field">
-              <input id="product-purchase-amount" class="align-right" matInput type="text" appNumberInput
+              <input id="product-purchase-amount" class="align-right" matInput type="text" appCurrencyCommaInput
                 formControlName="productPurchaseAmount"
                 placeholder="{{ 'dummyPurchasingPage.productPurchaseAmount' | translate }}" [attr.locale]='locale'
                 [attr.currency]="currency" [readonly]=true>

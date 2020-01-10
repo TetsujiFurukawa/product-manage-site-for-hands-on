@@ -4,7 +4,7 @@ import { UrlConst } from 'src/app/const/url-const';
 import { ProductStockRequestDto } from 'src/app/entity/dto/request/product-stock-request-dto';
 import { ProductStockResponseDto } from 'src/app/entity/dto/response/product-stock-response-dto';
 import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
-import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
+import { CurrencyCommaPipe } from 'src/app/pipe/currency-comma.pipe';
 import { AccountService } from 'src/app/service/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
@@ -34,7 +34,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     private productStockService: ProductStockService,
     private accountService: AccountService,
     private dialog: MatDialog,
-    private currencyToNumberPipe: CurrencyToNumberPipe,
+    private currencyCommaPipe: CurrencyCommaPipe,
     private titleI18Service: TitleI18Service,
     public translateService: TranslateService
   ) {}
@@ -158,8 +158,8 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   private createProductStockRequestDto(): ProductStockRequestDto {
     const productStockRequestDto: ProductStockRequestDto = new ProductStockRequestDto();
     productStockRequestDto.productCode = this.productCode.value;
-    productStockRequestDto.productStockQuantity = this.currencyToNumberPipe.parse(this.productStockQuantity.value);
-    productStockRequestDto.addProductStockQuantity = this.currencyToNumberPipe.parse(this.addProductStockQuantity.value);
+    productStockRequestDto.productStockQuantity = this.currencyCommaPipe.parse(this.productStockQuantity.value);
+    productStockRequestDto.addProductStockQuantity = this.currencyCommaPipe.parse(this.addProductStockQuantity.value);
 
     return productStockRequestDto;
   }
@@ -171,7 +171,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     this.productName.setValue(productStockResponseDto.productName);
     this.productGenre.setValue(this.translateService.instant('genre.' + productStockResponseDto.productGenre));
     this.productSizeStandard.setValue(productStockResponseDto.productSizeStandard);
-    this.productStockQuantity.setValue(this.currencyToNumberPipe.transform(String(productStockResponseDto.productStockQuantity), this.locale, this.currency));
+    this.productStockQuantity.setValue(this.currencyCommaPipe.transform(String(productStockResponseDto.productStockQuantity), this.locale, this.currency));
     this.productImage.setValue(productStockResponseDto.productImage);
   }
 
@@ -179,7 +179,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     if (productStockResponseDto === null) {
       return;
     }
-    this.productStockQuantity.setValue(this.currencyToNumberPipe.transform(String(productStockResponseDto.productStockQuantity), this.locale, this.currency));
+    this.productStockQuantity.setValue(this.currencyCommaPipe.transform(String(productStockResponseDto.productStockQuantity), this.locale, this.currency));
     this.addProductStockQuantity.reset();
   }
 

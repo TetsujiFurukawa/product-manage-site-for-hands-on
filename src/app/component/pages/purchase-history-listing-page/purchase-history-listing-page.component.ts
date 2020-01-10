@@ -4,7 +4,7 @@ import { UrlConst } from 'src/app/const/url-const';
 import {
     ProductPurchaseHistorySearchResponseDto
 } from 'src/app/entity/dto/response/product-purchase-history-search-response-dto';
-import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
+import { CurrencyCommaPipe } from 'src/app/pipe/currency-comma.pipe';
 import { AccountService } from 'src/app/service/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
 import { SearchParamsService } from 'src/app/service/common/search-params.service';
@@ -34,7 +34,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
     private accountService: AccountService,
     private searchParamsService: SearchParamsService,
     private titleI18Service: TitleI18Service,
-    public currencyToNumberPipe: CurrencyToNumberPipe,
+    public currencyCommaPipe: CurrencyCommaPipe,
     public translateService: TranslateService
   ) {}
 

@@ -10,7 +10,7 @@ import {
 } from 'src/app/entity/dto/response/product-search-list-response-dto';
 import { ProductSearchResponseDto } from 'src/app/entity/dto/response/product-search-response-dto';
 import { User } from 'src/app/entity/user';
-import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
+import { CurrencyCommaPipe } from 'src/app/pipe/currency-comma.pipe';
 import { AccountService } from 'src/app/service/account.service';
 import { SearchParamsService } from 'src/app/service/common/search-params.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
@@ -92,14 +92,14 @@ describe('ProductListingPageComponent', () => {
       ],
       providers: [
         FormBuilder,
-        CurrencyToNumberPipe,
+        CurrencyCommaPipe,
         CurrencyPipe,
         { provide: AccountService, useValue: accountServiceSpy },
         { provide: ProductService, useValue: productServiceSpy },
         { provide: TitleI18Service, useValue: titleI18ServiceSpy },
         { provide: SearchParamsService, useValue: searchParamsServiceSpy }
       ],
-      declarations: [ProductListingPageComponent, CurrencyToNumberPipe]
+      declarations: [ProductListingPageComponent, CurrencyCommaPipe]
     }).compileComponents();
     router = TestBed.get(Router);
   }));

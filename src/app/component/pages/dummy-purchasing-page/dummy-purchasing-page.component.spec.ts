@@ -6,7 +6,7 @@ import {
     ProductPurchaseResponseDto
 } from 'src/app/entity/dto/response/product-purchase-response-dto';
 import { User } from 'src/app/entity/user';
-import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
+import { CurrencyCommaPipe } from 'src/app/pipe/currency-comma.pipe';
 import { AccountService } from 'src/app/service/account.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 import { ProductPurchaseService } from 'src/app/service/product-purchase.service';
@@ -74,7 +74,7 @@ describe('DummyPurchasingPageComponent', () => {
       ],
       providers: [
         FormBuilder,
-        CurrencyToNumberPipe,
+        CurrencyCommaPipe,
         CurrencyPipe,
         { provide: MatDialog, useValue: matDialogSpy },
         { provide: AccountService, useValue: accountServiceSpy },

@@ -45,10 +45,10 @@ import { SignInPageComponent } from './component/pages/sign-in-page/sign-in-page
 import {
     StockRegisteringPageComponent
 } from './component/pages/stock-registering-page/stock-registering-page.component';
-import { NumberInputDirective } from './directive/number-input.directive';
+import { CurrencyCommaInputDirective } from './directive/currency-comma-input.directive';
 import { HttpXsrfInterceptor } from './intercepter/http-xsrf-interceptor';
 import { XhrInterceptor } from './intercepter/xhr-interceptor';
-import { CurrencyToNumberPipe } from './pipe/currency-to-number.pipe';
+import { CurrencyCommaPipe } from './pipe/currency-comma.pipe';
 import { MatPaginatorI18nService } from './service/common/mat-paginator-i18n.service';
 import { MaterialModule } from './utils/material/material.module';
 
@@ -77,8 +77,8 @@ registerLocaleData(localeJa);
     YesNoDialogComponent,
     SuccessMessagingComponent,
     MatDatePickerComponent,
-    CurrencyToNumberPipe,
-    NumberInputDirective
+    CurrencyCommaPipe,
+    CurrencyCommaInputDirective
   ],
   imports: [
     BrowserModule,
@@ -102,7 +102,7 @@ registerLocaleData(localeJa);
     { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpXsrfInterceptor, multi: true },
     CurrencyPipe,
-    CurrencyToNumberPipe,
+    CurrencyCommaPipe,
     // The locale to use for this system
     { provide: LOCALE_ID, useValue: 'ja-JP' },
     { provide: MatPaginatorIntl, useClass: MatPaginatorI18nService }

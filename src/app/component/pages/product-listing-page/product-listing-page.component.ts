@@ -5,7 +5,7 @@ import {
     ProductListingSearchParams
 } from 'src/app/entity/dto/request/product-listing-search-params';
 import { ProductSearchResponseDto } from 'src/app/entity/dto/response/product-search-response-dto';
-import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
+import { CurrencyCommaPipe } from 'src/app/pipe/currency-comma.pipe';
 import { AccountService } from 'src/app/service/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
 import { RoutingService } from 'src/app/service/common/routing.service';
@@ -33,7 +33,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
     private searchParamsService: SearchParamsService,
     private routingService: RoutingService,
     private titleI18Service: TitleI18Service,
-    public currencyToNumberPipe: CurrencyToNumberPipe,
+    public currencyCommaPipe: CurrencyCommaPipe,
     public translateService: TranslateService
   ) {}
 

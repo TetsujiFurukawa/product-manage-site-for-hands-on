@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
-import { CurrencyToNumberPipe } from '../pipe/currency-to-number.pipe';
+import { CurrencyCommaPipe } from '../pipe/currency-comma.pipe';
 import { ProductCodeProductNameValidator } from './product-code-product-name-validator';
 import {
     PurchaseQuantityStockQuantityValidator
@@ -11,7 +11,7 @@ const PRODUCT_PURCHASE_QUANTITY = 'productPurchaseQuantity';
 describe('PurchaseQuantityStockQuantityValidator', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [PurchaseQuantityStockQuantityValidator, CurrencyToNumberPipe]
+      providers: [PurchaseQuantityStockQuantityValidator, CurrencyCommaPipe]
     });
   });
 

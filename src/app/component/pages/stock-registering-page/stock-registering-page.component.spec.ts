@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { ProductStockRequestDto } from 'src/app/entity/dto/request/product-stock-request-dto';
 import { ProductStockResponseDto } from 'src/app/entity/dto/response/product-stock-response-dto';
 import { User } from 'src/app/entity/user';
-import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
+import { CurrencyCommaPipe } from 'src/app/pipe/currency-comma.pipe';
 import { AccountService } from 'src/app/service/account.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 import { ProductStockService } from 'src/app/service/product-stock.service';
@@ -71,7 +71,7 @@ describe('StockRegisteringPageComponent', () => {
       ],
       providers: [
         FormBuilder,
-        CurrencyToNumberPipe,
+        CurrencyCommaPipe,
         CurrencyPipe,
         { provide: MatDialog, useValue: matDialogSpy },
         { provide: AccountService, useValue: accountServiceSpy },

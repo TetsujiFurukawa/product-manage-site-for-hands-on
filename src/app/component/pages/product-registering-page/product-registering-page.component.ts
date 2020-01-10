@@ -3,7 +3,7 @@ import { RegexConst } from 'src/app/const/regex-const';
 import { UrlConst } from 'src/app/const/url-const';
 import { ProductDto } from 'src/app/entity/dto/product-dto';
 import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
-import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
+import { CurrencyCommaPipe } from 'src/app/pipe/currency-comma.pipe';
 import { AccountService } from 'src/app/service/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
 import { RoutingService } from 'src/app/service/common/routing.service';
@@ -37,7 +37,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     private routingService: RoutingService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private currencyToNumberPipe: CurrencyToNumberPipe,
+    private currencyCommaPipe: CurrencyCommaPipe,
     private titleI18Service: TitleI18Service,
     public translateService: TranslateService
   ) {}
@@ -224,7 +224,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     productDto.productGenre = this.productGenre.value;
     productDto.productSizeStandard = this.productSizeStandard.value;
     productDto.productColor = this.productColor.value;
-    productDto.productUnitPrice = this.currencyToNumberPipe.parse(this.productUnitPrice.value);
+    productDto.productUnitPrice = this.currencyCommaPipe.parse(this.productUnitPrice.value);
     productDto.endOfSale = this.endOfSale.value;
     productDto.endOfSaleDate = this.endOfSaleDate.value;
     productDto.productImage = this.productImage.value;
@@ -243,7 +243,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     this.productGenre.setValue(productDto.productGenre);
     this.productSizeStandard.setValue(productDto.productSizeStandard);
     this.productColor.setValue(productDto.productColor);
-    this.productUnitPrice.setValue(this.currencyToNumberPipe.transform(productDto.productUnitPrice.toString(), this.locale, this.currency));
+    this.productUnitPrice.setValue(this.currencyCommaPipe.transform(productDto.productUnitPrice.toString(), this.locale, this.currency));
     this.endOfSale.setValue(productDto.endOfSale);
     this.endOfSaleDate.setValue(productDto.endOfSaleDate);
     this.productImage.setValue(productDto.productImage);

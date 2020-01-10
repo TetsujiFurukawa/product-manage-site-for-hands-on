@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CurrencyToNumberPipe } from './currency-to-number.pipe';
+import { CurrencyCommaPipe } from './currency-comma.pipe';
 
-describe('CurrencyToNumberPipe', () => {
-  let pipe: CurrencyToNumberPipe;
+describe('CurrencyCommaPipe', () => {
+  let pipe: CurrencyCommaPipe;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [CurrencyToNumberPipe]
+      providers: [CurrencyCommaPipe]
     });
-    pipe = TestBed.get(CurrencyToNumberPipe);
+    pipe = TestBed.get(CurrencyCommaPipe);
   });
 
   describe('#constractor', () => {

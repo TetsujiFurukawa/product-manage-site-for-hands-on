@@ -42,8 +42,8 @@
                     </div>
                     <div class="registering-condition-wrapper margin-left-25px">
                         <mat-form-field class="form-field">
-                            <input id="product-stock-quantity" class="align-right" matInput type="text" appNumberInput
-                                formControlName="productStockQuantity"
+                            <input id="product-stock-quantity" class="align-right" matInput type="text"
+                                appCurrencyCommaInput formControlName="productStockQuantity"
                                 placeholder="{{ 'stockRegisteringPage.productStockQuantity' | translate }}"
                                 [attr.locale]='locale' [attr.currency]="currency" [readonly]=true>
                         </mat-form-field>
@@ -51,7 +51,7 @@
                     <div class="registering-condition-wrapper">
                         <mat-form-field class="form-field">
                             <input id="add-product-stock-quantity" class="align-right" matInput type="text"
-                                appNumberInput formControlName="addProductStockQuantity"
+                                appCurrencyCommaInput formControlName="addProductStockQuantity"
                                 placeholder="{{ 'stockRegisteringPage.addStockQuantity' | translate }}"
                                 matTooltip="{{ 'tooltip.registerValue.input.numeric' | translate }}"
                                 [attr.locale]='locale' [attr.currency]="currency" maxlength=11>

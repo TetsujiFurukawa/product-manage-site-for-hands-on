@@ -71,7 +71,8 @@
           </div>
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
-              <input id="product-unit-price" matInput type="text" appNumberInput formControlName="productUnitPrice"
+              <input id="product-unit-price" matInput type="text" appCurrencyCommaInput
+                formControlName="productUnitPrice"
                 placeholder="{{ 'productRegisteringPage.productUnitPrice' | translate }}"
                 matTooltip="{{ 'tooltip.registerValue.input.numeric' | translate }}" maxlength=11 [attr.locale]='locale'
                 [attr.currency]="currency">

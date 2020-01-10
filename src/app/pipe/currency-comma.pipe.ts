@@ -6,7 +6,7 @@ import { RegexConst } from '../const/regex-const';
 @Pipe({
   name: 'currencyToNumber'
 })
-export class CurrencyToNumberPipe implements PipeTransform {
+export class CurrencyCommaPipe implements PipeTransform {
   transform(value: any, locale: string, currency: string): any {
     const regexp = new RegExp(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD);
     if (!value.toString().match(regexp)) {

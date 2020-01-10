@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { UrlConst } from 'src/app/const/url-const';
 import { ProductDto } from 'src/app/entity/dto/product-dto';
 import { User } from 'src/app/entity/user';
-import { CurrencyToNumberPipe } from 'src/app/pipe/currency-to-number.pipe';
+import { CurrencyCommaPipe } from 'src/app/pipe/currency-comma.pipe';
 import { AccountService } from 'src/app/service/account.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 import { ProductService } from 'src/app/service/product.service';
@@ -73,7 +73,7 @@ describe('ProductRegisteringPageComponent', () => {
       ],
       providers: [
         FormBuilder,
-        CurrencyToNumberPipe,
+        CurrencyCommaPipe,
         CurrencyPipe,
         { provide: MatDialog, useValue: matDialogSpy },
         { provide: AccountService, useValue: accountServiceSpy },

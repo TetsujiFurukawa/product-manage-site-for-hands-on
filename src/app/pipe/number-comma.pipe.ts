@@ -1,18 +1,18 @@
-import { CurrencyPipe } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 
 import { RegexConst } from '../const/regex-const';
 
 @Pipe({
-  name: 'currencyComma'
+  name: 'numberComma'
 })
-export class CurrencyCommaPipe implements PipeTransform {
-  transform(value: any, locale: string, currency: string): any {
+export class NumberCommaPipe implements PipeTransform {
+  transform(value: any, locale: string): any {
     const regexp = new RegExp(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD);
     if (!value.toString().match(regexp)) {
       return value;
     }
-    return new CurrencyPipe(locale).transform(this.parse(value.toString()), currency, '', '', locale);
+    return new DecimalPipe(locale).transform(this.parse(value.toString()), '1.0', locale);
   }
 
   parse(value: any): any {

@@ -46,9 +46,11 @@ import {
     StockRegisteringPageComponent
 } from './component/pages/stock-registering-page/stock-registering-page.component';
 import { CurrencyCommaInputDirective } from './directive/currency-comma-input.directive';
+import { NumberCommaInputDirective } from './directive/number-comma-input.directive';
 import { HttpXsrfInterceptor } from './intercepter/http-xsrf-interceptor';
 import { XhrInterceptor } from './intercepter/xhr-interceptor';
 import { CurrencyCommaPipe } from './pipe/currency-comma.pipe';
+import { NumberCommaPipe } from './pipe/number-comma.pipe';
 import { MatPaginatorI18nService } from './service/common/mat-paginator-i18n.service';
 import { MaterialModule } from './utils/material/material.module';
 
@@ -78,7 +80,9 @@ registerLocaleData(localeJa);
     SuccessMessagingComponent,
     MatDatePickerComponent,
     CurrencyCommaPipe,
-    CurrencyCommaInputDirective
+    CurrencyCommaInputDirective,
+    NumberCommaPipe,
+    NumberCommaInputDirective
   ],
   imports: [
     BrowserModule,
@@ -103,6 +107,7 @@ registerLocaleData(localeJa);
     { provide: HTTP_INTERCEPTORS, useClass: HttpXsrfInterceptor, multi: true },
     CurrencyPipe,
     CurrencyCommaPipe,
+    NumberCommaPipe,
     // The locale to use for this system
     { provide: LOCALE_ID, useValue: 'ja-JP' },
     { provide: MatPaginatorIntl, useClass: MatPaginatorI18nService }

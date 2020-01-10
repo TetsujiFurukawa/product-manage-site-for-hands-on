@@ -120,14 +120,14 @@
           {{ 'productListingPage.productUnitPrice' | translate }}</th>
         <td class="width-product-unit-price" mat-cell *matCellDef="let element"
           [attr.data-label]="translateService.instant( 'productListingPage.productUnitPrice')">
-          {{element.productUnitPrice | currencyToNumber:locale:currency }}</td>
+          {{element.productUnitPrice | currencyComma:locale:currency }}</td>
       </ng-container>
       <ng-container matColumnDef="productStockQuantity">
         <th class="width-product-stock" mat-header-cell *matHeaderCellDef>
           {{ 'productListingPage.productStockQuantity' | translate }}</th>
         <td class="width-product-stock" mat-cell *matCellDef="let element"
           [attr.data-label]="translateService.instant( 'productListingPage.productStockQuantity')">
-          {{element.productStockQuantity | currencyToNumber:locale:currency }} </td>
+          {{element.productStockQuantity | currencyComma:locale:currency }} </td>
       </ng-container>
       <ng-container matColumnDef="endOfSale">
         <th class="width-endOfSale" mat-header-cell *matHeaderCellDef>

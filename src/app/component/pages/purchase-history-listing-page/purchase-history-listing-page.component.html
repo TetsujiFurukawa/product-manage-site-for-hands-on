@@ -108,21 +108,21 @@
           {{ "PurchaseHistoryListingPage.productPurchaseUnitPrice" | translate }}</th>
         <td class="width-product-purchase-unit-price" mat-cell *matCellDef="let element"
           [attr.data-label]="translateService.instant( 'PurchaseHistoryListingPage.productPurchaseUnitPrice')">
-          {{element.productPurchaseUnitPrice | currencyToNumber:locale:currency }}</td>
+          {{element.productPurchaseUnitPrice | currencyComma:locale:currency }}</td>
       </ng-container>
       <ng-container matColumnDef="productPurchaseQuantity">
         <th class="width-product-purchase-quantity" mat-header-cell *matHeaderCellDef>
           {{ "PurchaseHistoryListingPage.productPurchaseQuantity" | translate }}</th>
         <td class="width-product-purchase-quantity" mat-cell *matCellDef="let element"
           [attr.data-label]="translateService.instant( 'PurchaseHistoryListingPage.productPurchaseQuantity')">
-          {{element.productPurchaseQuantity | currencyToNumber:locale:currency }} </td>
+          {{element.productPurchaseQuantity | currencyComma:locale:currency }} </td>
       </ng-container>
       <ng-container matColumnDef="productPurchaseAmount">
         <th class="width-product-purchase-amount" mat-header-cell *matHeaderCellDef>
           {{ "PurchaseHistoryListingPage.productPurchaseAmount" | translate }}</th>
         <td class="width-product-purchase-amount" mat-cell *matCellDef="let element"
           [attr.data-label]="translateService.instant( 'PurchaseHistoryListingPage.productPurchaseAmount')">
-          {{element.productPurchaseAmount | currencyToNumber:locale:currency }} </td>
+          {{element.productPurchaseAmount | currencyComma:locale:currency }} </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>

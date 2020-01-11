@@ -125,7 +125,7 @@ describe('SignInPageComponent', () => {
       expect(htmlInputElement.placeholder).toContain('パスワード');
     });
     it('saveBtn', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#signInBtn');
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#sign-in-button');
       expect(htmlInputElement.innerText).toContain('サインイン');
     });
   });

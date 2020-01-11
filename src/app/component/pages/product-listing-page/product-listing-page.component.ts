@@ -77,7 +77,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
 
   clickNewButton() {
     this.searchParamsService.removeProductListingSearchParam();
-    this.routingService.navigate(UrlConst.PATH_PRODUCT_REGISTERING + '/new');
+    this.routingService.navigate(UrlConst.PATH_PRODUCT_REGISTERING_NEW);
   }
 
   clickClearButton() {

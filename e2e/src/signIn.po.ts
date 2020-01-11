@@ -1,11 +1,12 @@
 import { browser, by, element } from 'protractor';
+
 import { UrlConst } from './url-const';
 
 export class SignInPage {
   private TEST_IDS = {
     SIGN_IN_USER_ACCOUNT: 'signin-user-account',
     SIGN_IN_USER_PASSWORD: 'signin-user-password',
-    SIGN_IN_BTN: 'signInBtn',
+    SIGN_IN_BTN: 'sign-in-button'
   };
 
   signIn(signInUserAccount: string, signInUserPassword: string): SignInPage {
@@ -15,5 +16,4 @@ export class SignInPage {
     element(by.id(this.TEST_IDS.SIGN_IN_BTN)).click();
     return this;
   }
-
 }

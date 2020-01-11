@@ -171,7 +171,7 @@ describe('ProductListingPageComponent', () => {
       spyOn(router, 'navigate').and.returnValue(null);
       component.clickNewButton();
       expect(searchParamsServiceSpy.removeProductListingSearchParam.calls.count()).toEqual(1);
-      expect(router.navigate).toHaveBeenCalledWith(['/' + UrlConst.PATH_PRODUCT_REGISTERING + '/new']);
+      expect(router.navigate).toHaveBeenCalledWith(['/' + UrlConst.PATH_PRODUCT_REGISTERING_NEW]);
     });
   });
 

@@ -29,7 +29,7 @@
             <mat-label id="product-genre-label">{{ 'productListingPage.productGenre' | translate }}</mat-label>
             <mat-select id="product-genre" formControlName="productGenre"
               matTooltip="{{ 'tooltip.searchCriteria.pullDown' | translate }}">
-              <mat-option></mat-option>
+              <mat-option class="product-genre-option"></mat-option>
               <mat-option class="product-genre-option" *ngFor="let code of genres" [value]="code">
                 {{ 'genre.' + code | translate }}
               </mat-option>
@@ -64,7 +64,7 @@
     </div>
   </div>
   <div class="search-results">
-    <table class="results" mat-table *ngIf="resultsLength>0" [dataSource]="productSearchResponseDtos">
+    <table id="results" class="results" mat-table *ngIf="resultsLength>0" [dataSource]="productSearchResponseDtos">
       <ng-container matColumnDef="no">
         <th class="width-no" mat-header-cell *matHeaderCellDef>
           {{ 'productListingPage.no' | translate }}

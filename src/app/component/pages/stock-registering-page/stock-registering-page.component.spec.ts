@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { ProductStockRequestDto } from 'src/app/entity/dto/request/product-stock-request-dto';
 import { ProductStockResponseDto } from 'src/app/entity/dto/response/product-stock-response-dto';
 import { User } from 'src/app/entity/user';
-import { CurrencyCommaPipe } from 'src/app/pipe/currency-comma.pipe';
+import { NumberCommaPipe } from 'src/app/pipe/number-comma.pipe';
 import { AccountService } from 'src/app/service/account.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 import { ProductStockService } from 'src/app/service/product-stock.service';
@@ -12,7 +12,6 @@ import { ProductService } from 'src/app/service/product.service';
 import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
 import { MaterialModule } from 'src/app/utils/material/material.module';
 
-import { CurrencyPipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -71,8 +70,7 @@ describe('StockRegisteringPageComponent', () => {
       ],
       providers: [
         FormBuilder,
-        CurrencyCommaPipe,
-        CurrencyPipe,
+        NumberCommaPipe,
         { provide: MatDialog, useValue: matDialogSpy },
         { provide: AccountService, useValue: accountServiceSpy },
         { provide: ProductService, useValue: productServiceSpy },

@@ -49,10 +49,10 @@
           </div>
           <div class="registering-condition-wrapper margin-left-25px">
             <mat-form-field class="form-field">
-              <input id="product-stock-quantity" class="align-right" matInput type="text" appCurrencyCommaInput
+              <input id="product-stock-quantity" class="align-right" matInput type="text" appNumberCommaInput
                 formControlName="productStockQuantity"
                 placeholder="{{ 'dummyPurchasingPage.productStockQuantity' | translate }}" [attr.locale]='locale'
-                [attr.currency]="currency" [readonly]=true>
+                [readonly]=true>
             </mat-form-field>
           </div>
           <div class="registering-condition-wrapper">
@@ -67,11 +67,11 @@
           </div>
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
-              <input id="product-purchase-quantity" class="align-right" matInput type="text" appCurrencyCommaInput
+              <input id="product-purchase-quantity" class="align-right" matInput type="text" appNumberCommaInput
                 formControlName="productPurchaseQuantity"
                 placeholder="{{ 'dummyPurchasingPage.productPurchaseQuantity' | translate }}"
-                matTooltip="{{ 'tooltip.registerValue.input.numeric' | translate }}" [attr.locale]='locale'
-                [attr.currency]="currency" maxlength=11 (blur)='blurProductPurchaseQuantity()'>
+                matTooltip="{{ 'tooltip.registerValue.input.numeric' | translate }}" [attr.locale]='locale' maxlength=11
+                (blur)='blurProductPurchaseQuantity()'>
               <mat-error class="validation-error" *ngIf="productPurchaseQuantity.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>

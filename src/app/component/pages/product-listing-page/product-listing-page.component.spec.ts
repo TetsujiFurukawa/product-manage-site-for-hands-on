@@ -11,6 +11,7 @@ import {
 import { ProductSearchResponseDto } from 'src/app/entity/dto/response/product-search-response-dto';
 import { User } from 'src/app/entity/user';
 import { CurrencyCommaPipe } from 'src/app/pipe/currency-comma.pipe';
+import { NumberCommaPipe } from 'src/app/pipe/number-comma.pipe';
 import { AccountService } from 'src/app/service/account.service';
 import { SearchParamsService } from 'src/app/service/common/search-params.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
@@ -93,13 +94,14 @@ describe('ProductListingPageComponent', () => {
       providers: [
         FormBuilder,
         CurrencyCommaPipe,
+        NumberCommaPipe,
         CurrencyPipe,
         { provide: AccountService, useValue: accountServiceSpy },
         { provide: ProductService, useValue: productServiceSpy },
         { provide: TitleI18Service, useValue: titleI18ServiceSpy },
         { provide: SearchParamsService, useValue: searchParamsServiceSpy }
       ],
-      declarations: [ProductListingPageComponent, CurrencyCommaPipe]
+      declarations: [ProductListingPageComponent, CurrencyCommaPipe, NumberCommaPipe]
     }).compileComponents();
     router = TestBed.get(Router);
   }));

@@ -115,7 +115,7 @@
           {{ "PurchaseHistoryListingPage.productPurchaseQuantity" | translate }}</th>
         <td class="width-product-purchase-quantity" mat-cell *matCellDef="let element"
           [attr.data-label]="translateService.instant( 'PurchaseHistoryListingPage.productPurchaseQuantity')">
-          {{element.productPurchaseQuantity | currencyComma:locale:currency }} </td>
+          {{element.productPurchaseQuantity | numberComma:locale }} </td>
       </ng-container>
       <ng-container matColumnDef="productPurchaseAmount">
         <th class="width-product-purchase-amount" mat-header-cell *matHeaderCellDef>

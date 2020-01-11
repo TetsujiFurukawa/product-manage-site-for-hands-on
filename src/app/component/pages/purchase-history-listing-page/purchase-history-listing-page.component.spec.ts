@@ -9,6 +9,7 @@ import {
 } from 'src/app/entity/dto/response/product-purchase-history-search-response-dto';
 import { User } from 'src/app/entity/user';
 import { CurrencyCommaPipe } from 'src/app/pipe/currency-comma.pipe';
+import { NumberCommaPipe } from 'src/app/pipe/number-comma.pipe';
 import { AccountService } from 'src/app/service/account.service';
 import { SearchParamsService } from 'src/app/service/common/search-params.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
@@ -92,6 +93,7 @@ describe('PurchaseHistoryListingPageComponent', () => {
       providers: [
         FormBuilder,
         CurrencyCommaPipe,
+        NumberCommaPipe,
         CurrencyPipe,
         {
           provide: HAMMER_LOADER,
@@ -103,7 +105,7 @@ describe('PurchaseHistoryListingPageComponent', () => {
         { provide: SearchParamsService, useValue: searchParamsServiceSpy },
         { provide: ProductPurchaseService, useValue: productPurchaseServiceSpy }
       ],
-      declarations: [PurchaseHistoryListingPageComponent, CurrencyCommaPipe]
+      declarations: [PurchaseHistoryListingPageComponent, CurrencyCommaPipe, NumberCommaPipe]
     }).compileComponents();
   }));
 

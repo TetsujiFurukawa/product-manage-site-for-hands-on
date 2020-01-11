@@ -127,7 +127,7 @@
           {{ 'productListingPage.productStockQuantity' | translate }}</th>
         <td class="width-product-stock" mat-cell *matCellDef="let element"
           [attr.data-label]="translateService.instant( 'productListingPage.productStockQuantity')">
-          {{element.productStockQuantity | currencyComma:locale:currency }} </td>
+          {{element.productStockQuantity | numberComma:locale }} </td>
       </ng-container>
       <ng-container matColumnDef="endOfSale">
         <th class="width-endOfSale" mat-header-cell *matHeaderCellDef>

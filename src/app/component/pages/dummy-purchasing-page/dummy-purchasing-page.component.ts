@@ -7,6 +7,7 @@ import {
 } from 'src/app/entity/dto/response/product-purchase-response-dto';
 import { YesNoDialogData } from 'src/app/entity/yes-no-dialog-data';
 import { CurrencyCommaPipe } from 'src/app/pipe/currency-comma.pipe';
+import { NumberCommaPipe } from 'src/app/pipe/number-comma.pipe';
 import { AccountService } from 'src/app/service/account.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
@@ -40,6 +41,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     private accountService: AccountService,
     private dialog: MatDialog,
     private currencyCommaPipe: CurrencyCommaPipe,
+    private numberCommaPipe: NumberCommaPipe,
     private titleI18Service: TitleI18Service,
     public translateService: TranslateService
   ) {}
@@ -176,7 +178,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     const productPurchaseRequestDto: ProductPurchaseRequestDto = new ProductPurchaseRequestDto();
     productPurchaseRequestDto.productCode = this.productCode.value;
     productPurchaseRequestDto.productPurchaseName = this.productPurchaseName.value;
-    productPurchaseRequestDto.productStockQuantity = this.currencyCommaPipe.parse(this.productStockQuantity.value);
+    productPurchaseRequestDto.productStockQuantity = this.numberCommaPipe.parse(this.productStockQuantity.value);
     productPurchaseRequestDto.productPurchaseQuantity = this.currencyCommaPipe.parse(this.productPurchaseQuantity.value);
 
     return productPurchaseRequestDto;
@@ -190,7 +192,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     this.productGenre.setValue(this.translateService.instant('genre.' + productPurchaseResponseDto.productGenre));
     this.productSizeStandard.setValue(productPurchaseResponseDto.productSizeStandard);
     this.productPurchaseUnitPrice.setValue(this.currencyCommaPipe.transform(String(productPurchaseResponseDto.productPurchaseUnitPrice), this.locale, this.currency));
-    this.productStockQuantity.setValue(this.currencyCommaPipe.transform(String(productPurchaseResponseDto.productStockQuantity), this.locale, this.currency));
+    this.productStockQuantity.setValue(this.numberCommaPipe.transform(String(productPurchaseResponseDto.productStockQuantity), this.locale));
     this.productImage.setValue(productPurchaseResponseDto.productImage);
   }
 
@@ -198,7 +200,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     if (productPurchaseResponseDto === null) {
       return;
     }
-    this.productStockQuantity.setValue(this.currencyCommaPipe.transform(String(productPurchaseResponseDto.productStockQuantity), this.locale, this.currency));
+    this.productStockQuantity.setValue(this.numberCommaPipe.transform(String(productPurchaseResponseDto.productStockQuantity), this.locale));
     this.productPurchaseQuantity.reset();
     this.productPurchaseAmount.reset();
   }

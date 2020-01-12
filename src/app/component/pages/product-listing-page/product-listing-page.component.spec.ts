@@ -260,7 +260,7 @@ describe('ProductListingPageComponent', () => {
       expect(component.productCode.value).toEqual(expectedValue.toUpperCase());
     });
     it('product genre', () => {
-      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(fixture, '#product-genre', '.product-genre-option', 0);
+      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(fixture, '#product-genre', '.product-genre-option', Number(expectedProductListingSearchParams.productGenre));
       expect(component.productGenre.value).toEqual(expectedProductListingSearchParams.productGenre);
     });
     it('end of sale', () => {
@@ -274,7 +274,7 @@ describe('ProductListingPageComponent', () => {
     it('Should Enter input and create request dto / http params', () => {
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', expectedProductListingSearchParams.productName);
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedProductListingSearchParams.productCode);
-      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(fixture, '#product-genre', '.product-genre-option', 0);
+      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(fixture, '#product-genre', '.product-genre-option', Number(expectedProductListingSearchParams.productGenre));
       HtmlElementUtility.clickHtmlElement<typeof component>(fixture, '#end-of-sale label');
 
       fixture.detectChanges();

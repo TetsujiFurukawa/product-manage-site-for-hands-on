@@ -168,6 +168,9 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     this.endOfSaleDate.setValue(eventData);
   }
 
+  resetEndOfSaleDate() {
+    this.endOfSaleDate.setValue('');
+  }
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------
@@ -226,7 +229,11 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     productDto.productColor = this.productColor.value;
     productDto.productUnitPrice = this.currencyCommaPipe.parse(this.productUnitPrice.value);
     productDto.endOfSale = this.endOfSale.value;
-    productDto.endOfSaleDate = this.endOfSaleDate.value;
+    if (this.endOfSaleDate.value === '') {
+      productDto.endOfSaleDate = null;
+    } else {
+      productDto.endOfSaleDate = this.endOfSaleDate.value;
+    }
     productDto.productImage = this.productImage.value;
     productDto.updateDate = this.updateDate.value;
 
@@ -245,7 +252,11 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     this.productColor.setValue(productDto.productColor);
     this.productUnitPrice.setValue(this.currencyCommaPipe.transform(productDto.productUnitPrice.toString(), this.locale, this.currency));
     this.endOfSale.setValue(productDto.endOfSale);
-    this.endOfSaleDate.setValue(productDto.endOfSaleDate);
+    if (productDto.endOfSaleDate === null) {
+      this.endOfSaleDate.setValue('');
+    } else {
+      this.endOfSaleDate.setValue(productDto.endOfSaleDate);
+    }
     this.productImage.setValue(productDto.productImage);
     this.updateDate.setValue(productDto.updateDate);
   }

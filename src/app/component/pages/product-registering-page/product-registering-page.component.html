@@ -89,7 +89,7 @@
           </div>
           <div class="registering-condition-wrapper">
             <mat-checkbox id="end-of-sale" class="form-field" formControlName="endOfSale"
-              matTooltip="{{ 'productRegisteringPage.tooltip.endOfSale' | translate }}">
+              matTooltip="{{ 'productRegisteringPage.tooltip.endOfSale' | translate }}" (change)="resetEndOfSaleDate()">
               {{ 'productRegisteringPage.endOfSale' | translate }}
             </mat-checkbox>
           </div>
@@ -97,7 +97,7 @@
             <app-mat-date-picker id="end-of-sale-date" *ngIf="endOfSale.value" [locale]='locale'
               placeholder="{{ 'productRegisteringPage.endOfSaleDate' | translate }}"
               matTooltip="{{ 'productRegisteringPage.tooltip.endOfSaleDate' | translate }}" [isBlank]=false
-              [required]=true [initialValue]="endOfSaleDate.value" (event)=" receivedEventFromChild($event)">
+              [required]=true [initialValue]="endOfSaleDate.value" (event)="receivedEventFromChild($event)">
             </app-mat-date-picker>
           </div>
         </div>

@@ -130,7 +130,27 @@ describe('ProductRegisteringPageComponent', () => {
       expect(component.productColor.value).toEqual(expectedResponseDto.productColor);
       expect(component.productUnitPrice.value).toEqual('1,000');
       expect(component.endOfSale.value).toEqual(expectedResponseDto.endOfSale);
-      expect(component.endOfSaleDate.value).toEqual(expectedResponseDto.endOfSaleDate);
+      expect(component.endOfSaleDate.value).toEqual('');
+      expect(component.productImage.value).toEqual(expectedResponseDto.productImage);
+      expect(component.updateDate.value).toEqual(expectedResponseDto.updateDate);
+    });
+
+    it('should update data', async () => {
+      matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) });
+      expectedResponseDto.endOfSaleDate = null;
+      productServiceSpy.updateProduct.and.returnValue(of(expectedResponseDto));
+      component.clickSaveButton();
+      expect(productServiceSpy.createProduct.calls.count()).toEqual(0);
+      expect(productServiceSpy.updateProduct.calls.count()).toEqual(1);
+      expect(component.productSeq.value).toEqual(expectedResponseDto.productSeq);
+      expect(component.productCode.value).toEqual(expectedResponseDto.productCode);
+      expect(component.productName.value).toEqual(expectedResponseDto.productName);
+      expect(component.productGenre.value).toEqual(expectedResponseDto.productGenre);
+      expect(component.productSizeStandard.value).toEqual(expectedResponseDto.productSizeStandard);
+      expect(component.productColor.value).toEqual(expectedResponseDto.productColor);
+      expect(component.productUnitPrice.value).toEqual('1,000');
+      expect(component.endOfSale.value).toEqual(expectedResponseDto.endOfSale);
+      expect(component.endOfSaleDate.value).toEqual('');
       expect(component.productImage.value).toEqual(expectedResponseDto.productImage);
       expect(component.updateDate.value).toEqual(expectedResponseDto.updateDate);
     });

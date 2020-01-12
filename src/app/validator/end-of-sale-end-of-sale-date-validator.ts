@@ -8,7 +8,7 @@ export class EndOfSaleEndOfSaleDateValidator {
     const endOfSale = ac.get(END_OF_SALE).value;
     const endOfSaleDate = ac.get(END_OF_SALE_DATE).value;
 
-    if (true === endOfSale && endOfSaleDate === null) {
+    if (true === endOfSale && (endOfSaleDate === '' || endOfSaleDate === null)) {
       ac.get(END_OF_SALE_DATE).setErrors({ required: true });
     }
   }

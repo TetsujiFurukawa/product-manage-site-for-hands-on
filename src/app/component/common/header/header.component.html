@@ -11,13 +11,14 @@
 
       <div class="toolBarMenu">
         <ng-container *ngFor="let item of menuListResponseDto">
-          <button mat-button [matMenuTriggerFor]="appMenu" class="menu mainMenu">
+          <button mat-button [matMenuTriggerFor]="appMenu" id="{{'menu-'+ item.menuCode}}" class="menu mainMenu">
             <div>{{ 'menu.' + item.menuCode | translate }}</div>
           </button>
           <mat-menu #appMenu="matMenu">
             <ng-container *ngFor="let subMenuCode of item.subMenuCodeList">
-              <button mat-menu-item matTooltip="{{ 'menu.tooltip.subMenu.' + subMenuCode | translate }}"
-                routerLink="/{{subMenuCode}}" class="menu subMenu" (click)="clickSubmenu()">
+              <button mat-menu-item id="{{'subMenu-' + subMenuCode}}" class="menu subMenu"
+                matTooltip="{{ 'menu.tooltip.subMenu.' + subMenuCode | translate }}" routerLink="/{{subMenuCode}}"
+                (click)="clickSubmenu()">
                 {{'subMenu.' + subMenuCode | translate }}
               </button>
             </ng-container>

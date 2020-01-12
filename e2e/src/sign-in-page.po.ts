@@ -9,11 +9,25 @@ export class SignInPage {
     SIGN_IN_BTN: 'sign-in-button'
   };
 
-  signIn(signInUserAccount: string, signInUserPassword: string): SignInPage {
+  /**
+   * Clicks sign in button
+   * @returns SignInPage
+   */
+  clickSignInButton(): SignInPage {
+    element(by.id(this.TEST_IDS.SIGN_IN_BTN)).click();
+    return this;
+  }
+
+  /**
+   * Setups sign in
+   * @param signInUserAccount sign in user account
+   * @param signInUserPassword sign in user password
+   * @returns SignInPage
+   */
+  setupSignIn(signInUserAccount: string, signInUserPassword: string): SignInPage {
     browser.get('http://localhost:4200/' + UrlConst.PATH_SIGN_IN);
     element(by.id(this.TEST_IDS.SIGN_IN_USER_ACCOUNT)).sendKeys(signInUserAccount);
     element(by.id(this.TEST_IDS.SIGN_IN_USER_PASSWORD)).sendKeys(signInUserPassword);
-    element(by.id(this.TEST_IDS.SIGN_IN_BTN)).click();
     return this;
   }
 }

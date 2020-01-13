@@ -208,6 +208,15 @@ describe('ProductListingPageComponent', () => {
       expect(router.navigate).toHaveBeenCalledTimes(1);
     });
   });
+  describe('unselectProductGenre', () => {
+    it('should unselect genre', () => {
+      component.productGenre.setValue('1');
+      component.unselectProductGenre();
+
+      expect(component.productGenre.value).toEqual('');
+    });
+  });
+
   // --------------------------------------------------------------------------------
   // DOM test cases
   // --------------------------------------------------------------------------------

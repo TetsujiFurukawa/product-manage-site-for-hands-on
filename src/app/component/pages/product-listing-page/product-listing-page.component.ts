@@ -111,7 +111,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
     this.routingService.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING, productResponseDto.productCode]);
   }
 
-  resetProductGenre() {
+  unselectProductGenre() {
     this.productGenre.setValue('');
   }
   // --------------------------------------------------------------------------------

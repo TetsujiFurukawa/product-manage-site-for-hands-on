@@ -29,7 +29,7 @@
             <mat-label id="product-genre-label">{{ 'productListingPage.productGenre' | translate }}</mat-label>
             <mat-select id="product-genre" formControlName="productGenre"
               matTooltip="{{ 'tooltip.searchCriteria.pullDown' | translate }}">
-              <mat-option class="product-genre-option"></mat-option>
+              <mat-option class="product-genre-option" (click)="resetProductGenre()"></mat-option>
               <mat-option class="product-genre-option" *ngFor="let code of genres" [value]="code">
                 {{ 'genre.' + code | translate }}
               </mat-option>

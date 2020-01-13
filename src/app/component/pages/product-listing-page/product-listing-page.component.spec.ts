@@ -65,6 +65,7 @@ describe('ProductListingPageComponent', () => {
     }
   ];
   expectedProductSearchListResponseDto.productSearchResponseDtos = productSearchResponseDto;
+  expectedProductSearchListResponseDto.pageIndex = 1;
 
   let component: ProductListingPageComponent;
   let fixture: ComponentFixture<ProductListingPageComponent>;
@@ -109,6 +110,7 @@ describe('ProductListingPageComponent', () => {
   beforeEach(() => {
     accountServiceSpy.getUser.and.returnValue(user);
     productServiceSpy.getGenres.and.returnValue(of(expectedGenres));
+    searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(null);
     fixture = TestBed.createComponent(ProductListingPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -130,6 +132,7 @@ describe('ProductListingPageComponent', () => {
     });
     it('should init search criteria', () => {
       searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(expectedProductListingSearchParams);
+      productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
       component.ngOnInit();
 
       expect(component.productName.value).toEqual(expectedProductListingSearchParams.productName);
@@ -146,6 +149,7 @@ describe('ProductListingPageComponent', () => {
       expectedProductListingSearchParamsUndefine.pageIndex = 1;
       expectedProductListingSearchParamsUndefine.pageSize = 50;
       searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(expectedProductListingSearchParamsUndefine);
+      productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
       component.ngOnInit();
 
       expect(component.productName.value).toEqual('');

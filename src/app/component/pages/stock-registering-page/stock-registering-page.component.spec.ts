@@ -160,13 +160,6 @@ describe('StockRegisteringPageComponent', () => {
       expect(productStockServiceSpy.updateProductStock.calls.count()).toEqual(0);
     });
   });
-
-  describe('#onKey', () => {
-    it('to be determined', () => {
-      component.onKey();
-    });
-  });
-
   // --------------------------------------------------------------------------------
   // DOM test cases
   // --------------------------------------------------------------------------------

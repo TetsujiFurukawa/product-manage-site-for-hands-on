@@ -85,7 +85,9 @@ describe('HeaderComponent', () => {
 
   describe('#clickToggleSidenav', () => {
     it('should show side navi', () => {
+      spyOn(component.sidenavToggle, 'emit').and.callThrough();
       component.clickToggleSidenav();
+      expect(component.sidenavToggle.emit).toHaveBeenCalled();
     });
   });
   describe('#clickSubmenu', () => {

@@ -138,12 +138,6 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     const productPurchaseAmount = this.currencyCommaPipe.parse(this.productPurchaseUnitPrice.value) * this.currencyCommaPipe.parse(this.productPurchaseQuantity.value);
     this.productPurchaseAmount.setValue(this.currencyCommaPipe.transform(String(productPurchaseAmount), this.locale, this.currency));
   }
-
-  // TODO
-  onKey() {
-    console.log('onKey');
-  }
-
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------

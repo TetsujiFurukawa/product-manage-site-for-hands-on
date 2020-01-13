@@ -178,13 +178,6 @@ describe('DummyPurchasingPageComponent', () => {
       expect(component.productPurchaseAmount.value).toEqual('222,222,222');
     });
   });
-
-  describe('#onKey', () => {
-    it('to be determined', () => {
-      component.onKey();
-    });
-  });
-
   // --------------------------------------------------------------------------------
   // DOM test cases
   // --------------------------------------------------------------------------------

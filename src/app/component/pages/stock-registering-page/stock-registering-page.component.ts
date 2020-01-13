@@ -117,12 +117,6 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
       }
     });
   }
-
-  // TODO
-  onKey() {
-    console.log('onKey');
-  }
-
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------

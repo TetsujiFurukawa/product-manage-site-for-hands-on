@@ -310,6 +310,8 @@ describe('DummyPurchasingPageComponent', () => {
     });
 
     it('Should Enter input and create purchase request dto', () => {
+      productPurchaseServiceSpy.getProductPurchase.and.returnValue(of(expectedResponseDto));
+
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'ABCD1234');
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-Purchase-name', 'productPurchaseName');
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-stock-quantity', '1,111');

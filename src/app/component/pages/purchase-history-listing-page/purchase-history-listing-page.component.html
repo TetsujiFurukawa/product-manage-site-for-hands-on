@@ -100,7 +100,7 @@
           {{ "PurchaseHistoryListingPage.productPurchaseDate" | translate }}</th>
         <td class="width-product-purchase-date" mat-cell *matCellDef="let element"
           [attr.data-label]="translateService.instant( 'PurchaseHistoryListingPage.productPurchaseDate')">
-          {{element.productPurchaseDate | date:'medium':timezone:locale}}
+          {{element.productPurchaseDate | date:'short':timezone:locale}}
         </td>
       </ng-container>
       <ng-container matColumnDef="productPurchaseUnitPrice">

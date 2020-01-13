@@ -162,6 +162,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
     }
     if (this.productPurchaseDateTo.value !== '' && this.productPurchaseDateTo.value !== null) {
       const date = new Date(this.productPurchaseDateTo.value);
+      date.setDate(date.getDate() + 1);
       conditions.productPurchaseDateTo = date.toDateString();
     }
 

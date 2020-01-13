@@ -257,6 +257,8 @@ describe('StockRegisteringPageComponent', () => {
     });
 
     it('Should Enter input and create product stock request dto', () => {
+      productStockServiceSpy.getProductStock.and.returnValue(of(expectedResponseDto));
+
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'ABCD1234');
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-stock-quantity', '1,111');
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#add-product-stock-quantity', '123');

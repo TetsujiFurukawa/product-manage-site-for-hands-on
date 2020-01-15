@@ -1,5 +1,4 @@
 export class SignInResponseDto {
-
   public userAccount: string;
 
   public userName: string;
@@ -10,6 +9,7 @@ export class SignInResponseDto {
 
   public userTimezone: string;
 
-  public userCurrency: string;
+  public userTimezoneOffset: string;
 
+  public userCurrency: string;
 }

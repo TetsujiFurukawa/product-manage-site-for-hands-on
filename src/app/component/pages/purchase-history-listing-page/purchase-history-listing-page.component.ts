@@ -57,6 +57,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
   locale: string = this.accountService.getUser().userLocale;
   currency: string = this.accountService.getUser().userCurrency;
   timezone: string = this.accountService.getUser().userTimezone;
+  timezoneOffset: string = this.accountService.getUser().userTimezoneOffset;
 
   // Material table's header
   displayColumns: string[] = [
@@ -156,14 +157,17 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
       pageSize: this.paginator.pageSize,
       pageIndex: this.paginator.pageIndex
     };
+
     if (this.productPurchaseDateFrom.value !== '' && this.productPurchaseDateFrom.value !== null) {
-      const date = new Date(this.productPurchaseDateFrom.value);
-      conditions.productPurchaseDateFrom = date.toDateString();
+      const localDate = new Date(this.productPurchaseDateFrom.value + ' ' + this.timezoneOffset);
+      conditions.productPurchaseDateFrom = localDate.toUTCString();
     }
+
     if (this.productPurchaseDateTo.value !== '' && this.productPurchaseDateTo.value !== null) {
       const date = new Date(this.productPurchaseDateTo.value);
       date.setDate(date.getDate() + 1);
-      conditions.productPurchaseDateTo = date.toDateString();
+      const localDate = new Date(date + ' ' + this.timezoneOffset);
+      conditions.productPurchaseDateTo = localDate.toUTCString();
     }
 
     const paramsOptions = { fromObject: conditions } as any;

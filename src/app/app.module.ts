@@ -110,6 +110,7 @@ registerLocaleData(localeJa);
     NumberCommaPipe,
     // The locale to use for this system
     { provide: LOCALE_ID, useValue: 'ja-JP' },
+    { provide: LOCALE_ID, useValue: 'en-US' },
     { provide: MatPaginatorIntl, useClass: MatPaginatorI18nService }
   ],
   bootstrap: [AppComponent]

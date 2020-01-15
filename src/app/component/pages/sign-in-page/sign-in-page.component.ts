@@ -1,6 +1,3 @@
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { UrlConst } from 'src/app/const/url-const';
 import { SignInRequestDto } from 'src/app/entity/dto/request/sign-in-request-dto';
@@ -11,6 +8,9 @@ import { LoadingService } from 'src/app/service/common/loading.service';
 import { RoutingService } from 'src/app/service/common/routing.service';
 import { TitleI18Service } from 'src/app/service/common/title-i18.service';
 
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sign-in-page',
@@ -33,7 +33,7 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
     private routingService: RoutingService,
     private titleI18Service: TitleI18Service,
     public translateService: TranslateService
-  ) { }
+  ) {}
 
   /**
    * on init
@@ -112,6 +112,7 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
     user.userLocale = responseDto.userLocale;
     user.userLanguage = responseDto.userLanguage;
     user.userTimezone = responseDto.userTimezone;
+    user.userTimezoneOffset = responseDto.userTimezoneOffset;
     user.userCurrency = responseDto.userCurrency;
     this.accountService.setUser(user);
   }

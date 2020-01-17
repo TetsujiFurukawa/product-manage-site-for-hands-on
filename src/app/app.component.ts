@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { RoutingService } from './service/common/routing.service';
+
+import { RoutingService } from './core/services/routing.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,5 @@ import { RoutingService } from './service/common/routing.service';
 export class AppComponent {
   title = 'product-manage-site-for-hands-on';
 
-  constructor(
-    public routingService: RoutingService
-  ) { }
+  constructor(public routingService: RoutingService) {}
 }

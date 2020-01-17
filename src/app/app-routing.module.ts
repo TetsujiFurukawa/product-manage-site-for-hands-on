@@ -2,23 +2,23 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import {
-    DummyPurchasingPageComponent
-} from './component/pages/dummy-purchasing-page/dummy-purchasing-page.component';
-import {
     ProductListingPageComponent
-} from './component/pages/product-listing-page/product-listing-page.component';
+} from './pages/components/product-listing-page/product-listing-page.component';
 import {
     ProductRegisteringPageComponent
-} from './component/pages/product-registering-page/product-registering-page.component';
+} from './pages/components/product-registering-page/product-registering-page.component';
 import {
     PurchaseHistoryListingPageComponent
-} from './component/pages/purchase-history-listing-page/purchase-history-listing-page.component';
-import { SignInPageComponent } from './component/pages/sign-in-page/sign-in-page.component';
+} from './pages/components/purchase-history-listing-page/purchase-history-listing-page.component';
+import { SignInPageComponent } from './pages/components/sign-in-page/sign-in-page.component';
 import {
     StockRegisteringPageComponent
-} from './component/pages/stock-registering-page/stock-registering-page.component';
-import { UrlConst } from './const/url-const';
-import { AuthGuard } from './guard/auth.guard';
+} from './pages/components/stock-registering-page/stock-registering-page.component';
+import { UrlConst } from './pages/constants/url-const';
+import { AuthGuard } from './pages/guards/auth.guard';
+import {
+    DummyPurchasingPageComponent
+} from './superUserPages/dummy-purchasing-page/dummy-purchasing-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/' + UrlConst.PATH_SIGN_IN, pathMatch: 'full' },

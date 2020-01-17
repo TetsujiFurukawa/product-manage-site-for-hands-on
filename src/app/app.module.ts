@@ -17,48 +17,47 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
     ErrorMessagingComponent
-} from './component/common/error-messaging/error-messaging.component';
-import { FooterComponent } from './component/common/footer/footer.component';
-import { HeaderComponent } from './component/common/header/header.component';
-import { LoadingComponent } from './component/common/loading/loading.component';
+} from './core/components/error-messaging/error-messaging.component';
+import { LoadingComponent } from './core/components/loading/loading.component';
 import {
     MatDatePickerComponent
-} from './component/common/mat-date-picker/mat-date-picker.component';
-import { SidenavComponent } from './component/common/sidenav/sidenav.component';
+} from './core/components/mat-date-picker/mat-date-picker.component';
 import {
     SuccessMessagingComponent
-} from './component/common/success-messaging/success-messaging.component';
-import { YesNoDialogComponent } from './component/common/yes-no-dialog/yes-no-dialog.component';
-import {
-    DummyPurchasingPageComponent
-} from './component/pages/dummy-purchasing-page/dummy-purchasing-page.component';
+} from './core/components/success-messaging/success-messaging.component';
+import { YesNoDialogComponent } from './core/components/yes-no-dialog/yes-no-dialog.component';
+import { CurrencyCommaInputDirective } from './core/directives/currency-comma-input.directive';
+import { NumberCommaInputDirective } from './core/directives/number-comma-input.directive';
+import { HttpXsrfInterceptor } from './core/interceptors/http-xsrf-interceptor';
+import { XhrInterceptor } from './core/interceptors/xhr-interceptor';
+import { CurrencyCommaPipe } from './core/pipes/currency-comma.pipe';
+import { NumberCommaPipe } from './core/pipes/number-comma.pipe';
+import { MatPaginatorI18nService } from './core/services/mat-paginator-i18n.service';
 import {
     ProductListingPageComponent
-} from './component/pages/product-listing-page/product-listing-page.component';
+} from './pages/components/product-listing-page/product-listing-page.component';
 import {
     ProductRegisteringPageComponent
-} from './component/pages/product-registering-page/product-registering-page.component';
+} from './pages/components/product-registering-page/product-registering-page.component';
 import {
     PurchaseHistoryListingPageComponent
-} from './component/pages/purchase-history-listing-page/purchase-history-listing-page.component';
-import { SignInPageComponent } from './component/pages/sign-in-page/sign-in-page.component';
+} from './pages/components/purchase-history-listing-page/purchase-history-listing-page.component';
+import { SignInPageComponent } from './pages/components/sign-in-page/sign-in-page.component';
 import {
     StockRegisteringPageComponent
-} from './component/pages/stock-registering-page/stock-registering-page.component';
-import { CurrencyCommaInputDirective } from './directive/currency-comma-input.directive';
-import { NumberCommaInputDirective } from './directive/number-comma-input.directive';
-import { HttpXsrfInterceptor } from './intercepter/http-xsrf-interceptor';
-import { XhrInterceptor } from './intercepter/xhr-interceptor';
-import { CurrencyCommaPipe } from './pipe/currency-comma.pipe';
-import { NumberCommaPipe } from './pipe/number-comma.pipe';
-import { MatPaginatorI18nService } from './service/common/mat-paginator-i18n.service';
+} from './pages/components/stock-registering-page/stock-registering-page.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
+import {
+    DummyPurchasingPageComponent
+} from './superUserPages/dummy-purchasing-page/dummy-purchasing-page.component';
 import { MaterialModule } from './utils/material/material.module';
 
 // 他言語化の設定
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
-
 registerLocaleData(localeJa);
 
 @NgModule({

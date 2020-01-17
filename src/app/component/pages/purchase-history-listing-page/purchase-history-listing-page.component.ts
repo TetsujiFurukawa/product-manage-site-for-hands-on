@@ -160,14 +160,14 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
 
     if (this.productPurchaseDateFrom.value !== '' && this.productPurchaseDateFrom.value !== null) {
       const localDate = new Date(this.productPurchaseDateFrom.value + ' ' + this.timezoneOffset);
-      conditions.productPurchaseDateFrom = localDate.toUTCString();
+      conditions.productPurchaseDateFrom = localDate.toISOString();
     }
 
     if (this.productPurchaseDateTo.value !== '' && this.productPurchaseDateTo.value !== null) {
       const date = new Date(this.productPurchaseDateTo.value);
       date.setDate(date.getDate() + 1);
       const localDate = new Date(date + ' ' + this.timezoneOffset);
-      conditions.productPurchaseDateTo = localDate.toUTCString();
+      conditions.productPurchaseDateTo = localDate.toISOString();
     }
 
     const paramsOptions = { fromObject: conditions } as any;

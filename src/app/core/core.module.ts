@@ -1,10 +1,18 @@
-import { CommonModule, CurrencyPipe } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientXsrfModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 
-import { HttpLoaderFactory } from '../app.module';
+import { CommonModule, CurrencyPipe, registerLocaleData } from '@angular/common';
+import {
+    HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpClientXsrfModule
+} from '@angular/common/http';
+import localeJa from '@angular/common/locales/ja';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+import { AppRoutingModule } from '../app-routing.module';
 import { MaterialModule } from '../utils/material/material.module';
 import { ErrorMessagingComponent } from './components/error-messaging/error-messaging.component';
 import { LoadingComponent } from './components/loading/loading.component';
@@ -20,6 +28,11 @@ import { XhrInterceptor } from './interceptors/xhr-interceptor';
 import { CurrencyCommaPipe } from './pipes/currency-comma.pipe';
 import { NumberCommaPipe } from './pipes/number-comma.pipe';
 
+// 他言語化の設定
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+registerLocaleData(localeJa);
 @NgModule({
   declarations: [
     ErrorMessagingComponent,
@@ -36,7 +49,6 @@ import { NumberCommaPipe } from './pipes/number-comma.pipe';
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
-    HttpClientXsrfModule.withOptions({ cookieName: 'XSRF-TOKEN', headerName: 'X-XSRF-TOKEN' }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -48,6 +60,8 @@ import { NumberCommaPipe } from './pipes/number-comma.pipe';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpXsrfInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: 'ja-JP' },
+    { provide: LOCALE_ID, useValue: 'en-US' },
     CurrencyPipe,
     CurrencyCommaPipe,
     NumberCommaPipe

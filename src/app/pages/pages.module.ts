@@ -1,17 +1,19 @@
 import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import localeJa from '@angular/common/locales/ja';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { AppRoutingModule } from '../app-routing.module';
-import { HttpLoaderFactory } from '../app.module';
 import { CoreModule } from '../core/core.module';
+import { MatPaginatorI18nService } from '../core/services/mat-paginator-i18n.service';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../utils/material/material.module';
 import {
@@ -28,11 +30,21 @@ import {
     StockRegisteringPageComponent
 } from './components/stock-registering-page/stock-registering-page.component';
 
+// 他言語化の設定
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+registerLocaleData(localeJa);
+
 @NgModule({
   declarations: [ProductListingPageComponent, ProductRegisteringPageComponent, PurchaseHistoryListingPageComponent, SignInPageComponent, StockRegisteringPageComponent],
   imports: [
     CommonModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    HttpClientModule,
     MaterialModule,
+    NgxUpperCaseDirectiveModule,
     ReactiveFormsModule,
     RouterModule,
     TranslateModule.forRoot({
@@ -44,6 +56,13 @@ import {
     }),
     CoreModule,
     SharedModule
-  ]
+  ],
+  providers: [
+    // The locale to use for this system
+    { provide: LOCALE_ID, useValue: 'ja-JP' },
+    { provide: LOCALE_ID, useValue: 'en-US' },
+    { provide: MatPaginatorIntl, useClass: MatPaginatorI18nService }
+  ],
+  exports: [ProductListingPageComponent, ProductRegisteringPageComponent, PurchaseHistoryListingPageComponent, SignInPageComponent, StockRegisteringPageComponent]
 })
 export class PagesModule {}

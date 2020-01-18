@@ -1,19 +1,18 @@
+import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
+import { CoreModule } from 'src/app/core/core.module';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { MaterialModule } from 'src/app/utils/material/material.module';
+
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import localeJa from '@angular/common/locales/ja';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { CoreModule } from '../core/core.module';
-import { MaterialModule } from '../utils/material/material.module';
-import { FooterComponent } from './components/footer/footer.component';
-import { HeaderComponent } from './components/header/header.component';
-import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { DummyPurchasingPageRoutingModule } from './dummy-purchasing-page-routing.module';
+import { DummyPurchasingPageComponent } from './dummy-purchasing-page.component';
 
 // 他言語化の設定
 export function HttpLoaderFactory(http: HttpClient) {
@@ -21,13 +20,10 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 registerLocaleData(localeJa);
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, SidenavComponent],
+  declarations: [DummyPurchasingPageComponent],
   imports: [
-    CommonModule,
-    HttpClientModule,
     MaterialModule,
     ReactiveFormsModule,
-    RouterModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -35,13 +31,16 @@ registerLocaleData(localeJa);
         deps: [HttpClient]
       }
     }),
-    CoreModule
+    CoreModule,
+    SharedModule,
+    CommonModule,
+    DummyPurchasingPageRoutingModule
   ],
   providers: [
     // The locale to use for this system
     { provide: LOCALE_ID, useValue: 'ja-JP' },
     { provide: LOCALE_ID, useValue: 'en-US' }
   ],
-  exports: [HeaderComponent, FooterComponent, SidenavComponent]
+  exports: [DummyPurchasingPageComponent]
 })
-export class SharedModule {}
+export class DummyPurchasingPageModule {}

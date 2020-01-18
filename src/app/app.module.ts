@@ -17,9 +17,6 @@ import { CoreModule } from './core/core.module';
 import { MatPaginatorI18nService } from './core/services/mat-paginator-i18n.service';
 import { PagesModule } from './pages/pages.module';
 import { SharedModule } from './shared/shared.module';
-import {
-    DummyPurchasingPageComponent
-} from './superUserPages/dummy-purchasing-page/dummy-purchasing-page.component';
 import { MaterialModule } from './utils/material/material.module';
 
 // 他言語化の設定
@@ -29,7 +26,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 registerLocaleData(localeJa);
 
 @NgModule({
-  declarations: [AppComponent, DummyPurchasingPageComponent],
+  declarations: [AppComponent],
   imports: [
     AppRoutingModule,
     BrowserAnimationsModule,

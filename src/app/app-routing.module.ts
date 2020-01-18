@@ -18,7 +18,7 @@ import { UrlConst } from './pages/constants/url-const';
 import { AuthGuard } from './pages/guards/auth.guard';
 import {
     DummyPurchasingPageComponent
-} from './superUserPages/dummy-purchasing-page/dummy-purchasing-page.component';
+} from './super-user-pages/dummy-purchasing-page/dummy-purchasing-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/' + UrlConst.PATH_SIGN_IN, pathMatch: 'full' },
@@ -27,8 +27,9 @@ const routes: Routes = [
   { path: UrlConst.PATH_PRODUCT_REGISTERING_NEW, component: ProductRegisteringPageComponent, canActivate: [AuthGuard] },
   { path: UrlConst.PATH_PRODUCT_REGISTERING + '/:productCode', component: ProductRegisteringPageComponent, canActivate: [AuthGuard] },
   { path: UrlConst.PATH_PURCHASE_HISTORY_LISTING, component: PurchaseHistoryListingPageComponent, canActivate: [AuthGuard] },
-  { path: UrlConst.PATH_DUMMY_PURCHASING, component: DummyPurchasingPageComponent, canActivate: [AuthGuard] },
-  { path: UrlConst.PATH_STOCK_REGISTERING, component: StockRegisteringPageComponent, canActivate: [AuthGuard] }
+  { path: UrlConst.PATH_STOCK_REGISTERING, component: StockRegisteringPageComponent, canActivate: [AuthGuard] },
+  { path: UrlConst.PATH_DUMMY_PURCHASING, loadChildren: () => import('./super-user-pages/dummy-purchasing-page/dummy-purchasing-page.module').then(m => m.DummyPurchasingPageModule) }
+  // { path: UrlConst.PATH_DUMMY_PURCHASING, component: DummyPurchasingPageComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

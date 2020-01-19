@@ -6,8 +6,6 @@ import localeJa from '@angular/common/locales/ja';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorIntl } from '@angular/material/paginator';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -40,8 +38,6 @@ registerLocaleData(localeJa);
   declarations: [ProductListingPageComponent, ProductRegisteringPageComponent, PurchaseHistoryListingPageComponent, SignInPageComponent, StockRegisteringPageComponent],
   imports: [
     CommonModule,
-    BrowserAnimationsModule,
-    BrowserModule,
     HttpClientModule,
     MaterialModule,
     NgxUpperCaseDirectiveModule,

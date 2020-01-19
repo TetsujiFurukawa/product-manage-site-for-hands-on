@@ -1,18 +1,13 @@
 import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 
 import { CommonModule, CurrencyPipe, registerLocaleData } from '@angular/common';
-import {
-    HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpClientXsrfModule
-} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import localeJa from '@angular/common/locales/ja';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { AppRoutingModule } from '../app-routing.module';
 import { MaterialModule } from '../utils/material/material.module';
 import { ErrorMessagingComponent } from './components/error-messaging/error-messaging.component';
 import { LoadingComponent } from './components/loading/loading.component';

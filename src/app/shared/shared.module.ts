@@ -1,15 +1,17 @@
+import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
+
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import localeJa from '@angular/common/locales/ja';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { RouterModule } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { CoreModule } from '../core/core.module';
+import { MatPaginatorI18nService } from '../core/services/mat-paginator-i18n.service';
 import { MaterialModule } from '../utils/material/material.module';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -26,6 +28,7 @@ registerLocaleData(localeJa);
     CommonModule,
     HttpClientModule,
     MaterialModule,
+    NgxUpperCaseDirectiveModule,
     ReactiveFormsModule,
     RouterModule,
     TranslateModule.forRoot({
@@ -40,7 +43,8 @@ registerLocaleData(localeJa);
   providers: [
     // The locale to use for this system
     { provide: LOCALE_ID, useValue: 'ja-JP' },
-    { provide: LOCALE_ID, useValue: 'en-US' }
+    { provide: LOCALE_ID, useValue: 'en-US' },
+    { provide: MatPaginatorIntl, useClass: MatPaginatorI18nService }
   ],
   exports: [HeaderComponent, FooterComponent, SidenavComponent]
 })

@@ -4,7 +4,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { MaterialModule } from 'src/app/utils/material/material.module';
 
 import { CommonModule, registerLocaleData } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import localeJa from '@angular/common/locales/ja';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -22,7 +22,10 @@ registerLocaleData(localeJa);
 @NgModule({
   declarations: [DummyPurchasingPageComponent],
   imports: [
+    CommonModule,
+    DummyPurchasingPageRoutingModule,
     MaterialModule,
+    NgxUpperCaseDirectiveModule,
     ReactiveFormsModule,
     TranslateModule.forRoot({
       loader: {
@@ -32,9 +35,7 @@ registerLocaleData(localeJa);
       }
     }),
     CoreModule,
-    SharedModule,
-    CommonModule,
-    DummyPurchasingPageRoutingModule
+    SharedModule
   ],
   providers: [
     // The locale to use for this system

@@ -1,5 +1,4 @@
 import { of } from 'rxjs';
-import { HttpLoaderFactory } from 'src/app/app.module';
 import { MenuListResponseDto } from 'src/app/pages/models/dtos/responses/menu-list-response-dto';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { SearchParamsService } from 'src/app/pages/services/search-params.service';
@@ -16,6 +15,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
+import { HttpLoaderFactory } from '../../shared.module';
 import { SidenavComponent } from './sidenav.component';
 
 describe('SidenavComponent', () => {

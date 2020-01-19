@@ -1,4 +1,3 @@
-import { HttpLoaderFactory } from 'src/app/app.module';
 import { User } from 'src/app/pages/models/user';
 
 import { HttpClient } from '@angular/common/http';
@@ -8,6 +7,7 @@ import { TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { AccountService } from '../../pages/services/account.service';
+import { HttpLoaderFactory } from '../shared.module';
 import { TitleI18Service } from './title-i18.service';
 
 describe('TitleI18Service', () => {

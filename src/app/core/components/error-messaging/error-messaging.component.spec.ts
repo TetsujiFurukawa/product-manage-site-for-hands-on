@@ -1,4 +1,3 @@
-import { HttpLoaderFactory } from 'src/app/app.module';
 import { ErrorMessagingService } from 'src/app/core/services/error-messaging.service';
 
 import { HttpClient } from '@angular/common/http';
@@ -7,6 +6,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
+import { HttpLoaderFactory } from '../../core.module';
 import { ErrorMessagingComponent } from './error-messaging.component';
 
 describe('ErrorMessagingComponent', () => {

@@ -1,4 +1,3 @@
-import { HttpLoaderFactory } from 'src/app/app.module';
 import { SuccessMessagingService } from 'src/app/core/services/success-messaging.service';
 
 import { HttpClient } from '@angular/common/http';
@@ -7,6 +6,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
+import { HttpLoaderFactory } from '../../core.module';
 import { SuccessMessagingComponent } from './success-messaging.component';
 
 describe('SuccessMessagingComponent', () => {
@@ -18,6 +18,7 @@ describe('SuccessMessagingComponent', () => {
     successMessagingServiceSpy = jasmine.createSpyObj('AccountService', ['clearMessageProperty', 'getMessageProperty']);
 
     TestBed.configureTestingModule({
+      schemas: [NO_ERRORS_SCHEMA],
       imports: [
         HttpClientTestingModule,
         TranslateModule.forRoot({

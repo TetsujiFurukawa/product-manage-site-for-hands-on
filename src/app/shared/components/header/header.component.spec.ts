@@ -1,5 +1,4 @@
 import { of } from 'rxjs';
-import { HttpLoaderFactory } from 'src/app/app.module';
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { UrlConst } from 'src/app/pages/constants/url-const';
 import { MenuListResponseDto } from 'src/app/pages/models/dtos/responses/menu-list-response-dto';
@@ -17,6 +16,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
+import { HttpLoaderFactory } from '../../shared.module';
 import { HeaderComponent } from './header.component';
 
 describe('HeaderComponent', () => {

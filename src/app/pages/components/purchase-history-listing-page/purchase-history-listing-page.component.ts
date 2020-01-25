@@ -53,7 +53,6 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
     productCode: this.productCode
   });
 
-  test: Date = new Date();
   /** other informations */
   locale: string = this.accountService.getUser().userLocale;
   currency: string = this.accountService.getUser().userCurrency;

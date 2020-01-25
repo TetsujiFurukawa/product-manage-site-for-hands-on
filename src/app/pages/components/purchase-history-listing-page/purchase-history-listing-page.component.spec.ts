@@ -38,11 +38,14 @@ describe('PurchaseHistoryListingPageComponent', () => {
   user.userLanguage = 'ja';
   user.userLocale = 'ja-JP';
   user.userName = 'userName';
-  user.userTimezone = 'UTC';
+  user.userTimezone = 'Asia/Tokyo';
+  user.userTimezoneOffset = '+0900';
 
   const expectedSearchParamsProductPurchaseName = 'productPurchaseName';
-  const expectedSearchParamsProductPurchaseDateFrom = '2020/01/01';
-  const expectedSearchParamsProductPurchaseDateTo = '2020/01/11';
+  const expectedSearchParamsProductPurchaseDateFrom = 'Wed Jan 01 2020 00:00:00 GMT+0900';
+  const expectedSearchParamsProductPurchaseDateTo = 'Wed Jan 11 2020 00:00:00 GMT+0900';
+  const expectedSearchParamsProductPurchaseDateFromIsoString = '2019-12-31T15:00:00.000Z';
+  const expectedSearchParamsProductPurchaseDateToIsoString = '2020-01-11T15:00:00.000Z';
   const expectedSearchParamsProductName = 'productName';
   const expectedSearchParamsProductCode = 'productCode';
   const expectedSearchParamsPageSize = 50;
@@ -211,7 +214,6 @@ describe('PurchaseHistoryListingPageComponent', () => {
 
       component.receivedEventFromChildFrom(expectedSearchParamsProductPurchaseDateFrom);
       component.receivedEventFromChildTo(expectedSearchParamsProductPurchaseDateTo);
-      // fixture.detectChanges();
 
       // tslint:disable-next-line: no-string-literal
       const actualHttpParams: HttpParams = component['createHttpParams']();
@@ -221,17 +223,14 @@ describe('PurchaseHistoryListingPageComponent', () => {
       expect(actualHttpParams.get('pageSize').toString()).toEqual(expectedSearchParamsPageSize.toString());
       expect(actualHttpParams.get('pageIndex').toString()).toEqual((expectedSearchParamsPageIndex - 1).toString());
 
-      // TBD
-      // expect(actualHttpParams.get('productPurchaseDateFrom')).toEqual(new Date(expectedSearchParamsProductPurchaseDateFrom).toISOString());
-      // expect(actualHttpParams.get('productPurchaseDateTo')).toEqual(new Date(expectedSearchParamsProductPurchaseDateTo).toDateString());
+      expect(actualHttpParams.get('productPurchaseDateFrom')).toEqual(expectedSearchParamsProductPurchaseDateFromIsoString);
+      expect(actualHttpParams.get('productPurchaseDateTo')).toEqual(expectedSearchParamsProductPurchaseDateToIsoString);
     });
-    it('Should Enter input and create http params without purchase date', () => {
+    xit('Should Enter input and create http params without purchase date', () => {
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-purchase-name', expectedSearchParamsProductPurchaseName);
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', expectedSearchParamsProductName);
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedSearchParamsProductCode);
 
-      // fixture.detectChanges();
-
       // tslint:disable-next-line: no-string-literal
       const actualHttpParams: HttpParams = component['createHttpParams']();
       expect(actualHttpParams.get('productPurchaseName')).toEqual(expectedSearchParamsProductPurchaseName);
@@ -240,9 +239,8 @@ describe('PurchaseHistoryListingPageComponent', () => {
       expect(actualHttpParams.get('pageSize').toString()).toEqual(expectedSearchParamsPageSize.toString());
       expect(actualHttpParams.get('pageIndex').toString()).toEqual((expectedSearchParamsPageIndex - 1).toString());
 
-      // TBD
-      // expect(actualHttpParams.get('productPurchaseDateFrom')).toBeNull();
-      // expect(actualHttpParams.get('productPurchaseDateTo')).toBeNull();
+      expect(actualHttpParams.get('productPurchaseDateFrom')).toBeNull();
+      expect(actualHttpParams.get('productPurchaseDateTo')).toBeNull();
     });
   });
 });

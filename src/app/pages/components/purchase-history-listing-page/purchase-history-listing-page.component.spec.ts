@@ -226,7 +226,7 @@ describe('PurchaseHistoryListingPageComponent', () => {
       expect(actualHttpParams.get('productPurchaseDateFrom')).toEqual(expectedSearchParamsProductPurchaseDateFromIsoString);
       expect(actualHttpParams.get('productPurchaseDateTo')).toEqual(expectedSearchParamsProductPurchaseDateToIsoString);
     });
-    xit('Should Enter input and create http params without purchase date', () => {
+    it('Should Enter input and create http params without purchase date', () => {
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-purchase-name', expectedSearchParamsProductPurchaseName);
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', expectedSearchParamsProductName);
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedSearchParamsProductCode);

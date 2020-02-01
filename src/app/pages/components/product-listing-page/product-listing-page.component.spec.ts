@@ -3,6 +3,7 @@ import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 import { of } from 'rxjs';
 import { CurrencyCommaPipe } from 'src/app/core/pipes/currency-comma.pipe';
 import { NumberCommaPipe } from 'src/app/core/pipes/number-comma.pipe';
+import { MaterialModule } from 'src/app/material/material.module';
 import { UrlConst } from 'src/app/pages/constants/url-const';
 import {
     ProductListingSearchParams
@@ -19,7 +20,6 @@ import { ProductService } from 'src/app/pages/services/product.service';
 import { SearchParamsService } from 'src/app/pages/services/search-params.service';
 import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
-import { MaterialModule } from 'src/app/utils/material/material.module';
 
 import { CurrencyPipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';

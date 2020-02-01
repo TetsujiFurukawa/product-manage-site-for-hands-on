@@ -2,6 +2,7 @@ import { TranslateTestingModule } from 'ngx-translate-testing';
 import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 import { of } from 'rxjs';
 import { NumberCommaPipe } from 'src/app/core/pipes/number-comma.pipe';
+import { MaterialModule } from 'src/app/material/material.module';
 import {
     ProductStockRequestDto
 } from 'src/app/pages/models/dtos/requests/product-stock-request-dto';
@@ -14,7 +15,6 @@ import { ProductStockService } from 'src/app/pages/services/product-stock.servic
 import { ProductService } from 'src/app/pages/services/product.service';
 import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
-import { MaterialModule } from 'src/app/utils/material/material.module';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';

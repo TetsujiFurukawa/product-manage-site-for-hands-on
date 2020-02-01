@@ -12,7 +12,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { CoreModule } from '../core/core.module';
 import { MatPaginatorI18nService } from '../core/services/mat-paginator-i18n.service';
-import { MaterialModule } from '../utils/material/material.module';
+import { MaterialModule } from '../material/material.module';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';

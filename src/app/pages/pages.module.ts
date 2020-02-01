@@ -12,8 +12,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { CoreModule } from '../core/core.module';
 import { MatPaginatorI18nService } from '../core/services/mat-paginator-i18n.service';
+import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
-import { MaterialModule } from '../utils/material/material.module';
 import {
     ProductListingPageComponent
 } from './components/product-listing-page/product-listing-page.component';

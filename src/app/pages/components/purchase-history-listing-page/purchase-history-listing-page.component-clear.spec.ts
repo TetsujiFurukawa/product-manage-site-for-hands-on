@@ -6,6 +6,7 @@ import {
 } from 'src/app/core/components/mat-date-picker/mat-date-picker.component';
 import { CurrencyCommaPipe } from 'src/app/core/pipes/currency-comma.pipe';
 import { NumberCommaPipe } from 'src/app/core/pipes/number-comma.pipe';
+import { MaterialModule } from 'src/app/material/material.module';
 import {
     ProductPurchaseHistorySearchListResponseDto
 } from 'src/app/pages/models/dtos/responses/product-purchase-history-search-list-response-dto';
@@ -18,7 +19,6 @@ import { ProductPurchaseService } from 'src/app/pages/services/product-purchase.
 import { ProductService } from 'src/app/pages/services/product.service';
 import { SearchParamsService } from 'src/app/pages/services/search-params.service';
 import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
-import { MaterialModule } from 'src/app/utils/material/material.module';
 
 import { CurrencyPipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';

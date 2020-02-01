@@ -1,5 +1,6 @@
 import { TranslateTestingModule } from 'ngx-translate-testing';
 import { of } from 'rxjs';
+import { MaterialModule } from 'src/app/material/material.module';
 import { UrlConst } from 'src/app/pages/constants/url-const';
 import { SignInRequestDto } from 'src/app/pages/models/dtos/requests/sign-in-request-dto';
 import { SignInResponseDto } from 'src/app/pages/models/dtos/responses/sign-in-response-dto';
@@ -7,7 +8,6 @@ import { User } from 'src/app/pages/models/user';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
-import { MaterialModule } from 'src/app/utils/material/material.module';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';

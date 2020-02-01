@@ -1,7 +1,7 @@
 import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 import { CoreModule } from 'src/app/core/core.module';
+import { MaterialModule } from 'src/app/material/material.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { MaterialModule } from 'src/app/utils/material/material.module';
 
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { HttpClient } from '@angular/common/http';

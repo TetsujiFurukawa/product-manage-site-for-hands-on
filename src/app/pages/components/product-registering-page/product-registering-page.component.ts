@@ -228,7 +228,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     productDto.productGenre = this.productGenre.value;
     productDto.productSizeStandard = this.productSizeStandard.value;
     productDto.productColor = this.productColor.value;
-    productDto.productUnitPrice = this.currencyCommaPipe.parse(this.productUnitPrice.value);
+    productDto.productUnitPrice = this.currencyCommaPipe.parse(this.productUnitPrice.value, this.locale, this.currency);
     productDto.endOfSale = this.endOfSale.value;
     if (this.endOfSaleDate.value === '') {
       productDto.endOfSaleDate = null;

@@ -59,6 +59,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   productPurchaseQuantity = new FormControl('', [Validators.required, Validators.max(999999999), Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)]);
   productPurchaseAmount = new FormControl('');
   productImage = new FormControl(null);
+  validatorLocale = new FormControl(this.accountService.getUser().userLocale);
 
   registeringForm = this.formBuilder.group(
     {
@@ -71,7 +72,8 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
       productStockQuantity: this.productStockQuantity,
       productPurchaseQuantity: this.productPurchaseQuantity,
       productPurchaseAmount: this.productPurchaseAmount,
-      productImage: this.productImage
+      productImage: this.productImage,
+      validatorLocale: this.validatorLocale
     },
     {
       validators: [ProductCodeProductNameValidator.match, PurchaseQuantityStockQuantityValidator.match]
@@ -138,7 +140,8 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
    * Blurs product purchase quantity
    */
   blurProductPurchaseQuantity(): void {
-    const productPurchaseAmount = this.currencyCommaPipe.parse(this.productPurchaseUnitPrice.value) * this.currencyCommaPipe.parse(this.productPurchaseQuantity.value);
+    const productPurchaseAmount =
+      this.currencyCommaPipe.parse(this.productPurchaseUnitPrice.value, this.locale, this.currency) * this.currencyCommaPipe.parse(this.productPurchaseQuantity.value, this.locale, this.currency);
     this.productPurchaseAmount.setValue(this.currencyCommaPipe.transform(String(productPurchaseAmount), this.locale, this.currency));
   }
   // --------------------------------------------------------------------------------
@@ -175,8 +178,8 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     const productPurchaseRequestDto: ProductPurchaseRequestDto = new ProductPurchaseRequestDto();
     productPurchaseRequestDto.productCode = this.productCode.value;
     productPurchaseRequestDto.productPurchaseName = this.productPurchaseName.value;
-    productPurchaseRequestDto.productStockQuantity = this.numberCommaPipe.parse(this.productStockQuantity.value);
-    productPurchaseRequestDto.productPurchaseQuantity = this.currencyCommaPipe.parse(this.productPurchaseQuantity.value);
+    productPurchaseRequestDto.productStockQuantity = this.numberCommaPipe.parse(this.productStockQuantity.value, this.locale);
+    productPurchaseRequestDto.productPurchaseQuantity = this.currencyCommaPipe.parse(this.productPurchaseQuantity.value, this.locale, this.currency);
 
     return productPurchaseRequestDto;
   }

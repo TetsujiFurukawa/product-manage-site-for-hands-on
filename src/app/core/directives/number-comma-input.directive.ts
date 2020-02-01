@@ -18,7 +18,7 @@ export class NumberCommaInputDirective implements OnInit {
 
   @HostListener('focus', ['$event.target.value'])
   onFocus(value: any) {
-    this.element.value = this.numberCommaPipe.parse(value);
+    this.element.value = this.numberCommaPipe.parse(value, this.element.getAttribute('locale'));
   }
 
   @HostListener('blur', ['$event.target.value'])

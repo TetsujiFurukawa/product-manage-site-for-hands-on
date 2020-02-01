@@ -18,7 +18,7 @@ export class CurrencyCommaInputDirective implements OnInit {
 
   @HostListener('focus', ['$event.target.value'])
   onFocus(value: any) {
-    this.element.value = this.currencyCommaPipe.parse(value);
+    this.element.value = this.currencyCommaPipe.parse(value, this.element.getAttribute('locale'), this.element.getAttribute('currency'));
   }
 
   @HostListener('blur', ['$event.target.value'])

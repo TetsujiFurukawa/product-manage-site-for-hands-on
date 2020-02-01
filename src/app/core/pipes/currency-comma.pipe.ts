@@ -3,6 +3,8 @@ import { RegexConst } from 'src/app/pages/constants/regex-const';
 import { CurrencyPipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 
+import { NumberUtility } from '../utilities/number-utility';
+
 @Pipe({
   name: 'currencyComma'
 })
@@ -12,10 +14,11 @@ export class CurrencyCommaPipe implements PipeTransform {
     if (!value.toString().match(regexp)) {
       return value;
     }
-    return new CurrencyPipe(locale).transform(this.parse(value.toString()), currency, '', '', locale);
+    return new CurrencyPipe(locale).transform(this.parse(value.toString(), locale, currency), currency, '', '', locale);
   }
 
-  parse(value: any): any {
-    return value.toString().replace(/,/g, '');
+  parse(value: any, locale: string, currency: string): any {
+    return NumberUtility.parseCurrencyToNumber(value.toString(), locale, currency);
+    // return value.toString().replace(/,/g, '');
   }
 }

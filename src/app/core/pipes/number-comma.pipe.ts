@@ -3,6 +3,8 @@ import { RegexConst } from 'src/app/pages/constants/regex-const';
 import { DecimalPipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 
+import { NumberUtility } from '../utilities/number-utility';
+
 @Pipe({
   name: 'numberComma'
 })
@@ -12,10 +14,10 @@ export class NumberCommaPipe implements PipeTransform {
     if (!value.toString().match(regexp)) {
       return value;
     }
-    return new DecimalPipe(locale).transform(this.parse(value.toString()), '1.0', locale);
+    return new DecimalPipe(locale).transform(this.parse(value.toString(), locale), '1.0', locale);
   }
 
-  parse(value: any): any {
-    return value.toString().replace(/,/g, '');
+  parse(value: any, locale: string): any {
+    return NumberUtility.parseNumber(value.toString(), locale);
   }
 }

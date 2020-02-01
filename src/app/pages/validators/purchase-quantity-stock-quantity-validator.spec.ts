@@ -20,7 +20,8 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
       const formBuilder: FormBuilder = new FormBuilder();
       const testingForm: FormGroup = formBuilder.group({
         productStockQuantity: new FormControl(''),
-        productPurchaseQuantity: new FormControl(1)
+        productPurchaseQuantity: new FormControl(1),
+        validatorLocale: new FormControl('ja-JP')
       });
       PurchaseQuantityStockQuantityValidator.match(testingForm);
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
@@ -29,7 +30,8 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
       const formBuilder: FormBuilder = new FormBuilder();
       const testingForm: FormGroup = formBuilder.group({
         productStockQuantity: new FormControl(null),
-        productPurchaseQuantity: new FormControl(1)
+        productPurchaseQuantity: new FormControl(1),
+        validatorLocale: new FormControl('ja-JP')
       });
       PurchaseQuantityStockQuantityValidator.match(testingForm);
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
@@ -39,7 +41,8 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
       const formBuilder: FormBuilder = new FormBuilder();
       const testingForm: FormGroup = formBuilder.group({
         productStockQuantity: new FormControl(1),
-        productPurchaseQuantity: new FormControl('')
+        productPurchaseQuantity: new FormControl(''),
+        validatorLocale: new FormControl('ja-JP')
       });
       PurchaseQuantityStockQuantityValidator.match(testingForm);
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
@@ -49,7 +52,8 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
       const formBuilder: FormBuilder = new FormBuilder();
       const testingForm: FormGroup = formBuilder.group({
         productStockQuantity: new FormControl(1),
-        productPurchaseQuantity: new FormControl(null)
+        productPurchaseQuantity: new FormControl(null),
+        validatorLocale: new FormControl('ja-JP')
       });
       PurchaseQuantityStockQuantityValidator.match(testingForm);
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
@@ -59,7 +63,8 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
       const formBuilder: FormBuilder = new FormBuilder();
       const testingForm: FormGroup = formBuilder.group({
         productStockQuantity: new FormControl(2),
-        productPurchaseQuantity: new FormControl(1)
+        productPurchaseQuantity: new FormControl(1),
+        validatorLocale: new FormControl('ja-JP')
       });
       PurchaseQuantityStockQuantityValidator.match(testingForm);
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
@@ -69,7 +74,8 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
       const formBuilder: FormBuilder = new FormBuilder();
       const testingForm: FormGroup = formBuilder.group({
         productStockQuantity: new FormControl(1),
-        productPurchaseQuantity: new FormControl(2)
+        productPurchaseQuantity: new FormControl(2),
+        validatorLocale: new FormControl('ja-JP')
       });
       PurchaseQuantityStockQuantityValidator.match(testingForm);
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeTruthy();

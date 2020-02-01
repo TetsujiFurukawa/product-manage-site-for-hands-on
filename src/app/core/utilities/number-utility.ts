@@ -1,5 +1,7 @@
 import { CurrencyPipe, DecimalPipe } from '@angular/common';
 
+const CHAR_CODE_FRENCH_SEPARATOR = 160; // Hex(A0)
+
 export const NumberUtility = {
   /**
    * Parses number
@@ -9,7 +11,9 @@ export const NumberUtility = {
    */
   parseNumber(value: any, locale: string) {
     const localeTest = new DecimalPipe(locale).transform('1111', '', locale);
-    const thousandSeparator = localeTest.charAt(1);
+    let thousandSeparator = localeTest.charAt(1);
+    thousandSeparator = whenHexA0ReplaceToSpace(thousandSeparator);
+    thousandSeparator = whenPeriodAddEscape(thousandSeparator);
 
     return value.toString().replace(new RegExp(thousandSeparator, 'g'), '');
   },
@@ -23,8 +27,26 @@ export const NumberUtility = {
    */
   parseCurrencyToNumber(value: any, locale: string, currency: string) {
     const localeTest = new CurrencyPipe(locale).transform('1111', currency, '', '', locale);
-    const thousandSeparator = localeTest.charAt(1);
+    let thousandSeparator = localeTest.charAt(1);
+    thousandSeparator = whenHexA0ReplaceToSpace(thousandSeparator);
+    thousandSeparator = whenPeriodAddEscape(thousandSeparator);
+
+    console.log('localeTest:' + localeTest);
+    console.log('thousandSeparator:' + thousandSeparator);
 
     return value.toString().replace(new RegExp(thousandSeparator, 'g'), '');
   }
 };
+
+function whenHexA0ReplaceToSpace(thousandSeparator: string) {
+  if (thousandSeparator.charCodeAt(0) === CHAR_CODE_FRENCH_SEPARATOR) {
+    thousandSeparator = ' ';
+  }
+  return thousandSeparator;
+}
+function whenPeriodAddEscape(thousandSeparator: string) {
+  if (thousandSeparator === '.') {
+    thousandSeparator = '\\.';
+  }
+  return thousandSeparator;
+}

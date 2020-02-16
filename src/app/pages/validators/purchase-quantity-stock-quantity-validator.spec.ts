@@ -1,4 +1,4 @@
-import { CurrencyCommaPipe } from 'src/app/core/pipes/currency-comma.pipe';
+import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 
 import { TestBed } from '@angular/core/testing';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
@@ -11,7 +11,7 @@ const PRODUCT_PURCHASE_QUANTITY = 'productPurchaseQuantity';
 describe('PurchaseQuantityStockQuantityValidator', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [PurchaseQuantityStockQuantityValidator, CurrencyCommaPipe]
+      providers: [PurchaseQuantityStockQuantityValidator, FormattedCurrencyPipe]
     });
   });
 

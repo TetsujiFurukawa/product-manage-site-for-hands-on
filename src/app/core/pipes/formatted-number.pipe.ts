@@ -6,9 +6,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { NumberUtility } from '../utilities/number-utility';
 
 @Pipe({
-  name: 'numberComma'
+  name: 'formattedNumber'
 })
-export class NumberCommaPipe implements PipeTransform {
+export class FormattedNumberPipe implements PipeTransform {
   transform(value: any, locale: string): any {
     const regexp = new RegExp(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD);
     if (!value.toString().match(regexp)) {

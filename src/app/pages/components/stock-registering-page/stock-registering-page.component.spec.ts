@@ -1,7 +1,7 @@
 import { TranslateTestingModule } from 'ngx-translate-testing';
 import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 import { of } from 'rxjs';
-import { NumberCommaPipe } from 'src/app/core/pipes/number-comma.pipe';
+import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 import { MaterialModule } from 'src/app/material/material.module';
 import {
     ProductStockRequestDto
@@ -74,7 +74,7 @@ describe('StockRegisteringPageComponent', () => {
       ],
       providers: [
         FormBuilder,
-        NumberCommaPipe,
+        FormattedNumberPipe,
         { provide: MatDialog, useValue: matDialogSpy },
         { provide: AccountService, useValue: accountServiceSpy },
         { provide: ProductService, useValue: productServiceSpy },

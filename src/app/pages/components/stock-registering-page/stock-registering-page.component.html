@@ -43,7 +43,7 @@
                     <div class="registering-condition-wrapper margin-left-25px">
                         <mat-form-field class="form-field">
                             <input id="product-stock-quantity" class="align-right" matInput type="text"
-                                appNumberCommaInput formControlName="productStockQuantity"
+                                appFormattedNumberInput formControlName="productStockQuantity"
                                 placeholder="{{ 'stockRegisteringPage.productStockQuantity' | translate }}"
                                 [attr.locale]='locale' [readonly]=true>
                         </mat-form-field>
@@ -51,7 +51,7 @@
                     <div class="registering-condition-wrapper">
                         <mat-form-field class="form-field">
                             <input id="add-product-stock-quantity" class="align-right" matInput type="text"
-                                appNumberCommaInput formControlName="addProductStockQuantity"
+                                appFormattedNumberInput formControlName="addProductStockQuantity"
                                 placeholder="{{ 'stockRegisteringPage.addStockQuantity' | translate }}"
                                 matTooltip="{{ 'tooltip.registerValue.input.numeric' | translate }}"
                                 [attr.locale]='locale' maxlength=11>

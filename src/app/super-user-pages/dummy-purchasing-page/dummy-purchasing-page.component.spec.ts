@@ -1,8 +1,8 @@
 import { TranslateTestingModule } from 'ngx-translate-testing';
 import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 import { of } from 'rxjs';
-import { CurrencyCommaPipe } from 'src/app/core/pipes/currency-comma.pipe';
-import { NumberCommaPipe } from 'src/app/core/pipes/number-comma.pipe';
+import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
+import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 import { MaterialModule } from 'src/app/material/material.module';
 import {
     ProductPurchaseRequestDto
@@ -77,8 +77,8 @@ describe('DummyPurchasingPageComponent', () => {
       ],
       providers: [
         FormBuilder,
-        CurrencyCommaPipe,
-        NumberCommaPipe,
+        FormattedCurrencyPipe,
+        FormattedNumberPipe,
         CurrencyPipe,
         { provide: MatDialog, useValue: matDialogSpy },
         { provide: AccountService, useValue: accountServiceSpy },

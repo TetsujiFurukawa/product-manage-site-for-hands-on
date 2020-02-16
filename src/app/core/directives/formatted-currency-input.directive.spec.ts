@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NumberCommaPipe } from '../pipes/number-comma.pipe';
-import { NumberCommaInputDirective } from './number-comma-input.directive';
+import { FormattedCurrencyPipe } from '../pipes/formatted-currency.pipe';
+import { FormattedCurrencyInputDirective } from './formatted-currency-input.directive';
 
 @Component({
   template: `
-    <input type="text" appNumberCommaInput locale="ja-JP" />
+    <input type="text" appFormattedCurrencyInput locale="ja-JP" currency="JPY" />
   `
 })
-class TestNumberCommaInputComponent {}
+class TestFormattedCurrencyInputComponent {}
 
-describe('NumberCommaInputDirective', () => {
-  let component: TestNumberCommaInputComponent;
-  let fixture: ComponentFixture<TestNumberCommaInputComponent>;
+describe('FormattedCurrencyInputDirective', () => {
+  let component: TestFormattedCurrencyInputComponent;
+  let fixture: ComponentFixture<TestFormattedCurrencyInputComponent>;
   let hTMLInputElement: HTMLInputElement;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [NumberCommaPipe],
-      declarations: [TestNumberCommaInputComponent, NumberCommaInputDirective]
+      providers: [FormattedCurrencyPipe],
+      declarations: [TestFormattedCurrencyInputComponent, FormattedCurrencyInputDirective]
     });
-    fixture = TestBed.createComponent(TestNumberCommaInputComponent);
+    fixture = TestBed.createComponent(TestFormattedCurrencyInputComponent);
     component = fixture.componentInstance;
     hTMLInputElement = fixture.nativeElement.querySelector('input');
     fixture.detectChanges();

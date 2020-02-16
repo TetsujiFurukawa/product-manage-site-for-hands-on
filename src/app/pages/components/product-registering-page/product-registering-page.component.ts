@@ -2,7 +2,7 @@ import {
     YesNoDialogComponent
 } from 'src/app/core/components/yes-no-dialog/yes-no-dialog.component';
 import { YesNoDialogData } from 'src/app/core/models/yes-no-dialog-data';
-import { CurrencyCommaPipe } from 'src/app/core/pipes/currency-comma.pipe';
+import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { AppConst } from 'src/app/pages/constants/app-const';
@@ -38,7 +38,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     private routingService: RoutingService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private currencyCommaPipe: CurrencyCommaPipe,
+    private formattedCurrencyPipe: FormattedCurrencyPipe,
     private titleI18Service: TitleI18Service,
     public translateService: TranslateService
   ) {}
@@ -228,7 +228,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     productDto.productGenre = this.productGenre.value;
     productDto.productSizeStandard = this.productSizeStandard.value;
     productDto.productColor = this.productColor.value;
-    productDto.productUnitPrice = this.currencyCommaPipe.parse(this.productUnitPrice.value, this.locale, this.currency);
+    productDto.productUnitPrice = this.formattedCurrencyPipe.parse(this.productUnitPrice.value, this.locale, this.currency);
     productDto.endOfSale = this.endOfSale.value;
     if (this.endOfSaleDate.value === '') {
       productDto.endOfSaleDate = null;
@@ -251,7 +251,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     this.productGenre.setValue(productDto.productGenre);
     this.productSizeStandard.setValue(productDto.productSizeStandard);
     this.productColor.setValue(productDto.productColor);
-    this.productUnitPrice.setValue(this.currencyCommaPipe.transform(productDto.productUnitPrice.toString(), this.locale, this.currency));
+    this.productUnitPrice.setValue(this.formattedCurrencyPipe.transform(productDto.productUnitPrice.toString(), this.locale, this.currency));
     this.endOfSale.setValue(productDto.endOfSale);
     if (productDto.endOfSaleDate === null) {
       this.endOfSaleDate.setValue('');

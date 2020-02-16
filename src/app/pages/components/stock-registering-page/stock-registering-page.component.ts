@@ -2,7 +2,7 @@ import {
     YesNoDialogComponent
 } from 'src/app/core/components/yes-no-dialog/yes-no-dialog.component';
 import { YesNoDialogData } from 'src/app/core/models/yes-no-dialog-data';
-import { NumberCommaPipe } from 'src/app/core/pipes/number-comma.pipe';
+import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { AppConst } from 'src/app/pages/constants/app-const';
 import { RegexConst } from 'src/app/pages/constants/regex-const';
@@ -39,7 +39,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     private productStockService: ProductStockService,
     private accountService: AccountService,
     private dialog: MatDialog,
-    private numberCommaPipe: NumberCommaPipe,
+    private formattedNumberPipe: FormattedNumberPipe,
     private titleI18Service: TitleI18Service,
     public translateService: TranslateService
   ) {}
@@ -156,8 +156,8 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   private createProductStockRequestDto(): ProductStockRequestDto {
     const productStockRequestDto: ProductStockRequestDto = new ProductStockRequestDto();
     productStockRequestDto.productCode = this.productCode.value;
-    productStockRequestDto.productStockQuantity = this.numberCommaPipe.parse(this.productStockQuantity.value, this.locale);
-    productStockRequestDto.addProductStockQuantity = this.numberCommaPipe.parse(this.addProductStockQuantity.value, this.locale);
+    productStockRequestDto.productStockQuantity = this.formattedNumberPipe.parse(this.productStockQuantity.value, this.locale);
+    productStockRequestDto.addProductStockQuantity = this.formattedNumberPipe.parse(this.addProductStockQuantity.value, this.locale);
 
     return productStockRequestDto;
   }
@@ -169,7 +169,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     this.productName.setValue(productStockResponseDto.productName);
     this.productGenre.setValue(this.translateService.instant('genre.' + productStockResponseDto.productGenre));
     this.productSizeStandard.setValue(productStockResponseDto.productSizeStandard);
-    this.productStockQuantity.setValue(this.numberCommaPipe.transform(String(productStockResponseDto.productStockQuantity), this.locale));
+    this.productStockQuantity.setValue(this.formattedNumberPipe.transform(String(productStockResponseDto.productStockQuantity), this.locale));
     this.productImage.setValue(productStockResponseDto.productImage);
   }
 
@@ -177,7 +177,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     if (productStockResponseDto === null) {
       return;
     }
-    this.productStockQuantity.setValue(this.numberCommaPipe.transform(String(productStockResponseDto.productStockQuantity), this.locale));
+    this.productStockQuantity.setValue(this.formattedNumberPipe.transform(String(productStockResponseDto.productStockQuantity), this.locale));
     this.addProductStockQuantity.reset();
   }
 

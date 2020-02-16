@@ -1,6 +1,6 @@
 import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
-import { CurrencyCommaPipe } from 'src/app/core/pipes/currency-comma.pipe';
+import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { UrlConst } from 'src/app/pages/constants/url-const';
@@ -35,7 +35,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
     private searchParamsService: SearchParamsService,
     private routingService: RoutingService,
     private titleI18Service: TitleI18Service,
-    public currencyCommaPipe: CurrencyCommaPipe,
+    public formattedCurrencyPipe: FormattedCurrencyPipe,
     public translateService: TranslateService
   ) {}
 

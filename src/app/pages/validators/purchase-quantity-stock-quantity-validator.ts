@@ -1,4 +1,4 @@
-import { NumberCommaPipe } from 'src/app/core/pipes/number-comma.pipe';
+import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 
 import { AbstractControl } from '@angular/forms';
 
@@ -19,9 +19,9 @@ export class PurchaseQuantityStockQuantityValidator {
       return;
     }
 
-    const numberCommaPipe: NumberCommaPipe = new NumberCommaPipe();
-    const numProductStockQuantity = Number(numberCommaPipe.parse(productStockQuantity, validatorLocale));
-    const numProductPurchaseQuantity = Number(numberCommaPipe.parse(productPurchaseQuantity, validatorLocale));
+    const formattedNumberPipe: FormattedNumberPipe = new FormattedNumberPipe();
+    const numProductStockQuantity = Number(formattedNumberPipe.parse(productStockQuantity, validatorLocale));
+    const numProductPurchaseQuantity = Number(formattedNumberPipe.parse(productPurchaseQuantity, validatorLocale));
 
     console.log('numProductPurchaseQuantity:' + numProductPurchaseQuantity);
     console.log('numProductStockQuantity:' + numProductStockQuantity);

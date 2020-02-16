@@ -1,7 +1,7 @@
 import { TranslateTestingModule } from 'ngx-translate-testing';
 import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 import { of } from 'rxjs';
-import { CurrencyCommaPipe } from 'src/app/core/pipes/currency-comma.pipe';
+import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 import { MaterialModule } from 'src/app/material/material.module';
 import { UrlConst } from 'src/app/pages/constants/url-const';
 import { ProductDto } from 'src/app/pages/models/dtos/product-dto';
@@ -75,7 +75,7 @@ describe('ProductRegisteringPageComponent', () => {
       ],
       providers: [
         FormBuilder,
-        CurrencyCommaPipe,
+        FormattedCurrencyPipe,
         CurrencyPipe,
         { provide: MatDialog, useValue: matDialogSpy },
         { provide: AccountService, useValue: accountServiceSpy },

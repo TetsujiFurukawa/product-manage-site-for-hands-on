@@ -2,8 +2,8 @@ import {
     YesNoDialogComponent
 } from 'src/app/core/components/yes-no-dialog/yes-no-dialog.component';
 import { YesNoDialogData } from 'src/app/core/models/yes-no-dialog-data';
-import { CurrencyCommaPipe } from 'src/app/core/pipes/currency-comma.pipe';
-import { NumberCommaPipe } from 'src/app/core/pipes/number-comma.pipe';
+import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
+import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { AppConst } from 'src/app/pages/constants/app-const';
 import { RegexConst } from 'src/app/pages/constants/regex-const';
@@ -43,8 +43,8 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     private productPurchaseService: ProductPurchaseService,
     private accountService: AccountService,
     private dialog: MatDialog,
-    private currencyCommaPipe: CurrencyCommaPipe,
-    private numberCommaPipe: NumberCommaPipe,
+    private formattedCurrencyPipe: FormattedCurrencyPipe,
+    private formattedNumberPipe: FormattedNumberPipe,
     private titleI18Service: TitleI18Service,
     public translateService: TranslateService
   ) {}
@@ -141,8 +141,9 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
    */
   blurProductPurchaseQuantity(): void {
     const productPurchaseAmount =
-      this.currencyCommaPipe.parse(this.productPurchaseUnitPrice.value, this.locale, this.currency) * this.currencyCommaPipe.parse(this.productPurchaseQuantity.value, this.locale, this.currency);
-    this.productPurchaseAmount.setValue(this.currencyCommaPipe.transform(String(productPurchaseAmount), this.locale, this.currency));
+      this.formattedCurrencyPipe.parse(this.productPurchaseUnitPrice.value, this.locale, this.currency) *
+      this.formattedCurrencyPipe.parse(this.productPurchaseQuantity.value, this.locale, this.currency);
+    this.productPurchaseAmount.setValue(this.formattedCurrencyPipe.transform(String(productPurchaseAmount), this.locale, this.currency));
   }
   // --------------------------------------------------------------------------------
   // private methods
@@ -178,8 +179,8 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     const productPurchaseRequestDto: ProductPurchaseRequestDto = new ProductPurchaseRequestDto();
     productPurchaseRequestDto.productCode = this.productCode.value;
     productPurchaseRequestDto.productPurchaseName = this.productPurchaseName.value;
-    productPurchaseRequestDto.productStockQuantity = this.numberCommaPipe.parse(this.productStockQuantity.value, this.locale);
-    productPurchaseRequestDto.productPurchaseQuantity = this.currencyCommaPipe.parse(this.productPurchaseQuantity.value, this.locale, this.currency);
+    productPurchaseRequestDto.productStockQuantity = this.formattedNumberPipe.parse(this.productStockQuantity.value, this.locale);
+    productPurchaseRequestDto.productPurchaseQuantity = this.formattedCurrencyPipe.parse(this.productPurchaseQuantity.value, this.locale, this.currency);
 
     return productPurchaseRequestDto;
   }
@@ -191,8 +192,8 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     this.productName.setValue(productPurchaseResponseDto.productName);
     this.productGenre.setValue(this.translateService.instant('genre.' + productPurchaseResponseDto.productGenre));
     this.productSizeStandard.setValue(productPurchaseResponseDto.productSizeStandard);
-    this.productPurchaseUnitPrice.setValue(this.currencyCommaPipe.transform(String(productPurchaseResponseDto.productPurchaseUnitPrice), this.locale, this.currency));
-    this.productStockQuantity.setValue(this.numberCommaPipe.transform(String(productPurchaseResponseDto.productStockQuantity), this.locale));
+    this.productPurchaseUnitPrice.setValue(this.formattedCurrencyPipe.transform(String(productPurchaseResponseDto.productPurchaseUnitPrice), this.locale, this.currency));
+    this.productStockQuantity.setValue(this.formattedNumberPipe.transform(String(productPurchaseResponseDto.productStockQuantity), this.locale));
     this.productImage.setValue(productPurchaseResponseDto.productImage);
   }
 
@@ -200,7 +201,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     if (productPurchaseResponseDto === null) {
       return;
     }
-    this.productStockQuantity.setValue(this.numberCommaPipe.transform(String(productPurchaseResponseDto.productStockQuantity), this.locale));
+    this.productStockQuantity.setValue(this.formattedNumberPipe.transform(String(productPurchaseResponseDto.productStockQuantity), this.locale));
     this.productPurchaseQuantity.reset();
     this.productPurchaseAmount.reset();
   }

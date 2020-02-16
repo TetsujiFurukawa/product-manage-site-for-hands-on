@@ -3,7 +3,7 @@ import { map, startWith, switchMap } from 'rxjs/operators';
 import {
     MatDatePickerComponent
 } from 'src/app/core/components/mat-date-picker/mat-date-picker.component';
-import { CurrencyCommaPipe } from 'src/app/core/pipes/currency-comma.pipe';
+import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { UrlConst } from 'src/app/pages/constants/url-const';
 import {
@@ -35,7 +35,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
     private accountService: AccountService,
     private searchParamsService: SearchParamsService,
     private titleI18Service: TitleI18Service,
-    public currencyCommaPipe: CurrencyCommaPipe,
+    public formattedCurrencyPipe: FormattedCurrencyPipe,
     public translateService: TranslateService
   ) {}
 

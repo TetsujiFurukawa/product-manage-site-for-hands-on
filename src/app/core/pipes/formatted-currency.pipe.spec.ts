@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NumberCommaPipe } from './number-comma.pipe';
+import { FormattedCurrencyPipe } from './formatted-currency.pipe';
 
-describe('NumberCommaPipe', () => {
-  let pipe: NumberCommaPipe;
+describe('FormattedCurrencyPipe', () => {
+  let pipe: FormattedCurrencyPipe;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [NumberCommaPipe]
+      providers: [FormattedCurrencyPipe]
     });
-    pipe = TestBed.inject(NumberCommaPipe);
+    pipe = TestBed.inject(FormattedCurrencyPipe);
   });
 
   describe('#constractor', () => {
@@ -21,14 +21,14 @@ describe('NumberCommaPipe', () => {
       const value = '1234567';
       const locale = 'ja-JP';
       const currency = 'JPY';
-      expect(pipe.transform(value, locale)).toEqual('1,234,567');
+      expect(pipe.transform(value, locale, currency)).toEqual('1,234,567');
     });
 
     it('should return transform result', () => {
       const value = 'あいうえお';
       const locale = 'ja-JP';
       const currency = 'JPY';
-      expect(pipe.transform(value, locale)).toEqual('あいうえお');
+      expect(pipe.transform(value, locale, currency)).toEqual('あいうえお');
     });
   });
 });

@@ -4,8 +4,8 @@ import { of } from 'rxjs';
 import {
     MatDatePickerComponent
 } from 'src/app/core/components/mat-date-picker/mat-date-picker.component';
-import { CurrencyCommaPipe } from 'src/app/core/pipes/currency-comma.pipe';
-import { NumberCommaPipe } from 'src/app/core/pipes/number-comma.pipe';
+import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
+import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 import { MaterialModule } from 'src/app/material/material.module';
 import {
     ProductPurchaseHistorySearchListResponseDto
@@ -91,8 +91,8 @@ describe('PurchaseHistoryListingPageComponent', () => {
       ],
       providers: [
         FormBuilder,
-        CurrencyCommaPipe,
-        NumberCommaPipe,
+        FormattedCurrencyPipe,
+        FormattedNumberPipe,
         CurrencyPipe,
         {
           provide: HAMMER_LOADER,
@@ -104,7 +104,7 @@ describe('PurchaseHistoryListingPageComponent', () => {
         { provide: SearchParamsService, useValue: searchParamsServiceSpy },
         { provide: ProductPurchaseService, useValue: productPurchaseServiceSpy }
       ],
-      declarations: [PurchaseHistoryListingPageComponent, CurrencyCommaPipe, NumberCommaPipe, MatDatePickerComponent]
+      declarations: [PurchaseHistoryListingPageComponent, FormattedCurrencyPipe, FormattedNumberPipe, MatDatePickerComponent]
     }).compileComponents();
   }));
 

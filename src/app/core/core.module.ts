@@ -18,12 +18,12 @@ import {
     SuccessMessagingComponent
 } from './components/success-messaging/success-messaging.component';
 import { YesNoDialogComponent } from './components/yes-no-dialog/yes-no-dialog.component';
-import { CurrencyCommaInputDirective } from './directives/currency-comma-input.directive';
-import { NumberCommaInputDirective } from './directives/number-comma-input.directive';
+import { FormattedCurrencyInputDirective } from './directives/formatted-currency-input.directive';
+import { FormattedNumberInputDirective } from './directives/formatted-number-input.directive';
 import { HttpXsrfInterceptor } from './interceptors/http-xsrf-interceptor';
 import { XhrInterceptor } from './interceptors/xhr-interceptor';
-import { CurrencyCommaPipe } from './pipes/currency-comma.pipe';
-import { NumberCommaPipe } from './pipes/number-comma.pipe';
+import { FormattedCurrencyPipe } from './pipes/formatted-currency.pipe';
+import { FormattedNumberPipe } from './pipes/formatted-number.pipe';
 
 // 他言語化の設定
 export function HttpLoaderFactory(http: HttpClient) {
@@ -40,10 +40,10 @@ registerLocaleData(localeDe);
     MatDatePickerComponent,
     SuccessMessagingComponent,
     YesNoDialogComponent,
-    CurrencyCommaPipe,
-    CurrencyCommaInputDirective,
-    NumberCommaPipe,
-    NumberCommaInputDirective
+    FormattedCurrencyPipe,
+    FormattedCurrencyInputDirective,
+    FormattedNumberPipe,
+    FormattedNumberInputDirective
   ],
   imports: [
     CommonModule,
@@ -65,8 +65,8 @@ registerLocaleData(localeDe);
     { provide: LOCALE_ID, useValue: 'fr-FR' },
     { provide: LOCALE_ID, useValue: 'de-DE' },
     CurrencyPipe,
-    CurrencyCommaPipe,
-    NumberCommaPipe
+    FormattedCurrencyPipe,
+    FormattedNumberPipe
   ],
   entryComponents: [YesNoDialogComponent],
   exports: [
@@ -75,10 +75,10 @@ registerLocaleData(localeDe);
     MatDatePickerComponent,
     SuccessMessagingComponent,
     YesNoDialogComponent,
-    CurrencyCommaPipe,
-    CurrencyCommaInputDirective,
-    NumberCommaPipe,
-    NumberCommaInputDirective
+    FormattedCurrencyPipe,
+    FormattedCurrencyInputDirective,
+    FormattedNumberPipe,
+    FormattedNumberInputDirective
   ]
 })
 export class CoreModule {}

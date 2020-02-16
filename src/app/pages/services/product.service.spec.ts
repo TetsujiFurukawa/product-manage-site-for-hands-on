@@ -29,9 +29,9 @@ describe('ProductService', () => {
       imports: [HttpClientTestingModule],
       providers: [ProductService, { provide: SuccessMessagingService, useValue: successMessagingServiceSpy }, { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }]
     });
-    httpClient = TestBed.get(HttpClient);
-    httpTestingController = TestBed.get(HttpTestingController);
-    service = TestBed.get(ProductService);
+    httpClient = TestBed.inject(HttpClient);
+    httpTestingController = TestBed.inject(HttpTestingController);
+    service = TestBed.inject(ProductService);
   });
 
   afterEach(() => {

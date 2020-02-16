@@ -62,7 +62,7 @@ describe('SignInPageComponent', () => {
       providers: [FormBuilder, { provide: AccountService, useValue: accountServiceSpy }, { provide: TitleI18Service, useValue: titleI18ServiceSpy }],
       declarations: [SignInPageComponent]
     }).compileComponents();
-    router = TestBed.get(Router);
+    router = TestBed.inject(Router);
   }));
 
   beforeEach(() => {

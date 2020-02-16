@@ -31,10 +31,10 @@ describe('TitleI18Service', () => {
       ],
       providers: [TranslateService, AccountService]
     });
-    service = TestBed.get(TitleI18Service);
-    translateService = TestBed.get(TranslateService);
-    http = TestBed.get(HttpTestingController);
-    accountService = TestBed.get(AccountService);
+    service = TestBed.inject(TitleI18Service);
+    translateService = TestBed.inject(TranslateService);
+    http = TestBed.inject(HttpTestingController);
+    accountService = TestBed.inject(AccountService);
   });
 
   describe('#constractor', () => {

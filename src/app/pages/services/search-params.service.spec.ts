@@ -17,8 +17,8 @@ describe('SearchParamsService', () => {
     TestBed.configureTestingModule({
       providers: [SessionStrageService]
     });
-    service = TestBed.get(SearchParamsService);
-    sessionStrageService = TestBed.get(SessionStrageService);
+    service = TestBed.inject(SearchParamsService);
+    sessionStrageService = TestBed.inject(SessionStrageService);
   });
 
   describe('#constractor', () => {

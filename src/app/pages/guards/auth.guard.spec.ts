@@ -21,8 +21,8 @@ describe('AuthGuard', () => {
       imports: [RouterTestingModule],
       providers: [{ provide: AccountService, useValue: accountServiceSpy }]
     });
-    routingService = TestBed.get(RoutingService);
-    authGuard = TestBed.get(AuthGuard);
+    routingService = TestBed.inject(RoutingService);
+    authGuard = TestBed.inject(AuthGuard);
   });
 
   describe('#constractor', () => {

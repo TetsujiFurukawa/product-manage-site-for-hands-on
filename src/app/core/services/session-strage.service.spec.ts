@@ -12,7 +12,7 @@ describe('SessionStrageService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.get(SessionStrageService);
+    service = TestBed.inject(SessionStrageService);
   });
 
   describe('#constractor', () => {

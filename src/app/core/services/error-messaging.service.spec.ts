@@ -8,7 +8,7 @@ describe('ErrorMessagingService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.get(ErrorMessagingService);
+    service = TestBed.inject(ErrorMessagingService);
   });
 
   describe('#constractor', () => {

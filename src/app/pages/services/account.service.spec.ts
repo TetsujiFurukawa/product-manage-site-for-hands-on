@@ -25,9 +25,9 @@ describe('AccountService', () => {
       imports: [HttpClientTestingModule],
       providers: [AccountService, { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }]
     });
-    httpClient = TestBed.get(HttpClient);
-    httpTestingController = TestBed.get(HttpTestingController);
-    service = TestBed.get(AccountService);
+    httpClient = TestBed.inject(HttpClient);
+    httpTestingController = TestBed.inject(HttpTestingController);
+    service = TestBed.inject(AccountService);
   });
 
   afterEach(() => {

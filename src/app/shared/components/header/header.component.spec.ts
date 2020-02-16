@@ -56,7 +56,7 @@ describe('HeaderComponent', () => {
       ],
       declarations: [HeaderComponent]
     }).compileComponents();
-    router = TestBed.get(Router);
+    router = TestBed.inject(Router);
   }));
 
   beforeEach(() => {

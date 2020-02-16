@@ -24,8 +24,8 @@ describe('HttpXsrfInterceptor', () => {
         { provide: HttpXsrfTokenExtractor, useValue: tokenExtractor }
       ]
     });
-    httpTestingController = TestBed.get(HttpTestingController);
-    httpClient = TestBed.get(HttpClient);
+    httpTestingController = TestBed.inject(HttpTestingController);
+    httpClient = TestBed.inject(HttpClient);
   });
 
   describe('#intercept', () => {

@@ -106,7 +106,7 @@ describe('ProductListingPageComponent', () => {
       ],
       declarations: [ProductListingPageComponent, CurrencyCommaPipe, NumberCommaPipe]
     }).compileComponents();
-    router = TestBed.get(Router);
+    router = TestBed.inject(Router);
   }));
 
   beforeEach(() => {

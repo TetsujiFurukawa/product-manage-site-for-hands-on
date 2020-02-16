@@ -8,7 +8,7 @@ describe('LoadingService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.get(LoadingService);
+    service = TestBed.inject(LoadingService);
   });
 
   describe('#constractor', () => {

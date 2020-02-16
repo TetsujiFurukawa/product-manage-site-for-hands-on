@@ -16,8 +16,8 @@ describe('RoutingService', () => {
       schemas: [NO_ERRORS_SCHEMA],
       imports: [RouterTestingModule]
     });
-    service = TestBed.get(RoutingService);
-    router = TestBed.get(Router);
+    service = TestBed.inject(RoutingService);
+    router = TestBed.inject(Router);
   });
 
   describe('#constractor', () => {

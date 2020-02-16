@@ -8,7 +8,7 @@ describe('NumberCommaPipe', () => {
     TestBed.configureTestingModule({
       providers: [NumberCommaPipe]
     });
-    pipe = TestBed.get(NumberCommaPipe);
+    pipe = TestBed.inject(NumberCommaPipe);
   });
 
   describe('#constractor', () => {

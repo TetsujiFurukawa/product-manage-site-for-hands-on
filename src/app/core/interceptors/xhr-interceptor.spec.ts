@@ -13,8 +13,8 @@ describe('XhrInterceptor', () => {
       imports: [HttpClientTestingModule],
       providers: [{ provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true }]
     });
-    httpTestingController = TestBed.get(HttpTestingController);
-    httpClient = TestBed.get(HttpClient);
+    httpTestingController = TestBed.inject(HttpTestingController);
+    httpClient = TestBed.inject(HttpClient);
   });
 
   describe('#intercept', () => {

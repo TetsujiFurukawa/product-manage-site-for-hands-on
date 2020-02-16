@@ -7,7 +7,7 @@ describe('SuccessMessagingService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.get(SuccessMessagingService);
+    service = TestBed.inject(SuccessMessagingService);
   });
 
   describe('#constractor', () => {

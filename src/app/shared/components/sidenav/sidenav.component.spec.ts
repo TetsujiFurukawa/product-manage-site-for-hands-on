@@ -43,7 +43,7 @@ describe('SidenavComponent', () => {
       providers: [TranslateService, { provide: AccountService, useValue: accountServiceSpy }, { provide: SearchParamsService, useValue: searchParamsServiceSpy }],
       declarations: [SidenavComponent]
     }).compileComponents();
-    router = TestBed.get(Router);
+    router = TestBed.inject(Router);
   }));
 
   beforeEach(() => {

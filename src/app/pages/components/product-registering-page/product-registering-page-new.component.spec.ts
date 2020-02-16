@@ -86,7 +86,7 @@ describe('ProductRegisteringPageComponent', () => {
       ],
       declarations: [ProductRegisteringPageComponent]
     }).compileComponents();
-    router = TestBed.get(Router);
+    router = TestBed.inject(Router);
   }));
 
   beforeEach(() => {

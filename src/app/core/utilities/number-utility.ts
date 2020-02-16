@@ -25,13 +25,6 @@ export const NumberUtility = {
   }
 };
 
-function createThousandSeparatorRegex(thousandSeparator: string) {
-  if (thousandSeparator === '.') {
-    thousandSeparator = '\\.';
-  }
-  return thousandSeparator;
-}
-
 function parse(localeTest: string, value: any) {
   let thousandSeparator = localeTest.charAt(1);
   thousandSeparator = createThousandSeparatorRegex(thousandSeparator);
@@ -39,4 +32,11 @@ function parse(localeTest: string, value: any) {
     .toString()
     .replace(new RegExp(' ', 'g'), '')
     .replace(new RegExp(thousandSeparator, 'g'), '');
+}
+
+function createThousandSeparatorRegex(thousandSeparator: string) {
+  if (thousandSeparator === '.') {
+    thousandSeparator = '\\.';
+  }
+  return thousandSeparator;
 }

@@ -27,9 +27,9 @@ describe('MatPaginatorI18nService', () => {
       ],
       providers: [TranslateService]
     });
-    service = TestBed.get(MatPaginatorI18nService);
-    translate = TestBed.get(TranslateService);
-    http = TestBed.get(HttpTestingController);
+    service = TestBed.inject(MatPaginatorI18nService);
+    translate = TestBed.inject(TranslateService);
+    http = TestBed.inject(HttpTestingController);
   });
 
   describe('#constractor', () => {

@@ -7,7 +7,9 @@ describe('LoadingService', () => {
   let service: LoadingService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      schemas: [NO_ERRORS_SCHEMA]
+    });
     service = TestBed.inject(LoadingService);
   });
 

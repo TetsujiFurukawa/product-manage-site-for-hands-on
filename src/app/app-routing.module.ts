@@ -16,9 +16,6 @@ import {
 } from './pages/components/stock-registering-page/stock-registering-page.component';
 import { UrlConst } from './pages/constants/url-const';
 import { AuthGuard } from './pages/guards/auth.guard';
-import {
-    DummyPurchasingPageComponent
-} from './super-user-pages/dummy-purchasing-page/dummy-purchasing-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/' + UrlConst.PATH_SIGN_IN, pathMatch: 'full' },

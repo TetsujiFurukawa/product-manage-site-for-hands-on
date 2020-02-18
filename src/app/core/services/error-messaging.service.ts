@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class ErrorMessagingService {
   private messageProperty: string;
 
-  constructor() { }
+  constructor() {}
 
   public getMessageProperty(): string {
     return this.messageProperty;
@@ -50,5 +50,4 @@ export class ErrorMessagingService {
         break;
     }
   }
-
 }

@@ -7,7 +7,9 @@ describe('ErrorMessagingService', () => {
   let service: ErrorMessagingService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      schemas: [NO_ERRORS_SCHEMA]
+    });
     service = TestBed.inject(ErrorMessagingService);
   });
 

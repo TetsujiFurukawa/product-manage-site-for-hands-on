@@ -75,4 +75,4 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTooltipModule
   ]
 })
-export class MaterialModule { }
+export class MaterialModule {}

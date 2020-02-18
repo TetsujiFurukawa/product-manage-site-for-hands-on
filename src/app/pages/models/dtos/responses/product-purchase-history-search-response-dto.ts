@@ -1,21 +1,19 @@
 export class ProductPurchaseHistorySearchResponseDto {
+  no: number;
 
-    no: number;
+  productName: string;
 
-    productName: string;
+  productCode: string;
 
-    productCode: string;
+  productPurchaseName: string;
 
-    productPurchaseName: string;
+  productImageUrl: string;
 
-    productImageUrl: string;
+  productPurchaseDate: Date;
 
-    productPurchaseDate: Date;
+  productPurchaseUnitPrice: number;
 
-    productPurchaseUnitPrice: number;
+  productPurchaseQuantity: number;
 
-    productPurchaseQuantity: number;
-
-    productPurchaseAmount: number;
-
+  productPurchaseAmount: number;
 }

@@ -1,5 +1,4 @@
 export class ProductStockResponseDto {
-
   productCode: string;
 
   productName: string;
@@ -13,5 +12,4 @@ export class ProductStockResponseDto {
   productColor: string;
 
   productStockQuantity: number;
-
 }

@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoutingService {
-
-  constructor(
-    public router: Router
-  ) { }
+  constructor(public router: Router) {}
 
   /**
    * Navigates to path.
@@ -18,5 +15,4 @@ export class RoutingService {
     // navigates to path.
     this.router.navigate(['/' + path]);
   }
-
 }

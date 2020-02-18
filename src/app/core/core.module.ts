@@ -1,5 +1,3 @@
-import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
-
 import { CommonModule, CurrencyPipe, registerLocaleData } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';

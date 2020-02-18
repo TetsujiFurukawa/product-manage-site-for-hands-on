@@ -1,6 +1,5 @@
 export class BaseSearchParams {
-
   pageSize: number;
-  pageIndex: number;
 
+  pageIndex: number;
 }

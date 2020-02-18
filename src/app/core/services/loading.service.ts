@@ -4,10 +4,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class LoadingService {
-
   isLoading: boolean;
 
-  constructor() { }
+  constructor() {}
 
   startLoading() {
     this.isLoading = true;
@@ -16,5 +15,4 @@ export class LoadingService {
   stopLoading() {
     this.isLoading = false;
   }
-
 }

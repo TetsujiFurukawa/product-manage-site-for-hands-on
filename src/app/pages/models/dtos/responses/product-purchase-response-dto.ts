@@ -1,5 +1,4 @@
 export class ProductPurchaseResponseDto {
-
   productCode: string;
 
   productName: string;
@@ -15,5 +14,4 @@ export class ProductPurchaseResponseDto {
   productPurchaseUnitPrice: number;
 
   productStockQuantity: number;
-
 }

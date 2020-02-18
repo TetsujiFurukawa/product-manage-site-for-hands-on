@@ -1,7 +1,6 @@
 import { of } from 'rxjs';
 
-import { async, inject, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { RoutingService } from '../../core/services/routing.service';

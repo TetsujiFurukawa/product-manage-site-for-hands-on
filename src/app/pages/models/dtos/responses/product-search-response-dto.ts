@@ -1,5 +1,4 @@
 export class ProductSearchResponseDto {
-
   no: number;
 
   productName: string;
@@ -19,5 +18,4 @@ export class ProductSearchResponseDto {
   productStockQuantity: number;
 
   endOfSale: boolean;
-
 }

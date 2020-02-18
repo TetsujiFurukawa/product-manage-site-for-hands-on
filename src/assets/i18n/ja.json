@@ -78,7 +78,7 @@
     "productColor": "色",
     "productUnitPrice": "* 単価",
     "endOfSale": "販売終了",
-    "endOfSaleDate": "販売終了日",
+    "endOfSaleDate": "* 販売終了日",
     "returnButton": "戻る",
     "saveButton": {
       "new": "登録",

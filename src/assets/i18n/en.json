@@ -78,7 +78,7 @@
     "productColor": "Product Color",
     "productUnitPrice": "* Product Unit Price",
     "endOfSale": "End of Sale",
-    "endOfSaleDate": "End of Sale Date",
+    "endOfSaleDate": "* End of Sale Date",
     "returnButton": "Return",
     "saveButton": {
       "new": "Register",

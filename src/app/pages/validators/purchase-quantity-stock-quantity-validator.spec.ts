@@ -1,5 +1,3 @@
-import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
-
 import { TestBed } from '@angular/core/testing';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
@@ -11,7 +9,7 @@ const PRODUCT_PURCHASE_QUANTITY = 'productPurchaseQuantity';
 describe('PurchaseQuantityStockQuantityValidator', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [PurchaseQuantityStockQuantityValidator, FormattedCurrencyPipe]
+      providers: [PurchaseQuantityStockQuantityValidator]
     });
   });
 
@@ -23,7 +21,8 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
         productPurchaseQuantity: new FormControl(1),
         validatorLocale: new FormControl('ja-JP')
       });
-      PurchaseQuantityStockQuantityValidator.match(testingForm);
+      // expect(PurchaseQuantityStockQuantityValidator(testingForm)).toBeNull();
+      // PurchaseQuantityStockQuantityValidator.match(testingForm);
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
     });
     it('should not have error | productStockQuantity', () => {
@@ -33,7 +32,7 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
         productPurchaseQuantity: new FormControl(1),
         validatorLocale: new FormControl('ja-JP')
       });
-      PurchaseQuantityStockQuantityValidator.match(testingForm);
+      // PurchaseQuantityStockQuantityValidator.match(testingForm);
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
     });
 
@@ -44,7 +43,7 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
         productPurchaseQuantity: new FormControl(''),
         validatorLocale: new FormControl('ja-JP')
       });
-      PurchaseQuantityStockQuantityValidator.match(testingForm);
+      // PurchaseQuantityStockQuantityValidator.match(testingForm);
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
     });
 
@@ -55,18 +54,18 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
         productPurchaseQuantity: new FormControl(null),
         validatorLocale: new FormControl('ja-JP')
       });
-      PurchaseQuantityStockQuantityValidator.match(testingForm);
+      // PurchaseQuantityStockQuantityValidator.match(testingForm);
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
     });
 
     it('should not have error | productPurchaseQuantity', () => {
       const formBuilder: FormBuilder = new FormBuilder();
       const testingForm: FormGroup = formBuilder.group({
-        productStockQuantity: new FormControl(2),
+        productStockQuantity: new FormControl(1),
         productPurchaseQuantity: new FormControl(1),
         validatorLocale: new FormControl('ja-JP')
       });
-      PurchaseQuantityStockQuantityValidator.match(testingForm);
+      // PurchaseQuantityStockQuantityValidator.match(testingForm);
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
     });
 
@@ -77,8 +76,11 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
         productPurchaseQuantity: new FormControl(2),
         validatorLocale: new FormControl('ja-JP')
       });
-      PurchaseQuantityStockQuantityValidator.match(testingForm);
-      expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeTruthy();
+      const purchaseQuantityStockQuantityValidator = PurchaseQuantityStockQuantityValidator(testingForm);
+      // PurchaseQuantityStockQuantityValidator.match(testingForm);
+      // expect(PurchaseQuantityStockQuantityValidator(testingForm)).toBeNull();
+      expect(purchaseQuantityStockQuantityValidator).toEqual({ exceedStockError: true });
+      // expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeTruthy();
     });
   });
 });

@@ -56,7 +56,11 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   productPurchaseName = new FormControl('', [Validators.required]);
   productPurchaseUnitPrice = new FormControl('');
   productStockQuantity = new FormControl('');
-  productPurchaseQuantity = new FormControl('', [Validators.required, Validators.max(999999999), Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)]);
+  productPurchaseQuantity = new FormControl('', [
+    Validators.required,
+    Validators.max(999999999),
+    Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)
+  ]);
   productPurchaseAmount = new FormControl('');
   productImage = new FormControl(null);
   validatorLocale = new FormControl(this.accountService.getUser().userLocale);
@@ -76,7 +80,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
       validatorLocale: this.validatorLocale
     },
     {
-      validators: [ProductCodeProductNameValidator.match, PurchaseQuantityStockQuantityValidator.match]
+      validators: [ProductCodeProductNameValidator.match, PurchaseQuantityStockQuantityValidator]
     }
   );
 
@@ -143,7 +147,9 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     const productPurchaseAmount =
       this.formattedCurrencyPipe.parse(this.productPurchaseUnitPrice.value, this.locale, this.currency) *
       this.formattedCurrencyPipe.parse(this.productPurchaseQuantity.value, this.locale, this.currency);
-    this.productPurchaseAmount.setValue(this.formattedCurrencyPipe.transform(String(productPurchaseAmount), this.locale, this.currency));
+    this.productPurchaseAmount.setValue(
+      this.formattedCurrencyPipe.transform(String(productPurchaseAmount), this.locale, this.currency)
+    );
   }
   // --------------------------------------------------------------------------------
   // private methods
@@ -179,8 +185,15 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     const productPurchaseRequestDto: ProductPurchaseRequestDto = new ProductPurchaseRequestDto();
     productPurchaseRequestDto.productCode = this.productCode.value;
     productPurchaseRequestDto.productPurchaseName = this.productPurchaseName.value;
-    productPurchaseRequestDto.productStockQuantity = this.formattedNumberPipe.parse(this.productStockQuantity.value, this.locale);
-    productPurchaseRequestDto.productPurchaseQuantity = this.formattedCurrencyPipe.parse(this.productPurchaseQuantity.value, this.locale, this.currency);
+    productPurchaseRequestDto.productStockQuantity = this.formattedNumberPipe.parse(
+      this.productStockQuantity.value,
+      this.locale
+    );
+    productPurchaseRequestDto.productPurchaseQuantity = this.formattedCurrencyPipe.parse(
+      this.productPurchaseQuantity.value,
+      this.locale,
+      this.currency
+    );
 
     return productPurchaseRequestDto;
   }
@@ -192,8 +205,16 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     this.productName.setValue(productPurchaseResponseDto.productName);
     this.productGenre.setValue(this.translateService.instant('genre.' + productPurchaseResponseDto.productGenre));
     this.productSizeStandard.setValue(productPurchaseResponseDto.productSizeStandard);
-    this.productPurchaseUnitPrice.setValue(this.formattedCurrencyPipe.transform(String(productPurchaseResponseDto.productPurchaseUnitPrice), this.locale, this.currency));
-    this.productStockQuantity.setValue(this.formattedNumberPipe.transform(String(productPurchaseResponseDto.productStockQuantity), this.locale));
+    this.productPurchaseUnitPrice.setValue(
+      this.formattedCurrencyPipe.transform(
+        String(productPurchaseResponseDto.productPurchaseUnitPrice),
+        this.locale,
+        this.currency
+      )
+    );
+    this.productStockQuantity.setValue(
+      this.formattedNumberPipe.transform(String(productPurchaseResponseDto.productStockQuantity), this.locale)
+    );
     this.productImage.setValue(productPurchaseResponseDto.productImage);
   }
 
@@ -201,7 +222,9 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     if (productPurchaseResponseDto === null) {
       return;
     }
-    this.productStockQuantity.setValue(this.formattedNumberPipe.transform(String(productPurchaseResponseDto.productStockQuantity), this.locale));
+    this.productStockQuantity.setValue(
+      this.formattedNumberPipe.transform(String(productPurchaseResponseDto.productStockQuantity), this.locale)
+    );
     this.productPurchaseQuantity.reset();
     this.productPurchaseAmount.reset();
   }

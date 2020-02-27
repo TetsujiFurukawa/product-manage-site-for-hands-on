@@ -58,6 +58,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   productStockQuantity = new FormControl('');
   productPurchaseQuantity = new FormControl('', [
     Validators.required,
+    Validators.min(1),
     Validators.max(999999999),
     Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)
   ]);

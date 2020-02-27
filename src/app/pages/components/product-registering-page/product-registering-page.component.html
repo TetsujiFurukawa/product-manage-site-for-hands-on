@@ -79,6 +79,9 @@
               <mat-error class="validation-error" *ngIf="productUnitPrice.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
+              <mat-error class="validation-error" *ngIf="productUnitPrice.hasError('min')">
+                {{'validationError.min'|translate}}
+              </mat-error>
               <mat-error class="validation-error" *ngIf="productUnitPrice.hasError('max')">
                 {{'validationError.maxlength9'|translate}}
               </mat-error>

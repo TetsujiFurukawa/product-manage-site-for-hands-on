@@ -72,6 +72,12 @@
                 placeholder="{{ 'dummyPurchasingPage.productPurchaseQuantity' | translate }}"
                 matTooltip="{{ 'tooltip.registerValue.input.numeric' | translate }}" [attr.locale]='locale' maxlength=11
                 (blur)='blurProductPurchaseQuantity()'>
+              <mat-error class="validation-error" *ngIf="productPurchaseQuantity.hasError('min')">
+                {{'validationError.min'|translate}}
+              </mat-error>
+              <mat-error class="validation-error" *ngIf="productPurchaseQuantity.hasError('max')">
+                {{'validationError.maxlength9'|translate}}
+              </mat-error>
               <mat-error class="validation-error" *ngIf="productPurchaseQuantity.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>

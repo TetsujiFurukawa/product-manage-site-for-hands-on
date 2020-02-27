@@ -49,7 +49,12 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   productGenre = new FormControl('', [Validators.required]);
   productSizeStandard = new FormControl('', [Validators.required]);
   productColor = new FormControl('');
-  productUnitPrice = new FormControl('', [Validators.required, Validators.max(999999999), Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)]);
+  productUnitPrice = new FormControl('', [
+    Validators.required,
+    Validators.min(1),
+    Validators.max(999999999),
+    Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)
+  ]);
   endOfSale = new FormControl(false);
   endOfSaleDate = new FormControl('');
   productImage = new FormControl(null);
@@ -228,7 +233,11 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     productDto.productGenre = this.productGenre.value;
     productDto.productSizeStandard = this.productSizeStandard.value;
     productDto.productColor = this.productColor.value;
-    productDto.productUnitPrice = this.formattedCurrencyPipe.parse(this.productUnitPrice.value, this.locale, this.currency);
+    productDto.productUnitPrice = this.formattedCurrencyPipe.parse(
+      this.productUnitPrice.value,
+      this.locale,
+      this.currency
+    );
     productDto.endOfSale = this.endOfSale.value;
     if (this.endOfSaleDate.value === '') {
       productDto.endOfSaleDate = null;
@@ -251,7 +260,9 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     this.productGenre.setValue(productDto.productGenre);
     this.productSizeStandard.setValue(productDto.productSizeStandard);
     this.productColor.setValue(productDto.productColor);
-    this.productUnitPrice.setValue(this.formattedCurrencyPipe.transform(productDto.productUnitPrice.toString(), this.locale, this.currency));
+    this.productUnitPrice.setValue(
+      this.formattedCurrencyPipe.transform(productDto.productUnitPrice.toString(), this.locale, this.currency)
+    );
     this.endOfSale.setValue(productDto.endOfSale);
     if (productDto.endOfSaleDate === null) {
       this.endOfSaleDate.setValue('');

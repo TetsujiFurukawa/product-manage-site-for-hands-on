@@ -186,6 +186,7 @@
       "singleByteAlphanumeric": "半角英数を入力してください。",
       "halfWidthNumericComma": "数値を入力してください。"
     },
+    "min": "最低数を下回っています。",
     "maxlength9": "最大9桁までが入力可能です。"
   },
   "tooltip": {

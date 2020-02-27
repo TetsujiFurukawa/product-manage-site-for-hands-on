@@ -49,7 +49,12 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   productGenre = new FormControl('');
   productSizeStandard = new FormControl('');
   productStockQuantity = new FormControl('');
-  addProductStockQuantity = new FormControl('', [Validators.required, Validators.max(999999999), Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)]);
+  addProductStockQuantity = new FormControl('', [
+    Validators.required,
+    Validators.min(1),
+    Validators.max(999999999),
+    Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)
+  ]);
   productImage = new FormControl(null);
 
   registeringForm = this.formBuilder.group(
@@ -156,8 +161,14 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   private createProductStockRequestDto(): ProductStockRequestDto {
     const productStockRequestDto: ProductStockRequestDto = new ProductStockRequestDto();
     productStockRequestDto.productCode = this.productCode.value;
-    productStockRequestDto.productStockQuantity = this.formattedNumberPipe.parse(this.productStockQuantity.value, this.locale);
-    productStockRequestDto.addProductStockQuantity = this.formattedNumberPipe.parse(this.addProductStockQuantity.value, this.locale);
+    productStockRequestDto.productStockQuantity = this.formattedNumberPipe.parse(
+      this.productStockQuantity.value,
+      this.locale
+    );
+    productStockRequestDto.addProductStockQuantity = this.formattedNumberPipe.parse(
+      this.addProductStockQuantity.value,
+      this.locale
+    );
 
     return productStockRequestDto;
   }
@@ -169,7 +180,9 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     this.productName.setValue(productStockResponseDto.productName);
     this.productGenre.setValue(this.translateService.instant('genre.' + productStockResponseDto.productGenre));
     this.productSizeStandard.setValue(productStockResponseDto.productSizeStandard);
-    this.productStockQuantity.setValue(this.formattedNumberPipe.transform(String(productStockResponseDto.productStockQuantity), this.locale));
+    this.productStockQuantity.setValue(
+      this.formattedNumberPipe.transform(String(productStockResponseDto.productStockQuantity), this.locale)
+    );
     this.productImage.setValue(productStockResponseDto.productImage);
   }
 
@@ -177,7 +190,9 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     if (productStockResponseDto === null) {
       return;
     }
-    this.productStockQuantity.setValue(this.formattedNumberPipe.transform(String(productStockResponseDto.productStockQuantity), this.locale));
+    this.productStockQuantity.setValue(
+      this.formattedNumberPipe.transform(String(productStockResponseDto.productStockQuantity), this.locale)
+    );
     this.addProductStockQuantity.reset();
   }
 

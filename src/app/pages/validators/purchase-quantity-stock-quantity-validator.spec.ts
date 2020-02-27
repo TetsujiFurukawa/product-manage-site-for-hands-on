@@ -21,8 +21,6 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
         productPurchaseQuantity: new FormControl(1),
         validatorLocale: new FormControl('ja-JP')
       });
-      // expect(PurchaseQuantityStockQuantityValidator(testingForm)).toBeNull();
-      // PurchaseQuantityStockQuantityValidator.match(testingForm);
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
     });
     it('should not have error | productStockQuantity', () => {
@@ -32,7 +30,6 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
         productPurchaseQuantity: new FormControl(1),
         validatorLocale: new FormControl('ja-JP')
       });
-      // PurchaseQuantityStockQuantityValidator.match(testingForm);
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
     });
 
@@ -43,7 +40,6 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
         productPurchaseQuantity: new FormControl(''),
         validatorLocale: new FormControl('ja-JP')
       });
-      // PurchaseQuantityStockQuantityValidator.match(testingForm);
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
     });
 
@@ -54,7 +50,6 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
         productPurchaseQuantity: new FormControl(null),
         validatorLocale: new FormControl('ja-JP')
       });
-      // PurchaseQuantityStockQuantityValidator.match(testingForm);
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
     });
 
@@ -65,7 +60,6 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
         productPurchaseQuantity: new FormControl(1),
         validatorLocale: new FormControl('ja-JP')
       });
-      // PurchaseQuantityStockQuantityValidator.match(testingForm);
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
     });
 
@@ -77,10 +71,7 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
         validatorLocale: new FormControl('ja-JP')
       });
       const purchaseQuantityStockQuantityValidator = PurchaseQuantityStockQuantityValidator(testingForm);
-      // PurchaseQuantityStockQuantityValidator.match(testingForm);
-      // expect(PurchaseQuantityStockQuantityValidator(testingForm)).toBeNull();
-      expect(purchaseQuantityStockQuantityValidator).toEqual({ exceedStockError: true });
-      // expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeTruthy();
+      expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeTruthy();
     });
   });
 });

@@ -81,7 +81,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
       validatorLocale: this.validatorLocale
     },
     {
-      validators: [ProductCodeProductNameValidator.match, PurchaseQuantityStockQuantityValidator]
+      validators: [ProductCodeProductNameValidator, PurchaseQuantityStockQuantityValidator]
     }
   );
 

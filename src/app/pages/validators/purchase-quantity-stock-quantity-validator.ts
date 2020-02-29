@@ -22,14 +22,11 @@ export const PurchaseQuantityStockQuantityValidator: ValidatorFn = (control: For
   const numProductStockQuantity = Number(formattedNumberPipe.parse(productStockQuantity, validatorLocale));
   const numProductPurchaseQuantity = Number(formattedNumberPipe.parse(productPurchaseQuantity, validatorLocale));
 
-  console.log('numProductPurchaseQuantity:' + numProductPurchaseQuantity);
-  console.log('numProductStockQuantity:' + numProductStockQuantity);
-
   if (numProductPurchaseQuantity <= numProductStockQuantity) {
     return;
   }
-  const errorCode = { exceedStockError: true };
-  control.get(PRODUCT_PURCHASE_QUANTITY).setErrors(errorCode);
+  const validateError = { exceedStockError: true };
+  control.get(PRODUCT_PURCHASE_QUANTITY).setErrors(validateError);
 
-  return errorCode;
+  return validateError;
 };

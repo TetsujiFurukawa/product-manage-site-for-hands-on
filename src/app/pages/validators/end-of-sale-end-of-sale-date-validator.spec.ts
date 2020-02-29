@@ -19,7 +19,7 @@ describe('EndOfSaleEndOfSaleDateValidator', () => {
         endOfSale: new FormControl(false),
         endOfSaleDate: new FormControl(null)
       });
-      EndOfSaleEndOfSaleDateValidator.match(testingForm);
+      EndOfSaleEndOfSaleDateValidator(testingForm);
       expect(testingForm.get(END_OF_SALE_DATE).getError('required')).toBeNull();
     });
 
@@ -29,7 +29,7 @@ describe('EndOfSaleEndOfSaleDateValidator', () => {
         endOfSale: new FormControl(true),
         endOfSaleDate: new FormControl(null)
       });
-      EndOfSaleEndOfSaleDateValidator.match(testingForm);
+      EndOfSaleEndOfSaleDateValidator(testingForm);
       expect(testingForm.get(END_OF_SALE_DATE).getError('required')).toBeTruthy();
     });
   });

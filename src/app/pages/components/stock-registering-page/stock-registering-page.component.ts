@@ -68,7 +68,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
       productImage: this.productImage
     },
     {
-      validators: ProductCodeProductNameValidator.match
+      validators: ProductCodeProductNameValidator
     }
   );
 

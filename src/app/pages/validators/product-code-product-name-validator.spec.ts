@@ -19,7 +19,7 @@ describe('ProductCodeProductNameValidator', () => {
         productCode: new FormControl('productCode'),
         productName: new FormControl(null)
       });
-      ProductCodeProductNameValidator.match(testingForm);
+      ProductCodeProductNameValidator(testingForm);
       expect(testingForm.get(PRODUCT_CODE).getError('productNotExistError')).toBeTruthy();
     });
 
@@ -29,7 +29,7 @@ describe('ProductCodeProductNameValidator', () => {
         productCode: new FormControl('productCode'),
         productName: new FormControl('productName')
       });
-      ProductCodeProductNameValidator.match(testingForm);
+      ProductCodeProductNameValidator(testingForm);
       expect(testingForm.get(PRODUCT_CODE).getError('productNotExistError')).toBeNull();
     });
   });

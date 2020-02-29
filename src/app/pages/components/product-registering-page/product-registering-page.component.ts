@@ -75,7 +75,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
       updateDate: this.updateDate
     },
     {
-      validators: EndOfSaleEndOfSaleDateValidator.match
+      validators: EndOfSaleEndOfSaleDateValidator
     }
   );
 

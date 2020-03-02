@@ -22,11 +22,24 @@ const routes: Routes = [
   { path: UrlConst.PATH_SIGN_IN, component: SignInPageComponent },
   { path: UrlConst.PATH_PRODUCT_LISTING, component: ProductListingPageComponent, canActivate: [AuthGuard] },
   { path: UrlConst.PATH_PRODUCT_REGISTERING_NEW, component: ProductRegisteringPageComponent, canActivate: [AuthGuard] },
-  { path: UrlConst.PATH_PRODUCT_REGISTERING + '/:productCode', component: ProductRegisteringPageComponent, canActivate: [AuthGuard] },
-  { path: UrlConst.PATH_PURCHASE_HISTORY_LISTING, component: PurchaseHistoryListingPageComponent, canActivate: [AuthGuard] },
+  {
+    path: UrlConst.PATH_PRODUCT_REGISTERING + '/:productCode',
+    component: ProductRegisteringPageComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: UrlConst.PATH_PURCHASE_HISTORY_LISTING,
+    component: PurchaseHistoryListingPageComponent,
+    canActivate: [AuthGuard]
+  },
   { path: UrlConst.PATH_STOCK_REGISTERING, component: StockRegisteringPageComponent, canActivate: [AuthGuard] },
-  { path: UrlConst.PATH_DUMMY_PURCHASING, loadChildren: () => import('./super-user-pages/dummy-purchasing-page/dummy-purchasing-page.module').then(m => m.DummyPurchasingPageModule) }
-  // { path: UrlConst.PATH_DUMMY_PURCHASING, component: DummyPurchasingPageComponent, canActivate: [AuthGuard] },
+  {
+    path: UrlConst.PATH_DUMMY_PURCHASING,
+    loadChildren: () =>
+      import('./super-user-pages/dummy-purchasing-page/dummy-purchasing-page.module').then(
+        m => m.DummyPurchasingPageModule
+      )
+  }
 ];
 
 @NgModule({

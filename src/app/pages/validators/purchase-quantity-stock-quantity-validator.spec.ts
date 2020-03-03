@@ -14,7 +14,7 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
   });
 
   describe('#validate', () => {
-    it('should not have error | productStockQuantity', () => {
+    it('should not have error | productStockQuantity is blank', () => {
       const formBuilder: FormBuilder = new FormBuilder();
       const testingForm: FormGroup = formBuilder.group({
         productStockQuantity: new FormControl(''),
@@ -24,7 +24,7 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
       PurchaseQuantityStockQuantityValidator(testingForm);
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
     });
-    it('should not have error | productStockQuantity', () => {
+    it('should not have error | productStockQuantity is null', () => {
       const formBuilder: FormBuilder = new FormBuilder();
       const testingForm: FormGroup = formBuilder.group({
         productStockQuantity: new FormControl(null),
@@ -35,7 +35,7 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
     });
 
-    it('should not have error | productPurchaseQuantity', () => {
+    it('should not have error | productPurchaseQuantity is blank', () => {
       const formBuilder: FormBuilder = new FormBuilder();
       const testingForm: FormGroup = formBuilder.group({
         productStockQuantity: new FormControl(1),
@@ -46,7 +46,7 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
     });
 
-    it('should not have error | productPurchaseQuantity', () => {
+    it('should not have error | productPurchaseQuantity is null', () => {
       const formBuilder: FormBuilder = new FormBuilder();
       const testingForm: FormGroup = formBuilder.group({
         productStockQuantity: new FormControl(1),
@@ -57,7 +57,7 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
     });
 
-    it('should not have error | productPurchaseQuantity', () => {
+    it('should not have error | productPurchaseQuantity equals productStockQuantity', () => {
       const formBuilder: FormBuilder = new FormBuilder();
       const testingForm: FormGroup = formBuilder.group({
         productStockQuantity: new FormControl(1),
@@ -68,7 +68,7 @@ describe('PurchaseQuantityStockQuantityValidator', () => {
       expect(testingForm.get(PRODUCT_PURCHASE_QUANTITY).getError('exceedStockError')).toBeNull();
     });
 
-    it('should have error', () => {
+    it('should have error | productPurchaseQuantity exceeds productStockQuantity', () => {
       const formBuilder: FormBuilder = new FormBuilder();
       const testingForm: FormGroup = formBuilder.group({
         productStockQuantity: new FormControl(1),

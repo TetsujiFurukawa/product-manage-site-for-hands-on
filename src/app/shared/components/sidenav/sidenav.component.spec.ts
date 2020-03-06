@@ -1,5 +1,6 @@
 import { of } from 'rxjs';
 import { MaterialModule } from 'src/app/material/material.module';
+import { HttpLoaderFactory } from 'src/app/ngx-translate/ngx-translate/ngx-translate.module';
 import { MenuListResponseDto } from 'src/app/pages/models/dtos/responses/menu-list-response-dto';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { SearchParamsService } from 'src/app/pages/services/search-params.service';
@@ -12,7 +13,6 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
-import { HttpLoaderFactory } from '../../shared.module';
 import { SidenavComponent } from './sidenav.component';
 
 describe('SidenavComponent', () => {
@@ -40,7 +40,11 @@ describe('SidenavComponent', () => {
           }
         })
       ],
-      providers: [TranslateService, { provide: AccountService, useValue: accountServiceSpy }, { provide: SearchParamsService, useValue: searchParamsServiceSpy }],
+      providers: [
+        TranslateService,
+        { provide: AccountService, useValue: accountServiceSpy },
+        { provide: SearchParamsService, useValue: searchParamsServiceSpy }
+      ],
       declarations: [SidenavComponent]
     }).compileComponents();
     router = TestBed.inject(Router);

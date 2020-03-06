@@ -1,10 +1,11 @@
+import { HttpLoaderFactory } from 'src/app/ngx-translate/ngx-translate/ngx-translate.module';
+
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
-import { HttpLoaderFactory } from '../core.module';
 import { MatPaginatorI18nService } from './mat-paginator-i18n.service';
 
 describe('MatPaginatorI18nService', () => {

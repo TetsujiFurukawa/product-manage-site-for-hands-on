@@ -1,18 +1,17 @@
 import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 
-import { CommonModule, registerLocaleData } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import localeJa from '@angular/common/locales/ja';
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { RouterModule } from '@angular/router';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 
 import { CoreModule } from '../core/core.module';
 import { MatPaginatorI18nService } from '../core/services/mat-paginator-i18n.service';
 import { MaterialModule } from '../material/material.module';
+import { NgxTranslateModule } from '../ngx-translate/ngx-translate/ngx-translate.module';
 import { SharedModule } from '../shared/shared.module';
 import {
     ProductListingPageComponent
@@ -28,14 +27,14 @@ import {
     StockRegisteringPageComponent
 } from './components/stock-registering-page/stock-registering-page.component';
 
-// 他言語化の設定
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
-registerLocaleData(localeJa);
-
 @NgModule({
-  declarations: [ProductListingPageComponent, ProductRegisteringPageComponent, PurchaseHistoryListingPageComponent, SignInPageComponent, StockRegisteringPageComponent],
+  declarations: [
+    ProductListingPageComponent,
+    ProductRegisteringPageComponent,
+    PurchaseHistoryListingPageComponent,
+    SignInPageComponent,
+    StockRegisteringPageComponent
+  ],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -43,22 +42,17 @@ registerLocaleData(localeJa);
     NgxUpperCaseDirectiveModule,
     ReactiveFormsModule,
     RouterModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
     CoreModule,
-    SharedModule
+    SharedModule,
+    NgxTranslateModule
   ],
-  providers: [
-    // The locale to use for this system
-    { provide: LOCALE_ID, useValue: 'ja-JP' },
-    { provide: LOCALE_ID, useValue: 'en-US' },
-    { provide: MatPaginatorIntl, useClass: MatPaginatorI18nService }
-  ],
-  exports: [ProductListingPageComponent, ProductRegisteringPageComponent, PurchaseHistoryListingPageComponent, SignInPageComponent, StockRegisteringPageComponent]
+  providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorI18nService }],
+  exports: [
+    ProductListingPageComponent,
+    ProductRegisteringPageComponent,
+    PurchaseHistoryListingPageComponent,
+    SignInPageComponent,
+    StockRegisteringPageComponent
+  ]
 })
 export class PagesModule {}

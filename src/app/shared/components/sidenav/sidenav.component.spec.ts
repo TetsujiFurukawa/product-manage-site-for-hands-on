@@ -1,6 +1,6 @@
 import { of } from 'rxjs';
 import { MaterialModule } from 'src/app/material/material.module';
-import { HttpLoaderFactory } from 'src/app/ngx-translate/ngx-translate/ngx-translate.module';
+import { HttpLoaderFactory } from 'src/app/ngx-translate/ngx-translate.module';
 import { MenuListResponseDto } from 'src/app/pages/models/dtos/responses/menu-list-response-dto';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { SearchParamsService } from 'src/app/pages/services/search-params.service';

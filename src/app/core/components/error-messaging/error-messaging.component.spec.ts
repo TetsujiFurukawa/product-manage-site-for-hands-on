@@ -1,5 +1,5 @@
 import { ErrorMessagingService } from 'src/app/core/services/error-messaging.service';
-import { HttpLoaderFactory } from 'src/app/ngx-translate/ngx-translate/ngx-translate.module';
+import { HttpLoaderFactory } from 'src/app/ngx-translate/ngx-translate.module';
 
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';

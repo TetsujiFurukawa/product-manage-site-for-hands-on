@@ -1,5 +1,5 @@
 import { of } from 'rxjs';
-import { HttpLoaderFactory } from 'src/app/ngx-translate/ngx-translate/ngx-translate.module';
+import { HttpLoaderFactory } from 'src/app/ngx-translate/ngx-translate.module';
 import { UrlConst } from 'src/app/pages/constants/url-const';
 import { MenuListResponseDto } from 'src/app/pages/models/dtos/responses/menu-list-response-dto';
 import { AccountService } from 'src/app/pages/services/account.service';

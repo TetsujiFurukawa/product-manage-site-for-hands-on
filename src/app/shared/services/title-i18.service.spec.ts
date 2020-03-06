@@ -1,4 +1,4 @@
-import { HttpLoaderFactory } from 'src/app/ngx-translate/ngx-translate/ngx-translate.module';
+import { HttpLoaderFactory } from 'src/app/ngx-translate/ngx-translate.module';
 import { User } from 'src/app/pages/models/user';
 
 import { HttpClient } from '@angular/common/http';

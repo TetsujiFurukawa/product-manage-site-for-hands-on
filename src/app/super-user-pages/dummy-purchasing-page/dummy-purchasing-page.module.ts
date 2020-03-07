@@ -1,7 +1,7 @@
 import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 import { CoreModule } from 'src/app/core/core.module';
 import { MaterialModule } from 'src/app/material/material.module';
-import { NgxTranslateModule } from 'src/app/ngx-translate/ngx-translate/ngx-translate.module';
+import { NgxTranslateModule } from 'src/app/ngx-translate/ngx-translate.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 import { CommonModule } from '@angular/common';

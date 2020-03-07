@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
 import { CoreModule } from '../core/core.module';
 import { MatPaginatorI18nService } from '../core/services/mat-paginator-i18n.service';
 import { MaterialModule } from '../material/material.module';
-import { NgxTranslateModule } from '../ngx-translate/ngx-translate/ngx-translate.module';
+import { NgxTranslateModule } from '../ngx-translate/ngx-translate.module';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';

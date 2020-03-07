@@ -6,12 +6,11 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { RouterModule } from '@angular/router';
-import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 
 import { CoreModule } from '../core/core.module';
 import { MatPaginatorI18nService } from '../core/services/mat-paginator-i18n.service';
 import { MaterialModule } from '../material/material.module';
-import { NgxTranslateModule } from '../ngx-translate/ngx-translate/ngx-translate.module';
+import { NgxTranslateModule } from '../ngx-translate/ngx-translate.module';
 import { SharedModule } from '../shared/shared.module';
 import {
     ProductListingPageComponent

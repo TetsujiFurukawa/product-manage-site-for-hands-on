@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from '../material/material.module';
-import { NgxTranslateModule } from '../ngx-translate/ngx-translate/ngx-translate.module';
+import { NgxTranslateModule } from '../ngx-translate/ngx-translate.module';
 import { ErrorMessagingComponent } from './components/error-messaging/error-messaging.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { MatDatePickerComponent } from './components/mat-date-picker/mat-date-picker.component';

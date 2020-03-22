@@ -34,25 +34,25 @@ body {
 /* --------------------------------------------------------------------------------
  * Basic settings of the listing page.
  * -------------------------------------------------------------------------------- */
-.Listing-page .listing-title {
+.listing-page-wrapper .listing-title-wrapper {
   margin-top: 50px;
   height: 35px;
   background-color: #78BBE6;
   padding: 0 10px;
 }
 
-.Listing-page h1,
-.Listing-page th {
+.listing-page-wrapper h1,
+.listing-page-wrapper th {
   font-weight: normal;
 }
 
-.Listing-page h1 {
+.listing-page-wrapper h1 {
   line-height: 35px;
   color: #ffffff;
   font-size: 1.4rem;
 }
 
-.search-form {
+.search-criteria-wrapper {
   background-color: #ffffff;
 }
 
@@ -70,7 +70,7 @@ body {
   opacity: 0.8;
 }
 
-.search-criteria-wrapper {
+.search-condition-wrapper {
   display: table-cell;
 }
 
@@ -342,12 +342,12 @@ body {
   }
 
   /* ---------- Listing page ---------- */
-  .Listing-page h1 {
+  .listing-page-wrapper h1 {
     text-align: center;
   }
 
   .search-criteria,
-  .search-criteria-wrapper {
+  .search-condition-wrapper {
     display: block;
   }
 

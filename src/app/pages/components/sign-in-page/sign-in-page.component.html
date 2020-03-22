@@ -1,12 +1,12 @@
-<section class="sign-in-page">
-  <div class="sign-in-title">
+<section class="sign-in-page-wrapper">
+  <div class="sign-in-title-wrapper">
     <p>EXAPMLE SITE</p>
   </div>
   <app-error-messaging></app-error-messaging>
-  <div class="sign-in-conditions">
+  <div class="sign-in-criteria-wrapper">
     <form [formGroup]="signInForm">
 
-      <mat-form-field class="mat-form-field">
+      <mat-form-field class="form-field">
         <input id="signin-user-account" class="mat-input" matInput type="text" formControlName="signInUserAccount"
           placeholder="{{ 'signInPage.userAccount' | translate }}">
         <mat-error class="validation-error" *ngIf="signInUserAccount.hasError('required')">
@@ -14,7 +14,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="mat-form-field">
+      <mat-form-field class="form-field">
         <input id="signin-user-password" class="mat-input" matInput type="text" formControlName="signInUserPassword"
           placeholder="{{ 'signInPage.userPassword' | translate }}">
         <mat-error class="validation-error" *ngIf="signInUserPassword.hasError('required')">

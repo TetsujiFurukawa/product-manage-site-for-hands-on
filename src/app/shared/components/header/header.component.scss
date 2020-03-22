@@ -1,7 +1,7 @@
 /* --------------------------------------------------------------------------------
- * Header.
+ * header-wrapper.
  * -------------------------------------------------------------------------------- */
-.toolbar {
+.header-wrapper .toolbar {
   position: fixed;
   z-index: 10;
   top: 0;
@@ -14,23 +14,23 @@
   font-size: 1.4rem;
 }
 
-.toolbar-row {
+.header-wrapper .toolbar-row {
   padding: 0 0;
 }
 
-.menu {
+.header-wrapper .menu {
   height: 50px;
 }
 
-.menu:hover {
+.header-wrapper .menu:hover {
   opacity: 0.7;
 }
 
-.menu.btnSystemName {
+.header-wrapper .menu.btnSystemName {
   padding-left: 10px;
 }
 
-.menu.btnSignOut {
+.header-wrapper .menu.btnSignOut {
   text-align: right;
   padding-right: 10px;
   margin-right: 0;
@@ -39,7 +39,7 @@
   height: 50px;
 }
 
-.header .btnSidenav {
+.header-wrapper .btnSidenav {
   display: none;
 }
 
@@ -47,11 +47,11 @@
  * Smart Phones and tablets settings.
  * -------------------------------------------------------------------------------- */
 @media(max-width:768px) {
-  .menu.mainMenu {
+  .header-wrapper .menu.mainMenu {
     display: none;
   }
 
-  .header .btnSidenav {
+  .header-wrapper .btnSidenav {
     display: block;
   }
 }

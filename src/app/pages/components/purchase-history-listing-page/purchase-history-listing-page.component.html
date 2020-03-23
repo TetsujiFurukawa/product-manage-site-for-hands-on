@@ -58,8 +58,8 @@
         matTooltip="{{ 'tooltip.searchBtn.searchBtn' | translate }}">{{ 'PurchaseHistoryListingPage.searchButton' | translate }}</button>
     </div>
   </div>
-  <div class="search-results">
-    <table class="results" mat-table *ngIf="resultsLength>0" [dataSource]="purchaseHistorySearchResponseDtos">
+  <div class="search-results-wrapper">
+    <table class="search-results" mat-table *ngIf="resultsLength>0" [dataSource]="purchaseHistorySearchResponseDtos">
       <ng-container matColumnDef="no">
         <th class="width-no" mat-header-cell *matHeaderCellDef>
           {{ "PurchaseHistoryListingPage.no" | translate }}

@@ -139,7 +139,7 @@ body {
   opacity: 0.8;
 }
 
-.search-results-wrapper .results {
+.search-results-wrapper .search-results {
   table-layout: fixed;
   border-collapse: separate;
   width: 100%;
@@ -157,15 +157,15 @@ body {
   height: calc(100vh - 310px);
 }
 
-.search-results-wrapper .results table,
-.search-results-wrapper .results th,
-.search-results-wrapper .results td {
+.search-results-wrapper .search-results table,
+.search-results-wrapper .search-results th,
+.search-results-wrapper .search-results td {
   height: 40px;
   vertical-align: middle;
   text-align: center;
 }
 
-.search-results-wrapper .results th {
+.search-results-wrapper .search-results th {
   color: #323232;
   background-color: #D5EEFF;
   border-bottom: 1px solid #F2F2F2;
@@ -173,21 +173,21 @@ body {
   min-width: 100px;
 }
 
-.search-results-wrapper .results tr {
+.search-results-wrapper .search-results tr {
   background-color: #ffffff;
 }
 
-.search-results-wrapper .results td {
+.search-results-wrapper .search-results td {
   border-bottom: 1px solid #F2F2F2;
   text-align: center;
   min-width: 100px;
 }
 
-.search-results-wrapper .results a {
+.search-results-wrapper .search-results a {
   color: #323232;
 }
 
-.search-results-wrapper .results tr:hover {
+.search-results-wrapper .search-results tr:hover {
   background-color: rgb(213, 238, 255, 0.1);
   cursor: pointer;
 }
@@ -403,7 +403,7 @@ body {
     width: 100%;
   }
 
-  .search-results-wrapper .results thead {
+  .search-results-wrapper .search-results thead {
     display: none;
   }
 
@@ -412,13 +412,13 @@ body {
     height: auto;
   }
 
-  .search-results-wrapper .results tr {
+  .search-results-wrapper .search-results tr {
     border-bottom: 2px solid #F2F2F2;
     display: block;
     height: 210px;
   }
 
-  .search-results-wrapper .results td {
+  .search-results-wrapper .search-results td {
     padding: 0 10px;
     margin: 0;
     display: block;
@@ -427,12 +427,12 @@ body {
     border-bottom: 0;
   }
 
-  .search-results-wrapper .results td:before {
+  .search-results-wrapper .search-results td:before {
     content: attr(data-label);
     float: left;
   }
 
-  .search-results-wrapper .results td:first-child {
+  .search-results-wrapper .search-results td:first-child {
     margin-top: 5px !important;
   }
 

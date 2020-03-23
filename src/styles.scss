@@ -213,7 +213,7 @@ body {
   font-size: 1.4rem;
 }
 
-.registering-conditions {
+.registering-criteria-wrapper {
   height: 520px;
   background-color: #ffffff;
 }
@@ -223,7 +223,7 @@ body {
   margin: 0 auto;
 }
 
-.registering-conditions-wrapper,
+.registering-criteria,
 .registering-functions-wrapper {
   width: 770px;
   margin: 0 auto;
@@ -234,11 +234,11 @@ body {
   padding-top: 20px;
 }
 
-.registering-conditions .raised-button:hover {
+.registering-criteria-wrapper .raised-button:hover {
   opacity: 0.8;
 }
 
-.registering-conditions .registering-form {
+.registering-criteria-wrapper .registering-criteria {
   display: table;
   table-layout: fixed;
 }
@@ -267,20 +267,20 @@ body {
   text-align: left;
 }
 
-.registering-conditions .registering-condition-wrapper {
+.registering-criteria-wrapper .registering-condition-wrapper {
   margin: 10px auto 0;
 }
 
-.registering-conditions .form-field {
+.registering-criteria-wrapper .form-field {
   width: 20rem;
   font-size: 1.4rem;
 }
 
-.registering-conditions .form-field.width-wide {
+.registering-criteria-wrapper .form-field.width-wide {
   width: 40rem;
 }
 
-.registering-conditions p {
+.registering-criteria-wrapper p {
   margin-top: 30px;
   font-size: 1.4rem;
   display: block;
@@ -442,13 +442,13 @@ body {
     text-align: center;
   }
 
-  .registering-conditions .registering-form,
-  .registering-area-wrapper {
+  .registering-criteria-wrapper .registering-criteria,
+  .registering-criteria-wrapper .registering-area-wrapper {
     display: block;
   }
 
   .registering-title,
-  .registering-conditions-wrapper,
+  .registering-criteria,
   .registering-condition-wrapper,
   .registering-functions-wrapper,
   .registering-area-wrapper.left,
@@ -456,28 +456,28 @@ body {
   .registering-area-wrapper img,
   .registering-area-wrapper .raised-button,
   .registering-functions .raised-button,
-  .registering-conditions p {
+  .registering-criteria-wrapper p {
     width: 100%;
     margin-left: 0;
     margin-right: 0;
     text-align: center;
   }
 
-  .registering-conditions {
+  .registering-criteria-wrapper {
     height: auto;
   }
 
-  .registering-conditions .registering-conditions-wrapper {
+  .registering-criteria-wrapper .registering-criteria {
     padding-bottom: 0;
   }
 
-  .registering-conditions .registering-condition-wrapper {
+  .registering-criteria-wrapper .registering-condition-wrapper {
     margin: 0;
     padding: 0;
   }
 
-  .registering-conditions .form-field,
-  .registering-conditions .form-field.width-wide {
+  .registering-criteria-wrapper .form-field,
+  .registering-criteria-wrapper .form-field.width-wide {
     width: 95%;
     font-size: 1.2rem;
   }

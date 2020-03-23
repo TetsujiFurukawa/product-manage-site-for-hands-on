@@ -4,11 +4,11 @@
       <h1 id="title">{{ 'dummyPurchasingPage.title' | translate }}</h1>
     </div>
   </div>
-  <div class="registering-conditions">
+  <div class="registering-criteria-wrapper">
     <app-error-messaging></app-error-messaging>
     <app-success-messaging></app-success-messaging>
-    <div class="registering-conditions-wrapper">
-      <form class="registering-form" [formGroup]="registeringForm">
+    <div class="registering-criteria">
+      <form [formGroup]="registeringForm">
         <div class="registering-area-wrapper left">
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">

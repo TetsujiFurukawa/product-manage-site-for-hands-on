@@ -84,7 +84,7 @@ body {
   width: 100px;
 }
 
-.search-functions {
+.search-functions-wrapper {
   display: table;
   height: 30px;
   width: 100%;
@@ -103,14 +103,14 @@ body {
   text-align: right;
 }
 
-.search-functions .mat-paginator-container {
+.search-functions-wrapper .mat-paginator-container {
   justify-content: left;
   padding-left: 8px;
   min-height: 50px;
   background-color: #ECEFF1;
 }
 
-.search-functions .raised-button {
+.search-functions-wrapper .raised-button {
   margin-right: 10px;
   width: 200px;
   border-radius: 2px;
@@ -121,51 +121,51 @@ body {
   box-shadow: none;
 }
 
-.search-functions .raised-button:hover {
+.search-functions-wrapper .raised-button:hover {
   opacity: 0.8;
 }
 
-.search-functions .raised-button.active {
+.search-functions-wrapper .raised-button.active {
   background-color: #F99F48;
   color: #ffffff;
 }
 
-.search-results {
+.search-results-wrapper {
   width: 100%;
   text-align: center;
 }
 
-.search-results:hover {
+.search-results-wrapper:hover {
   opacity: 0.8;
 }
 
-.search-results .results {
+.search-results-wrapper .results {
   table-layout: fixed;
   border-collapse: separate;
   width: 100%;
 }
 
-.search-results thead,
-.search-results tbody {
+.search-results-wrapper thead,
+.search-results-wrapper tbody {
   display: block;
 }
 
-.search-results tbody {
+.search-results-wrapper tbody {
   overflow-y: scroll;
   height: 55vh;
   /* ↑ Fallback of calc() for unsupported browsers */
   height: calc(100vh - 310px);
 }
 
-.search-results .results table,
-.search-results .results th,
-.search-results .results td {
+.search-results-wrapper .results table,
+.search-results-wrapper .results th,
+.search-results-wrapper .results td {
   height: 40px;
   vertical-align: middle;
   text-align: center;
 }
 
-.search-results .results th {
+.search-results-wrapper .results th {
   color: #323232;
   background-color: #D5EEFF;
   border-bottom: 1px solid #F2F2F2;
@@ -173,21 +173,21 @@ body {
   min-width: 100px;
 }
 
-.search-results .results tr {
+.search-results-wrapper .results tr {
   background-color: #ffffff;
 }
 
-.search-results .results td {
+.search-results-wrapper .results td {
   border-bottom: 1px solid #F2F2F2;
   text-align: center;
   min-width: 100px;
 }
 
-.search-results .results a {
+.search-results-wrapper .results a {
   color: #323232;
 }
 
-.search-results .results tr:hover {
+.search-results-wrapper .results tr:hover {
   background-color: rgb(213, 238, 255, 0.1);
   cursor: pointer;
 }
@@ -372,7 +372,7 @@ body {
     width: 100%;
   }
 
-  .search-functions,
+  .search-functions-wrapper,
   .search-functions-paginator,
   .search-functions-buttons {
     padding: 0;
@@ -380,7 +380,7 @@ body {
     display: block;
   }
 
-  .search-functions {
+  .search-functions-wrapper {
     height: auto;
     margin-bottom: 0 auto 5px;
     text-align: center;
@@ -390,35 +390,35 @@ body {
     width: 100%;
   }
 
-  .search-functions .mat-paginator-container {
+  .search-functions-wrapper .mat-paginator-container {
     justify-content: center;
     margin: 0;
     padding: 0;
     min-height: 30px;
   }
 
-  .search-functions .raised-button {
+  .search-functions-wrapper .raised-button {
     margin-bottom: 2px;
     height: 50px;
     width: 100%;
   }
 
-  .search-results .results thead {
+  .search-results-wrapper .results thead {
     display: none;
   }
 
-  .search-results tbody {
+  .search-results-wrapper tbody {
     overflow: hidden;
     height: auto;
   }
 
-  .search-results .results tr {
+  .search-results-wrapper .results tr {
     border-bottom: 2px solid #F2F2F2;
     display: block;
     height: 210px;
   }
 
-  .search-results .results td {
+  .search-results-wrapper .results td {
     padding: 0 10px;
     margin: 0;
     display: block;
@@ -427,12 +427,12 @@ body {
     border-bottom: 0;
   }
 
-  .search-results .results td:before {
+  .search-results-wrapper .results td:before {
     content: attr(data-label);
     float: left;
   }
 
-  .search-results .results td:first-child {
+  .search-results-wrapper .results td:first-child {
     margin-top: 5px !important;
   }
 

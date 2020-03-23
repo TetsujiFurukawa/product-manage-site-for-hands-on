@@ -200,12 +200,6 @@ body {
   padding-bottom: 25px;
 }
 
-.registering-page-wrapper .registering-title-wrapper {
-  height: 35px;
-  background-color: #78BBE6;
-  padding: 0 10px;
-}
-
 .registering-page-wrapper h1 {
   line-height: 35px;
   font-weight: normal;
@@ -213,9 +207,10 @@ body {
   font-size: 1.4rem;
 }
 
-.registering-criteria-wrapper {
-  height: 520px;
-  background-color: #ffffff;
+.registering-title-wrapper {
+  height: 35px;
+  background-color: #78BBE6;
+  padding: 0 10px;
 }
 
 .registering-title {
@@ -223,24 +218,29 @@ body {
   margin: 0 auto;
 }
 
-.registering-criteria,
-.registering-functions-wrapper {
-  width: 770px;
-  margin: 0 auto;
-  padding: 0 0 10px;
-}
-
-.registering-functions-wrapper {
-  padding-top: 20px;
+.registering-criteria-wrapper {
+  height: 520px;
+  background-color: #ffffff;
 }
 
 .registering-criteria-wrapper .raised-button:hover {
   opacity: 0.8;
 }
 
-.registering-criteria-wrapper .registering-criteria {
+.registering-criteria,
+.registering-functions {
+  width: 770px;
+  margin: 0 auto;
+  padding: 0 0 10px;
+}
+
+.registering-criteria {
   display: table;
   table-layout: fixed;
+}
+
+.registering-functions {
+  padding-top: 20px;
 }
 
 .registering-area-wrapper {
@@ -267,7 +267,7 @@ body {
   text-align: left;
 }
 
-.registering-criteria-wrapper .registering-condition-wrapper {
+.registering-condition-wrapper {
   margin: 10px auto 0;
 }
 
@@ -286,13 +286,13 @@ body {
   display: block;
 }
 
-.registering-functions {
+.registering-functions-wrapper {
   height: 30px;
   text-align: right;
 }
 
 .registering-area-wrapper .raised-button,
-.registering-functions .raised-button {
+.registering-functions-wrapper .raised-button {
   width: 200px;
   border-radius: 2px;
   background-color: #78BBE6;
@@ -307,16 +307,16 @@ body {
   margin-top: 10px;
 }
 
-.registering-functions .raised-button:hover {
+.registering-functions-wrapper .raised-button:hover {
   opacity: 0.8;
 }
 
-.registering-functions .raised-button.active {
+.registering-functions-wrapper .raised-button.active {
   background-color: #F99F48;
   color: #ffffff;
 }
 
-.registering-functions .raised-button:disabled {
+.registering-functions-wrapper .raised-button:disabled {
   opacity: 0.4;
 }
 
@@ -450,12 +450,12 @@ body {
   .registering-title,
   .registering-criteria,
   .registering-condition-wrapper,
-  .registering-functions-wrapper,
+  .registering-functions,
   .registering-area-wrapper.left,
   .registering-area-wrapper.right,
   .registering-area-wrapper img,
   .registering-area-wrapper .raised-button,
-  .registering-functions .raised-button,
+  .registering-functions-wrapper .raised-button,
   .registering-criteria-wrapper p {
     width: 100%;
     margin-left: 0;
@@ -482,13 +482,13 @@ body {
     font-size: 1.2rem;
   }
 
-  .registering-functions-wrapper {
+  .registering-functions {
     padding-top: 0;
     padding-bottom: 0;
   }
 
   .registering-area-wrapper .raised-button,
-  .registering-functions-wrapper .raised-button {
+  .registering-functions .raised-button {
     display: block;
     height: 50px;
     margin-top: 0;

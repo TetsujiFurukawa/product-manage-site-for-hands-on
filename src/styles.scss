@@ -195,18 +195,18 @@ body {
 /* --------------------------------------------------------------------------------
  * Basic settings of the registering page.
  * -------------------------------------------------------------------------------- */
-.registering-page {
+.registering-page-wrapper {
   margin: 50px auto 10px;
   padding-bottom: 25px;
 }
 
-.registering-page .registering-title {
+.registering-page-wrapper .registering-title-wrapper {
   height: 35px;
   background-color: #78BBE6;
   padding: 0 10px;
 }
 
-.registering-page h1 {
+.registering-page-wrapper h1 {
   line-height: 35px;
   font-weight: normal;
   color: #ffffff;
@@ -218,7 +218,7 @@ body {
   background-color: #ffffff;
 }
 
-.registering-title-wrapper {
+.registering-title {
   width: 820px;
   margin: 0 auto;
 }
@@ -437,7 +437,7 @@ body {
   }
 
   /* ---------- Registering page ---------- */
-  .registering-page {
+  .registering-page-wrapper {
     padding-bottom: 55px;
     text-align: center;
   }
@@ -447,7 +447,7 @@ body {
     display: block;
   }
 
-  .registering-title-wrapper,
+  .registering-title,
   .registering-conditions-wrapper,
   .registering-condition-wrapper,
   .registering-functions-wrapper,

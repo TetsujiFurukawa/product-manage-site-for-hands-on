@@ -105,7 +105,7 @@
           </div>
         </div>
         <div class="registering-area-wrapper right">
-          <p class="form-field">{{ 'productRegisteringPage.productImage' | translate }}</p>
+          <p>{{ 'productRegisteringPage.productImage' | translate }}</p>
           <img src="../../../../assets/images/no_image.png" class="image-preview" *ngIf="!productImage.value" />
           <img id="product-image" [src]="productImage.value" class="image-preview" *ngIf="productImage.value" />
           <button mat-raised-button id="file-input-button" class="raised-button" type="button"

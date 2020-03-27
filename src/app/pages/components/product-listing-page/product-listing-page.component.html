@@ -7,44 +7,36 @@
     <form [formGroup]="searchForm">
       <div class="search-criteria">
         <div class="search-condition-wrapper">
-          <div id="searchCondition1">
-            <mat-form-field class="form-field">
-              <input id="product-name" matInput type="text" formControlName="productName"
-                placeholder="{{ 'productListingPage.productName' | translate }}" maxlength=50
-                matTooltip="{{ 'tooltip.searchCriteria.prefixMatching' | translate }}">
-            </mat-form-field>
-          </div>
+          <mat-form-field class="form-field">
+            <input id="product-name" matInput type="text" formControlName="productName"
+              placeholder="{{ 'productListingPage.productName' | translate }}" maxlength=50
+              matTooltip="{{ 'tooltip.searchCriteria.prefixMatching' | translate }}">
+          </mat-form-field>
         </div>
         <div class="search-condition-wrapper">
-          <div id="searchCondition2">
-            <mat-form-field class="form-field">
-              <input id="product-code" matInput type="text" formControlName="productCode" upperCase
-                placeholder="{{ 'productListingPage.productCode' | translate }}" maxlength=20
-                matTooltip="{{ 'tooltip.searchCriteria.prefixMatching' | translate }}">
-            </mat-form-field>
-          </div>
+          <mat-form-field class="form-field">
+            <input id="product-code" matInput type="text" formControlName="productCode" upperCase
+              placeholder="{{ 'productListingPage.productCode' | translate }}" maxlength=20
+              matTooltip="{{ 'tooltip.searchCriteria.prefixMatching' | translate }}">
+          </mat-form-field>
         </div>
         <div class="search-condition-wrapper">
-          <div id="searchCondition3">
-            <mat-form-field class="form-field">
-              <mat-label id="product-genre-label">{{ 'productListingPage.productGenre' | translate }}</mat-label>
-              <mat-select id="product-genre" formControlName="productGenre"
-                matTooltip="{{ 'tooltip.searchCriteria.pullDown' | translate }}">
-                <mat-option class="product-genre-option" (click)="unselectProductGenre()"></mat-option>
-                <mat-option class="product-genre-option" *ngFor="let code of genres" [value]="code">
-                  {{ 'genre.' + code | translate }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
+          <mat-form-field class="form-field">
+            <mat-label id="product-genre-label">{{ 'productListingPage.productGenre' | translate }}</mat-label>
+            <mat-select id="product-genre" formControlName="productGenre"
+              matTooltip="{{ 'tooltip.searchCriteria.pullDown' | translate }}">
+              <mat-option class="product-genre-option" (click)="unselectProductGenre()"></mat-option>
+              <mat-option class="product-genre-option" *ngFor="let code of genres" [value]="code">
+                {{ 'genre.' + code | translate }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
         <div class="search-condition-wrapper">
-          <div id="searchCondition4">
-            <mat-checkbox id="end-of-sale" formControlName="endOfSale"
-              matTooltip="{{ 'productListingPage.tooltip.endOfSale' | translate }}">
-              {{ 'productListingPage.endOfSale' | translate }}
-            </mat-checkbox>
-          </div>
+          <mat-checkbox id="end-of-sale" formControlName="endOfSale"
+            matTooltip="{{ 'productListingPage.tooltip.endOfSale' | translate }}">
+            {{ 'productListingPage.endOfSale' | translate }}
+          </mat-checkbox>
         </div>
       </div>
     </form>

@@ -5,15 +5,15 @@
   background-color: #ffffff;
 }
 
-#searchCondition2 {
+.search-condition-wrapper .form-field-dates {
   display: inline-table;
   table-layout: fixed;
   border-collapse: separate;
   border-spacing: 10px 0;
 }
 
-#searchCondition2 .date-from,
-#searchCondition2 .date-to {
+.search-condition-wrapper .date-from,
+.search-condition-wrapper .date-to {
   display: table-cell;
 }
 

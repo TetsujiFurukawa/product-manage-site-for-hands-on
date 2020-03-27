@@ -7,16 +7,14 @@
     <form [formGroup]="searchForm">
       <div class="search-criteria">
         <div class="search-condition-wrapper">
-          <div id="searchCondition1">
-            <mat-form-field class="form-field">
-              <input id="product-purchase-name" matInput type="text" formControlName="productPurchaseName"
-                placeholder="{{ 'PurchaseHistoryListingPage.productPurchaseName' | translate }}" maxlength=50
-                matTooltip="{{ 'tooltip.searchCriteria.prefixMatching' | translate }}">
-            </mat-form-field>
-          </div>
+          <mat-form-field class="form-field">
+            <input id="product-purchase-name" matInput type="text" formControlName="productPurchaseName"
+              placeholder="{{ 'PurchaseHistoryListingPage.productPurchaseName' | translate }}" maxlength=50
+              matTooltip="{{ 'tooltip.searchCriteria.prefixMatching' | translate }}">
+          </mat-form-field>
         </div>
         <div class="search-condition-wrapper">
-          <div id="searchCondition2" class="form-field-dates">
+          <div class="form-field-dates">
             <app-mat-date-picker id="product-purchase-date-from" [locale]='locale' class="date-from"
               placeholder="{{ 'PurchaseHistoryListingPage.productPurchaseDateFrom' | translate }}" [isBlank]=true
               [required]=false (event)=" receivedEventFromChildFrom($event)"></app-mat-date-picker>
@@ -26,22 +24,18 @@
           </div>
         </div>
         <div class="search-condition-wrapper">
-          <div id="searchCondition3">
-            <mat-form-field class="form-field">
-              <input id="product-name" matInput type="text" formControlName="productName"
-                placeholder="{{ 'PurchaseHistoryListingPage.productName' | translate }}" maxlength=50
-                matTooltip="{{ 'tooltip.searchCriteria.prefixMatching' | translate }}">
-            </mat-form-field>
-          </div>
+          <mat-form-field class="form-field">
+            <input id="product-name" matInput type="text" formControlName="productName"
+              placeholder="{{ 'PurchaseHistoryListingPage.productName' | translate }}" maxlength=50
+              matTooltip="{{ 'tooltip.searchCriteria.prefixMatching' | translate }}">
+          </mat-form-field>
         </div>
         <div class="search-condition-wrapper">
-          <div id="searchCondition4">
-            <mat-form-field class="form-field">
-              <input id="product-code" matInput type="text" formControlName="productCode" upperCase
-                placeholder="{{ 'PurchaseHistoryListingPage.productCode' | translate }}" maxlength=20
-                matTooltip="{{ 'tooltip.searchCriteria.prefixMatching' | translate }}">
-            </mat-form-field>
-          </div>
+          <mat-form-field class="form-field">
+            <input id="product-code" matInput type="text" formControlName="productCode" upperCase
+              placeholder="{{ 'PurchaseHistoryListingPage.productCode' | translate }}" maxlength=20
+              matTooltip="{{ 'tooltip.searchCriteria.prefixMatching' | translate }}">
+          </mat-form-field>
         </div>
       </div>
     </form>

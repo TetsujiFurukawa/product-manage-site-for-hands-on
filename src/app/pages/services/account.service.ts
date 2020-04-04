@@ -2,7 +2,6 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiConst } from 'src/app/pages/constants/api-const';
 import { AppConst } from 'src/app/pages/constants/app-const';
-import { UrlConst } from 'src/app/pages/constants/url-const';
 import { SignInRequestDto } from 'src/app/pages/models/dtos/requests/sign-in-request-dto';
 import { MenuListResponseDto } from 'src/app/pages/models/dtos/responses/menu-list-response-dto';
 import { SignInResponseDto } from 'src/app/pages/models/dtos/responses/sign-in-response-dto';
@@ -26,7 +25,7 @@ export class AccountService {
    * @returns sign in response
    */
   signIn(signInRequestDto: SignInRequestDto): Observable<SignInResponseDto> {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_SIGN_IN;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_SIGN_IN;
     const headers = new HttpHeaders({
       authorization: 'Basic ' + btoa(signInRequestDto.Username + ':' + signInRequestDto.Password)
     });
@@ -46,7 +45,7 @@ export class AccountService {
    * @returns menu response
    */
   getMenu(): Observable<MenuListResponseDto[]> {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_MENU;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_MENU;
 
     return this.http.get<MenuListResponseDto[]>(webApiUrl).pipe(
       catchError(error => {
@@ -61,7 +60,7 @@ export class AccountService {
    * @returns nothing
    */
   signOut(): Observable<void> {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_SIGN_OUT;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_SIGN_OUT;
     return this.http.post(webApiUrl, {}).pipe(
       map(res => {
         this.removeUser();

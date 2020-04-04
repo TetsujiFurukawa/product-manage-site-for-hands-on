@@ -7,6 +7,4 @@ export class UrlConst {
   static readonly PATH_PURCHASE_HISTORY_LISTING = 'purchase-history-listing';
   static readonly PATH_STOCK_REGISTERING = 'stock-registering';
   static readonly PATH_DUMMY_PURCHASING = 'dummy-purchasing';
-
-  static readonly PATH_API_FOLDER = '/api/';
 }

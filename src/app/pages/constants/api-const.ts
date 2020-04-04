@@ -1,5 +1,5 @@
 export class ApiConst {
-  static readonly PATH_API_FOLDER = '/api/';
+  static readonly PATH_API_ROOT = '/api/';
 
   static readonly PATH_SIGN_IN = 'sign-in/v1';
   static readonly PATH_SIGN_OUT = 'sign-out/v1';

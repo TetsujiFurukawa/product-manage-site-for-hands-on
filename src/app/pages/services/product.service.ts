@@ -1,7 +1,6 @@
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiConst } from 'src/app/pages/constants/api-const';
-import { UrlConst } from 'src/app/pages/constants/url-const';
 import { ProductDto } from 'src/app/pages/models/dtos/product-dto';
 import {
     ProductSearchListResponseDto
@@ -17,7 +16,11 @@ import { SuccessMessagingService } from '../../core/services/success-messaging.s
   providedIn: 'root'
 })
 export class ProductService {
-  constructor(private http: HttpClient, private successMessagingService: SuccessMessagingService, private errorMessageService: ErrorMessagingService) {}
+  constructor(
+    private http: HttpClient,
+    private successMessagingService: SuccessMessagingService,
+    private errorMessageService: ErrorMessagingService
+  ) {}
 
   /**
    * Gets product list
@@ -25,7 +28,7 @@ export class ProductService {
    * @returns product search response
    */
   getProductList(httpParams: HttpParams): Observable<ProductSearchListResponseDto> {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PRODUCT_SEARCH;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT_SEARCH;
     this.clearMessageProperty();
 
     return this.http
@@ -44,7 +47,7 @@ export class ProductService {
    * @returns product response
    */
   getProduct(productCode: string): Observable<ProductDto> {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PRODUCT;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT;
     this.clearMessageProperty();
 
     return this.http
@@ -63,7 +66,7 @@ export class ProductService {
    * @returns producr response
    */
   createProduct(productDto: ProductDto): Observable<ProductDto> {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PRODUCT;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT;
     this.clearMessageProperty();
 
     return this.http.post<ProductDto>(webApiUrl, productDto).pipe(
@@ -84,7 +87,7 @@ export class ProductService {
    * @returns producr response
    */
   updateProduct(productDto: ProductDto): Observable<ProductDto> {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PRODUCT;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT;
     this.clearMessageProperty();
 
     return this.http.put<ProductDto>(webApiUrl, productDto).pipe(
@@ -104,7 +107,7 @@ export class ProductService {
    * @returns genres
    */
   getGenres(): Observable<string[]> {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_GENRE;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_GENRE;
     this.clearMessageProperty();
 
     return this.http.get<string[]>(webApiUrl).pipe(

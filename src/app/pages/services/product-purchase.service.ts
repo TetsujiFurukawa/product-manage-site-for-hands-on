@@ -1,7 +1,6 @@
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiConst } from 'src/app/pages/constants/api-const';
-import { UrlConst } from 'src/app/pages/constants/url-const';
 import {
     ProductPurchaseRequestDto
 } from 'src/app/pages/models/dtos/requests/product-purchase-request-dto';
@@ -22,7 +21,11 @@ import { SuccessMessagingService } from '../../core/services/success-messaging.s
   providedIn: 'root'
 })
 export class ProductPurchaseService {
-  constructor(private http: HttpClient, private successMessagingService: SuccessMessagingService, private errorMessageService: ErrorMessagingService) {}
+  constructor(
+    private http: HttpClient,
+    private successMessagingService: SuccessMessagingService,
+    private errorMessageService: ErrorMessagingService
+  ) {}
 
   /**
    * Gets product purchase history list
@@ -30,7 +33,7 @@ export class ProductPurchaseService {
    * @returns product purchase history list
    */
   getProductPurchaseHistoryList(httpParams: HttpParams): Observable<ProductPurchaseHistorySearchListResponseDto> {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PURCHASE_HISTORY_SEARCH;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PURCHASE_HISTORY_SEARCH;
     this.clearMessageProperty();
 
     return this.http
@@ -49,7 +52,7 @@ export class ProductPurchaseService {
    * @returns product purchase response
    */
   getProductPurchase(productCode: string): Observable<ProductPurchaseResponseDto> {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PURCHASE;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PURCHASE;
     this.clearMessageProperty();
 
     return this.http
@@ -68,7 +71,7 @@ export class ProductPurchaseService {
    * @returns product purchase response
    */
   createProductPurchase(productPurchaseRequestDto: ProductPurchaseRequestDto): Observable<ProductPurchaseResponseDto> {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PURCHASE;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PURCHASE;
     this.clearMessageProperty();
 
     return this.http.post<ProductPurchaseResponseDto>(webApiUrl, productPurchaseRequestDto).pipe(

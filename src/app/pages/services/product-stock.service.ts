@@ -1,7 +1,6 @@
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiConst } from 'src/app/pages/constants/api-const';
-import { UrlConst } from 'src/app/pages/constants/url-const';
 import {
     ProductStockRequestDto
 } from 'src/app/pages/models/dtos/requests/product-stock-request-dto';
@@ -19,7 +18,11 @@ import { SuccessMessagingService } from '../../core/services/success-messaging.s
   providedIn: 'root'
 })
 export class ProductStockService {
-  constructor(private http: HttpClient, private successMessagingService: SuccessMessagingService, private errorMessageService: ErrorMessagingService) {}
+  constructor(
+    private http: HttpClient,
+    private successMessagingService: SuccessMessagingService,
+    private errorMessageService: ErrorMessagingService
+  ) {}
 
   /**
    * Gets product stock
@@ -27,7 +30,7 @@ export class ProductStockService {
    * @returns product stock response
    */
   getProductStock(productCode: string): Observable<ProductStockResponseDto> {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_STOCK;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_STOCK;
     this.clearMessageProperty();
 
     return this.http
@@ -46,7 +49,7 @@ export class ProductStockService {
    * @returns product stock response
    */
   updateProductStock(productStockRequestDto: ProductStockRequestDto): Observable<ProductStockResponseDto> {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_STOCK;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_STOCK;
     this.clearMessageProperty();
 
     return this.http.put<ProductStockResponseDto>(webApiUrl, productStockRequestDto).pipe(

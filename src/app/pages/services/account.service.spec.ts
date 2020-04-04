@@ -5,7 +5,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { ApiConst } from '../constants/api-const';
-import { UrlConst } from '../constants/url-const';
 import { SignInRequestDto } from '../models/dtos/requests/sign-in-request-dto';
 import { MenuListResponseDto } from '../models/dtos/responses/menu-list-response-dto';
 import { SignInResponseDto } from '../models/dtos/responses/sign-in-response-dto';
@@ -19,7 +18,10 @@ describe('AccountService', () => {
   let errorMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setupPageErrorMessageFromResponse: jasmine.Spy };
 
   beforeEach(() => {
-    errorMessagingServiceSpy = jasmine.createSpyObj('ErrorMessagingService', ['clearMessageProperty', 'setupPageErrorMessageFromResponse']);
+    errorMessagingServiceSpy = jasmine.createSpyObj('ErrorMessagingService', [
+      'clearMessageProperty',
+      'setupPageErrorMessageFromResponse'
+    ]);
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       imports: [HttpClientTestingModule],
@@ -42,7 +44,7 @@ describe('AccountService', () => {
   });
 
   describe('#signIn', () => {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_SIGN_IN;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_SIGN_IN;
 
     it('should return expected response', () => {
       const expectedSignInResponseDto: SignInResponseDto = new SignInResponseDto();
@@ -55,7 +57,10 @@ describe('AccountService', () => {
 
       service.signIn(new SignInRequestDto()).subscribe(signInResponseDto => {
         expect(signInResponseDto).toEqual(expectedSignInResponseDto, 'should return expected response');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0, 'setupPageErrorMessageFromResponse');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          0,
+          'setupPageErrorMessageFromResponse'
+        );
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -69,7 +74,10 @@ describe('AccountService', () => {
       const msg = '401 Unauthorized';
       service.signIn(new SignInRequestDto()).subscribe(signInResponseDto => {
         expect(signInResponseDto).toBeNull();
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1, 'setupPageErrorMessageFromResponse');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          1,
+          'setupPageErrorMessageFromResponse'
+        );
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -81,7 +89,7 @@ describe('AccountService', () => {
   });
 
   describe('#getMenu', () => {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_MENU;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_MENU;
 
     it('should return expected response', () => {
       const subMenuCodeList = new Array('subMenu1', 'subMenu2', 'subMenu3');
@@ -92,7 +100,10 @@ describe('AccountService', () => {
 
       service.getMenu().subscribe(response => {
         expect(response).toEqual(expectedMenuListResponseDto, 'should return expected response');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0, 'setupPageErrorMessageFromResponse');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          0,
+          'setupPageErrorMessageFromResponse'
+        );
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -106,7 +117,10 @@ describe('AccountService', () => {
       const msg = '404 Not Found';
       service.getMenu().subscribe(response => {
         expect(response).toBeNull();
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1, 'setupPageErrorMessageFromResponse');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          1,
+          'setupPageErrorMessageFromResponse'
+        );
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -118,7 +132,7 @@ describe('AccountService', () => {
   });
 
   describe('#signOut', () => {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_SIGN_OUT;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_SIGN_OUT;
 
     it('should return expected response', () => {
       const user: User = new User();
@@ -126,7 +140,10 @@ describe('AccountService', () => {
 
       service.signOut().subscribe(response => {
         expect(service.getUser()).toBeNull();
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0, 'setupPageErrorMessageFromResponse');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          0,
+          'setupPageErrorMessageFromResponse'
+        );
       });
 
       const req = httpTestingController.expectOne(webApiUrl);

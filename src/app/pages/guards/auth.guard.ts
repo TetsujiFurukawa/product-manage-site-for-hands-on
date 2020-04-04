@@ -16,10 +16,22 @@ export class AuthGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.accountService.getMenu().pipe(
-      map(menuListResponseDto => {
-        if (menuListResponseDto === null || this.accountService.getMenu === undefined) {
+      map(menuListResponseDtos => {
+        let existSubMenu = false;
+
+        if (menuListResponseDtos === null) {
           this.routingService.navigate(UrlConst.PATH_SIGN_IN);
-          return false;
+        }
+        menuListResponseDtos.forEach(menuListResponseDto => {
+          const filteredMenu = menuListResponseDto.subMenuCodeList.filter(subMenuCodeList =>
+            state.url.toString().endsWith(subMenuCodeList)
+          );
+          if (filteredMenu.length > 0) {
+            existSubMenu = true;
+          }
+        });
+        if (!existSubMenu) {
+          this.routingService.navigate(UrlConst.PATH_SIGN_IN);
         }
         return true;
       })

@@ -6,7 +6,6 @@ import { TestBed } from '@angular/core/testing';
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
 import { ApiConst } from '../constants/api-const';
-import { UrlConst } from '../constants/url-const';
 import { ProductStockRequestDto } from '../models/dtos/requests/product-stock-request-dto';
 import { ProductStockResponseDto } from '../models/dtos/responses/product-stock-response-dto';
 import { ProductStockService } from './product-stock.service';
@@ -19,12 +18,22 @@ describe('ProductStockService', () => {
   let errorMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setupPageErrorMessageFromResponse: jasmine.Spy };
 
   beforeEach(() => {
-    successMessagingServiceSpy = jasmine.createSpyObj('SuccessMessagingService', ['clearMessageProperty', 'setMessageProperty']);
-    errorMessagingServiceSpy = jasmine.createSpyObj('ErrorMessagingService', ['clearMessageProperty', 'setupPageErrorMessageFromResponse']);
+    successMessagingServiceSpy = jasmine.createSpyObj('SuccessMessagingService', [
+      'clearMessageProperty',
+      'setMessageProperty'
+    ]);
+    errorMessagingServiceSpy = jasmine.createSpyObj('ErrorMessagingService', [
+      'clearMessageProperty',
+      'setupPageErrorMessageFromResponse'
+    ]);
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       imports: [HttpClientTestingModule],
-      providers: [ProductStockService, { provide: SuccessMessagingService, useValue: successMessagingServiceSpy }, { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }]
+      providers: [
+        ProductStockService,
+        { provide: SuccessMessagingService, useValue: successMessagingServiceSpy },
+        { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }
+      ]
     });
     httpClient = TestBed.inject(HttpClient);
     httpTestingController = TestBed.inject(HttpTestingController);
@@ -43,7 +52,7 @@ describe('ProductStockService', () => {
   });
 
   describe('#getProductStock', () => {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_STOCK;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_STOCK;
 
     it('should return expected response', () => {
       const expectedResponseDto: ProductStockResponseDto = new ProductStockResponseDto();
@@ -57,7 +66,10 @@ describe('ProductStockService', () => {
 
       service.getProductStock('productCode').subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0, 'setupPageErrorMessageFromResponse');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          0,
+          'setupPageErrorMessageFromResponse'
+        );
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl + '?productCode=productCode');
@@ -73,7 +85,10 @@ describe('ProductStockService', () => {
       const msg = '404 Not Found';
       service.getProductStock('productCode').subscribe(responseDto => {
         expect(responseDto).toBeNull();
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1, 'setupPageErrorMessageFromResponse');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          1,
+          'setupPageErrorMessageFromResponse'
+        );
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl + '?productCode=productCode');
@@ -87,7 +102,7 @@ describe('ProductStockService', () => {
   });
 
   describe('#updateProductStock', () => {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_STOCK;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_STOCK;
 
     it('should return expected response', () => {
       const expectedResponseDto: ProductStockResponseDto = new ProductStockResponseDto();
@@ -102,7 +117,10 @@ describe('ProductStockService', () => {
       service.updateProductStock(new ProductStockRequestDto()).subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
         expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1, 'setMessageProperty');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0, 'setupPageErrorMessageFromResponse');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          0,
+          'setupPageErrorMessageFromResponse'
+        );
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -119,7 +137,10 @@ describe('ProductStockService', () => {
       service.updateProductStock(new ProductStockRequestDto()).subscribe(responseDto => {
         expect(responseDto).toBeNull();
         expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0, 'setMessageProperty');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1, 'setupPageErrorMessageFromResponse');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          1,
+          'setupPageErrorMessageFromResponse'
+        );
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);

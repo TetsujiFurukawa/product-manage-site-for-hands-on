@@ -6,7 +6,6 @@ import { TestBed } from '@angular/core/testing';
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
 import { ApiConst } from '../constants/api-const';
-import { UrlConst } from '../constants/url-const';
 import { ProductDto } from '../models/dtos/product-dto';
 import {
     ProductSearchListResponseDto
@@ -22,12 +21,22 @@ describe('ProductService', () => {
   let errorMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setupPageErrorMessageFromResponse: jasmine.Spy };
 
   beforeEach(() => {
-    successMessagingServiceSpy = jasmine.createSpyObj('SuccessMessagingService', ['clearMessageProperty', 'setMessageProperty']);
-    errorMessagingServiceSpy = jasmine.createSpyObj('ErrorMessagingService', ['clearMessageProperty', 'setupPageErrorMessageFromResponse']);
+    successMessagingServiceSpy = jasmine.createSpyObj('SuccessMessagingService', [
+      'clearMessageProperty',
+      'setMessageProperty'
+    ]);
+    errorMessagingServiceSpy = jasmine.createSpyObj('ErrorMessagingService', [
+      'clearMessageProperty',
+      'setupPageErrorMessageFromResponse'
+    ]);
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       imports: [HttpClientTestingModule],
-      providers: [ProductService, { provide: SuccessMessagingService, useValue: successMessagingServiceSpy }, { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }]
+      providers: [
+        ProductService,
+        { provide: SuccessMessagingService, useValue: successMessagingServiceSpy },
+        { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }
+      ]
     });
     httpClient = TestBed.inject(HttpClient);
     httpTestingController = TestBed.inject(HttpTestingController);
@@ -46,7 +55,7 @@ describe('ProductService', () => {
   });
 
   describe('#getProductList', () => {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PRODUCT_SEARCH;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT_SEARCH;
 
     it('should return expected response', () => {
       const productSearchResponseDto: ProductSearchResponseDto = new ProductSearchResponseDto();
@@ -68,7 +77,10 @@ describe('ProductService', () => {
 
       service.getProductList(new HttpParams()).subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0, 'setupPageErrorMessageFromResponse');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          0,
+          'setupPageErrorMessageFromResponse'
+        );
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -84,7 +96,10 @@ describe('ProductService', () => {
       const msg = '404 Not Found';
       service.getProductList(new HttpParams()).subscribe(responseDto => {
         expect(responseDto).toBeNull();
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1, 'setupPageErrorMessageFromResponse');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          1,
+          'setupPageErrorMessageFromResponse'
+        );
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -98,14 +113,17 @@ describe('ProductService', () => {
   });
 
   describe('#getProductPurchase', () => {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PRODUCT;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT;
 
     it('should return expected response', () => {
       const expectedResponseDto: ProductDto = createProductDto();
 
       service.getProduct('productCode').subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0, 'setupPageErrorMessageFromResponse');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          0,
+          'setupPageErrorMessageFromResponse'
+        );
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl + '?productCode=productCode');
@@ -121,7 +139,10 @@ describe('ProductService', () => {
       const msg = '404 Not Found';
       service.getProduct('productCode').subscribe(responseDto => {
         expect(responseDto).toBeNull();
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1, 'setupPageErrorMessageFromResponse');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          1,
+          'setupPageErrorMessageFromResponse'
+        );
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl + '?productCode=productCode');
@@ -135,7 +156,7 @@ describe('ProductService', () => {
   });
 
   describe('#createProduct', () => {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PRODUCT;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT;
 
     it('should return expected response', () => {
       const expectedResponseDto: ProductDto = createProductDto();
@@ -143,7 +164,10 @@ describe('ProductService', () => {
       service.createProduct(new ProductDto()).subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
         expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1, 'setMessageProperty');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0, 'setupPageErrorMessageFromResponse');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          0,
+          'setupPageErrorMessageFromResponse'
+        );
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -160,7 +184,10 @@ describe('ProductService', () => {
       service.createProduct(new ProductDto()).subscribe(responseDto => {
         expect(responseDto).toBeNull();
         expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0, 'setMessageProperty');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1, 'setupPageErrorMessageFromResponse');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          1,
+          'setupPageErrorMessageFromResponse'
+        );
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -174,7 +201,7 @@ describe('ProductService', () => {
   });
 
   describe('#updateProduct', () => {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_PRODUCT;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT;
 
     it('should return expected response', () => {
       const expectedResponseDto: ProductDto = createProductDto();
@@ -182,7 +209,10 @@ describe('ProductService', () => {
       service.updateProduct(new ProductDto()).subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
         expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1, 'setMessageProperty');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0, 'setupPageErrorMessageFromResponse');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          0,
+          'setupPageErrorMessageFromResponse'
+        );
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -199,7 +229,10 @@ describe('ProductService', () => {
       service.updateProduct(new ProductDto()).subscribe(responseDto => {
         expect(responseDto).toBeNull();
         expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0, 'setMessageProperty');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1, 'setupPageErrorMessageFromResponse');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          1,
+          'setupPageErrorMessageFromResponse'
+        );
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -213,14 +246,17 @@ describe('ProductService', () => {
   });
 
   describe('#getGenres', () => {
-    const webApiUrl = UrlConst.PATH_API_FOLDER + ApiConst.PATH_GENRE;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_GENRE;
 
     it('should return expected response', () => {
       const expectedResponseDto: string[] = Array('1', '2', '3');
 
       service.getGenres().subscribe(responseDto => {
         expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0, 'setupPageErrorMessageFromResponse');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          0,
+          'setupPageErrorMessageFromResponse'
+        );
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -236,7 +272,10 @@ describe('ProductService', () => {
       const msg = '404 Not Found';
       service.getGenres().subscribe(responseDto => {
         expect(responseDto).toBeNull();
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1, 'setupPageErrorMessageFromResponse');
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
+          1,
+          'setupPageErrorMessageFromResponse'
+        );
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);

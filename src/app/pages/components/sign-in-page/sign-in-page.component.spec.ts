@@ -59,7 +59,11 @@ describe('SignInPageComponent', () => {
         BrowserAnimationsModule,
         ReactiveFormsModule
       ],
-      providers: [FormBuilder, { provide: AccountService, useValue: accountServiceSpy }, { provide: TitleI18Service, useValue: titleI18ServiceSpy }],
+      providers: [
+        FormBuilder,
+        { provide: AccountService, useValue: accountServiceSpy },
+        { provide: TitleI18Service, useValue: titleI18ServiceSpy }
+      ],
       declarations: [SignInPageComponent]
     }).compileComponents();
     router = TestBed.inject(Router);
@@ -112,7 +116,7 @@ describe('SignInPageComponent', () => {
   // --------------------------------------------------------------------------------
   describe('DOM placeholder', () => {
     it('title', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('.sign-in-title');
+      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('.sign-in-title-wrapper');
       expect(htmlInputElement.innerText).toContain('EXAPMLE SITE');
     });
 
@@ -158,8 +162,16 @@ describe('SignInPageComponent', () => {
 
   describe('DOM input test', () => {
     it('Should Enter input and create request dto', () => {
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-account', expectedRequestDto.Username);
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-password', expectedRequestDto.Password);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#signin-user-account',
+        expectedRequestDto.Username
+      );
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#signin-user-password',
+        expectedRequestDto.Password
+      );
 
       // tslint:disable-next-line: no-string-literal
       const signInRequestDto: SignInRequestDto = component['createSignInRequestDto']();

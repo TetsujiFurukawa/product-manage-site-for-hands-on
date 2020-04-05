@@ -78,7 +78,7 @@ describe('HeaderComponent', () => {
 
       component.ngOnInit();
       expect(component.menuListResponseDto).toEqual(expetedMenuListResponseDtos);
-      expect(accountServiceSpy.getMenu.calls.count()).toBe(1, 'one call');
+      expect(accountServiceSpy.getMenu.calls.count()).toBe(1);
     });
   });
 
@@ -92,7 +92,7 @@ describe('HeaderComponent', () => {
   describe('#clickSubmenu', () => {
     it('should remove search param', () => {
       component.clickSubmenu();
-      expect(searchParamsServiceSpy.removeProductListingSearchParam.calls.count()).toBe(1, 'one call');
+      expect(searchParamsServiceSpy.removeProductListingSearchParam.calls.count()).toBe(1);
     });
   });
   describe('#clickSignOut', () => {
@@ -101,16 +101,16 @@ describe('HeaderComponent', () => {
       accountServiceSpy.signOut.and.returnValue(of(null));
       spyOn(router, 'navigate');
       component.clickSignOut();
-      expect(matDialogSpy.open.calls.count()).toBe(1, 'one call');
-      expect(accountServiceSpy.signOut.calls.count()).toBe(1, 'one call');
+      expect(matDialogSpy.open.calls.count()).toBe(1);
+      expect(accountServiceSpy.signOut.calls.count()).toBe(1);
       expect(router.navigate).toHaveBeenCalledWith(['/' + UrlConst.PATH_SIGN_IN]);
     }));
 
     it('should not sign out', () => {
       matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) });
       component.clickSignOut();
-      expect(matDialogSpy.open.calls.count()).toBe(1, 'one call');
-      expect(accountServiceSpy.signOut.calls.count()).toBe(0, 'no call');
+      expect(matDialogSpy.open.calls.count()).toBe(1);
+      expect(accountServiceSpy.signOut.calls.count()).toBe(0);
     });
   });
 });

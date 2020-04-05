@@ -75,18 +75,15 @@ describe('ProductService', () => {
       expectedResponseDto.pageIndex = 1;
       expectedResponseDto.resultsLength = 1;
 
-      service.getProductList(new HttpParams()).subscribe(responseDto => {
-        expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          0,
-          'setupPageErrorMessageFromResponse'
-        );
+      service.getProductList(new HttpParams()).subscribe((responseDto) => {
+        expect(responseDto).toEqual(expectedResponseDto);
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('GET');
-      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
-      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
       req.flush(expectedResponseDto);
@@ -94,18 +91,15 @@ describe('ProductService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      service.getProductList(new HttpParams()).subscribe(responseDto => {
+      service.getProductList(new HttpParams()).subscribe((responseDto) => {
         expect(responseDto).toBeNull();
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          1,
-          'setupPageErrorMessageFromResponse'
-        );
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('GET');
-      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'one call');
-      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
       req.flush(msg, { status: 404, statusText: '404 Not Found' });
@@ -118,18 +112,15 @@ describe('ProductService', () => {
     it('should return expected response', () => {
       const expectedResponseDto: ProductDto = createProductDto();
 
-      service.getProduct('productCode').subscribe(responseDto => {
-        expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          0,
-          'setupPageErrorMessageFromResponse'
-        );
+      service.getProduct('productCode').subscribe((responseDto) => {
+        expect(responseDto).toEqual(expectedResponseDto);
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl + '?productCode=productCode');
       expect(req.request.method).toEqual('GET');
-      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
-      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
       req.flush(expectedResponseDto);
@@ -137,18 +128,15 @@ describe('ProductService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      service.getProduct('productCode').subscribe(responseDto => {
+      service.getProduct('productCode').subscribe((responseDto) => {
         expect(responseDto).toBeNull();
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          1,
-          'setupPageErrorMessageFromResponse'
-        );
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl + '?productCode=productCode');
       expect(req.request.method).toEqual('GET');
-      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'one call');
-      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
       req.flush(msg, { status: 404, statusText: '404 Not Found' });
@@ -161,19 +149,16 @@ describe('ProductService', () => {
     it('should return expected response', () => {
       const expectedResponseDto: ProductDto = createProductDto();
 
-      service.createProduct(new ProductDto()).subscribe(responseDto => {
-        expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
-        expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1, 'setMessageProperty');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          0,
-          'setupPageErrorMessageFromResponse'
-        );
+      service.createProduct(new ProductDto()).subscribe((responseDto) => {
+        expect(responseDto).toEqual(expectedResponseDto);
+        expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1);
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('POST');
-      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
-      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
       req.flush(expectedResponseDto);
@@ -181,19 +166,16 @@ describe('ProductService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      service.createProduct(new ProductDto()).subscribe(responseDto => {
+      service.createProduct(new ProductDto()).subscribe((responseDto) => {
         expect(responseDto).toBeNull();
-        expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0, 'setMessageProperty');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          1,
-          'setupPageErrorMessageFromResponse'
-        );
+        expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0);
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('POST');
-      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
-      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
       req.flush(msg, { status: 404, statusText: '404 Not Found' });
@@ -206,19 +188,16 @@ describe('ProductService', () => {
     it('should return expected response', () => {
       const expectedResponseDto: ProductDto = createProductDto();
 
-      service.updateProduct(new ProductDto()).subscribe(responseDto => {
-        expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
-        expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1, 'setMessageProperty');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          0,
-          'setupPageErrorMessageFromResponse'
-        );
+      service.updateProduct(new ProductDto()).subscribe((responseDto) => {
+        expect(responseDto).toEqual(expectedResponseDto);
+        expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1);
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('PUT');
-      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
-      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
       req.flush(expectedResponseDto);
@@ -226,19 +205,16 @@ describe('ProductService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      service.updateProduct(new ProductDto()).subscribe(responseDto => {
+      service.updateProduct(new ProductDto()).subscribe((responseDto) => {
         expect(responseDto).toBeNull();
-        expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0, 'setMessageProperty');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          1,
-          'setupPageErrorMessageFromResponse'
-        );
+        expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0);
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('PUT');
-      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
-      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
       req.flush(msg, { status: 404, statusText: '404 Not Found' });
@@ -251,18 +227,15 @@ describe('ProductService', () => {
     it('should return expected response', () => {
       const expectedResponseDto: string[] = Array('1', '2', '3');
 
-      service.getGenres().subscribe(responseDto => {
-        expect(responseDto).toEqual(expectedResponseDto, 'should return expected response');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          0,
-          'setupPageErrorMessageFromResponse'
-        );
+      service.getGenres().subscribe((responseDto) => {
+        expect(responseDto).toEqual(expectedResponseDto);
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('GET');
-      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
-      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
       req.flush(expectedResponseDto);
@@ -270,18 +243,15 @@ describe('ProductService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      service.getGenres().subscribe(responseDto => {
+      service.getGenres().subscribe((responseDto) => {
         expect(responseDto).toBeNull();
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          1,
-          'setupPageErrorMessageFromResponse'
-        );
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('GET');
-      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'one call');
-      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'clearMessageProperty');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
       req.flush(msg, { status: 404, statusText: '404 Not Found' });

@@ -70,14 +70,14 @@ describe('SidenavComponent', () => {
 
       component.ngOnInit();
       expect(component.menuListResponseDto).toEqual(expetedMenuListResponseDtos);
-      expect(accountServiceSpy.getMenu.calls.count()).toBe(1, 'one call');
+      expect(accountServiceSpy.getMenu.calls.count()).toBe(1);
     });
   });
 
   describe('#clickSubmenu', () => {
     it('should remove search param', () => {
       component.clickSubmenu();
-      expect(searchParamsServiceSpy.removeProductListingSearchParam.calls.count()).toBe(1, 'one call');
+      expect(searchParamsServiceSpy.removeProductListingSearchParam.calls.count()).toBe(1);
     });
   });
 

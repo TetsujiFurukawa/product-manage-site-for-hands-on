@@ -51,7 +51,7 @@ describe('ErrorMessagingComponent', () => {
   describe('#ngOnInit', () => {
     it('should init', () => {
       component.ngOnInit();
-      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBeGreaterThan(1, 'clearMessageProperty');
+      expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBeGreaterThan(1);
     });
 
     it('should error dipslay message', () => {

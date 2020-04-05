@@ -44,7 +44,7 @@ describe('SuccessMessagingComponent', () => {
     it('should create', () => {
       expect(component).toBeTruthy();
       successMessagingServiceSpy.getMessageProperty.and.callThrough();
-      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1, 'one call');
+      expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
     });
   });
 });

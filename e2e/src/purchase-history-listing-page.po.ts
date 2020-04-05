@@ -1,6 +1,7 @@
 import { by, element, ElementArrayFinder } from 'protractor';
 
-const SELECTOR_FOR_MAT_DATE_PICKER = ' > form > mat-form-field > div > div.mat-form-field-flex > div.mat-form-field-infix > input';
+const SELECTOR_FOR_MAT_DATE_PICKER =
+  ' > form > mat-form-field > div > div.mat-form-field-flex > div.mat-form-field-infix > input';
 export class PurchaseHistoryListingPage {
   private TEST_IDS = {
     PRODUCT_PURCHASE_NAME: 'product-purchase-name',
@@ -8,7 +9,7 @@ export class PurchaseHistoryListingPage {
     PRODUCT_PURCHASE_DATE_TO: '#product-purchase-date-to' + SELECTOR_FOR_MAT_DATE_PICKER,
     PRODUCT_NAME: 'product-name',
     PRODUCT_CODE: 'product-code',
-    SEARCH_RESULT: '.results > tbody > tr',
+    SEARCH_RESULT: '.search-results > tbody > tr',
     CLEAR_BUTTON: 'clear-button',
     SEARCH_BUTTON: 'search-button'
   };
@@ -50,7 +51,13 @@ export class PurchaseHistoryListingPage {
    * @param productCode product code
    * @returns PurchaseHistoryListingPage
    */
-  setupSearchCriteria(productPurchaseName: string, productPurchaseDateFrom: string, productPurchaseDateTo: string, productName: string, productCode: string): PurchaseHistoryListingPage {
+  setupSearchCriteria(
+    productPurchaseName: string,
+    productPurchaseDateFrom: string,
+    productPurchaseDateTo: string,
+    productName: string,
+    productCode: string
+  ): PurchaseHistoryListingPage {
     element(by.id(this.TEST_IDS.PRODUCT_PURCHASE_NAME)).sendKeys(productPurchaseName);
     element(by.css(this.TEST_IDS.PRODUCT_PURCHASE_DATE_FROM)).sendKeys(productPurchaseDateFrom);
     element(by.css(this.TEST_IDS.PRODUCT_PURCHASE_DATE_TO)).sendKeys(productPurchaseDateTo);

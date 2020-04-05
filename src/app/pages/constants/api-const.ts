@@ -10,5 +10,6 @@ export class ApiConst {
   static readonly PATH_PURCHASE = 'product-purchase/v1';
 
   static readonly PATH_MENU = 'menu/v1';
+  static readonly PATH_AVAILABLE_PAGES = 'available-pages/v1';
   static readonly PATH_GENRE = 'product-genre/v1';
 }

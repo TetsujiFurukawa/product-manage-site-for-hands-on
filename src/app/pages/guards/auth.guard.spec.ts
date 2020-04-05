@@ -46,7 +46,18 @@ describe('AuthGuard', () => {
       const menuListResponseDto = new MenuListResponseDto();
       menuListResponseDto.menuCode = 'goodMenu';
       menuListResponseDto.subMenuCodeList = Array(UrlConst.PATH_PRODUCT_LISTING);
-      mockSnapshot.url = '/' + UrlConst.PATH_PRODUCT_LISTING;
+      mockSnapshot.url = UrlConst.SLASH + UrlConst.PATH_PRODUCT_LISTING;
+
+      accountServiceSpy.getMenu.and.returnValue(of(Array(menuListResponseDto)));
+      authGuard.canActivate(null, mockSnapshot).subscribe(res => {
+        expect(res).toBeTruthy();
+      });
+    });
+    it('Can activate /:productCode', () => {
+      const menuListResponseDto = new MenuListResponseDto();
+      menuListResponseDto.menuCode = 'goodMenu';
+      menuListResponseDto.subMenuCodeList = Array(UrlConst.PATH_PRODUCT_LISTING);
+      mockSnapshot.url = UrlConst.SLASH + UrlConst.PATH_PRODUCT_REGISTERING + UrlConst.SLASH + ':productCode';
 
       accountServiceSpy.getMenu.and.returnValue(of(Array(menuListResponseDto)));
       authGuard.canActivate(null, mockSnapshot).subscribe(res => {
@@ -57,7 +68,7 @@ describe('AuthGuard', () => {
       const menuListResponseDto = new MenuListResponseDto();
       menuListResponseDto.menuCode = 'badMenu';
       menuListResponseDto.subMenuCodeList = Array(UrlConst.PATH_DUMMY_PURCHASING);
-      mockSnapshot.url = '/' + UrlConst.PATH_PRODUCT_LISTING;
+      mockSnapshot.url = UrlConst.SLASH + UrlConst.PATH_PRODUCT_LISTING;
 
       accountServiceSpy.getMenu.and.returnValue(of(Array(menuListResponseDto)));
       spyOn(routingService, 'navigate');

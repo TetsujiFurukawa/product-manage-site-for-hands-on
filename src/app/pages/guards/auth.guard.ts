@@ -14,27 +14,31 @@ import { AccountService } from '../services/account.service';
 export class AuthGuard implements CanActivate {
   constructor(private accountService: AccountService, private routingService: RoutingService) {}
 
+  /**
+   * Determines whether activate can
+   * @param next Activated route snapshot
+   * @param state Router state snapshot
+   * @returns Whether activate can
+   */
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.accountService.getMenu().pipe(
-      map(menuListResponseDtos => {
-        let existSubMenu = false;
-
-        if (menuListResponseDtos === null) {
-          this.routingService.navigate(UrlConst.PATH_SIGN_IN);
+    return this.accountService.getAvailablePages().pipe(
+      map((availablePages) => {
+        if (availablePages === null) {
+          return this.cantActivate();
         }
-        menuListResponseDtos.forEach(menuListResponseDto => {
-          const filteredMenu = menuListResponseDto.subMenuCodeList.filter(subMenuCodeList =>
-            state.url.toString().endsWith(subMenuCodeList)
-          );
-          if (filteredMenu.length > 0) {
-            existSubMenu = true;
-          }
-        });
-        if (!existSubMenu) {
-          this.routingService.navigate(UrlConst.PATH_SIGN_IN);
+        const filteredMenu = availablePages.filter((availablePage) =>
+          state.url.toString().startsWith(UrlConst.SLASH + availablePage)
+        );
+        if (filteredMenu.length === 0) {
+          return this.cantActivate();
         }
         return true;
       })
     );
+  }
+
+  private cantActivate(): boolean {
+    this.routingService.navigate(UrlConst.PATH_SIGN_IN);
+    return false;
   }
 }

@@ -6,7 +6,7 @@ export class ProductListingPage {
     PRODUCT_CODE: 'product-code',
     PRODUCT_GENRE: 'product-genre',
     PRODUCT_GENRE_OPTIONS: '.product-genre-option',
-    SEARCH_RESULT: '.results > tbody > tr',
+    SEARCH_RESULT: '.search-results > tbody > tr',
     NEW_BUTTON: 'new-button',
     CLEAR_BUTTON: 'clear-button',
     SEARCH_BUTTON: 'search-button'

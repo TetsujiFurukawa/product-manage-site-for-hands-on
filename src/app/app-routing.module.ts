@@ -18,12 +18,12 @@ import { UrlConst } from './pages/constants/url-const';
 import { AuthGuard } from './pages/guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/' + UrlConst.PATH_SIGN_IN, pathMatch: 'full' },
+  { path: '', redirectTo: UrlConst.SLASH + UrlConst.PATH_SIGN_IN, pathMatch: 'full' },
   { path: UrlConst.PATH_SIGN_IN, component: SignInPageComponent },
   { path: UrlConst.PATH_PRODUCT_LISTING, component: ProductListingPageComponent, canActivate: [AuthGuard] },
   { path: UrlConst.PATH_PRODUCT_REGISTERING_NEW, component: ProductRegisteringPageComponent, canActivate: [AuthGuard] },
   {
-    path: UrlConst.PATH_PRODUCT_REGISTERING + '/:productCode',
+    path: UrlConst.PATH_PRODUCT_REGISTERING + UrlConst.SLASH + ':productCode',
     component: ProductRegisteringPageComponent,
     canActivate: [AuthGuard]
   },

@@ -13,11 +13,11 @@ import { AuthGuard } from './auth.guard';
 describe('AuthGuard', () => {
   let authGuard: AuthGuard;
   let routingService: RoutingService;
-  let accountServiceSpy: { getMenu: jasmine.Spy };
+  let accountServiceSpy: { getAvailablePages: jasmine.Spy };
   let mockSnapshot: RouterStateSnapshot;
 
   beforeEach(() => {
-    accountServiceSpy = jasmine.createSpyObj('AccountService', ['getMenu']);
+    accountServiceSpy = jasmine.createSpyObj('AccountService', ['getAvailablePages']);
     mockSnapshot = jasmine.createSpyObj('RouterStateSnapshot', ['toString']);
 
     TestBed.configureTestingModule({
@@ -36,43 +36,31 @@ describe('AuthGuard', () => {
 
   describe('#canActivate', () => {
     it('No menu', () => {
-      accountServiceSpy.getMenu.and.returnValue(of(null));
+      accountServiceSpy.getAvailablePages.and.returnValue(of(null));
       spyOn(routingService, 'navigate');
-      authGuard.canActivate(null, null).subscribe(res => {
+      authGuard.canActivate(null, null).subscribe((res) => {
         expect(routingService.navigate).toHaveBeenCalledWith(UrlConst.PATH_SIGN_IN);
       });
     });
     it('Can activate', () => {
-      const menuListResponseDto = new MenuListResponseDto();
-      menuListResponseDto.menuCode = 'goodMenu';
-      menuListResponseDto.subMenuCodeList = Array(UrlConst.PATH_PRODUCT_LISTING);
       mockSnapshot.url = UrlConst.SLASH + UrlConst.PATH_PRODUCT_LISTING;
-
-      accountServiceSpy.getMenu.and.returnValue(of(Array(menuListResponseDto)));
-      authGuard.canActivate(null, mockSnapshot).subscribe(res => {
+      accountServiceSpy.getAvailablePages.and.returnValue(of(Array(UrlConst.PATH_PRODUCT_LISTING)));
+      authGuard.canActivate(null, mockSnapshot).subscribe((res) => {
         expect(res).toBeTruthy();
       });
     });
     it('Can activate /:productCode', () => {
-      const menuListResponseDto = new MenuListResponseDto();
-      menuListResponseDto.menuCode = 'goodMenu';
-      menuListResponseDto.subMenuCodeList = Array(UrlConst.PATH_PRODUCT_LISTING);
       mockSnapshot.url = UrlConst.SLASH + UrlConst.PATH_PRODUCT_REGISTERING + UrlConst.SLASH + ':productCode';
-
-      accountServiceSpy.getMenu.and.returnValue(of(Array(menuListResponseDto)));
-      authGuard.canActivate(null, mockSnapshot).subscribe(res => {
+      accountServiceSpy.getAvailablePages.and.returnValue(of(Array(UrlConst.PATH_PRODUCT_REGISTERING)));
+      authGuard.canActivate(null, mockSnapshot).subscribe((res) => {
         expect(res).toBeTruthy();
       });
     });
     it('Can not activate', () => {
-      const menuListResponseDto = new MenuListResponseDto();
-      menuListResponseDto.menuCode = 'badMenu';
-      menuListResponseDto.subMenuCodeList = Array(UrlConst.PATH_DUMMY_PURCHASING);
       mockSnapshot.url = UrlConst.SLASH + UrlConst.PATH_PRODUCT_LISTING;
-
-      accountServiceSpy.getMenu.and.returnValue(of(Array(menuListResponseDto)));
+      accountServiceSpy.getAvailablePages.and.returnValue(of(Array(UrlConst.PATH_DUMMY_PURCHASING)));
       spyOn(routingService, 'navigate');
-      authGuard.canActivate(null, mockSnapshot).subscribe(res => {
+      authGuard.canActivate(null, mockSnapshot).subscribe((res) => {
         expect(routingService.navigate).toHaveBeenCalledWith(UrlConst.PATH_SIGN_IN);
       });
     });

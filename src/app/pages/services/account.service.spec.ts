@@ -1,3 +1,5 @@
+import { UrlConst } from 'e2e/src/url-const';
+
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -55,12 +57,9 @@ describe('AccountService', () => {
       expectedSignInResponseDto.userTimezone = 'UTC';
       expectedSignInResponseDto.userCurrency = 'JPY';
 
-      service.signIn(new SignInRequestDto()).subscribe(signInResponseDto => {
-        expect(signInResponseDto).toEqual(expectedSignInResponseDto, 'should return expected response');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          0,
-          'setupPageErrorMessageFromResponse'
-        );
+      service.signIn(new SignInRequestDto()).subscribe((signInResponseDto) => {
+        expect(signInResponseDto).toEqual(expectedSignInResponseDto);
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -72,12 +71,9 @@ describe('AccountService', () => {
 
     it('should return null 401 Unauthorized', () => {
       const msg = '401 Unauthorized';
-      service.signIn(new SignInRequestDto()).subscribe(signInResponseDto => {
+      service.signIn(new SignInRequestDto()).subscribe((signInResponseDto) => {
         expect(signInResponseDto).toBeNull();
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          1,
-          'setupPageErrorMessageFromResponse'
-        );
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -98,12 +94,9 @@ describe('AccountService', () => {
       menuListResponseDto.subMenuCodeList = subMenuCodeList;
       const expectedMenuListResponseDto = Array(menuListResponseDto);
 
-      service.getMenu().subscribe(response => {
-        expect(response).toEqual(expectedMenuListResponseDto, 'should return expected response');
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          0,
-          'setupPageErrorMessageFromResponse'
-        );
+      service.getMenu().subscribe((response) => {
+        expect(response).toEqual(expectedMenuListResponseDto);
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -115,12 +108,42 @@ describe('AccountService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      service.getMenu().subscribe(response => {
+      service.getMenu().subscribe((response) => {
         expect(response).toBeNull();
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          1,
-          'setupPageErrorMessageFromResponse'
-        );
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
+      }, fail);
+
+      const req = httpTestingController.expectOne(webApiUrl);
+      expect(req.request.method).toEqual('GET');
+
+      // Respond with the mock
+      req.flush(msg, { status: 401, statusText: '404 Not Found' });
+    });
+  });
+
+  describe('#getAvailablePages', () => {
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_AVAILABLE_PAGES;
+
+    it('should return expected response', () => {
+      const expectedResponse = Array(UrlConst.PATH_PRODUCT_LISTING, UrlConst.PATH_PRODUCT_REGISTERING);
+
+      service.getAvailablePages().subscribe((response) => {
+        expect(response).toEqual(expectedResponse);
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
+      }, fail);
+
+      const req = httpTestingController.expectOne(webApiUrl);
+      expect(req.request.method).toEqual('GET');
+
+      // Respond with the mock
+      req.flush(expectedResponse);
+    });
+
+    it('should return null 404 Not Found', () => {
+      const msg = '404 Not Found';
+      service.getAvailablePages().subscribe((response) => {
+        expect(response).toBeNull();
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
       }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
@@ -138,12 +161,9 @@ describe('AccountService', () => {
       const user: User = new User();
       service.setUser(user);
 
-      service.signOut().subscribe(response => {
+      service.signOut().subscribe((response) => {
         expect(service.getUser()).toBeNull();
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(
-          0,
-          'setupPageErrorMessageFromResponse'
-        );
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       });
 
       const req = httpTestingController.expectOne(webApiUrl);

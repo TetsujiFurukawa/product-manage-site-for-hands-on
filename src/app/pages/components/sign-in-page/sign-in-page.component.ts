@@ -70,13 +70,17 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
     this.translateService.use(this.getLangage(navigator.language));
   }
 
-  private getLangage(locale: string): string {
+  private getLangage(language: string): string {
+    console.log('SignInPageComponent #getLangage() language:' + language);
+
     const CHAR_HYPHEN = '-';
-    if (locale.indexOf(CHAR_HYPHEN) > 0) {
-      const lang: string[] = locale.split(CHAR_HYPHEN);
-      return lang[0];
+    if (language.indexOf(CHAR_HYPHEN) > 0) {
+      const splittedLanguage: string[] = language.split(CHAR_HYPHEN);
+      console.log('SignInPageComponent #getLangage() splittedLanguage[0]:' + splittedLanguage[0]);
+
+      return splittedLanguage[0];
     }
-    return locale;
+    return language;
   }
 
   private signIn(signInRequestDto: SignInRequestDto) {
@@ -85,7 +89,7 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
 
     // Signs in and gets response dto.
     const signInResponseDto: Observable<SignInResponseDto> = this.accountService.signIn(signInRequestDto);
-    signInResponseDto.subscribe(responseDto => {
+    signInResponseDto.subscribe((responseDto) => {
       if (responseDto != null) {
         // Sets account information.
         this.setUpUserAccount(responseDto);
@@ -115,5 +119,13 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
     user.userTimezoneOffset = responseDto.userTimezoneOffset;
     user.userCurrency = responseDto.userCurrency;
     this.accountService.setUser(user);
+
+    console.log('SignInPageComponent #setUpUserAccount() user.userAccount:' + user.userAccount);
+    console.log('SignInPageComponent #setUpUserAccount() user.userName:' + user.userName);
+    console.log('SignInPageComponent #setUpUserAccount() user.userLocale:' + user.userLocale);
+    console.log('SignInPageComponent #setUpUserAccount() user.userLanguage:' + user.userLanguage);
+    console.log('SignInPageComponent #setUpUserAccount() user.userTimezone:' + user.userTimezone);
+    console.log('SignInPageComponent #setUpUserAccount() user.userTimezoneOffset:' + user.userTimezoneOffset);
+    console.log('SignInPageComponent #setUpUserAccount() user.userCurrency:' + user.userCurrency);
   }
 }

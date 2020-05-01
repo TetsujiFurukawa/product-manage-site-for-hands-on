@@ -8,8 +8,16 @@ import { AccountService } from '../../pages/services/account.service';
   providedIn: 'root'
 })
 export class TitleI18Service {
-  constructor(private accountService: AccountService, private translateService: TranslateService, public title: Title) {}
+  constructor(
+    private accountService: AccountService,
+    private translateService: TranslateService,
+    public title: Title
+  ) {}
 
+  /**
+   * Sets title
+   * @param subTitle Sub title
+   */
   public setTitle(subTitle: string) {
     this.setupLangage();
     const titleSystem = this.translateService.instant('title.system');
@@ -17,6 +25,9 @@ export class TitleI18Service {
     this.title.setTitle(titleSystem + titleSub);
   }
 
+  // --------------------------------------------------------------------------------
+  // private methods
+  // --------------------------------------------------------------------------------
   private setupLangage() {
     if (this.accountService.getUser() === null) {
       return;

@@ -8,10 +8,16 @@ export class LoadingService {
 
   constructor() {}
 
+  /**
+   * Starts loading
+   */
   startLoading() {
     this.isLoading = true;
   }
 
+  /**
+   * Stops loading
+   */
   stopLoading() {
     this.isLoading = false;
   }

@@ -6,15 +6,32 @@ import { Injectable } from '@angular/core';
 export class SessionStrageService {
   constructor() {}
 
-  public static setItem<T>(key: string, t: T): void {
+  /**
+   * Sets item
+   * @template T type T as generics
+   * @param key key name of variables to save session strage
+   * @param t type T as generics
+   */
+  static setItem<T>(key: string, t: T): void {
     sessionStorage.setItem(key, JSON.stringify(t));
   }
 
-  public static getItem<T>(key: string, t: T): T {
+  /**
+   * Gets item
+   * @template T type T as generics
+   * @param key key name of variables to save session strage
+   * @param t type T as generics
+   * @returns variables saved in session strage
+   */
+  static getItem<T>(key: string, t: T): T {
     return JSON.parse(sessionStorage.getItem(key));
   }
 
-  public static removeItem(key: string) {
+  /**
+   * Removes item
+   * @param key key name of variables to save session strage
+   */
+  static removeItem(key: string) {
     sessionStorage.removeItem(key);
   }
 }

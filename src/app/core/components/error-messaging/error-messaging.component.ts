@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class ErrorMessagingComponent implements OnInit {
   constructor(public translateService: TranslateService, public errorMessagingService: ErrorMessagingService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.errorMessagingService.clearMessageProperty();
   }
 }

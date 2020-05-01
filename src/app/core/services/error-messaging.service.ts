@@ -9,19 +9,34 @@ export class ErrorMessagingService {
 
   constructor() {}
 
-  public getMessageProperty(): string {
+  /**
+   * Gets message property
+   * @returns message property
+   */
+  getMessageProperty(): string {
     return this.messageProperty;
   }
 
-  public setMessageProperty(message: string): void {
+  /**
+   * Sets message property
+   * @param message message property
+   */
+  setMessageProperty(message: string): void {
     this.messageProperty = message;
   }
 
-  public clearMessageProperty(): void {
+  /**
+   * Clears message property
+   */
+  clearMessageProperty(): void {
     this.messageProperty = '';
   }
 
-  public setupPageErrorMessageFromResponse(error: any) {
+  /**
+   * Setups page error message from response
+   * @param error error from api response
+   */
+  setupPageErrorMessageFromResponse(error: any) {
     switch (error.status) {
       case 400:
         this.setMessageProperty('errMessage.http.badRequest');

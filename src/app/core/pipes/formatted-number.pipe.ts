@@ -14,7 +14,7 @@ export class FormattedNumberPipe implements PipeTransform {
     if (!value.toString().match(regexp)) {
       return value;
     }
-    return new DecimalPipe(locale).transform(this.parse(value.toString(), locale), '1.0', locale);
+    return new DecimalPipe(locale).transform(this.parse(value.toString(), locale), '1.0-0', locale);
   }
 
   parse(value: any, locale: string): any {

@@ -52,7 +52,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   productUnitPrice = new FormControl('', [
     Validators.required,
     Validators.min(1),
-    Validators.max(999999999),
+    Validators.max(99999999),
     Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)
   ]);
   endOfSale = new FormControl(false);
@@ -162,7 +162,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
       data: dialogData
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const productDto: ProductDto = this.createProductRegisterRequestDto(this.isNew);
         this.registerProduct(productDto);
@@ -181,7 +181,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   // private methods
   // --------------------------------------------------------------------------------
   private loadData() {
-    this.productService.getGenres().subscribe(data => (this.genres = data));
+    this.productService.getGenres().subscribe((data) => (this.genres = data));
   }
 
   private setupLangage() {
@@ -193,7 +193,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   private getProduct() {
     const productCode = this.route.snapshot.paramMap.get('productCode');
     this.loadingService.startLoading();
-    this.productService.getProduct(productCode).subscribe(data => {
+    this.productService.getProduct(productCode).subscribe((data) => {
       this.extractGetProductResponse(data);
       this.loadingService.stopLoading();
     });
@@ -204,12 +204,12 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
 
     if (productDto.productSeq === null) {
       // Creates product.
-      this.productService.createProduct(productDto).subscribe(data => {
+      this.productService.createProduct(productDto).subscribe((data) => {
         this.extractGetProductResponse(data);
         this.loadingService.stopLoading();
       });
     } else {
-      this.productService.updateProduct(productDto).subscribe(data => {
+      this.productService.updateProduct(productDto).subscribe((data) => {
         this.extractGetProductResponse(data);
         this.loadingService.stopLoading();
       });

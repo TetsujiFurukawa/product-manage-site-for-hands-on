@@ -52,7 +52,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   addProductStockQuantity = new FormControl('', [
     Validators.required,
     Validators.min(1),
-    Validators.max(999999999),
+    Validators.max(99999999),
     Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)
   ]);
   productImage = new FormControl(null);
@@ -120,7 +120,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
       data: dialogData
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const productStockRequestDto: ProductStockRequestDto = this.createProductStockRequestDto();
         this.updateProductStock(productStockRequestDto);
@@ -131,7 +131,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   // private methods
   // --------------------------------------------------------------------------------
   private loadData() {
-    this.productService.getGenres().subscribe(data => (this.genres = data));
+    this.productService.getGenres().subscribe((data) => (this.genres = data));
   }
 
   private setupLangage() {
@@ -143,7 +143,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   private getProductStock() {
     this.loadingService.startLoading();
 
-    this.productStockService.getProductStock(this.productCode.value).subscribe(data => {
+    this.productStockService.getProductStock(this.productCode.value).subscribe((data) => {
       this.extractGetProductStockResponse(data);
       this.loadingService.stopLoading();
     });
@@ -152,7 +152,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   private updateProductStock(productStockRequestDto: ProductStockRequestDto) {
     this.loadingService.startLoading();
 
-    this.productStockService.updateProductStock(productStockRequestDto).subscribe(data => {
+    this.productStockService.updateProductStock(productStockRequestDto).subscribe((data) => {
       this.extractUpdateProductStockResponse(data);
       this.loadingService.stopLoading();
     });

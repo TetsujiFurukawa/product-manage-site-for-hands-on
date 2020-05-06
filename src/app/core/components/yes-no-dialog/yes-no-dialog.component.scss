@@ -7,18 +7,17 @@
   padding-top: 30px;
 }
 
-.mat-dialog-actions .raised-button {
+.mat-dialog-actions .flat-button {
   width: 140px;
   border-radius: 2px;
   background-color: #78BBE6;
   color: #ffffff;
   letter-spacing: 1px;
   font-size: 1.2rem;
-  box-shadow: none;
   margin-left: 5px;
 }
 
-.mat-dialog-actions .raised-button:hover {
+.mat-dialog-actions .flat-button:hover {
   opacity: 0.8;
 }
 
@@ -38,7 +37,7 @@ p {
  * Smart Phones and tablets settings.
  * -------------------------------------------------------------------------------- */
 @media(max-width:768px) {
-  .mat-dialog-actions .raised-button {
+  .mat-dialog-actions .flat-button {
     width: 135px;
     font-size: 1.0rem;
   }

@@ -59,7 +59,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   productPurchaseQuantity = new FormControl('', [
     Validators.required,
     Validators.min(1),
-    Validators.max(999999999),
+    Validators.max(99999999),
     Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)
   ]);
   productPurchaseAmount = new FormControl('');
@@ -133,7 +133,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
       data: dialogData
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const purchaseRequestDto: ProductPurchaseRequestDto = this.createPurchaseRequestDto();
         this.createProductPurchase(purchaseRequestDto);
@@ -156,7 +156,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   // private methods
   // --------------------------------------------------------------------------------
   private loadData() {
-    this.productService.getGenres().subscribe(data => (this.genres = data));
+    this.productService.getGenres().subscribe((data) => (this.genres = data));
   }
   private setupLangage() {
     const lang = this.accountService.getUser().userLanguage;
@@ -167,7 +167,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   private getProductPurchase() {
     this.loadingService.startLoading();
 
-    this.productPurchaseService.getProductPurchase(this.productCode.value).subscribe(data => {
+    this.productPurchaseService.getProductPurchase(this.productCode.value).subscribe((data) => {
       this.extractGetProductPurchaseResponse(data);
       this.loadingService.stopLoading();
     });
@@ -176,7 +176,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   private createProductPurchase(productPurchaseRequestDto: ProductPurchaseRequestDto) {
     this.loadingService.startLoading();
 
-    this.productPurchaseService.createProductPurchase(productPurchaseRequestDto).subscribe(data => {
+    this.productPurchaseService.createProductPurchase(productPurchaseRequestDto).subscribe((data) => {
       this.extractCreateProductPurchaseResponse(data);
       this.loadingService.stopLoading();
     });

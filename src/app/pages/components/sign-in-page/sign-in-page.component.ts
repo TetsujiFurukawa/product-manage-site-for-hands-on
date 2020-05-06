@@ -8,7 +8,7 @@ import { User } from 'src/app/pages/models/user';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -27,6 +27,7 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
   });
 
   constructor(
+    private changeDetectorRef: ChangeDetectorRef,
     private formBuilder: FormBuilder,
     private accountService: AccountService,
     private loadingService: LoadingService,
@@ -48,6 +49,7 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
    */
   ngAfterViewChecked() {
     this.titleI18Service.setTitle(UrlConst.PATH_SIGN_IN);
+    this.changeDetectorRef.detectChanges();
   }
 
   /**

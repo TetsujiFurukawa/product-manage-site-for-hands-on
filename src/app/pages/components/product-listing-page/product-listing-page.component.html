@@ -46,14 +46,13 @@
       <mat-paginator [length]="resultsLength" [pageSize]="50" [pageSizeOptions]="[10, 50, 100]"></mat-paginator>
     </div>
     <div class="search-functions-buttons">
-      <button mat-raised-button id="new-button" class="raised-button" type="button" (click)="clickNewButton()"
+      <button mat-flat-button id="new-button" class="flat-button" type="button" (click)="clickNewButton()"
         matTooltip="{{ 'productListingPage.tooltip.newBtn' | translate }}">{{ 'productListingPage.newButton' | translate }}</button>
 
-      <button mat-raised-button id="clear-button" class="raised-button" type="button" (click)="clickClearButton()"
+      <button mat-flat-button id="clear-button" class="flat-button" type="button" (click)="clickClearButton()"
         matTooltip="{{ 'tooltip.searchBtn.clearBtn' | translate }}">{{ 'productListingPage.clearButton' | translate }}</button>
 
-      <button mat-raised-button id="search-button" class="raised-button active" type="button"
-        (click)="clickSearchButton()"
+      <button mat-flat-button id="search-button" class="flat-button active" type="button" (click)="clickSearchButton()"
         matTooltip="{{ 'tooltip.searchBtn.searchBtn' | translate }}">{{ 'productListingPage.searchButton' | translate }}</button>
     </div>
   </div>

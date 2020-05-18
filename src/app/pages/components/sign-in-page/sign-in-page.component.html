@@ -16,7 +16,7 @@
         </mat-form-field>
 
         <mat-form-field class="form-field">
-          <input id="signin-user-password" matInput type="text" formControlName="signInUserPassword"
+          <input id="signin-user-password" matInput type="password" formControlName="signInUserPassword"
             placeholder="{{ 'signInPage.userPassword' | translate }}">
           <mat-error class="validation-error" *ngIf="signInUserPassword.hasError('required')">
             {{'validationError.required'|translate}}

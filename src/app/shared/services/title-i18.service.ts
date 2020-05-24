@@ -16,24 +16,11 @@ export class TitleI18Service {
 
   /**
    * Sets title
-   * @param subTitle Sub title
+   * @param screenName Name of screen
    */
-  public setTitle(subTitle: string) {
-    this.setupLangage();
+  public setTitle(screenName: string) {
     const titleSystem = this.translateService.instant('title.system');
-    const titleSub = this.translateService.instant('title.' + subTitle);
+    const titleSub = this.translateService.instant('title.' + screenName);
     this.title.setTitle(titleSystem + titleSub);
-  }
-
-  // --------------------------------------------------------------------------------
-  // private methods
-  // --------------------------------------------------------------------------------
-  private setupLangage() {
-    if (this.accountService.getUser() === null) {
-      return;
-    }
-    const lang = this.accountService.getUser().userLanguage;
-    this.translateService.setDefaultLang(lang);
-    this.translateService.use(lang);
   }
 }

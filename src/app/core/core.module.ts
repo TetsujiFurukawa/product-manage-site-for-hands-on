@@ -14,7 +14,6 @@ import {
 import { YesNoDialogComponent } from './components/yes-no-dialog/yes-no-dialog.component';
 import { FormattedCurrencyInputDirective } from './directives/formatted-currency-input.directive';
 import { FormattedNumberInputDirective } from './directives/formatted-number-input.directive';
-import { HttpXsrfInterceptor } from './interceptors/http-xsrf-interceptor';
 import { XhrInterceptor } from './interceptors/xhr-interceptor';
 import { FormattedCurrencyPipe } from './pipes/formatted-currency.pipe';
 import { FormattedNumberPipe } from './pipes/formatted-number.pipe';

@@ -1,11 +1,9 @@
 import { Directive, ElementRef, HostListener, OnInit } from '@angular/core';
-import { NgControl } from '@angular/forms';
 
 import { FormattedCurrencyPipe } from '../pipes/formatted-currency.pipe';
 
 const LOCALE = 'locale';
 const CURRENCY = 'currency';
-const CLIPBOARD_FORMAT = 'text/plain';
 
 @Directive({
   selector: '[appFormattedCurrencyInput]'
@@ -13,11 +11,7 @@ const CLIPBOARD_FORMAT = 'text/plain';
 export class FormattedCurrencyInputDirective implements OnInit {
   private element: HTMLInputElement;
 
-  constructor(
-    private elementRef: ElementRef,
-    private formattedCurrencyPipe: FormattedCurrencyPipe,
-    private ngControl: NgControl
-  ) {}
+  constructor(private elementRef: ElementRef, private formattedCurrencyPipe: FormattedCurrencyPipe) {}
 
   /**
    * on init
@@ -66,17 +60,7 @@ export class FormattedCurrencyInputDirective implements OnInit {
    */
   @HostListener('paste', ['$event'])
   beforePaste(clipboardEvent: ClipboardEvent): void {
-    // Kills paste event.
-    clipboardEvent.preventDefault();
-    const editedValue = this.formattedCurrencyPipe.parse(
-      clipboardEvent.clipboardData.getData(CLIPBOARD_FORMAT),
-      this.element.getAttribute(LOCALE),
-      this.element.getAttribute(CURRENCY)
-    );
-
-    // Validation doesn't work well when updates element value like other.
-    // So updates value from control only when pasting.
-    this.ngControl.control.setValue(editedValue);
+    this.element.dispatchEvent(new Event('keyup'));
   }
 
   /**
@@ -90,5 +74,6 @@ export class FormattedCurrencyInputDirective implements OnInit {
       this.element.getAttribute(CURRENCY)
     );
     this.element.value = editedValue;
+    this.element.dispatchEvent(new Event('input'));
   }
 }

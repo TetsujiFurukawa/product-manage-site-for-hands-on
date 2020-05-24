@@ -1,10 +1,8 @@
 import { Directive, ElementRef, HostListener, OnInit } from '@angular/core';
-import { NgControl } from '@angular/forms';
 
 import { FormattedNumberPipe } from '../pipes/formatted-number.pipe';
 
 const LOCALE = 'locale';
-const CLIPBOARD_FORMAT = 'text/plain';
 
 @Directive({
   selector: '[appFormattedNumberInput]'
@@ -12,11 +10,7 @@ const CLIPBOARD_FORMAT = 'text/plain';
 export class FormattedNumberInputDirective implements OnInit {
   private element: HTMLInputElement;
 
-  constructor(
-    private elementRef: ElementRef,
-    private formattedNumberPipe: FormattedNumberPipe,
-    private ngControl: NgControl
-  ) {}
+  constructor(private elementRef: ElementRef, private formattedNumberPipe: FormattedNumberPipe) {}
 
   /**
    * on init
@@ -53,16 +47,7 @@ export class FormattedNumberInputDirective implements OnInit {
    */
   @HostListener('paste', ['$event'])
   beforePaste(clipboardEvent: ClipboardEvent): void {
-    // Kills paste event.
-    clipboardEvent.preventDefault();
-    const editedValue = this.formattedNumberPipe.parse(
-      clipboardEvent.clipboardData.getData(CLIPBOARD_FORMAT),
-      this.element.getAttribute(LOCALE)
-    );
-
-    // Validation doesn't work well when updates element value like other.
-    // So updates value from control only when pasting.
-    this.ngControl.control.setValue(editedValue);
+    this.element.dispatchEvent(new Event('keyup'));
   }
 
   /**

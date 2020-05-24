@@ -1,18 +1,13 @@
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormControl, FormsModule, NgControl } from '@angular/forms';
+import { ComponentFixture, TestBed, tick } from '@angular/core/testing';
 
 import { FormattedCurrencyPipe } from '../pipes/formatted-currency.pipe';
 import { FormattedCurrencyInputDirective } from './formatted-currency-input.directive';
 
 @Component({
-  template: `
-    <input type="text" appFormattedCurrencyInput locale="ja-JP" currency="JPY" formControlName="formControl" />
-  `
+  template: ` <input type="text" appFormattedCurrencyInput locale="ja-JP" currency="JPY" /> `
 })
-class TestFormattedCurrencyInputComponent {
-  formControl: FormControl;
-}
+class TestFormattedCurrencyInputComponent {}
 
 const formattedValue = '1,234,567';
 const nonFormattedValue = '1234567';
@@ -24,7 +19,7 @@ describe('FormattedCurrencyInputDirective', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [FormattedCurrencyPipe, FormsModule, NgControl],
+      providers: [FormattedCurrencyPipe],
       declarations: [TestFormattedCurrencyInputComponent, FormattedCurrencyInputDirective]
     });
     fixture = TestBed.createComponent(TestFormattedCurrencyInputComponent);
@@ -55,14 +50,14 @@ describe('FormattedCurrencyInputDirective', () => {
 
   describe('#beforePaste', () => {
     it('should transfer', () => {
+      hTMLInputElement.value = formattedValue;
       const dataTransfer = new DataTransfer();
-      dataTransfer.setData('text/plain', formattedValue);
+      dataTransfer.setData('text/plain', '');
       const clipboardEvent = new ClipboardEvent('paste', { clipboardData: dataTransfer });
       hTMLInputElement.dispatchEvent(clipboardEvent);
+      fixture.detectChanges();
 
-      fixture.whenStable().then(() => {
-        expect(this.formControl.value).toBe(nonFormattedValue);
-      });
+      expect(hTMLInputElement.value).toEqual(nonFormattedValue);
     });
   });
 

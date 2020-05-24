@@ -34,7 +34,6 @@ import { FormattedNumberPipe } from './pipes/formatted-number.pipe';
   imports: [CommonModule, MaterialModule, ReactiveFormsModule, NgxTranslateModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpXsrfInterceptor, multi: true },
     CurrencyPipe,
     FormattedCurrencyPipe,
     FormattedNumberPipe

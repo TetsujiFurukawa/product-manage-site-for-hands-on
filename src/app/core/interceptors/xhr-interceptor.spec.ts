@@ -22,13 +22,13 @@ describe('XhrInterceptor', () => {
     const expectedValue = 'XMLHttpRequest';
 
     it('should intercept get method', () => {
-      httpClient.get('/test').subscribe(res => expect(res).toBeTruthy());
+      httpClient.get('/test').subscribe((res) => expect(res).toBeTruthy());
       const req = httpTestingController.expectOne({ method: 'GET' });
       expect(req.request.headers.get(headerName)).toEqual(expectedValue);
     });
 
     it('should intercept post method', () => {
-      httpClient.post('/test', null).subscribe(res => expect(res).toBeTruthy());
+      httpClient.post('/test', null).subscribe((res) => expect(res).toBeTruthy());
       const req = httpTestingController.expectOne({ method: 'POST' });
       expect(req.request.headers.get(headerName)).toEqual(expectedValue);
     });

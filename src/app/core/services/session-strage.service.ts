@@ -24,7 +24,7 @@ export class SessionStrageService {
    * @returns variables saved in session strage
    */
   static getItem<T>(key: string, t: T): T {
-    return JSON.parse(sessionStorage.getItem(key));
+    return JSON.parse(sessionStorage.getItem(key)) as T;
   }
 
   /**

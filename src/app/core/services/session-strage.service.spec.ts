@@ -26,7 +26,10 @@ describe('SessionStrageService', () => {
       const expectedProductListingSearchParams: ProductListingSearchParams = createProductListingSearchParams();
 
       SessionStrageService.setItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST, expectedProductListingSearchParams);
-      const res: ProductListingSearchParams = SessionStrageService.getItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST, new ProductListingSearchParams());
+      const res: ProductListingSearchParams = SessionStrageService.getItem(
+        AppConst.STRAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST,
+        new ProductListingSearchParams()
+      );
       expect(res.endOfSale).toEqual(expectedProductListingSearchParams.endOfSale);
       expect(res.pageIndex).toEqual(expectedProductListingSearchParams.pageIndex);
       expect(res.pageSize).toEqual(expectedProductListingSearchParams.pageSize);
@@ -41,7 +44,9 @@ describe('SessionStrageService', () => {
       const expectedProductListingSearchParams: ProductListingSearchParams = createProductListingSearchParams();
       SessionStrageService.setItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST, expectedProductListingSearchParams);
       SessionStrageService.removeItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST);
-      expect(SessionStrageService.getItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST, new ProductListingSearchParams())).toBeNull();
+      expect(
+        SessionStrageService.getItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST, new ProductListingSearchParams())
+      ).toBeNull();
     });
   });
 });

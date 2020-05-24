@@ -187,7 +187,7 @@ function setNavigatorLanguage(language: string) {
   window.navigator['__defineGetter__'](
     'language',
     // tslint:disable-next-line: only-arrow-functions
-    function() {
+    () => {
       return language;
     }
   );

@@ -51,14 +51,24 @@ describe('ProductRegisteringPageComponent', () => {
   let component: ProductRegisteringPageComponent;
   let fixture: ComponentFixture<ProductRegisteringPageComponent>;
   let accountServiceSpy: { getUser: jasmine.Spy };
-  let productServiceSpy: { getGenres: jasmine.Spy; getProduct: jasmine.Spy; createProduct: jasmine.Spy; updateProduct: jasmine.Spy };
+  let productServiceSpy: {
+    getGenres: jasmine.Spy;
+    getProduct: jasmine.Spy;
+    createProduct: jasmine.Spy;
+    updateProduct: jasmine.Spy;
+  };
   let titleI18ServiceSpy: { setTitle: jasmine.Spy };
   let matDialogSpy: { open: jasmine.Spy };
   let router: Router;
 
   beforeEach(async(() => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
-    productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres', 'getProduct', 'createProduct', 'updateProduct']);
+    productServiceSpy = jasmine.createSpyObj('ProductService', [
+      'getGenres',
+      'getProduct',
+      'createProduct',
+      'updateProduct'
+    ]);
     titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);
     matDialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
 
@@ -81,7 +91,10 @@ describe('ProductRegisteringPageComponent', () => {
         { provide: AccountService, useValue: accountServiceSpy },
         { provide: ProductService, useValue: productServiceSpy },
         { provide: TitleI18Service, useValue: titleI18ServiceSpy },
-        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: convertToParamMap({ productCode: 'ABCD1234' }) } } },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { paramMap: convertToParamMap({ productCode: 'ABCD1234' }) } }
+        },
         { provide: Router, useValue: { url: '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW, navigate(): void {} } }
       ],
       declarations: [ProductRegisteringPageComponent]
@@ -152,8 +165,7 @@ describe('ProductRegisteringPageComponent', () => {
       const dummyFileReader = { addEventListener: eventListener };
       spyOn<any>(window, 'FileReader').and.returnValue(dummyFileReader);
       const reader = new FileReader();
-      // tslint:disable-next-line: only-arrow-functions
-      reader.addEventListener('onload', function(e: any) {
+      reader.addEventListener('onload', (e: any) => {
         expect(e.target.result).toEqual(expectedResponseDto.productImage);
       });
       expect(eventListener.calls.mostRecent().args[0]).toEqual('onload');
@@ -281,7 +293,12 @@ describe('ProductRegisteringPageComponent', () => {
       expect(component.productName.value).toEqual(expectedValue);
     });
     it('product genre', () => {
-      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(fixture, '#product-genre', '.product-genre-option', 0);
+      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(
+        fixture,
+        '#product-genre',
+        '.product-genre-option',
+        0
+      );
       expect(component.productGenre.value).toEqual('1');
     });
     it('product size standard', () => {
@@ -334,8 +351,17 @@ describe('ProductRegisteringPageComponent', () => {
     it('EndOfSaleEndOfSaleDateValidator', async () => {
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'PRODUCTCODE0001');
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', 'productName');
-      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(fixture, '#product-genre', '.product-genre-option', 0);
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-size-standard', 'productSizeStandard');
+      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(
+        fixture,
+        '#product-genre',
+        '.product-genre-option',
+        0
+      );
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#product-size-standard',
+        'productSizeStandard'
+      );
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-unit-price', '12345');
       // Clicks checkbox's label
       HtmlElementUtility.clickHtmlElement<typeof component>(fixture, '#end-of-sale label');
@@ -348,12 +374,37 @@ describe('ProductRegisteringPageComponent', () => {
 
   describe('DOM input/output test', () => {
     it('Should Enter input and create product register request dto', () => {
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedResponseDto.productCode);
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', expectedResponseDto.productName);
-      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(fixture, '#product-genre', '.product-genre-option', 0);
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-size-standard', expectedResponseDto.productSizeStandard);
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-color', expectedResponseDto.productColor);
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-unit-price', expectedResponseDto.productUnitPrice.toString());
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#product-code',
+        expectedResponseDto.productCode
+      );
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#product-name',
+        expectedResponseDto.productName
+      );
+      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(
+        fixture,
+        '#product-genre',
+        '.product-genre-option',
+        0
+      );
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#product-size-standard',
+        expectedResponseDto.productSizeStandard
+      );
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#product-color',
+        expectedResponseDto.productColor
+      );
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#product-unit-price',
+        expectedResponseDto.productUnitPrice.toString()
+      );
       // Clicks checkbox's label
       HtmlElementUtility.clickHtmlElement<typeof component>(fixture, '#end-of-sale label');
       component.receivedEventFromChild(expectedResponseDto.endOfSaleDate.toString());
@@ -380,7 +431,9 @@ describe('ProductRegisteringPageComponent', () => {
         expect(fixture.nativeElement.querySelector('#product-code').value).toEqual(expectedResponseDto.productCode);
         expect(fixture.nativeElement.querySelector('#product-name').value).toEqual(expectedResponseDto.productName);
         expect(fixture.nativeElement.querySelector('#product-genre').innerText).toContain('靴・スニーカー');
-        expect(fixture.nativeElement.querySelector('#product-size-standard').value).toEqual(expectedResponseDto.productSizeStandard);
+        expect(fixture.nativeElement.querySelector('#product-size-standard').value).toEqual(
+          expectedResponseDto.productSizeStandard
+        );
         expect(fixture.nativeElement.querySelector('#product-color').value).toEqual(expectedResponseDto.productColor);
         expect(fixture.nativeElement.querySelector('#product-unit-price').value).toEqual('1,000');
         //

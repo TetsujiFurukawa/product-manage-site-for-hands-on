@@ -74,14 +74,22 @@ describe('ProductListingPageComponent', () => {
   let accountServiceSpy: { getUser: jasmine.Spy };
   let productServiceSpy: { getGenres: jasmine.Spy; getProductList: jasmine.Spy };
   let titleI18ServiceSpy: { setTitle: jasmine.Spy };
-  let searchParamsServiceSpy: { getProductListingSearchParam: jasmine.Spy; removeProductListingSearchParam: jasmine.Spy; setProductListingSearchParam: jasmine.Spy };
+  let searchParamsServiceSpy: {
+    getProductListingSearchParam: jasmine.Spy;
+    removeProductListingSearchParam: jasmine.Spy;
+    setProductListingSearchParam: jasmine.Spy;
+  };
   let router: Router;
 
   beforeEach(async(() => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
     productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres', 'getProductList']);
     titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);
-    searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', ['getProductListingSearchParam', 'removeProductListingSearchParam', 'setProductListingSearchParam']);
+    searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', [
+      'getProductListingSearchParam',
+      'removeProductListingSearchParam',
+      'setProductListingSearchParam'
+    ]);
 
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
@@ -201,13 +209,16 @@ describe('ProductListingPageComponent', () => {
       component.clickSearchButton();
 
       expect(productServiceSpy.getProductList.calls.count()).toEqual(1);
-      expect(component.productSearchResponseDtos).toEqual(expectedProductSearchListResponseDto.productSearchResponseDtos);
+      expect(component.productSearchResponseDtos).toEqual(
+        expectedProductSearchListResponseDto.productSearchResponseDtos
+      );
     });
   });
 
   describe('clicks list row', () => {
     it('should move to new page', () => {
-      const expectedProductSearchResponseDto: ProductSearchResponseDto = expectedProductSearchListResponseDto.productSearchResponseDtos[0];
+      const expectedProductSearchResponseDto: ProductSearchResponseDto =
+        expectedProductSearchListResponseDto.productSearchResponseDtos[0];
       spyOn(router, 'navigate').and.returnValue(null);
       component.clickListRow(expectedProductSearchResponseDto);
 
@@ -275,7 +286,12 @@ describe('ProductListingPageComponent', () => {
       expect(component.productCode.value).toEqual(expectedValue.toUpperCase());
     });
     it('product genre', () => {
-      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(fixture, '#product-genre', '.product-genre-option', Number(expectedProductListingSearchParams.productGenre));
+      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(
+        fixture,
+        '#product-genre',
+        '.product-genre-option',
+        Number(expectedProductListingSearchParams.productGenre)
+      );
       expect(component.productGenre.value).toEqual(expectedProductListingSearchParams.productGenre);
     });
     it('end of sale', () => {
@@ -287,9 +303,22 @@ describe('ProductListingPageComponent', () => {
 
   describe('DOM input test', () => {
     it('Should Enter input and create request dto / http params', () => {
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', expectedProductListingSearchParams.productName);
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedProductListingSearchParams.productCode);
-      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(fixture, '#product-genre', '.product-genre-option', Number(expectedProductListingSearchParams.productGenre));
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#product-name',
+        expectedProductListingSearchParams.productName
+      );
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#product-code',
+        expectedProductListingSearchParams.productCode
+      );
+      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(
+        fixture,
+        '#product-genre',
+        '.product-genre-option',
+        Number(expectedProductListingSearchParams.productGenre)
+      );
       HtmlElementUtility.clickHtmlElement<typeof component>(fixture, '#end-of-sale label');
 
       fixture.detectChanges();
@@ -297,7 +326,9 @@ describe('ProductListingPageComponent', () => {
       const actualProductListingSearchParams: ProductListingSearchParams = component['createSearchParams']();
 
       expect(actualProductListingSearchParams.productName).toEqual(expectedProductListingSearchParams.productName);
-      expect(actualProductListingSearchParams.productCode).toEqual(expectedProductListingSearchParams.productCode.toUpperCase());
+      expect(actualProductListingSearchParams.productCode).toEqual(
+        expectedProductListingSearchParams.productCode.toUpperCase()
+      );
       expect(actualProductListingSearchParams.productGenre).toEqual('1');
       expect(actualProductListingSearchParams.endOfSale).toEqual(true);
       expect(actualProductListingSearchParams.pageIndex).toEqual(0);

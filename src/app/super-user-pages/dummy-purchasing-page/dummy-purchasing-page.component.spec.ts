@@ -62,7 +62,10 @@ describe('DummyPurchasingPageComponent', () => {
     productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres']);
     titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);
     matDialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
-    productPurchaseServiceSpy = jasmine.createSpyObj('PurchaseService', ['getProductPurchase', 'createProductPurchase']);
+    productPurchaseServiceSpy = jasmine.createSpyObj('PurchaseService', [
+      'getProductPurchase',
+      'createProductPurchase'
+    ]);
 
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
@@ -249,7 +252,11 @@ describe('DummyPurchasingPageComponent', () => {
     });
     it('product purchase quantity', () => {
       const expectedValue = '123';
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-purchase-quantity', expectedValue);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#product-purchase-quantity',
+        expectedValue
+      );
 
       expect(component.productPurchaseQuantity.value).toEqual(expectedValue);
     });
@@ -287,7 +294,11 @@ describe('DummyPurchasingPageComponent', () => {
     it('Should Enter product code and get product purchase data then display screen', () => {
       productPurchaseServiceSpy.getProductPurchase.and.returnValue(of(expectedResponseDto));
 
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-Purchase-name', 'The value to be reset');
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#product-Purchase-name',
+        'The value to be reset'
+      );
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-purchase-quantity', '123');
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-purchase-amount', '456');
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'abcd1234');
@@ -295,7 +306,9 @@ describe('DummyPurchasingPageComponent', () => {
       expect(fixture.nativeElement.querySelector('#product-code').value).toEqual(expectedResponseDto.productCode);
       expect(fixture.nativeElement.querySelector('#product-name').value).toEqual(expectedResponseDto.productName);
       expect(fixture.nativeElement.querySelector('#product-genre').value).toEqual('靴・スニーカー');
-      expect(fixture.nativeElement.querySelector('#product-size-standard').value).toEqual(expectedResponseDto.productSizeStandard);
+      expect(fixture.nativeElement.querySelector('#product-size-standard').value).toEqual(
+        expectedResponseDto.productSizeStandard
+      );
       expect(fixture.nativeElement.querySelector('#product-unit-price').value).toEqual('1,000');
       expect(fixture.nativeElement.querySelector('#product-stock-quantity').value).toEqual('2,000');
       expect(fixture.nativeElement.querySelector('#product-image').src).toEqual(expectedResponseDto.productImage);
@@ -308,7 +321,11 @@ describe('DummyPurchasingPageComponent', () => {
       productPurchaseServiceSpy.getProductPurchase.and.returnValue(of(expectedResponseDto));
 
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'ABCD1234');
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-Purchase-name', 'productPurchaseName');
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#product-Purchase-name',
+        'productPurchaseName'
+      );
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-stock-quantity', '1,111');
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-purchase-quantity', '1');
 

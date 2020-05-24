@@ -64,14 +64,24 @@ describe('ProductRegisteringPageComponent', () => {
   let component: ProductRegisteringPageComponent;
   let fixture: ComponentFixture<ProductRegisteringPageComponent>;
   let accountServiceSpy: { getUser: jasmine.Spy };
-  let productServiceSpy: { getGenres: jasmine.Spy; getProduct: jasmine.Spy; createProduct: jasmine.Spy; updateProduct: jasmine.Spy };
+  let productServiceSpy: {
+    getGenres: jasmine.Spy;
+    getProduct: jasmine.Spy;
+    createProduct: jasmine.Spy;
+    updateProduct: jasmine.Spy;
+  };
   let titleI18ServiceSpy: { setTitle: jasmine.Spy };
   let matDialogSpy: { open: jasmine.Spy };
   let router: Router;
 
   beforeEach(async(() => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
-    productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres', 'getProduct', 'createProduct', 'updateProduct']);
+    productServiceSpy = jasmine.createSpyObj('ProductService', [
+      'getGenres',
+      'getProduct',
+      'createProduct',
+      'updateProduct'
+    ]);
     titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);
     matDialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
 
@@ -94,8 +104,14 @@ describe('ProductRegisteringPageComponent', () => {
         { provide: AccountService, useValue: accountServiceSpy },
         { provide: ProductService, useValue: productServiceSpy },
         { provide: TitleI18Service, useValue: titleI18ServiceSpy },
-        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: convertToParamMap({ productCode: 'ABCD1234' }) } } },
-        { provide: Router, useValue: { url: '/' + UrlConst.PATH_PRODUCT_REGISTERING + '/:123456', navigate(): void {} } }
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { paramMap: convertToParamMap({ productCode: 'ABCD1234' }) } }
+        },
+        {
+          provide: Router,
+          useValue: { url: '/' + UrlConst.PATH_PRODUCT_REGISTERING + '/:123456', navigate(): void {} }
+        }
       ],
       declarations: [ProductRegisteringPageComponent]
     }).compileComponents();

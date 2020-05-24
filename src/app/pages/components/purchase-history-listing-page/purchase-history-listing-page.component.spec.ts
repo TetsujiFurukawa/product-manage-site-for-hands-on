@@ -72,14 +72,22 @@ describe('PurchaseHistoryListingPageComponent', () => {
   let accountServiceSpy: { getUser: jasmine.Spy };
   let productServiceSpy: { getGenres: jasmine.Spy; getProductList: jasmine.Spy };
   let titleI18ServiceSpy: { setTitle: jasmine.Spy };
-  let searchParamsServiceSpy: { getProductListingSearchParam: jasmine.Spy; removeProductListingSearchParam: jasmine.Spy; setProductListingSearchParam: jasmine.Spy };
+  let searchParamsServiceSpy: {
+    getProductListingSearchParam: jasmine.Spy;
+    removeProductListingSearchParam: jasmine.Spy;
+    setProductListingSearchParam: jasmine.Spy;
+  };
   let productPurchaseServiceSpy: { getProductPurchaseHistoryList: jasmine.Spy };
 
   beforeEach(async(() => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
     productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres', 'getProductList']);
     titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);
-    searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', ['getProductListingSearchParam', 'removeProductListingSearchParam', 'setProductListingSearchParam']);
+    searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', [
+      'getProductListingSearchParam',
+      'removeProductListingSearchParam',
+      'setProductListingSearchParam'
+    ]);
     productPurchaseServiceSpy = jasmine.createSpyObj('PurchaseService', ['getProductPurchaseHistoryList']);
 
     TestBed.configureTestingModule({
@@ -136,11 +144,15 @@ describe('PurchaseHistoryListingPageComponent', () => {
 
   describe('#clickSearchButton', () => {
     it('should search', () => {
-      productPurchaseServiceSpy.getProductPurchaseHistoryList.and.returnValue(of(expectedProductPurchaseHistorySearchListResponseDto));
+      productPurchaseServiceSpy.getProductPurchaseHistoryList.and.returnValue(
+        of(expectedProductPurchaseHistorySearchListResponseDto)
+      );
       component.clickSearchButton();
 
       expect(productPurchaseServiceSpy.getProductPurchaseHistoryList.calls.count()).toEqual(1);
-      expect(component.purchaseHistorySearchResponseDtos).toEqual(expectedProductPurchaseHistorySearchListResponseDto.productPurchaseHistorySearchResponseDtos);
+      expect(component.purchaseHistorySearchResponseDtos).toEqual(
+        expectedProductPurchaseHistorySearchListResponseDto.productPurchaseHistorySearchResponseDtos
+      );
     });
   });
 
@@ -208,9 +220,21 @@ describe('PurchaseHistoryListingPageComponent', () => {
 
   describe('DOM input test', () => {
     it('Should Enter input and create http params', () => {
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-purchase-name', expectedSearchParamsProductPurchaseName);
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', expectedSearchParamsProductName);
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedSearchParamsProductCode);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#product-purchase-name',
+        expectedSearchParamsProductPurchaseName
+      );
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#product-name',
+        expectedSearchParamsProductName
+      );
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#product-code',
+        expectedSearchParamsProductCode
+      );
 
       component.receivedEventFromChildFrom(expectedSearchParamsProductPurchaseDateFrom);
       component.receivedEventFromChildTo(expectedSearchParamsProductPurchaseDateTo);
@@ -223,13 +247,27 @@ describe('PurchaseHistoryListingPageComponent', () => {
       expect(actualHttpParams.get('pageSize').toString()).toEqual(expectedSearchParamsPageSize.toString());
       expect(actualHttpParams.get('pageIndex').toString()).toEqual((expectedSearchParamsPageIndex - 1).toString());
 
-      expect(actualHttpParams.get('productPurchaseDateFrom')).toEqual(expectedSearchParamsProductPurchaseDateFromIsoString);
+      expect(actualHttpParams.get('productPurchaseDateFrom')).toEqual(
+        expectedSearchParamsProductPurchaseDateFromIsoString
+      );
       expect(actualHttpParams.get('productPurchaseDateTo')).toEqual(expectedSearchParamsProductPurchaseDateToIsoString);
     });
     it('Should Enter input and create http params without purchase date', () => {
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-purchase-name', expectedSearchParamsProductPurchaseName);
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', expectedSearchParamsProductName);
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedSearchParamsProductCode);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#product-purchase-name',
+        expectedSearchParamsProductPurchaseName
+      );
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#product-name',
+        expectedSearchParamsProductName
+      );
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#product-code',
+        expectedSearchParamsProductCode
+      );
 
       // tslint:disable-next-line: no-string-literal
       const actualHttpParams: HttpParams = component['createHttpParams']();

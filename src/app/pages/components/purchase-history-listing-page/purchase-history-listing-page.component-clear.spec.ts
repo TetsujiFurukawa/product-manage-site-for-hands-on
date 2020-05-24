@@ -68,14 +68,22 @@ describe('PurchaseHistoryListingPageComponent', () => {
   let accountServiceSpy: { getUser: jasmine.Spy };
   let productServiceSpy: { getGenres: jasmine.Spy; getProductList: jasmine.Spy };
   let titleI18ServiceSpy: { setTitle: jasmine.Spy };
-  let searchParamsServiceSpy: { getProductListingSearchParam: jasmine.Spy; removeProductListingSearchParam: jasmine.Spy; setProductListingSearchParam: jasmine.Spy };
+  let searchParamsServiceSpy: {
+    getProductListingSearchParam: jasmine.Spy;
+    removeProductListingSearchParam: jasmine.Spy;
+    setProductListingSearchParam: jasmine.Spy;
+  };
   let productPurchaseServiceSpy: { getProductPurchaseHistoryList: jasmine.Spy };
 
   beforeEach(async(() => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
     productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres', 'getProductList']);
     titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);
-    searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', ['getProductListingSearchParam', 'removeProductListingSearchParam', 'setProductListingSearchParam']);
+    searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', [
+      'getProductListingSearchParam',
+      'removeProductListingSearchParam',
+      'setProductListingSearchParam'
+    ]);
     productPurchaseServiceSpy = jasmine.createSpyObj('PurchaseService', ['getProductPurchaseHistoryList']);
 
     TestBed.configureTestingModule({
@@ -104,7 +112,12 @@ describe('PurchaseHistoryListingPageComponent', () => {
         { provide: SearchParamsService, useValue: searchParamsServiceSpy },
         { provide: ProductPurchaseService, useValue: productPurchaseServiceSpy }
       ],
-      declarations: [PurchaseHistoryListingPageComponent, FormattedCurrencyPipe, FormattedNumberPipe, MatDatePickerComponent]
+      declarations: [
+        PurchaseHistoryListingPageComponent,
+        FormattedCurrencyPipe,
+        FormattedNumberPipe,
+        MatDatePickerComponent
+      ]
     }).compileComponents();
   }));
 

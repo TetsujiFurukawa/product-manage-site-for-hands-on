@@ -215,7 +215,11 @@ describe('StockRegisteringPageComponent', () => {
     });
     it('product add stock quantity', () => {
       const expectedValue = '123';
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#add-product-stock-quantity', expectedValue);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        '#add-product-stock-quantity',
+        expectedValue
+      );
 
       expect(component.addProductStockQuantity.value).toEqual(expectedValue);
     });
@@ -247,7 +251,9 @@ describe('StockRegisteringPageComponent', () => {
       expect(fixture.nativeElement.querySelector('#product-code').value).toEqual(expectedResponseDto.productCode);
       expect(fixture.nativeElement.querySelector('#product-name').value).toEqual(expectedResponseDto.productName);
       expect(fixture.nativeElement.querySelector('#product-genre').value).toEqual('靴・スニーカー');
-      expect(fixture.nativeElement.querySelector('#product-size-standard').value).toEqual(expectedResponseDto.productSizeStandard);
+      expect(fixture.nativeElement.querySelector('#product-size-standard').value).toEqual(
+        expectedResponseDto.productSizeStandard
+      );
       expect(fixture.nativeElement.querySelector('#product-stock-quantity').value).toEqual('2,000');
       expect(fixture.nativeElement.querySelector('#product-image').src).toEqual(expectedResponseDto.productImage);
       expect(fixture.nativeElement.querySelector('#add-product-stock-quantity').value).toEqual('');

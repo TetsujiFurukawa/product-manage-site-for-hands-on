@@ -1,7 +1,5 @@
 import { AppConst } from 'src/app/pages/constants/app-const';
-import {
-    ProductListingSearchParams
-} from 'src/app/pages/models/dtos/requests/product-listing-search-params';
+import { User } from 'src/app/pages/models/user';
 
 import { TestBed } from '@angular/core/testing';
 
@@ -9,10 +7,12 @@ import { SessionStrageService } from './session-strage.service';
 
 describe('SessionStrageService', () => {
   let service: SessionStrageService;
+  let expectedUser: User;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(SessionStrageService);
+    expectedUser = createUser();
   });
 
   describe('#constractor', () => {
@@ -23,41 +23,35 @@ describe('SessionStrageService', () => {
 
   describe('#setItem,#getItem', () => {
     it('should set value', () => {
-      const expectedProductListingSearchParams: ProductListingSearchParams = createProductListingSearchParams();
-
-      SessionStrageService.setItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST, expectedProductListingSearchParams);
-      const res: ProductListingSearchParams = SessionStrageService.getItem(
-        AppConst.STRAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST,
-        new ProductListingSearchParams()
-      );
-      expect(res.endOfSale).toEqual(expectedProductListingSearchParams.endOfSale);
-      expect(res.pageIndex).toEqual(expectedProductListingSearchParams.pageIndex);
-      expect(res.pageSize).toEqual(expectedProductListingSearchParams.pageSize);
-      expect(res.productCode).toEqual(expectedProductListingSearchParams.productCode);
-      expect(res.productGenre).toEqual(expectedProductListingSearchParams.productGenre);
-      expect(res.productName).toEqual(expectedProductListingSearchParams.productName);
+      SessionStrageService.setItem(AppConst.STRAGE_KEY_USER, expectedUser);
+      const res: User = SessionStrageService.getItem(AppConst.STRAGE_KEY_USER, new User());
+      expect(res.userAccount).toEqual(expectedUser.userAccount);
+      expect(res.userName).toEqual(expectedUser.userName);
+      expect(res.userLocale).toEqual(expectedUser.userLocale);
+      expect(res.userLanguage).toEqual(expectedUser.userLanguage);
+      expect(res.userTimezone).toEqual(expectedUser.userTimezone);
+      expect(res.userTimezoneOffset).toEqual(expectedUser.userTimezoneOffset);
+      expect(res.userCurrency).toEqual(expectedUser.userCurrency);
     });
   });
 
   describe('#removeItem', () => {
     it('should remove value', () => {
-      const expectedProductListingSearchParams: ProductListingSearchParams = createProductListingSearchParams();
-      SessionStrageService.setItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST, expectedProductListingSearchParams);
-      SessionStrageService.removeItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST);
-      expect(
-        SessionStrageService.getItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST, new ProductListingSearchParams())
-      ).toBeNull();
+      SessionStrageService.setItem(AppConst.STRAGE_KEY_USER, expectedUser);
+      SessionStrageService.removeItem(AppConst.STRAGE_KEY_USER);
+      expect(SessionStrageService.getItem(AppConst.STRAGE_KEY_USER, new User())).toBeNull();
     });
   });
 });
 
-function createProductListingSearchParams() {
-  const expectedProductListingSearchParams: ProductListingSearchParams = new ProductListingSearchParams();
-  expectedProductListingSearchParams.endOfSale = true;
-  expectedProductListingSearchParams.pageIndex = 1;
-  expectedProductListingSearchParams.pageSize = 1;
-  expectedProductListingSearchParams.productCode = 'productCode';
-  expectedProductListingSearchParams.productGenre = '1';
-  expectedProductListingSearchParams.productName = 'productName';
-  return expectedProductListingSearchParams;
+function createUser() {
+  const user: User = new User();
+  user.userAccount = 'userAccount';
+  user.userName = 'userName';
+  user.userLocale = 'ja-JP';
+  user.userLanguage = 'ja';
+  user.userTimezone = 'Asia/Tokyo';
+  user.userTimezoneOffset = '+0900';
+  user.userCurrency = 'JPY';
+  return user;
 }

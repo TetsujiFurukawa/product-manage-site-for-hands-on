@@ -8,12 +8,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { RoutingService } from './routing.service';
 
 describe('RoutingService', () => {
-  let router: Router;
   let service: RoutingService;
+  let router: Router;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      schemas: [NO_ERRORS_SCHEMA],
       imports: [RouterTestingModule]
     });
     service = TestBed.inject(RoutingService);
@@ -27,10 +26,10 @@ describe('RoutingService', () => {
   });
 
   describe('#navigate', () => {
-    it('should be navigated', () => {
+    it('should be navigated to sign in page', () => {
       spyOn(router, 'navigate');
       service.navigate(UrlConst.PATH_SIGN_IN);
-      expect(router.navigate).toHaveBeenCalledWith(['/' + UrlConst.PATH_SIGN_IN]);
+      expect(router.navigate).toHaveBeenCalledWith([UrlConst.SLASH + UrlConst.PATH_SIGN_IN]);
     });
   });
 });

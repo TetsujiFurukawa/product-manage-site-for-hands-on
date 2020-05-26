@@ -1,4 +1,3 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { LoadingService } from './loading.service';
@@ -7,9 +6,7 @@ describe('LoadingService', () => {
   let service: LoadingService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      schemas: [NO_ERRORS_SCHEMA]
-    });
+    TestBed.configureTestingModule({});
     service = TestBed.inject(LoadingService);
   });
 

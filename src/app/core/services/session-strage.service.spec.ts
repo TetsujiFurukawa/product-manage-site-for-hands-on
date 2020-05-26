@@ -21,22 +21,22 @@ describe('SessionStrageService', () => {
     });
   });
 
-  describe('#setItem,#getItem', () => {
-    it('should set value', () => {
+  describe('#setItem, #getItem', () => {
+    it('should set and get item', () => {
       SessionStrageService.setItem(AppConst.STRAGE_KEY_USER, expectedUser);
-      const res: User = SessionStrageService.getItem(AppConst.STRAGE_KEY_USER, new User());
-      expect(res.userAccount).toEqual(expectedUser.userAccount);
-      expect(res.userName).toEqual(expectedUser.userName);
-      expect(res.userLocale).toEqual(expectedUser.userLocale);
-      expect(res.userLanguage).toEqual(expectedUser.userLanguage);
-      expect(res.userTimezone).toEqual(expectedUser.userTimezone);
-      expect(res.userTimezoneOffset).toEqual(expectedUser.userTimezoneOffset);
-      expect(res.userCurrency).toEqual(expectedUser.userCurrency);
+      const resultUser: User = SessionStrageService.getItem(AppConst.STRAGE_KEY_USER, new User());
+      expect(resultUser.userAccount).toEqual(expectedUser.userAccount);
+      expect(resultUser.userName).toEqual(expectedUser.userName);
+      expect(resultUser.userLocale).toEqual(expectedUser.userLocale);
+      expect(resultUser.userLanguage).toEqual(expectedUser.userLanguage);
+      expect(resultUser.userTimezone).toEqual(expectedUser.userTimezone);
+      expect(resultUser.userTimezoneOffset).toEqual(expectedUser.userTimezoneOffset);
+      expect(resultUser.userCurrency).toEqual(expectedUser.userCurrency);
     });
   });
 
   describe('#removeItem', () => {
-    it('should remove value', () => {
+    it('should remove item', () => {
       SessionStrageService.setItem(AppConst.STRAGE_KEY_USER, expectedUser);
       SessionStrageService.removeItem(AppConst.STRAGE_KEY_USER);
       expect(SessionStrageService.getItem(AppConst.STRAGE_KEY_USER, new User())).toBeNull();

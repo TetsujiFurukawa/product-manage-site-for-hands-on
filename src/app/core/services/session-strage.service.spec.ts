@@ -44,7 +44,7 @@ describe('SessionStrageService', () => {
   });
 });
 
-function createUser() {
+function createUser(): User {
   const user: User = new User();
   user.userAccount = 'userAccount';
   user.userName = 'userName';

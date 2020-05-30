@@ -37,56 +37,56 @@ describe('ErrorMessagingService', () => {
   describe('#setupPageErrorMessageFromResponse', () => {
     const parameters = [
       {
-        descriptuion: 'should set property when error status is 400',
+        description: 'should set property when error status is 400',
         error: { status: 400 },
-        result: 'errMessage.http.badRequest'
+        expectedValue: 'errMessage.http.badRequest'
       },
       {
-        descriptuion: 'should set property when error status is 401',
+        description: 'should set property when error status is 401',
         error: { status: 401 },
-        result: 'errMessage.http.unAuthorized'
+        expectedValue: 'errMessage.http.unAuthorized'
       },
       {
-        descriptuion: 'should set property when error status is 404',
+        description: 'should set property when error status is 404',
         error: { status: 404 },
-        result: 'errMessage.http.notFound'
+        expectedValue: 'errMessage.http.notFound'
       },
       {
-        descriptuion: 'should set property when error status is 500 _ Duplicated key.',
+        description: 'should set property when error status is 500 _ Duplicated key.',
         error: { status: 500, error: { message: 'Duplicated key.' } },
-        result: 'errMessage.http.duplicateKeyException'
+        expectedValue: 'errMessage.http.duplicateKeyException'
       },
       {
-        descriptuion: 'should set property when error status is 500 _ Exclusive error occurred.',
+        description: 'should set property when error status is 500 _ Exclusive error occurred.',
         error: { status: 500, error: { message: 'Exclusive error occurred.' } },
-        result: 'errMessage.http.exclusiveProcessingException'
+        expectedValue: 'errMessage.http.exclusiveProcessingException'
       },
       {
-        descriptuion: 'should set property when error status is 500 _ There is no stock.',
+        description: 'should set property when error status is 500 _ There is no stock.',
         error: { status: 500, error: { message: 'There is no stock.' } },
-        result: 'errMessage.http.outOfStockException'
+        expectedValue: 'errMessage.http.outOfStockException'
       },
       {
-        descriptuion: 'should set property when error status is 500 _ Data not found.',
+        description: 'should set property when error status is 500 _ Data not found.',
         error: { status: 500, error: { message: 'Data not found.' } },
-        result: 'errMessage.http.datNotFoundException'
+        expectedValue: 'errMessage.http.datNotFoundException'
       },
       {
-        descriptuion: 'should set property when error status is 500 _ Another message',
+        description: 'should set property when error status is 500 _ Another message',
         error: { status: 500, error: { message: 'Another message' } },
-        result: 'errMessage.http.internalServerError'
+        expectedValue: 'errMessage.http.internalServerError'
       },
       {
-        descriptuion: 'should set property when error status is 501',
+        description: 'should set property when error status is 501',
         error: { status: 501 },
-        result: 'errMessage.http.GenericError'
+        expectedValue: 'errMessage.http.GenericError'
       }
     ];
 
     parameters.forEach((parameter) => {
-      it(parameter.descriptuion, () => {
+      it(parameter.description, () => {
         service.setupPageErrorMessageFromResponse(parameter.error);
-        expect(service.getMessageProperty()).toEqual(parameter.result);
+        expect(service.getMessageProperty()).toEqual(parameter.expectedValue);
       });
     });
   });

@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
@@ -11,7 +10,6 @@ import { ProductStockResponseDto } from '../models/dtos/responses/product-stock-
 import { ProductStockService } from './product-stock.service';
 
 describe('ProductStockService', () => {
-  let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
   let service: ProductStockService;
   let successMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setMessageProperty: jasmine.Spy };
@@ -35,7 +33,6 @@ describe('ProductStockService', () => {
         { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }
       ]
     });
-    httpClient = TestBed.inject(HttpClient);
     httpTestingController = TestBed.inject(HttpTestingController);
     service = TestBed.inject(ProductStockService);
   });

@@ -162,11 +162,11 @@ describe('AccountService', () => {
     });
   });
 
-  describe('#getUser', () => {
+  describe('#getUser,#setUser', () => {
     it('should return expected data', () => {
       const user: User = createExpectedUser();
       service.setUser(user);
-      expectUser(service, user);
+      expectUser(service, service.getUser());
     });
   });
 
@@ -174,7 +174,7 @@ describe('AccountService', () => {
     it('should remove user', () => {
       const user: User = createExpectedUser();
       service.setUser(user);
-      expectUser(service, user);
+      expectUser(service, service.getUser());
 
       service.removeUser();
       expect(service.getUser()).toBeNull();

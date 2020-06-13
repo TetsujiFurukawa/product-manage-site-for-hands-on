@@ -13,6 +13,7 @@ describe('ErrorMessagingComponent', () => {
   let component: ErrorMessagingComponent;
   let fixture: ComponentFixture<ErrorMessagingComponent>;
   let errorMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; getMessageProperty: jasmine.Spy };
+  let translateService: TranslateService;
 
   beforeEach(async(() => {
     errorMessagingServiceSpy = jasmine.createSpyObj('ErrorMessagingService', [
@@ -34,6 +35,7 @@ describe('ErrorMessagingComponent', () => {
       providers: [TranslateService, { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }],
       declarations: [ErrorMessagingComponent]
     }).compileComponents();
+    translateService = TestBed.inject(TranslateService);
   }));
 
   beforeEach(() => {
@@ -55,12 +57,18 @@ describe('ErrorMessagingComponent', () => {
     });
 
     it('should error dipslay message', () => {
-      const errorMessage = 'error';
-      errorMessagingServiceSpy.getMessageProperty.and.returnValue(errorMessage);
+      const errorMessageProperty = 'errMessage.http.badRequest';
+      const expectedValue = '入力情報が正しくありません。';
+
+      translateService.setTranslation('ja', { 'errMessage.http.badRequest': expectedValue });
+      translateService.use('ja');
+
+      errorMessagingServiceSpy.getMessageProperty.and.returnValue(errorMessageProperty);
       fixture.detectChanges();
+
       const nativeElement = fixture.nativeElement;
-      const hTMLParagraphElement: HTMLParagraphElement = nativeElement.querySelector('p');
-      expect(hTMLParagraphElement.innerText).toEqual(errorMessage);
+      const htmlParagraphElement: HTMLParagraphElement = nativeElement.querySelector('p');
+      expect(htmlParagraphElement.innerText).toEqual(expectedValue);
     });
   });
 });

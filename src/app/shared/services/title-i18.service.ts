@@ -2,17 +2,11 @@ import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 
-import { AccountService } from '../../pages/services/account.service';
-
 @Injectable({
   providedIn: 'root'
 })
 export class TitleI18Service {
-  constructor(
-    private accountService: AccountService,
-    private translateService: TranslateService,
-    public title: Title
-  ) {}
+  constructor(private translateService: TranslateService, public title: Title) {}
 
   /**
    * Sets title

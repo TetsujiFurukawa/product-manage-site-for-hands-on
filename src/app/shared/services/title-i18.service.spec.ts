@@ -1,24 +1,18 @@
 import { HttpLoaderFactory } from 'src/app/ngx-translate/ngx-translate.module';
-import { User } from 'src/app/pages/models/user';
 
 import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
-import { AccountService } from '../../pages/services/account.service';
 import { TitleI18Service } from './title-i18.service';
 
 describe('TitleI18Service', () => {
   let service: TitleI18Service;
   let translateService: TranslateService;
-  let http: HttpTestingController;
-  let accountService: AccountService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      schemas: [NO_ERRORS_SCHEMA],
       imports: [
         HttpClientTestingModule,
         TranslateModule.forRoot({
@@ -29,12 +23,10 @@ describe('TitleI18Service', () => {
           }
         })
       ],
-      providers: [TranslateService, AccountService]
+      providers: [TranslateService]
     });
     service = TestBed.inject(TitleI18Service);
     translateService = TestBed.inject(TranslateService);
-    http = TestBed.inject(HttpTestingController);
-    accountService = TestBed.inject(AccountService);
   });
 
   describe('#constractor', () => {
@@ -46,23 +38,14 @@ describe('TitleI18Service', () => {
   describe('#setTitle', () => {
     it('should set property', () => {
       const subTitle = 'subTitle';
-      const expectedUser = new User();
-      expectedUser.userLanguage = 'ja';
-      spyOn(accountService, 'getUser').and.returnValue(expectedUser);
+      const expectedTitle = 'テストサイト名';
+      const expectedSubTitle = 'テスト画面名';
 
-      translateService.setTranslation('ja', { 'title.subTitle': '画面名', 'title.system': '【テストサイト】' });
+      translateService.setTranslation('ja', { 'title.system': expectedTitle, 'title.subTitle': expectedSubTitle });
       translateService.use('ja');
 
       service.setTitle(subTitle);
-      expect(service.title.getTitle()).toEqual('【テストサイト】画面名');
-    });
-
-    it('should set property', () => {
-      const subTitle = 'subTitle';
-      spyOn(accountService, 'getUser').and.returnValue(null);
-
-      service.setTitle(subTitle);
-      expect(service.title.getTitle()).toEqual('title.system' + 'title.' + subTitle);
+      expect(service.title.getTitle()).toEqual(expectedTitle + expectedSubTitle);
     });
   });
 });

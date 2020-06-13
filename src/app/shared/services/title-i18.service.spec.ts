@@ -36,7 +36,7 @@ describe('TitleI18Service', () => {
   });
 
   describe('#setTitle', () => {
-    it('should set property', () => {
+    it('should set title', () => {
       const subTitle = 'subTitle';
       const expectedTitle = 'テストサイト名';
       const expectedSubTitle = 'テスト画面名';

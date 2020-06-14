@@ -10,7 +10,7 @@ import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -74,7 +74,7 @@ describe('SignInPageComponent', () => {
     fixture = TestBed.createComponent(SignInPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    setNavigatorLanguage('ja');
+    setupNavigatorLanguage('ja');
   });
 
   describe('#constractor', () => {
@@ -82,7 +82,7 @@ describe('SignInPageComponent', () => {
       expect(component).toBeTruthy();
     });
     it('should create when navigator.langage returns ja-JP', () => {
-      setNavigatorLanguage('ja-jp');
+      setupNavigatorLanguage('ja-jp');
       expect(component).toBeTruthy();
     });
   });
@@ -178,7 +178,7 @@ describe('SignInPageComponent', () => {
   });
 });
 
-function setNavigatorLanguage(language: string) {
+function setupNavigatorLanguage(language: string) {
   const defineGetter = '__defineGetter__';
   window.navigator[defineGetter]('language', () => {
     return language;

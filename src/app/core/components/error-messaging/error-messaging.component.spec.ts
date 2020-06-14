@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { ErrorMessagingComponent } from './error-messaging.component';
@@ -66,8 +67,7 @@ describe('ErrorMessagingComponent', () => {
       errorMessagingServiceSpy.getMessageProperty.and.returnValue(errorMessageProperty);
       fixture.detectChanges();
 
-      const nativeElement = fixture.nativeElement;
-      const htmlParagraphElement: HTMLParagraphElement = nativeElement.querySelector('p');
+      const htmlParagraphElement: HTMLParagraphElement = fixture.debugElement.query(By.css('p')).nativeElement;
       expect(htmlParagraphElement.innerText).toEqual(expectedValue);
     });
   });

@@ -10,9 +10,10 @@ import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -116,20 +117,23 @@ describe('SignInPageComponent', () => {
   // --------------------------------------------------------------------------------
   describe('DOM placeholder', () => {
     it('title', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('.sign-in-title-wrapper');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('.sign-in-title-wrapper'))
+        .nativeElement;
       expect(htmlInputElement.innerText).toContain('EXAPMLE SITE');
     });
 
     it('signin user account', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#signin-user-account');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#signin-user-account'))
+        .nativeElement;
       expect(htmlInputElement.placeholder).toContain('ユーザアカウント');
     });
     it('signin user password', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#signin-user-password');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#signin-user-password'))
+        .nativeElement;
       expect(htmlInputElement.placeholder).toContain('パスワード');
     });
     it('saveBtn', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#sign-in-button');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#sign-in-button')).nativeElement;
       expect(htmlInputElement.innerText).toContain('サインイン');
     });
   });
@@ -137,24 +141,24 @@ describe('SignInPageComponent', () => {
   describe('DOM input test', () => {
     it('signin user account', () => {
       const expectedValue = expectedResponseDto.userAccount;
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-account', expectedValue);
+      HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-account', expectedValue);
       expect(component.signInUserAccount.value).toEqual(expectedValue);
     });
     it('signin user password', () => {
       const expectedValue = 'productName';
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-password', expectedValue);
+      HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-password', expectedValue);
       expect(component.signInUserPassword.value).toEqual(expectedValue);
     });
   });
 
   describe('DOM input validation test', () => {
     it('signin user account', () => {
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-account', '');
+      HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-account', '');
       const validationError = fixture.nativeElement.querySelector('.validation-error');
       expect(validationError).toBeTruthy();
     });
     it('signin user password', () => {
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#signin-user-password', '');
+      HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-password', '');
       const validationError = fixture.nativeElement.querySelector('.validation-error');
       expect(validationError).toBeTruthy();
     });
@@ -162,19 +166,11 @@ describe('SignInPageComponent', () => {
 
   describe('DOM input test', () => {
     it('Should Enter input and create request dto', () => {
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
-        fixture,
-        '#signin-user-account',
-        expectedRequestDto.Username
-      );
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
-        fixture,
-        '#signin-user-password',
-        expectedRequestDto.Password
-      );
+      HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-account', expectedRequestDto.Username);
+      HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-password', expectedRequestDto.Password);
 
-      // tslint:disable-next-line: no-string-literal
-      const signInRequestDto: SignInRequestDto = component['createSignInRequestDto']();
+      const targetMethodName = 'createSignInRequestDto';
+      const signInRequestDto: SignInRequestDto = component[targetMethodName]();
 
       expect(signInRequestDto.Username).toEqual(expectedRequestDto.Username);
       expect(signInRequestDto.Password).toEqual(expectedRequestDto.Password);
@@ -183,12 +179,8 @@ describe('SignInPageComponent', () => {
 });
 
 function setNavigatorLanguage(language: string) {
-  // tslint:disable-next-line: no-string-literal
-  window.navigator['__defineGetter__'](
-    'language',
-    // tslint:disable-next-line: only-arrow-functions
-    () => {
-      return language;
-    }
-  );
+  const defineGetter = '__defineGetter__';
+  window.navigator[defineGetter]('language', () => {
+    return language;
+  });
 }

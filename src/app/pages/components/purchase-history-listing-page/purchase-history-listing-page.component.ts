@@ -6,9 +6,6 @@ import {
 import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { UrlConst } from 'src/app/pages/constants/url-const';
-import {
-    ProductPurchaseHistorySearchResponseDto
-} from 'src/app/pages/models/dtos/responses/product-purchase-history-search-response-dto';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductPurchaseService } from 'src/app/pages/services/product-purchase.service';
 import { SearchParamsService } from 'src/app/pages/services/search-params.service';
@@ -21,6 +18,10 @@ import {
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { TranslateService } from '@ngx-translate/core';
+
+import {
+    ProductPurchaseHistorySearchResponseDto
+} from '../../models/interfaces/responses/product-purchase-history-search-response-dto';
 
 @Component({
   selector: 'app-purchase-history-listing-page',
@@ -115,14 +116,14 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
           // const purchaseHistoryListingSearchParams: ProductPurchaseHistoryListingSearchParams = this.createSearchParams();
           return this.productPurchaseService.getProductPurchaseHistoryList(this.createHttpParams());
         }),
-        map(data => {
+        map((data) => {
           this.loadingService.stopLoading();
           this.resultsLength = data.resultsLength;
           this.paginator.pageIndex = data.pageIndex;
           return data.productPurchaseHistorySearchResponseDtos;
         })
       )
-      .subscribe(data => (this.purchaseHistorySearchResponseDtos = data));
+      .subscribe((data) => (this.purchaseHistorySearchResponseDtos = data));
   }
 
   /**
@@ -177,7 +178,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
 
   private clearSearchCondition() {
     this.productPurchaseName.setValue('');
-    this.matDatePickerComponents.map(fn => fn.reset());
+    this.matDatePickerComponents.map((fn) => fn.reset());
     this.productPurchaseDateFrom.setValue('');
     this.productPurchaseDateTo.setValue('');
     this.productName.setValue('');

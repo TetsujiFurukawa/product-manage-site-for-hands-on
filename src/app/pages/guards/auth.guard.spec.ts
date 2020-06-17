@@ -6,7 +6,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { RoutingService } from '../../core/services/routing.service';
 import { UrlConst } from '../constants/url-const';
-import { MenuListResponseDto } from '../models/dtos/responses/menu-list-response-dto';
 import { AccountService } from '../services/account.service';
 import { AuthGuard } from './auth.guard';
 

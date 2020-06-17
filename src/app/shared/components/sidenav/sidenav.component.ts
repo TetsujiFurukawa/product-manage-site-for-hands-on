@@ -1,6 +1,8 @@
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { UrlConst } from 'src/app/pages/constants/url-const';
-import { MenuListResponseDto } from 'src/app/pages/models/dtos/responses/menu-list-response-dto';
+import {
+    MenuListResponseDto
+} from 'src/app/pages/models/interfaces/responses/menu-list-response-dto';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { SearchParamsService } from 'src/app/pages/services/search-params.service';
 
@@ -16,7 +18,12 @@ export class SidenavComponent implements OnInit {
   // Menu response data
   menuListResponseDto: MenuListResponseDto[];
 
-  constructor(private accountService: AccountService, private translateService: TranslateService, private searchParamsService: SearchParamsService, public routingService: RoutingService) {}
+  constructor(
+    private accountService: AccountService,
+    private translateService: TranslateService,
+    private searchParamsService: SearchParamsService,
+    public routingService: RoutingService
+  ) {}
 
   @Output() sidenavClose = new EventEmitter();
 
@@ -48,7 +55,7 @@ export class SidenavComponent implements OnInit {
   // private methods
   // --------------------------------------------------------------------------------
   private getMenu() {
-    this.accountService.getMenu().subscribe(menuListResponseDto => {
+    this.accountService.getMenu().subscribe((menuListResponseDto) => {
       this.menuListResponseDto = menuListResponseDto;
     });
   }

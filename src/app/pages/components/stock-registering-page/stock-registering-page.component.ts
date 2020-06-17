@@ -7,12 +7,6 @@ import { LoadingService } from 'src/app/core/services/loading.service';
 import { AppConst } from 'src/app/pages/constants/app-const';
 import { RegexConst } from 'src/app/pages/constants/regex-const';
 import { UrlConst } from 'src/app/pages/constants/url-const';
-import {
-    ProductStockRequestDto
-} from 'src/app/pages/models/dtos/requests/product-stock-request-dto';
-import {
-    ProductStockResponseDto
-} from 'src/app/pages/models/dtos/responses/product-stock-response-dto';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductStockService } from 'src/app/pages/services/product-stock.service';
 import { ProductService } from 'src/app/pages/services/product.service';
@@ -25,6 +19,11 @@ import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
+
+import { ProductStockRequest } from '../../models/interfaces/requests/product-stock-request';
+import {
+    ProductStockResponseDto
+} from '../../models/interfaces/responses/product-stock-response-dto';
 
 @Component({
   selector: 'app-stock-registering-page',
@@ -122,8 +121,8 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        const productStockRequestDto: ProductStockRequestDto = this.createProductStockRequestDto();
-        this.updateProductStock(productStockRequestDto);
+        const productStockRequest: ProductStockRequest = this.createProductStockRequestDto();
+        this.updateProductStock(productStockRequest);
       }
     });
   }
@@ -149,28 +148,22 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  private updateProductStock(productStockRequestDto: ProductStockRequestDto) {
+  private updateProductStock(productStockRequest: ProductStockRequest) {
     this.loadingService.startLoading();
 
-    this.productStockService.updateProductStock(productStockRequestDto).subscribe((data) => {
+    this.productStockService.updateProductStock(productStockRequest).subscribe((data) => {
       this.extractUpdateProductStockResponse(data);
       this.loadingService.stopLoading();
     });
   }
 
-  private createProductStockRequestDto(): ProductStockRequestDto {
-    const productStockRequestDto: ProductStockRequestDto = new ProductStockRequestDto();
-    productStockRequestDto.productCode = this.productCode.value;
-    productStockRequestDto.productStockQuantity = this.formattedNumberPipe.parse(
-      this.productStockQuantity.value,
-      this.locale
-    );
-    productStockRequestDto.addProductStockQuantity = this.formattedNumberPipe.parse(
-      this.addProductStockQuantity.value,
-      this.locale
-    );
-
-    return productStockRequestDto;
+  private createProductStockRequestDto(): ProductStockRequest {
+    const productStockRequest: ProductStockRequest = {
+      productCode: this.productCode.value,
+      productStockQuantity: this.formattedNumberPipe.parse(this.productStockQuantity.value, this.locale),
+      addProductStockQuantity: this.formattedNumberPipe.parse(this.addProductStockQuantity.value, this.locale)
+    };
+    return productStockRequest;
   }
 
   private extractGetProductStockResponse(productStockResponseDto: ProductStockResponseDto) {

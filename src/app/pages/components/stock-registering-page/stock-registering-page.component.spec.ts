@@ -3,12 +3,6 @@ import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 import { of } from 'rxjs';
 import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 import { MaterialModule } from 'src/app/material/material.module';
-import {
-    ProductStockRequestDto
-} from 'src/app/pages/models/dtos/requests/product-stock-request-dto';
-import {
-    ProductStockResponseDto
-} from 'src/app/pages/models/dtos/responses/product-stock-response-dto';
 import { User } from 'src/app/pages/models/user';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductStockService } from 'src/app/pages/services/product-stock.service';
@@ -24,6 +18,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import { ProductStockRequest } from '../../models/interfaces/requests/product-stock-request';
+import {
+    ProductStockResponseDto
+} from '../../models/interfaces/responses/product-stock-response-dto';
 import { StockRegisteringPageComponent } from './stock-registering-page.component';
 
 describe('StockRegisteringPageComponent', () => {
@@ -267,11 +265,11 @@ describe('StockRegisteringPageComponent', () => {
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#add-product-stock-quantity', '123');
 
       // tslint:disable-next-line: no-string-literal
-      const productStockRequestDto: ProductStockRequestDto = component['createProductStockRequestDto']();
+      const productStockRequest: ProductStockRequest = component['createProductStockRequestDto']();
 
-      expect(productStockRequestDto.productCode).toEqual('ABCD1234');
-      expect(productStockRequestDto.productStockQuantity.toString()).toEqual('1111');
-      expect(productStockRequestDto.addProductStockQuantity.toString()).toEqual('123');
+      expect(productStockRequest.productCode).toEqual('ABCD1234');
+      expect(productStockRequest.productStockQuantity.toString()).toEqual('1111');
+      expect(productStockRequest.addProductStockQuantity.toString()).toEqual('123');
     });
   });
 });

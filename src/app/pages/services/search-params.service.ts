@@ -1,11 +1,11 @@
 import { AppConst } from 'src/app/pages/constants/app-const';
-import {
-    ProductListingSearchParams
-} from 'src/app/pages/models/dtos/requests/product-listing-search-params';
 
 import { Injectable } from '@angular/core';
 
 import { SessionStrageService } from '../../core/services/session-strage.service';
+import {
+    ProductListingSearchParams
+} from '../models/interfaces/requests/product-listing-search-params';
 
 @Injectable({
   providedIn: 'root'

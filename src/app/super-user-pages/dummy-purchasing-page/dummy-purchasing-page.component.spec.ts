@@ -6,10 +6,10 @@ import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 import { MaterialModule } from 'src/app/material/material.module';
 import {
     ProductPurchaseRequestDto
-} from 'src/app/pages/models/dtos/requests/product-purchase-request-dto';
+} from 'src/app/pages/models/interfaces/requests/product-purchase-request-dto';
 import {
     ProductPurchaseResponseDto
-} from 'src/app/pages/models/dtos/responses/product-purchase-response-dto';
+} from 'src/app/pages/models/interfaces/responses/product-purchase-response-dto';
 import { User } from 'src/app/pages/models/user';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductPurchaseService } from 'src/app/pages/services/product-purchase.service';

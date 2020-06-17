@@ -7,12 +7,6 @@ import {
 import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 import { MaterialModule } from 'src/app/material/material.module';
-import {
-    ProductPurchaseHistorySearchListResponseDto
-} from 'src/app/pages/models/dtos/responses/product-purchase-history-search-list-response-dto';
-import {
-    ProductPurchaseHistorySearchResponseDto
-} from 'src/app/pages/models/dtos/responses/product-purchase-history-search-response-dto';
 import { User } from 'src/app/pages/models/user';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductPurchaseService } from 'src/app/pages/services/product-purchase.service';
@@ -29,6 +23,12 @@ import { HAMMER_LOADER } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import {
+    ProductPurchaseHistorySearchListResponseDto
+} from '../../models/interfaces/responses/product-purchase-history-search-list-response-dto';
+import {
+    ProductPurchaseHistorySearchResponseDto
+} from '../../models/interfaces/responses/product-purchase-history-search-response-dto';
 import { PurchaseHistoryListingPageComponent } from './purchase-history-listing-page.component';
 
 describe('PurchaseHistoryListingPageComponent', () => {

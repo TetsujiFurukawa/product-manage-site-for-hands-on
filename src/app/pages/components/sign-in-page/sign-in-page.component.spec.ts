@@ -2,8 +2,6 @@ import { TranslateTestingModule } from 'ngx-translate-testing';
 import { of } from 'rxjs';
 import { MaterialModule } from 'src/app/material/material.module';
 import { UrlConst } from 'src/app/pages/constants/url-const';
-import { SignInRequestDto } from 'src/app/pages/models/dtos/requests/sign-in-request-dto';
-import { SignInResponseDto } from 'src/app/pages/models/dtos/responses/sign-in-response-dto';
 import { User } from 'src/app/pages/models/user';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
@@ -18,6 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import { SignInRequest } from '../../models/interfaces/requests/sign-in-request';
+import { SignInResponseDto } from '../../models/interfaces/responses/sign-in-response-dto';
 import { SignInPageComponent } from './sign-in-page.component';
 
 describe('SignInPageComponent', () => {
@@ -29,9 +29,7 @@ describe('SignInPageComponent', () => {
   user.userName = 'userName';
   user.userTimezone = 'UTC';
 
-  const expectedRequestDto = new SignInRequestDto();
-  expectedRequestDto.Password = 'Password';
-  expectedRequestDto.Username = 'Username';
+  const expectedRequestDto: SignInRequest = { Password: 'Password', Username: 'Username' };
 
   const expectedResponseDto = new SignInResponseDto();
   expectedResponseDto.userAccount = 'userAccount';
@@ -169,11 +167,11 @@ describe('SignInPageComponent', () => {
       HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-account', expectedRequestDto.Username);
       HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-password', expectedRequestDto.Password);
 
-      const targetMethodName = 'createSignInRequestDto';
-      const signInRequestDto: SignInRequestDto = component[targetMethodName]();
+      const targetMethodName = 'createSignInRequest';
+      const signInRequest: SignInRequest = component[targetMethodName]();
 
-      expect(signInRequestDto.Username).toEqual(expectedRequestDto.Username);
-      expect(signInRequestDto.Password).toEqual(expectedRequestDto.Password);
+      expect(signInRequest.Username).toEqual(expectedRequestDto.Username);
+      expect(signInRequest.Password).toEqual(expectedRequestDto.Password);
     });
   });
 });

@@ -2,8 +2,6 @@ import { Observable } from 'rxjs';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { UrlConst } from 'src/app/pages/constants/url-const';
-import { SignInRequestDto } from 'src/app/pages/models/dtos/requests/sign-in-request-dto';
-import { SignInResponseDto } from 'src/app/pages/models/dtos/responses/sign-in-response-dto';
 import { User } from 'src/app/pages/models/user';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
@@ -11,6 +9,9 @@ import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+
+import { SignInRequest } from '../../models/interfaces/requests/sign-in-request';
+import { SignInResponseDto } from '../../models/interfaces/responses/sign-in-response-dto';
 
 @Component({
   selector: 'app-sign-in-page',
@@ -57,10 +58,10 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
    */
   clickSignInButton() {
     // Creates request dto.
-    const signInRequestDto = this.createSignInRequestDto();
+    const signInRequest: SignInRequest = this.createSignInRequest();
 
     // Signs in using dto.
-    this.signIn(signInRequestDto);
+    this.signIn(signInRequest);
   }
 
   // --------------------------------------------------------------------------------
@@ -85,12 +86,12 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
     return language;
   }
 
-  private signIn(signInRequestDto: SignInRequestDto) {
+  private signIn(SignInRequest: SignInRequest) {
     // Starts Loading.
     this.loadingService.startLoading();
 
     // Signs in and gets response dto.
-    const signInResponseDto: Observable<SignInResponseDto> = this.accountService.signIn(signInRequestDto);
+    const signInResponseDto: Observable<SignInResponseDto> = this.accountService.signIn(SignInRequest);
     signInResponseDto.subscribe((responseDto) => {
       if (responseDto != null) {
         // Sets account information.
@@ -103,12 +104,13 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  private createSignInRequestDto(): SignInRequestDto {
+  private createSignInRequest(): SignInRequest {
     // Creates Request dto.
-    const signInRequestDto = new SignInRequestDto();
-    signInRequestDto.Username = this.signInUserAccount.value;
-    signInRequestDto.Password = this.signInUserPassword.value;
-    return signInRequestDto;
+    const signInRequest: SignInRequest = {
+      Username: this.signInUserAccount.value,
+      Password: this.signInUserPassword.value
+    };
+    return signInRequest;
   }
 
   private setUpUserAccount(responseDto: SignInResponseDto) {

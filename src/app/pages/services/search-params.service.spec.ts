@@ -1,12 +1,9 @@
-import { AppConst } from 'src/app/pages/constants/app-const';
-import {
-    ProductListingSearchParams
-} from 'src/app/pages/models/dtos/requests/product-listing-search-params';
-
 import { TestBed } from '@angular/core/testing';
-import { TranslateService } from '@ngx-translate/core';
 
 import { SessionStrageService } from '../../core/services/session-strage.service';
+import {
+    ProductListingSearchParams
+} from '../models/interfaces/requests/product-listing-search-params';
 import { SearchParamsService } from './search-params.service';
 
 describe('SearchParamsService', () => {

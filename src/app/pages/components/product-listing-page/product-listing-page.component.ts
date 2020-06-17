@@ -4,12 +4,6 @@ import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pip
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { UrlConst } from 'src/app/pages/constants/url-const';
-import {
-    ProductListingSearchParams
-} from 'src/app/pages/models/dtos/requests/product-listing-search-params';
-import {
-    ProductSearchResponseDto
-} from 'src/app/pages/models/dtos/responses/product-search-response-dto';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductService } from 'src/app/pages/services/product.service';
 import { SearchParamsService } from 'src/app/pages/services/search-params.service';
@@ -20,6 +14,13 @@ import { AfterViewChecked, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { TranslateService } from '@ngx-translate/core';
+
+import {
+    ProductListingSearchParams
+} from '../../models/interfaces/requests/product-listing-search-params';
+import {
+    ProductSearchResponseDto
+} from '../../models/interfaces/responses/product-search-response-dto';
 
 @Component({
   selector: 'app-product-listing-page',
@@ -58,7 +59,18 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
   genres: string[];
 
   // Material table's header
-  displayColumns: string[] = ['no', 'productName', 'productCode', 'productGenre', 'productImage', 'productSizeStandard', 'productColor', 'productUnitPrice', 'productStockQuantity', 'endOfSale'];
+  displayColumns: string[] = [
+    'no',
+    'productName',
+    'productCode',
+    'productGenre',
+    'productImage',
+    'productSizeStandard',
+    'productColor',
+    'productUnitPrice',
+    'productStockQuantity',
+    'endOfSale'
+  ];
 
   // Search result
   productSearchResponseDtos: ProductSearchResponseDto[];
@@ -99,14 +111,14 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
 
           return this.productService.getProductList(this.createHttpParams(productListingSearchParams));
         }),
-        map(data => {
+        map((data) => {
           this.loadingService.stopLoading();
           this.resultsLength = data.resultsLength;
           this.paginator.pageIndex = data.pageIndex;
           return data.productSearchResponseDtos;
         })
       )
-      .subscribe(data => (this.productSearchResponseDtos = data));
+      .subscribe((data) => (this.productSearchResponseDtos = data));
   }
 
   clickListRow(productResponseDto: ProductSearchResponseDto) {
@@ -120,7 +132,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
   // private methods
   // --------------------------------------------------------------------------------
   private loadData() {
-    this.productService.getGenres().subscribe(data => (this.genres = data));
+    this.productService.getGenres().subscribe((data) => (this.genres = data));
   }
 
   private setupLanguage() {

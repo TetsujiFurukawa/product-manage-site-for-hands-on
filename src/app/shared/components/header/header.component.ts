@@ -6,7 +6,9 @@ import { LoadingService } from 'src/app/core/services/loading.service';
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { AppConst } from 'src/app/pages/constants/app-const';
 import { UrlConst } from 'src/app/pages/constants/url-const';
-import { MenuListResponseDto } from 'src/app/pages/models/dtos/responses/menu-list-response-dto';
+import {
+    MenuListResponseDto
+} from 'src/app/pages/models/interfaces/responses/menu-list-response-dto';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { SearchParamsService } from 'src/app/pages/services/search-params.service';
 
@@ -74,7 +76,7 @@ export class HeaderComponent implements OnInit {
       data: dialogData
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.signOut();
       }
@@ -85,14 +87,14 @@ export class HeaderComponent implements OnInit {
   // private methods
   // --------------------------------------------------------------------------------
   private getMenu() {
-    this.accountService.getMenu().subscribe(menuListResponseDto => {
+    this.accountService.getMenu().subscribe((menuListResponseDto) => {
       this.menuListResponseDto = menuListResponseDto;
     });
   }
 
   private signOut() {
     this.loadingService.startLoading();
-    this.accountService.signOut().subscribe(res => {
+    this.accountService.signOut().subscribe((res) => {
       this.searchParamsService.removeProductListingSearchParam();
       this.loadingService.stopLoading();
       this.routingService.navigate(UrlConst.PATH_SIGN_IN);

@@ -5,15 +5,6 @@ import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pip
 import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 import { MaterialModule } from 'src/app/material/material.module';
 import { UrlConst } from 'src/app/pages/constants/url-const';
-import {
-    ProductListingSearchParams
-} from 'src/app/pages/models/dtos/requests/product-listing-search-params';
-import {
-    ProductSearchListResponseDto
-} from 'src/app/pages/models/dtos/responses/product-search-list-response-dto';
-import {
-    ProductSearchResponseDto
-} from 'src/app/pages/models/dtos/responses/product-search-response-dto';
 import { User } from 'src/app/pages/models/user';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductService } from 'src/app/pages/services/product.service';
@@ -31,6 +22,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import {
+    ProductListingSearchParams
+} from '../../models/interfaces/requests/product-listing-search-params';
+import {
+    ProductSearchListResponseDto
+} from '../../models/interfaces/responses/product-search-list-response-dto';
+import {
+    ProductSearchResponseDto
+} from '../../models/interfaces/responses/product-search-response-dto';
 import { ProductListingPageComponent } from './product-listing-page.component';
 
 describe('ProductListingPageComponent', () => {

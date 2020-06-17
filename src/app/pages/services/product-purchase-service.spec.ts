@@ -6,14 +6,18 @@ import { TestBed } from '@angular/core/testing';
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
 import { ApiConst } from '../constants/api-const';
-import { ProductPurchaseRequestDto } from '../models/dtos/requests/product-purchase-request-dto';
+import {
+    ProductPurchaseRequestDto
+} from '../models/interfaces/requests/product-purchase-request-dto';
 import {
     ProductPurchaseHistorySearchListResponseDto
-} from '../models/dtos/responses/product-purchase-history-search-list-response-dto';
+} from '../models/interfaces/responses/product-purchase-history-search-list-response-dto';
 import {
     ProductPurchaseHistorySearchResponseDto
-} from '../models/dtos/responses/product-purchase-history-search-response-dto';
-import { ProductPurchaseResponseDto } from '../models/dtos/responses/product-purchase-response-dto';
+} from '../models/interfaces/responses/product-purchase-history-search-response-dto';
+import {
+    ProductPurchaseResponseDto
+} from '../models/interfaces/responses/product-purchase-response-dto';
 import { ProductPurchaseService } from './product-purchase.service';
 
 describe('ProductPurchaseService', () => {

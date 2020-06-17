@@ -5,9 +5,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { ApiConst } from '../constants/api-const';
-import { SignInRequestDto } from '../models/dtos/requests/sign-in-request-dto';
-import { MenuListResponseDto } from '../models/dtos/responses/menu-list-response-dto';
-import { SignInResponseDto } from '../models/dtos/responses/sign-in-response-dto';
+import { MenuListResponseDto } from '../models/interfaces/responses/menu-list-response-dto';
+import { SignInResponseDto } from '../models/interfaces/responses/sign-in-response-dto';
 import { User } from '../models/user';
 import { AccountService } from './account.service';
 
@@ -44,7 +43,7 @@ describe('AccountService', () => {
       const expectedSignInResponseDto: SignInResponseDto = createExpectedSignInResponseDto();
 
       // Subscribes to api.
-      service.signIn(new SignInRequestDto()).subscribe((signInResponseDto) => {
+      service.signIn({ Username: '', Password: '' }).subscribe((signInResponseDto) => {
         expect(signInResponseDto).toEqual(expectedSignInResponseDto);
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
@@ -60,7 +59,7 @@ describe('AccountService', () => {
       const errorMessage = '401 Unauthorized';
 
       // Subscribes to api.
-      service.signIn(new SignInRequestDto()).subscribe((signInResponseDto) => {
+      service.signIn({ Username: '', Password: '' }).subscribe((signInResponseDto) => {
         expect(signInResponseDto).toBeNull();
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
       }, fail);

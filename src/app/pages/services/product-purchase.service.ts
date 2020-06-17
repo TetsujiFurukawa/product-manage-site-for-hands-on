@@ -1,21 +1,21 @@
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiConst } from 'src/app/pages/constants/api-const';
-import {
-    ProductPurchaseRequestDto
-} from 'src/app/pages/models/dtos/requests/product-purchase-request-dto';
-import {
-    ProductPurchaseHistorySearchListResponseDto
-} from 'src/app/pages/models/dtos/responses/product-purchase-history-search-list-response-dto';
-import {
-    ProductPurchaseResponseDto
-} from 'src/app/pages/models/dtos/responses/product-purchase-response-dto';
 
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
+import {
+    ProductPurchaseRequestDto
+} from '../models/interfaces/requests/product-purchase-request-dto';
+import {
+    ProductPurchaseHistorySearchListResponseDto
+} from '../models/interfaces/responses/product-purchase-history-search-list-response-dto';
+import {
+    ProductPurchaseResponseDto
+} from '../models/interfaces/responses/product-purchase-response-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +39,7 @@ export class ProductPurchaseService {
     return this.http
       .get<ProductPurchaseHistorySearchListResponseDto>(webApiUrl, { params: httpParams })
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           this.errorMessageService.setupPageErrorMessageFromResponse(error);
           return of(null as ProductPurchaseHistorySearchListResponseDto);
         })
@@ -58,7 +58,7 @@ export class ProductPurchaseService {
     return this.http
       .get<ProductPurchaseResponseDto>(webApiUrl, { params: { productCode } })
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           this.errorMessageService.setupPageErrorMessageFromResponse(error);
           return of(null as ProductPurchaseResponseDto);
         })
@@ -75,11 +75,11 @@ export class ProductPurchaseService {
     this.clearMessageProperty();
 
     return this.http.post<ProductPurchaseResponseDto>(webApiUrl, productPurchaseRequestDto).pipe(
-      map(res => {
+      map((res) => {
         this.successMessagingService.setMessageProperty('successMessage.http');
         return res;
       }),
-      catchError(error => {
+      catchError((error) => {
         this.errorMessageService.setupPageErrorMessageFromResponse(error);
         return of(null as ProductPurchaseResponseDto);
       })

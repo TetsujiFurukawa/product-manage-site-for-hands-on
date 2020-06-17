@@ -9,8 +9,8 @@ import { AppConst } from 'src/app/pages/constants/app-const';
 import { RegexConst } from 'src/app/pages/constants/regex-const';
 import { UrlConst } from 'src/app/pages/constants/url-const';
 import {
-    ProductPurchaseRequestDto
-} from 'src/app/pages/models/interfaces/requests/product-purchase-request-dto';
+    ProductPurchaseRequest
+} from 'src/app/pages/models/interfaces/requests/product-purchase-request';
 import {
     ProductPurchaseResponseDto
 } from 'src/app/pages/models/interfaces/responses/product-purchase-response-dto';
@@ -135,7 +135,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        const purchaseRequestDto: ProductPurchaseRequestDto = this.createPurchaseRequestDto();
+        const purchaseRequestDto: ProductPurchaseRequest = this.createPurchaseRequestDto();
         this.createProductPurchase(purchaseRequestDto);
       }
     });
@@ -173,30 +173,27 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  private createProductPurchase(productPurchaseRequestDto: ProductPurchaseRequestDto) {
+  private createProductPurchase(productPurchaseRequest: ProductPurchaseRequest) {
     this.loadingService.startLoading();
 
-    this.productPurchaseService.createProductPurchase(productPurchaseRequestDto).subscribe((data) => {
+    this.productPurchaseService.createProductPurchase(productPurchaseRequest).subscribe((data) => {
       this.extractCreateProductPurchaseResponse(data);
       this.loadingService.stopLoading();
     });
   }
 
-  private createPurchaseRequestDto(): ProductPurchaseRequestDto {
-    const productPurchaseRequestDto: ProductPurchaseRequestDto = new ProductPurchaseRequestDto();
-    productPurchaseRequestDto.productCode = this.productCode.value;
-    productPurchaseRequestDto.productPurchaseName = this.productPurchaseName.value;
-    productPurchaseRequestDto.productStockQuantity = this.formattedNumberPipe.parse(
-      this.productStockQuantity.value,
-      this.locale
-    );
-    productPurchaseRequestDto.productPurchaseQuantity = this.formattedCurrencyPipe.parse(
-      this.productPurchaseQuantity.value,
-      this.locale,
-      this.currency
-    );
-
-    return productPurchaseRequestDto;
+  private createPurchaseRequestDto(): ProductPurchaseRequest {
+    const productPurchaseRequest: ProductPurchaseRequest = {
+      productCode: this.productCode.value,
+      productPurchaseName: this.productPurchaseName.value,
+      productStockQuantity: this.formattedNumberPipe.parse(this.productStockQuantity.value, this.locale),
+      productPurchaseQuantity: this.formattedCurrencyPipe.parse(
+        this.productPurchaseQuantity.value,
+        this.locale,
+        this.currency
+      )
+    };
+    return productPurchaseRequest;
   }
 
   private extractGetProductPurchaseResponse(productPurchaseResponseDto: ProductPurchaseResponseDto) {

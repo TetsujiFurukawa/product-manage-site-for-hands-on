@@ -7,9 +7,6 @@ import { ErrorMessagingService } from '../../core/services/error-messaging.servi
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
 import { ApiConst } from '../constants/api-const';
 import {
-    ProductPurchaseRequestDto
-} from '../models/interfaces/requests/product-purchase-request-dto';
-import {
     ProductPurchaseHistorySearchListResponseDto
 } from '../models/interfaces/responses/product-purchase-history-search-list-response-dto';
 import {
@@ -170,11 +167,18 @@ describe('ProductPurchaseService', () => {
       expectedResponseDto.productSizeStandard = 'productSizeStandard';
       expectedResponseDto.productStockQuantity = 1;
 
-      service.createProductPurchase(new ProductPurchaseRequestDto()).subscribe((responseDto) => {
-        expect(responseDto).toEqual(expectedResponseDto);
-        expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1);
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
-      }, fail);
+      service
+        .createProductPurchase({
+          productCode: '',
+          productPurchaseName: '',
+          productStockQuantity: 0,
+          productPurchaseQuantity: 0
+        })
+        .subscribe((responseDto) => {
+          expect(responseDto).toEqual(expectedResponseDto);
+          expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1);
+          expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
+        }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('POST');
@@ -187,11 +191,18 @@ describe('ProductPurchaseService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      service.createProductPurchase(new ProductPurchaseRequestDto()).subscribe((responseDto) => {
-        expect(responseDto).toBeNull();
-        expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0);
-        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
-      }, fail);
+      service
+        .createProductPurchase({
+          productCode: '',
+          productPurchaseName: '',
+          productStockQuantity: 0,
+          productPurchaseQuantity: 0
+        })
+        .subscribe((responseDto) => {
+          expect(responseDto).toBeNull();
+          expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0);
+          expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
+        }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('POST');

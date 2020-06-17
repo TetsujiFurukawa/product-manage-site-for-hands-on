@@ -1,4 +1,4 @@
-export class ProductPurchaseRequestDto {
+export interface ProductPurchaseRequest {
   productCode: string;
   productPurchaseName: string;
   productStockQuantity: number;

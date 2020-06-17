@@ -5,8 +5,8 @@ import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pip
 import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 import { MaterialModule } from 'src/app/material/material.module';
 import {
-    ProductPurchaseRequestDto
-} from 'src/app/pages/models/interfaces/requests/product-purchase-request-dto';
+    ProductPurchaseRequest
+} from 'src/app/pages/models/interfaces/requests/product-purchase-request';
 import {
     ProductPurchaseResponseDto
 } from 'src/app/pages/models/interfaces/responses/product-purchase-response-dto';
@@ -330,12 +330,12 @@ describe('DummyPurchasingPageComponent', () => {
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-purchase-quantity', '1');
 
       // tslint:disable-next-line: no-string-literal
-      const productPurchaseRequestDto: ProductPurchaseRequestDto = component['createPurchaseRequestDto']();
+      const productPurchaseRequest: ProductPurchaseRequest = component['createPurchaseRequestDto']();
 
-      expect(productPurchaseRequestDto.productCode).toEqual('ABCD1234');
-      expect(productPurchaseRequestDto.productPurchaseName).toEqual('productPurchaseName');
-      expect(productPurchaseRequestDto.productStockQuantity.toString()).toEqual('1111');
-      expect(productPurchaseRequestDto.productPurchaseQuantity.toString()).toEqual('1');
+      expect(productPurchaseRequest.productCode).toEqual('ABCD1234');
+      expect(productPurchaseRequest.productPurchaseName).toEqual('productPurchaseName');
+      expect(productPurchaseRequest.productStockQuantity.toString()).toEqual('1111');
+      expect(productPurchaseRequest.productPurchaseQuantity.toString()).toEqual('1');
     });
   });
 });

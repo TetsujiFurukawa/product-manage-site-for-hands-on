@@ -7,9 +7,7 @@ import { Injectable } from '@angular/core';
 
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
-import {
-    ProductPurchaseRequestDto
-} from '../models/interfaces/requests/product-purchase-request-dto';
+import { ProductPurchaseRequest } from '../models/interfaces/requests/product-purchase-request';
 import {
     ProductPurchaseHistorySearchListResponseDto
 } from '../models/interfaces/responses/product-purchase-history-search-list-response-dto';
@@ -67,14 +65,14 @@ export class ProductPurchaseService {
 
   /**
    * Creates product purchase
-   * @param productPurchaseRequestDto product purchase request
+   * @param productPurchaseRequest product purchase request
    * @returns product purchase response
    */
-  createProductPurchase(productPurchaseRequestDto: ProductPurchaseRequestDto): Observable<ProductPurchaseResponseDto> {
+  createProductPurchase(productPurchaseRequest: ProductPurchaseRequest): Observable<ProductPurchaseResponseDto> {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PURCHASE;
     this.clearMessageProperty();
 
-    return this.http.post<ProductPurchaseResponseDto>(webApiUrl, productPurchaseRequestDto).pipe(
+    return this.http.post<ProductPurchaseResponseDto>(webApiUrl, productPurchaseRequest).pipe(
       map((res) => {
         this.successMessagingService.setMessageProperty('successMessage.http');
         return res;

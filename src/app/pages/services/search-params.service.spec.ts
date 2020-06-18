@@ -29,7 +29,14 @@ describe('SearchParamsService', () => {
       const expectedProductListingSearchParams: ProductListingSearchParams = createProductListingSearchParams();
 
       service.setProductListingSearchParam(expectedProductListingSearchParams);
-      const res: ProductListingSearchParams = service.getProductListingSearchParam(new ProductListingSearchParams());
+      const res: ProductListingSearchParams = service.getProductListingSearchParam({
+        endOfSale: false,
+        pageIndex: 1,
+        pageSize: 1,
+        productCode: '',
+        productGenre: '',
+        productName: ''
+      });
       expect(res.endOfSale).toEqual(expectedProductListingSearchParams.endOfSale);
       expect(res.pageIndex).toEqual(expectedProductListingSearchParams.pageIndex);
       expect(res.pageSize).toEqual(expectedProductListingSearchParams.pageSize);
@@ -44,18 +51,28 @@ describe('SearchParamsService', () => {
       const expectedProductListingSearchParams: ProductListingSearchParams = createProductListingSearchParams();
       service.setProductListingSearchParam(expectedProductListingSearchParams);
       service.removeProductListingSearchParam();
-      expect(service.getProductListingSearchParam(new ProductListingSearchParams())).toBeNull();
+      expect(
+        service.getProductListingSearchParam({
+          endOfSale: false,
+          pageIndex: 1,
+          pageSize: 1,
+          productCode: '',
+          productGenre: '',
+          productName: ''
+        })
+      ).toBeNull();
     });
   });
 });
 
 function createProductListingSearchParams() {
-  const expectedProductListingSearchParams: ProductListingSearchParams = new ProductListingSearchParams();
-  expectedProductListingSearchParams.endOfSale = true;
-  expectedProductListingSearchParams.pageIndex = 1;
-  expectedProductListingSearchParams.pageSize = 1;
-  expectedProductListingSearchParams.productCode = 'productCode';
-  expectedProductListingSearchParams.productGenre = '1';
-  expectedProductListingSearchParams.productName = 'productName';
+  const expectedProductListingSearchParams: ProductListingSearchParams = {
+    endOfSale: true,
+    pageIndex: 1,
+    pageSize: 1,
+    productCode: 'productCode',
+    productGenre: '1',
+    productName: 'productName'
+  };
   return expectedProductListingSearchParams;
 }

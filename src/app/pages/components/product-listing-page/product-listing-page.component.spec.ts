@@ -43,13 +43,14 @@ describe('ProductListingPageComponent', () => {
   user.userName = 'userName';
   user.userTimezone = 'UTC';
 
-  const expectedProductListingSearchParams = new ProductListingSearchParams();
-  expectedProductListingSearchParams.endOfSale = true;
-  expectedProductListingSearchParams.pageIndex = 1;
-  expectedProductListingSearchParams.pageSize = 50;
-  expectedProductListingSearchParams.productCode = 'productCode';
-  expectedProductListingSearchParams.productGenre = '1';
-  expectedProductListingSearchParams.productName = 'productName';
+  const expectedProductListingSearchParams: ProductListingSearchParams = {
+    endOfSale: true,
+    pageIndex: 1,
+    pageSize: 50,
+    productCode: 'productCode',
+    productGenre: '1',
+    productName: 'productName'
+  };
 
   const expectedProductSearchListResponseDto: ProductSearchListResponseDto = new ProductSearchListResponseDto();
   const productSearchResponseDto: ProductSearchResponseDto[] = [
@@ -154,10 +155,14 @@ describe('ProductListingPageComponent', () => {
     });
 
     it('should init search criteria partly undefined', () => {
-      const expectedProductListingSearchParamsUndefine = new ProductListingSearchParams();
-      expectedProductListingSearchParamsUndefine.endOfSale = true;
-      expectedProductListingSearchParamsUndefine.pageIndex = 1;
-      expectedProductListingSearchParamsUndefine.pageSize = 50;
+      const expectedProductListingSearchParamsUndefine: ProductListingSearchParams = {
+        endOfSale: true,
+        pageIndex: 1,
+        pageSize: 50,
+        productCode: undefined,
+        productGenre: undefined,
+        productName: undefined
+      };
       searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(expectedProductListingSearchParamsUndefine);
       productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
       component.ngOnInit();

@@ -142,7 +142,14 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
   }
 
   private initSearchCriteria() {
-    let productListingSearchParams: ProductListingSearchParams = new ProductListingSearchParams();
+    let productListingSearchParams: ProductListingSearchParams = {
+      productName: '',
+      productCode: '',
+      productGenre: '',
+      endOfSale: false,
+      pageSize: 0,
+      pageIndex: 0
+    };
     productListingSearchParams = this.searchParamsService.getProductListingSearchParam(productListingSearchParams);
     if (productListingSearchParams !== null && productListingSearchParams !== undefined) {
       if (productListingSearchParams.productName !== undefined) {
@@ -166,14 +173,14 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
   }
 
   private createSearchParams(): ProductListingSearchParams {
-    const productListingSearchParams: ProductListingSearchParams = new ProductListingSearchParams();
-    productListingSearchParams.productName = this.productName.value;
-    productListingSearchParams.productCode = this.productCode.value;
-    productListingSearchParams.productGenre = this.productGenre.value;
-    productListingSearchParams.endOfSale = this.endOfSale.value;
-    productListingSearchParams.pageSize = this.paginator.pageSize;
-    productListingSearchParams.pageIndex = this.paginator.pageIndex;
-
+    const productListingSearchParams: ProductListingSearchParams = {
+      productName: this.productName.value,
+      productCode: this.productCode.value,
+      productGenre: this.productGenre.value,
+      endOfSale: this.endOfSale.value,
+      pageSize: this.paginator.pageSize,
+      pageIndex: this.paginator.pageIndex
+    };
     return productListingSearchParams;
   }
 

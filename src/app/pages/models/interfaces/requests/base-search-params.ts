@@ -1,5 +1,4 @@
-export class BaseSearchParams {
+export interface BaseSearchParams {
   pageSize: number;
-
   pageIndex: number;
 }

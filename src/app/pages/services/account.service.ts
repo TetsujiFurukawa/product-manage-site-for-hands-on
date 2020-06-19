@@ -10,8 +10,8 @@ import { Injectable } from '@angular/core';
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SessionStrageService } from '../../core/services/session-strage.service';
 import { SignInRequest } from '../models/interfaces/requests/sign-in-request';
-import { MenuListResponseDto } from '../models/interfaces/responses/menu-list-response-dto';
-import { SignInResponseDto } from '../models/interfaces/responses/sign-in-response-dto';
+import { MenuListResponse } from '../models/interfaces/responses/menu-list-response';
+import { SignInResponse } from '../models/interfaces/responses/sign-in-response';
 
 @Injectable({
   providedIn: 'root'
@@ -24,18 +24,18 @@ export class AccountService {
    * @param SignInRequest sign in request
    * @returns sign in response
    */
-  signIn(signInRequest: SignInRequest): Observable<SignInResponseDto> {
+  signIn(signInRequest: SignInRequest): Observable<SignInResponse> {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_SIGN_IN;
     const headers = new HttpHeaders({
       authorization: 'Basic ' + btoa(signInRequest.Username + ':' + signInRequest.Password)
     });
 
     return this.http
-      .post<SignInResponseDto>(webApiUrl, signInRequest, { headers })
+      .post<SignInResponse>(webApiUrl, signInRequest, { headers })
       .pipe(
         catchError((error) => {
           this.errorMessageService.setupPageErrorMessageFromResponse(error);
-          return of(null as SignInResponseDto);
+          return of(null as SignInResponse);
         })
       );
   }
@@ -44,13 +44,13 @@ export class AccountService {
    * Gets menu
    * @returns menu response
    */
-  getMenu(): Observable<MenuListResponseDto[]> {
+  getMenu(): Observable<MenuListResponse[]> {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_MENU;
 
-    return this.http.get<MenuListResponseDto[]>(webApiUrl).pipe(
+    return this.http.get<MenuListResponse[]>(webApiUrl).pipe(
       catchError((error) => {
         this.errorMessageService.setupPageErrorMessageFromResponse(error);
-        return of(null as MenuListResponseDto[]);
+        return of(null as MenuListResponse[]);
       })
     );
   }

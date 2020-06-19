@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
 import { ProductStockRequest } from '../models/interfaces/requests/product-stock-request';
-import { ProductStockResponseDto } from '../models/interfaces/responses/product-stock-response-dto';
+import { ProductStockResponse } from '../models/interfaces/responses/product-stock-response';
 
 @Injectable({
   providedIn: 'root'
@@ -25,16 +25,16 @@ export class ProductStockService {
    * @param productCode  product code
    * @returns product stock response
    */
-  getProductStock(productCode: string): Observable<ProductStockResponseDto> {
+  getProductStock(productCode: string): Observable<ProductStockResponse> {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_STOCK;
     this.clearMessageProperty();
 
     return this.http
-      .get<ProductStockResponseDto>(webApiUrl, { params: { productCode } })
+      .get<ProductStockResponse>(webApiUrl, { params: { productCode } })
       .pipe(
         catchError((error) => {
           this.errorMessageService.setupPageErrorMessageFromResponse(error);
-          return of(null as ProductStockResponseDto);
+          return of(null as ProductStockResponse);
         })
       );
   }
@@ -44,18 +44,18 @@ export class ProductStockService {
    * @param productStockRequest product Stock request
    * @returns product stock response
    */
-  updateProductStock(productStockRequest: ProductStockRequest): Observable<ProductStockResponseDto> {
+  updateProductStock(productStockRequest: ProductStockRequest): Observable<ProductStockResponse> {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_STOCK;
     this.clearMessageProperty();
 
-    return this.http.put<ProductStockResponseDto>(webApiUrl, productStockRequest).pipe(
+    return this.http.put<ProductStockResponse>(webApiUrl, productStockRequest).pipe(
       map((res) => {
         this.successMessagingService.setMessageProperty('successMessage.http');
         return res;
       }),
       catchError((error) => {
         this.errorMessageService.setupPageErrorMessageFromResponse(error);
-        return of(null as ProductStockResponseDto);
+        return of(null as ProductStockResponse);
       })
     );
   }

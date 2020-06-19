@@ -11,7 +11,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
 import { SignInRequest } from '../../models/interfaces/requests/sign-in-request';
-import { SignInResponseDto } from '../../models/interfaces/responses/sign-in-response-dto';
+import { SignInResponse } from '../../models/interfaces/responses/sign-in-response';
 
 @Component({
   selector: 'app-sign-in-page',
@@ -86,16 +86,16 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
     return language;
   }
 
-  private signIn(SignInRequest: SignInRequest) {
+  private signIn(signInRequest: SignInRequest) {
     // Starts Loading.
     this.loadingService.startLoading();
 
     // Signs in and gets response dto.
-    const signInResponseDto: Observable<SignInResponseDto> = this.accountService.signIn(SignInRequest);
-    signInResponseDto.subscribe((responseDto) => {
-      if (responseDto != null) {
+    const signInResponse: Observable<SignInResponse> = this.accountService.signIn(signInRequest);
+    signInResponse.subscribe((response) => {
+      if (response != null) {
         // Sets account information.
-        this.setUpUserAccount(responseDto);
+        this.setUpUserAccount(response);
         // Moves to the Product listing page.
         this.routingService.navigate(UrlConst.PATH_PRODUCT_LISTING);
       }
@@ -113,15 +113,15 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
     return signInRequest;
   }
 
-  private setUpUserAccount(responseDto: SignInResponseDto) {
+  private setUpUserAccount(response: SignInResponse) {
     const user: User = new User();
-    user.userAccount = responseDto.userAccount;
-    user.userName = responseDto.userName;
-    user.userLocale = responseDto.userLocale;
-    user.userLanguage = responseDto.userLanguage;
-    user.userTimezone = responseDto.userTimezone;
-    user.userTimezoneOffset = responseDto.userTimezoneOffset;
-    user.userCurrency = responseDto.userCurrency;
+    user.userAccount = response.userAccount;
+    user.userName = response.userName;
+    user.userLocale = response.userLocale;
+    user.userLanguage = response.userLanguage;
+    user.userTimezone = response.userTimezone;
+    user.userTimezoneOffset = response.userTimezoneOffset;
+    user.userCurrency = response.userCurrency;
     this.accountService.setUser(user);
 
     console.log('SignInPageComponent #setUpUserAccount() user.userAccount:' + user.userAccount);

@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { SignInRequest } from '../../models/interfaces/requests/sign-in-request';
-import { SignInResponseDto } from '../../models/interfaces/responses/sign-in-response-dto';
+import { SignInResponse } from '../../models/interfaces/responses/sign-in-response';
 import { SignInPageComponent } from './sign-in-page.component';
 
 describe('SignInPageComponent', () => {
@@ -29,15 +29,15 @@ describe('SignInPageComponent', () => {
   user.userName = 'userName';
   user.userTimezone = 'UTC';
 
-  const expectedRequestDto: SignInRequest = { Password: 'Password', Username: 'Username' };
+  const expectedRequest: SignInRequest = { Password: 'Password', Username: 'Username' };
 
-  const expectedResponseDto = new SignInResponseDto();
-  expectedResponseDto.userAccount = 'userAccount';
-  expectedResponseDto.userCurrency = 'JPY';
-  expectedResponseDto.userLanguage = 'ja';
-  expectedResponseDto.userLocale = 'ja-JP';
-  expectedResponseDto.userName = 'userName';
-  expectedResponseDto.userTimezone = '';
+  const expectedResponse = new SignInResponse();
+  expectedResponse.userAccount = 'userAccount';
+  expectedResponse.userCurrency = 'JPY';
+  expectedResponse.userLanguage = 'ja';
+  expectedResponse.userLocale = 'ja-JP';
+  expectedResponse.userName = 'userName';
+  expectedResponse.userTimezone = '';
   let component: SignInPageComponent;
   let fixture: ComponentFixture<SignInPageComponent>;
   let accountServiceSpy: { signIn: jasmine.Spy; setUser: jasmine.Spy };
@@ -100,7 +100,7 @@ describe('SignInPageComponent', () => {
     });
 
     it('should sign in', () => {
-      accountServiceSpy.signIn.and.returnValue(of(expectedResponseDto));
+      accountServiceSpy.signIn.and.returnValue(of(expectedResponse));
       spyOn(router, 'navigate');
 
       component.clickSignInButton();
@@ -138,7 +138,7 @@ describe('SignInPageComponent', () => {
 
   describe('DOM input test', () => {
     it('signin user account', () => {
-      const expectedValue = expectedResponseDto.userAccount;
+      const expectedValue = expectedResponse.userAccount;
       HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-account', expectedValue);
       expect(component.signInUserAccount.value).toEqual(expectedValue);
     });
@@ -164,14 +164,14 @@ describe('SignInPageComponent', () => {
 
   describe('DOM input test', () => {
     it('Should Enter input and create request dto', () => {
-      HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-account', expectedRequestDto.Username);
-      HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-password', expectedRequestDto.Password);
+      HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-account', expectedRequest.Username);
+      HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-password', expectedRequest.Password);
 
       const targetMethodName = 'createSignInRequest';
       const signInRequest: SignInRequest = component[targetMethodName]();
 
-      expect(signInRequest.Username).toEqual(expectedRequestDto.Username);
-      expect(signInRequest.Password).toEqual(expectedRequestDto.Password);
+      expect(signInRequest.Username).toEqual(expectedRequest.Username);
+      expect(signInRequest.Password).toEqual(expectedRequest.Password);
     });
   });
 });

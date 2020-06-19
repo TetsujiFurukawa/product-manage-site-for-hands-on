@@ -5,7 +5,7 @@ import { TestBed } from '@angular/core/testing';
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
 import { ApiConst } from '../constants/api-const';
-import { ProductStockResponseDto } from '../models/interfaces/responses/product-stock-response-dto';
+import { ProductStockResponse } from '../models/interfaces/responses/product-stock-response';
 import { ProductStockService } from './product-stock.service';
 
 describe('ProductStockService', () => {
@@ -51,17 +51,17 @@ describe('ProductStockService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_STOCK;
 
     it('should return expected response', () => {
-      const expectedResponseDto: ProductStockResponseDto = new ProductStockResponseDto();
-      expectedResponseDto.productCode = 'productCode';
-      expectedResponseDto.productColor = 'productColor';
-      expectedResponseDto.productGenre = '1';
-      expectedResponseDto.productImage = 'productImage';
-      expectedResponseDto.productName = 'productName';
-      expectedResponseDto.productSizeStandard = 'productSizeStandard';
-      expectedResponseDto.productStockQuantity = 1;
+      const expectedResponse: ProductStockResponse = new ProductStockResponse();
+      expectedResponse.productCode = 'productCode';
+      expectedResponse.productColor = 'productColor';
+      expectedResponse.productGenre = '1';
+      expectedResponse.productImage = 'productImage';
+      expectedResponse.productName = 'productName';
+      expectedResponse.productSizeStandard = 'productSizeStandard';
+      expectedResponse.productStockQuantity = 1;
 
-      service.getProductStock('productCode').subscribe((responseDto) => {
-        expect(responseDto).toEqual(expectedResponseDto);
+      service.getProductStock('productCode').subscribe((response) => {
+        expect(response).toEqual(expectedResponse);
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
@@ -71,13 +71,13 @@ describe('ProductStockService', () => {
       expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
-      req.flush(expectedResponseDto);
+      req.flush(expectedResponse);
     });
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      service.getProductStock('productCode').subscribe((responseDto) => {
-        expect(responseDto).toBeNull();
+      service.getProductStock('productCode').subscribe((response) => {
+        expect(response).toBeNull();
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
       }, fail);
 
@@ -95,19 +95,19 @@ describe('ProductStockService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_STOCK;
 
     it('should return expected response', () => {
-      const expectedResponseDto: ProductStockResponseDto = new ProductStockResponseDto();
-      expectedResponseDto.productCode = 'productCode';
-      expectedResponseDto.productColor = 'productColor';
-      expectedResponseDto.productGenre = '1';
-      expectedResponseDto.productImage = 'productImage';
-      expectedResponseDto.productName = 'productName';
-      expectedResponseDto.productSizeStandard = 'productSizeStandard';
-      expectedResponseDto.productStockQuantity = 1;
+      const expectedResponse: ProductStockResponse = new ProductStockResponse();
+      expectedResponse.productCode = 'productCode';
+      expectedResponse.productColor = 'productColor';
+      expectedResponse.productGenre = '1';
+      expectedResponse.productImage = 'productImage';
+      expectedResponse.productName = 'productName';
+      expectedResponse.productSizeStandard = 'productSizeStandard';
+      expectedResponse.productStockQuantity = 1;
 
       service
         .updateProductStock({ productCode: '', productStockQuantity: 0, addProductStockQuantity: 0 })
-        .subscribe((responseDto) => {
-          expect(responseDto).toEqual(expectedResponseDto);
+        .subscribe((response) => {
+          expect(response).toEqual(expectedResponse);
           expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1);
           expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
         }, fail);
@@ -118,15 +118,15 @@ describe('ProductStockService', () => {
       expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
-      req.flush(expectedResponseDto);
+      req.flush(expectedResponse);
     });
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
       service
         .updateProductStock({ productCode: '', productStockQuantity: 0, addProductStockQuantity: 0 })
-        .subscribe((responseDto) => {
-          expect(responseDto).toBeNull();
+        .subscribe((response) => {
+          expect(response).toBeNull();
           expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0);
           expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
         }, fail);

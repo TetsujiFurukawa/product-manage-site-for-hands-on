@@ -1,7 +1,7 @@
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiConst } from 'src/app/pages/constants/api-const';
-import { ProductDto } from 'src/app/pages/models/interfaces/product-dto';
+import { Product } from 'src/app/pages/models/interfaces/product';
 
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -9,8 +9,8 @@ import { Injectable } from '@angular/core';
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
 import {
-    ProductSearchListResponseDto
-} from '../models/interfaces/responses/product-search-list-response-dto';
+    ProductSearchListResponse
+} from '../models/interfaces/responses/product-search-list-response';
 
 @Injectable({
   providedIn: 'root'
@@ -27,16 +27,16 @@ export class ProductService {
    * @param httpParams search params
    * @returns product search response
    */
-  getProductList(httpParams: HttpParams): Observable<ProductSearchListResponseDto> {
+  getProductList(httpParams: HttpParams): Observable<ProductSearchListResponse> {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT_SEARCH;
     this.clearMessageProperty();
 
     return this.http
-      .get<ProductSearchListResponseDto>(webApiUrl, { params: httpParams })
+      .get<ProductSearchListResponse>(webApiUrl, { params: httpParams })
       .pipe(
         catchError((error) => {
           this.errorMessageService.setupPageErrorMessageFromResponse(error);
-          return of(null as ProductSearchListResponseDto);
+          return of(null as ProductSearchListResponse);
         })
       );
   }
@@ -46,58 +46,58 @@ export class ProductService {
    * @param productCode product code
    * @returns product response
    */
-  getProduct(productCode: string): Observable<ProductDto> {
+  getProduct(productCode: string): Observable<Product> {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT;
     this.clearMessageProperty();
 
     return this.http
-      .get<ProductDto>(webApiUrl, { params: { productCode } })
+      .get<Product>(webApiUrl, { params: { productCode } })
       .pipe(
         catchError((error) => {
           this.errorMessageService.setupPageErrorMessageFromResponse(error);
-          return of(null as ProductDto);
+          return of(null as Product);
         })
       );
   }
 
   /**
    * Creates product
-   * @param productDto product request
+   * @param product product request
    * @returns producr response
    */
-  createProduct(productDto: ProductDto): Observable<ProductDto> {
+  createProduct(product: Product): Observable<Product> {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT;
     this.clearMessageProperty();
 
-    return this.http.post<ProductDto>(webApiUrl, productDto).pipe(
+    return this.http.post<Product>(webApiUrl, product).pipe(
       map((res) => {
         this.successMessagingService.setMessageProperty('successMessage.http');
         return res;
       }),
       catchError((error) => {
         this.errorMessageService.setupPageErrorMessageFromResponse(error);
-        return of(null as ProductDto);
+        return of(null as Product);
       })
     );
   }
 
   /**
    * Updates product
-   * @param productDto  product request
+   * @param product  product request
    * @returns producr response
    */
-  updateProduct(productDto: ProductDto): Observable<ProductDto> {
+  updateProduct(product: Product): Observable<Product> {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT;
     this.clearMessageProperty();
 
-    return this.http.put<ProductDto>(webApiUrl, productDto).pipe(
+    return this.http.put<Product>(webApiUrl, product).pipe(
       map((res) => {
         this.successMessagingService.setMessageProperty('successMessage.http');
         return res;
       }),
       catchError((error) => {
         this.errorMessageService.setupPageErrorMessageFromResponse(error);
-        return of(null as ProductDto);
+        return of(null as Product);
       })
     );
   }

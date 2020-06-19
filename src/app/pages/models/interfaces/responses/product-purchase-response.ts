@@ -1,4 +1,4 @@
-export class ProductPurchaseResponseDto {
+export class ProductPurchaseResponse {
   productCode: string;
 
   productName: string;

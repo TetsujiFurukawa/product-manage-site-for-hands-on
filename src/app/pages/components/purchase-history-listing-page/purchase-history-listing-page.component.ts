@@ -20,8 +20,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { TranslateService } from '@ngx-translate/core';
 
 import {
-    ProductPurchaseHistorySearchResponseDto
-} from '../../models/interfaces/responses/product-purchase-history-search-response-dto';
+    ProductPurchaseHistorySearchResponse
+} from '../../models/interfaces/responses/product-purchase-history-search-response';
 
 @Component({
   selector: 'app-purchase-history-listing-page',
@@ -74,7 +74,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
   ];
 
   // Search result
-  purchaseHistorySearchResponseDtos: ProductPurchaseHistorySearchResponseDto[];
+  purchaseHistorySearchResponses: ProductPurchaseHistorySearchResponse[];
   resultsLength = 0;
 
   // Loading and pagenation
@@ -120,10 +120,10 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
           this.loadingService.stopLoading();
           this.resultsLength = data.resultsLength;
           this.paginator.pageIndex = data.pageIndex;
-          return data.productPurchaseHistorySearchResponseDtos;
+          return data.productPurchaseHistorySearchResponses;
         })
       )
-      .subscribe((data) => (this.purchaseHistorySearchResponseDtos = data));
+      .subscribe((data) => (this.purchaseHistorySearchResponses = data));
   }
 
   /**
@@ -186,7 +186,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
   }
 
   private clearSearchResultList() {
-    this.purchaseHistorySearchResponseDtos = null;
+    this.purchaseHistorySearchResponses = null;
     this.resultsLength = 0;
   }
 }

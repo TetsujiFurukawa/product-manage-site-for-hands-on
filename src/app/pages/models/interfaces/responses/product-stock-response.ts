@@ -1,4 +1,4 @@
-export class ProductStockResponseDto {
+export class ProductStockResponse {
   productCode: string;
 
   productName: string;

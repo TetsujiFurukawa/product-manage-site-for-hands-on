@@ -5,8 +5,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { ApiConst } from '../constants/api-const';
-import { MenuListResponseDto } from '../models/interfaces/responses/menu-list-response-dto';
-import { SignInResponseDto } from '../models/interfaces/responses/sign-in-response-dto';
+import { MenuListResponse } from '../models/interfaces/responses/menu-list-response';
+import { SignInResponse } from '../models/interfaces/responses/sign-in-response';
 import { User } from '../models/user';
 import { AccountService } from './account.service';
 
@@ -40,18 +40,18 @@ describe('AccountService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_SIGN_IN;
 
     it('should return expected response', () => {
-      const expectedSignInResponseDto: SignInResponseDto = createExpectedSignInResponseDto();
+      const expectedSignInResponse: SignInResponse = createExpectedSignInResponse();
 
       // Subscribes to api.
-      service.signIn({ Username: '', Password: '' }).subscribe((signInResponseDto) => {
-        expect(signInResponseDto).toEqual(expectedSignInResponseDto);
+      service.signIn({ Username: '', Password: '' }).subscribe((signInResponse) => {
+        expect(signInResponse).toEqual(expectedSignInResponse);
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
       // Responds with the mock.
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('POST');
-      req.flush(expectedSignInResponseDto);
+      req.flush(expectedSignInResponse);
     });
 
     it('should return null when response is 401 Unauthorized error', () => {
@@ -59,8 +59,8 @@ describe('AccountService', () => {
       const errorMessage = '401 Unauthorized';
 
       // Subscribes to api.
-      service.signIn({ Username: '', Password: '' }).subscribe((signInResponseDto) => {
-        expect(signInResponseDto).toBeNull();
+      service.signIn({ Username: '', Password: '' }).subscribe((signInResponse) => {
+        expect(signInResponse).toBeNull();
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
       }, fail);
 
@@ -75,18 +75,18 @@ describe('AccountService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_MENU;
 
     it('should return expected response', () => {
-      const expectedMenuListResponseDto = createExpectedMenuListResponseDto();
+      const expectedMenuListResponse = createExpectedMenuListResponse();
 
       // Subscribes to api.
       service.getMenu().subscribe((response) => {
-        expect(response).toEqual(expectedMenuListResponseDto);
+        expect(response).toEqual(expectedMenuListResponse);
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
       // Responds with the mock
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('GET');
-      req.flush(expectedMenuListResponseDto);
+      req.flush(expectedMenuListResponse);
     });
 
     it('should return null when response is 404 Not Found', () => {
@@ -181,24 +181,24 @@ describe('AccountService', () => {
   });
 });
 
-function createExpectedSignInResponseDto() {
-  const signInResponseDto: SignInResponseDto = new SignInResponseDto();
-  signInResponseDto.userAccount = 'userAccount';
-  signInResponseDto.userName = 'userName';
-  signInResponseDto.userLocale = 'ja-JP';
-  signInResponseDto.userLanguage = 'ja';
-  signInResponseDto.userTimezone = 'UTC';
-  signInResponseDto.userCurrency = 'JPY';
-  return signInResponseDto;
+function createExpectedSignInResponse() {
+  const signInResponse: SignInResponse = new SignInResponse();
+  signInResponse.userAccount = 'userAccount';
+  signInResponse.userName = 'userName';
+  signInResponse.userLocale = 'ja-JP';
+  signInResponse.userLanguage = 'ja';
+  signInResponse.userTimezone = 'UTC';
+  signInResponse.userCurrency = 'JPY';
+  return signInResponse;
 }
 
-function createExpectedMenuListResponseDto() {
+function createExpectedMenuListResponse() {
   const subMenuCodeList = new Array('subMenu1', 'subMenu2', 'subMenu3');
-  const menuListResponseDto: MenuListResponseDto = new MenuListResponseDto();
-  menuListResponseDto.menuCode = 'menu1';
-  menuListResponseDto.subMenuCodeList = subMenuCodeList;
-  const expectedMenuListResponseDto = Array(menuListResponseDto);
-  return expectedMenuListResponseDto;
+  const menuListResponse: MenuListResponse = new MenuListResponse();
+  menuListResponse.menuCode = 'menu1';
+  menuListResponse.subMenuCodeList = subMenuCodeList;
+  const expectedMenuListResponse = Array(menuListResponse);
+  return expectedMenuListResponse;
 }
 
 function createExpectedUser() {

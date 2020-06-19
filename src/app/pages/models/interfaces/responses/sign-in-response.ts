@@ -1,4 +1,4 @@
-export class SignInResponseDto {
+export class SignInResponse {
   public userAccount: string;
 
   public userName: string;

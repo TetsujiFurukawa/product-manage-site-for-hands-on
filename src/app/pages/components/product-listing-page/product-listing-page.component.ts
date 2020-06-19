@@ -18,9 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 import {
     ProductListingSearchParams
 } from '../../models/interfaces/requests/product-listing-search-params';
-import {
-    ProductSearchResponseDto
-} from '../../models/interfaces/responses/product-search-response-dto';
+import { ProductSearchResponse } from '../../models/interfaces/responses/product-search-response';
 
 @Component({
   selector: 'app-product-listing-page',
@@ -73,7 +71,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
   ];
 
   // Search result
-  productSearchResponseDtos: ProductSearchResponseDto[];
+  productSearchResponses: ProductSearchResponse[];
   resultsLength = 0;
 
   // Loading and pagenation
@@ -115,14 +113,14 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
           this.loadingService.stopLoading();
           this.resultsLength = data.resultsLength;
           this.paginator.pageIndex = data.pageIndex;
-          return data.productSearchResponseDtos;
+          return data.productSearchResponses;
         })
       )
-      .subscribe((data) => (this.productSearchResponseDtos = data));
+      .subscribe((data) => (this.productSearchResponses = data));
   }
 
-  clickListRow(productResponseDto: ProductSearchResponseDto) {
-    this.routingService.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING, productResponseDto.productCode]);
+  clickListRow(productResponse: ProductSearchResponse) {
+    this.routingService.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING, productResponse.productCode]);
   }
 
   unselectProductGenre() {
@@ -206,7 +204,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
   }
 
   private clearSearchResultList() {
-    this.productSearchResponseDtos = null;
+    this.productSearchResponses = null;
     this.resultsLength = 0;
   }
 }

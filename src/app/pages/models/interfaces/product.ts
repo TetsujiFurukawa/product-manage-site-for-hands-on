@@ -1,5 +1,5 @@
-export class ProductSearchResponseDto {
-  no: number;
+export class Product {
+  productSeq: number;
 
   productName: string;
 
@@ -7,7 +7,7 @@ export class ProductSearchResponseDto {
 
   productGenre: string;
 
-  productImageUrl: string;
+  productImage: string;
 
   productSizeStandard: string;
 
@@ -15,7 +15,9 @@ export class ProductSearchResponseDto {
 
   productUnitPrice: number;
 
-  productStockQuantity: number;
-
   endOfSale: boolean;
+
+  endOfSaleDate: Date;
+
+  updateDate: Date;
 }

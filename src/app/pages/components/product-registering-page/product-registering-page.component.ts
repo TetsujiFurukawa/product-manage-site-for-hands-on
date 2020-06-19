@@ -8,7 +8,7 @@ import { RoutingService } from 'src/app/core/services/routing.service';
 import { AppConst } from 'src/app/pages/constants/app-const';
 import { RegexConst } from 'src/app/pages/constants/regex-const';
 import { UrlConst } from 'src/app/pages/constants/url-const';
-import { ProductDto } from 'src/app/pages/models/interfaces/product-dto';
+import { Product } from 'src/app/pages/models/interfaces/product';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductService } from 'src/app/pages/services/product.service';
 import {
@@ -164,8 +164,8 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        const productDto: ProductDto = this.createProductRegisterRequestDto(this.isNew);
-        this.registerProduct(productDto);
+        const product: Product = this.createProductRegisterRequest(this.isNew);
+        this.registerProduct(product);
       }
     });
   }
@@ -199,17 +199,17 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     });
   }
 
-  private registerProduct(productDto: ProductDto) {
+  private registerProduct(product: Product) {
     this.loadingService.startLoading();
 
-    if (productDto.productSeq === null) {
+    if (product.productSeq === null) {
       // Creates product.
-      this.productService.createProduct(productDto).subscribe((data) => {
+      this.productService.createProduct(product).subscribe((data) => {
         this.extractGetProductResponse(data);
         this.loadingService.stopLoading();
       });
     } else {
-      this.productService.updateProduct(productDto).subscribe((data) => {
+      this.productService.updateProduct(product).subscribe((data) => {
         this.extractGetProductResponse(data);
         this.loadingService.stopLoading();
       });
@@ -221,55 +221,55 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     this.messagePropertySaveButton = 'productRegisteringPage.saveButton.edit';
   }
 
-  private createProductRegisterRequestDto(isNew: boolean): ProductDto {
-    const productDto: ProductDto = new ProductDto();
+  private createProductRegisterRequest(isNew: boolean): Product {
+    const product: Product = new Product();
     if (!isNew) {
-      productDto.productSeq = this.productSeq.value;
+      product.productSeq = this.productSeq.value;
     } else {
-      productDto.productSeq = null;
+      product.productSeq = null;
     }
-    productDto.productCode = this.productCode.value;
-    productDto.productName = this.productName.value;
-    productDto.productGenre = this.productGenre.value;
-    productDto.productSizeStandard = this.productSizeStandard.value;
-    productDto.productColor = this.productColor.value;
-    productDto.productUnitPrice = this.formattedCurrencyPipe.parse(
+    product.productCode = this.productCode.value;
+    product.productName = this.productName.value;
+    product.productGenre = this.productGenre.value;
+    product.productSizeStandard = this.productSizeStandard.value;
+    product.productColor = this.productColor.value;
+    product.productUnitPrice = this.formattedCurrencyPipe.parse(
       this.productUnitPrice.value,
       this.locale,
       this.currency
     );
-    productDto.endOfSale = this.endOfSale.value;
+    product.endOfSale = this.endOfSale.value;
     if (this.endOfSaleDate.value === '') {
-      productDto.endOfSaleDate = null;
+      product.endOfSaleDate = null;
     } else {
-      productDto.endOfSaleDate = this.endOfSaleDate.value;
+      product.endOfSaleDate = this.endOfSaleDate.value;
     }
-    productDto.productImage = this.productImage.value;
-    productDto.updateDate = this.updateDate.value;
+    product.productImage = this.productImage.value;
+    product.updateDate = this.updateDate.value;
 
-    return productDto;
+    return product;
   }
 
-  private extractGetProductResponse(productDto: ProductDto) {
-    if (productDto === null) {
+  private extractGetProductResponse(product: Product) {
+    if (product === null) {
       return;
     }
-    this.productSeq.setValue(productDto.productSeq);
-    this.productCode.setValue(productDto.productCode);
-    this.productName.setValue(productDto.productName);
-    this.productGenre.setValue(productDto.productGenre);
-    this.productSizeStandard.setValue(productDto.productSizeStandard);
-    this.productColor.setValue(productDto.productColor);
+    this.productSeq.setValue(product.productSeq);
+    this.productCode.setValue(product.productCode);
+    this.productName.setValue(product.productName);
+    this.productGenre.setValue(product.productGenre);
+    this.productSizeStandard.setValue(product.productSizeStandard);
+    this.productColor.setValue(product.productColor);
     this.productUnitPrice.setValue(
-      this.formattedCurrencyPipe.transform(productDto.productUnitPrice.toString(), this.locale, this.currency)
+      this.formattedCurrencyPipe.transform(product.productUnitPrice.toString(), this.locale, this.currency)
     );
-    this.endOfSale.setValue(productDto.endOfSale);
-    if (productDto.endOfSaleDate === null) {
+    this.endOfSale.setValue(product.endOfSale);
+    if (product.endOfSaleDate === null) {
       this.endOfSaleDate.setValue('');
     } else {
-      this.endOfSaleDate.setValue(productDto.endOfSaleDate);
+      this.endOfSaleDate.setValue(product.endOfSaleDate);
     }
-    this.productImage.setValue(productDto.productImage);
-    this.updateDate.setValue(productDto.updateDate);
+    this.productImage.setValue(product.productImage);
+    this.updateDate.setValue(product.updateDate);
   }
 }

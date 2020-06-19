@@ -24,11 +24,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import {
-    ProductPurchaseHistorySearchListResponseDto
-} from '../../models/interfaces/responses/product-purchase-history-search-list-response-dto';
+    ProductPurchaseHistorySearchListResponse
+} from '../../models/interfaces/responses/product-purchase-history-search-list-response';
 import {
-    ProductPurchaseHistorySearchResponseDto
-} from '../../models/interfaces/responses/product-purchase-history-search-response-dto';
+    ProductPurchaseHistorySearchResponse
+} from '../../models/interfaces/responses/product-purchase-history-search-response';
 import { PurchaseHistoryListingPageComponent } from './purchase-history-listing-page.component';
 
 describe('PurchaseHistoryListingPageComponent', () => {
@@ -47,8 +47,8 @@ describe('PurchaseHistoryListingPageComponent', () => {
   const expectedSearchParamsProductName = 'productName';
   const expectedSearchParamsProductCode = 'productCode';
 
-  const expectedProductPurchaseHistorySearchListResponseDto: ProductPurchaseHistorySearchListResponseDto = new ProductPurchaseHistorySearchListResponseDto();
-  const productPurchaseHistorySearchResponseDtos: ProductPurchaseHistorySearchResponseDto[] = [
+  const expectedProductPurchaseHistorySearchListResponse: ProductPurchaseHistorySearchListResponse = new ProductPurchaseHistorySearchListResponse();
+  const productPurchaseHistorySearchResponses: ProductPurchaseHistorySearchResponse[] = [
     {
       no: 1,
       productName: 'productName',
@@ -61,7 +61,7 @@ describe('PurchaseHistoryListingPageComponent', () => {
       productPurchaseAmount: 789
     }
   ];
-  expectedProductPurchaseHistorySearchListResponseDto.productPurchaseHistorySearchResponseDtos = productPurchaseHistorySearchResponseDtos;
+  expectedProductPurchaseHistorySearchListResponse.productPurchaseHistorySearchResponses = productPurchaseHistorySearchResponses;
 
   let component: PurchaseHistoryListingPageComponent;
   let fixture: ComponentFixture<PurchaseHistoryListingPageComponent>;

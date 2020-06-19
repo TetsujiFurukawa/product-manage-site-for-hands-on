@@ -12,8 +12,8 @@ import {
     ProductPurchaseRequest
 } from 'src/app/pages/models/interfaces/requests/product-purchase-request';
 import {
-    ProductPurchaseResponseDto
-} from 'src/app/pages/models/interfaces/responses/product-purchase-response-dto';
+    ProductPurchaseResponse
+} from 'src/app/pages/models/interfaces/responses/product-purchase-response';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductPurchaseService } from 'src/app/pages/services/product-purchase.service';
 import { ProductService } from 'src/app/pages/services/product.service';
@@ -135,8 +135,8 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        const purchaseRequestDto: ProductPurchaseRequest = this.createPurchaseRequestDto();
-        this.createProductPurchase(purchaseRequestDto);
+        const purchaseRequest: ProductPurchaseRequest = this.createPurchaseRequest();
+        this.createProductPurchase(purchaseRequest);
       }
     });
   }
@@ -182,7 +182,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  private createPurchaseRequestDto(): ProductPurchaseRequest {
+  private createPurchaseRequest(): ProductPurchaseRequest {
     const productPurchaseRequest: ProductPurchaseRequest = {
       productCode: this.productCode.value,
       productPurchaseName: this.productPurchaseName.value,
@@ -196,32 +196,32 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     return productPurchaseRequest;
   }
 
-  private extractGetProductPurchaseResponse(productPurchaseResponseDto: ProductPurchaseResponseDto) {
-    if (productPurchaseResponseDto === null) {
+  private extractGetProductPurchaseResponse(productPurchaseResponse: ProductPurchaseResponse) {
+    if (productPurchaseResponse === null) {
       return;
     }
-    this.productName.setValue(productPurchaseResponseDto.productName);
-    this.productGenre.setValue(this.translateService.instant('genre.' + productPurchaseResponseDto.productGenre));
-    this.productSizeStandard.setValue(productPurchaseResponseDto.productSizeStandard);
+    this.productName.setValue(productPurchaseResponse.productName);
+    this.productGenre.setValue(this.translateService.instant('genre.' + productPurchaseResponse.productGenre));
+    this.productSizeStandard.setValue(productPurchaseResponse.productSizeStandard);
     this.productPurchaseUnitPrice.setValue(
       this.formattedCurrencyPipe.transform(
-        String(productPurchaseResponseDto.productPurchaseUnitPrice),
+        String(productPurchaseResponse.productPurchaseUnitPrice),
         this.locale,
         this.currency
       )
     );
     this.productStockQuantity.setValue(
-      this.formattedNumberPipe.transform(String(productPurchaseResponseDto.productStockQuantity), this.locale)
+      this.formattedNumberPipe.transform(String(productPurchaseResponse.productStockQuantity), this.locale)
     );
-    this.productImage.setValue(productPurchaseResponseDto.productImage);
+    this.productImage.setValue(productPurchaseResponse.productImage);
   }
 
-  private extractCreateProductPurchaseResponse(productPurchaseResponseDto: ProductPurchaseResponseDto) {
-    if (productPurchaseResponseDto === null) {
+  private extractCreateProductPurchaseResponse(productPurchaseResponse: ProductPurchaseResponse) {
+    if (productPurchaseResponse === null) {
       return;
     }
     this.productStockQuantity.setValue(
-      this.formattedNumberPipe.transform(String(productPurchaseResponseDto.productStockQuantity), this.locale)
+      this.formattedNumberPipe.transform(String(productPurchaseResponse.productStockQuantity), this.locale)
     );
     this.productPurchaseQuantity.reset();
     this.productPurchaseAmount.reset();

@@ -6,9 +6,7 @@ import { LoadingService } from 'src/app/core/services/loading.service';
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { AppConst } from 'src/app/pages/constants/app-const';
 import { UrlConst } from 'src/app/pages/constants/url-const';
-import {
-    MenuListResponseDto
-} from 'src/app/pages/models/interfaces/responses/menu-list-response-dto';
+import { MenuListResponse } from 'src/app/pages/models/interfaces/responses/menu-list-response';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { SearchParamsService } from 'src/app/pages/services/search-params.service';
 
@@ -27,7 +25,7 @@ export class HeaderComponent implements OnInit {
   urlHome: string = UrlConst.PATH_PRODUCT_LISTING;
 
   // Menu response data
-  menuListResponseDto: MenuListResponseDto[];
+  menuListResponse: MenuListResponse[];
 
   constructor(
     private accountService: AccountService,
@@ -87,8 +85,8 @@ export class HeaderComponent implements OnInit {
   // private methods
   // --------------------------------------------------------------------------------
   private getMenu() {
-    this.accountService.getMenu().subscribe((menuListResponseDto) => {
-      this.menuListResponseDto = menuListResponseDto;
+    this.accountService.getMenu().subscribe((menuListResponse) => {
+      this.menuListResponse = menuListResponse;
     });
   }
 

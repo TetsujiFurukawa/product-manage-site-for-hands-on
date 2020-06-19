@@ -1,9 +1,7 @@
 import { of } from 'rxjs';
 import { HttpLoaderFactory } from 'src/app/ngx-translate/ngx-translate.module';
 import { UrlConst } from 'src/app/pages/constants/url-const';
-import {
-    MenuListResponseDto
-} from 'src/app/pages/models/interfaces/responses/menu-list-response-dto';
+import { MenuListResponse } from 'src/app/pages/models/interfaces/responses/menu-list-response';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { SearchParamsService } from 'src/app/pages/services/search-params.service';
 
@@ -75,11 +73,11 @@ describe('HeaderComponent', () => {
 
   describe('#ngOnInit', () => {
     it('should init', () => {
-      const expetedMenuListResponseDtos: MenuListResponseDto[] = createExpectedMenuDto();
-      accountServiceSpy.getMenu.and.returnValue(of(expetedMenuListResponseDtos));
+      const expetedMenuListResponses: MenuListResponse[] = createExpectedMenu();
+      accountServiceSpy.getMenu.and.returnValue(of(expetedMenuListResponses));
 
       component.ngOnInit();
-      expect(component.menuListResponseDto).toEqual(expetedMenuListResponseDtos);
+      expect(component.menuListResponse).toEqual(expetedMenuListResponses);
       expect(accountServiceSpy.getMenu.calls.count()).toBe(1);
     });
   });
@@ -117,13 +115,13 @@ describe('HeaderComponent', () => {
   });
 });
 
-function createExpectedMenuDto() {
-  const menuListResponseDto1: MenuListResponseDto = new MenuListResponseDto();
-  menuListResponseDto1.menuCode = 'menu1';
-  menuListResponseDto1.subMenuCodeList = Array('subMenu1-1', 'subMenu1-2');
-  const menuListResponseDto2: MenuListResponseDto = new MenuListResponseDto();
-  menuListResponseDto1.menuCode = 'menu2';
-  menuListResponseDto1.subMenuCodeList = Array('subMenu2-1');
-  const expetedMenuListResponseDtos: MenuListResponseDto[] = Array(menuListResponseDto1, menuListResponseDto2);
-  return expetedMenuListResponseDtos;
+function createExpectedMenu() {
+  const menuListResponse1: MenuListResponse = new MenuListResponse();
+  menuListResponse1.menuCode = 'menu1';
+  menuListResponse1.subMenuCodeList = Array('subMenu1-1', 'subMenu1-2');
+  const menuListResponse2: MenuListResponse = new MenuListResponse();
+  menuListResponse1.menuCode = 'menu2';
+  menuListResponse1.subMenuCodeList = Array('subMenu2-1');
+  const expetedMenuListResponses: MenuListResponse[] = Array(menuListResponse1, menuListResponse2);
+  return expetedMenuListResponses;
 }

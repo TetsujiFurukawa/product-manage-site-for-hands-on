@@ -3,7 +3,7 @@
     <mat-icon>home</mat-icon>{{ 'menu.home' | translate }}
   </mat-list-item>
 
-  <ng-container *ngFor=" let item of menuListResponseDto">
+  <ng-container *ngFor=" let item of menuListResponse">
     <mat-list-item [matMenuTriggerFor]="appMenu">
       <mat-icon>arrow_drop_down</mat-icon>
       <a matline>{{ 'menu.' +item.menuCode | translate }}</a>

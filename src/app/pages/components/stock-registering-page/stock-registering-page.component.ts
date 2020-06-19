@@ -21,9 +21,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 
 import { ProductStockRequest } from '../../models/interfaces/requests/product-stock-request';
-import {
-    ProductStockResponseDto
-} from '../../models/interfaces/responses/product-stock-response-dto';
+import { ProductStockResponse } from '../../models/interfaces/responses/product-stock-response';
 
 @Component({
   selector: 'app-stock-registering-page',
@@ -121,7 +119,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        const productStockRequest: ProductStockRequest = this.createProductStockRequestDto();
+        const productStockRequest: ProductStockRequest = this.createProductStockRequest();
         this.updateProductStock(productStockRequest);
       }
     });
@@ -157,7 +155,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  private createProductStockRequestDto(): ProductStockRequest {
+  private createProductStockRequest(): ProductStockRequest {
     const productStockRequest: ProductStockRequest = {
       productCode: this.productCode.value,
       productStockQuantity: this.formattedNumberPipe.parse(this.productStockQuantity.value, this.locale),
@@ -166,25 +164,25 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     return productStockRequest;
   }
 
-  private extractGetProductStockResponse(productStockResponseDto: ProductStockResponseDto) {
-    if (productStockResponseDto === null) {
+  private extractGetProductStockResponse(productStockResponse: ProductStockResponse) {
+    if (productStockResponse === null) {
       return;
     }
-    this.productName.setValue(productStockResponseDto.productName);
-    this.productGenre.setValue(this.translateService.instant('genre.' + productStockResponseDto.productGenre));
-    this.productSizeStandard.setValue(productStockResponseDto.productSizeStandard);
+    this.productName.setValue(productStockResponse.productName);
+    this.productGenre.setValue(this.translateService.instant('genre.' + productStockResponse.productGenre));
+    this.productSizeStandard.setValue(productStockResponse.productSizeStandard);
     this.productStockQuantity.setValue(
-      this.formattedNumberPipe.transform(String(productStockResponseDto.productStockQuantity), this.locale)
+      this.formattedNumberPipe.transform(String(productStockResponse.productStockQuantity), this.locale)
     );
-    this.productImage.setValue(productStockResponseDto.productImage);
+    this.productImage.setValue(productStockResponse.productImage);
   }
 
-  private extractUpdateProductStockResponse(productStockResponseDto: ProductStockResponseDto) {
-    if (productStockResponseDto === null) {
+  private extractUpdateProductStockResponse(productStockResponse: ProductStockResponse) {
+    if (productStockResponse === null) {
       return;
     }
     this.productStockQuantity.setValue(
-      this.formattedNumberPipe.transform(String(productStockResponseDto.productStockQuantity), this.locale)
+      this.formattedNumberPipe.transform(String(productStockResponse.productStockQuantity), this.locale)
     );
     this.addProductStockQuantity.reset();
   }

@@ -26,11 +26,9 @@ import {
     ProductListingSearchParams
 } from '../../models/interfaces/requests/product-listing-search-params';
 import {
-    ProductSearchListResponseDto
-} from '../../models/interfaces/responses/product-search-list-response-dto';
-import {
-    ProductSearchResponseDto
-} from '../../models/interfaces/responses/product-search-response-dto';
+    ProductSearchListResponse
+} from '../../models/interfaces/responses/product-search-list-response';
+import { ProductSearchResponse } from '../../models/interfaces/responses/product-search-response';
 import { ProductListingPageComponent } from './product-listing-page.component';
 
 describe('ProductListingPageComponent', () => {
@@ -52,8 +50,8 @@ describe('ProductListingPageComponent', () => {
     productName: 'productName'
   };
 
-  const expectedProductSearchListResponseDto: ProductSearchListResponseDto = new ProductSearchListResponseDto();
-  const productSearchResponseDto: ProductSearchResponseDto[] = [
+  const expectedProductSearchListResponse: ProductSearchListResponse = new ProductSearchListResponse();
+  const productSearchResponse: ProductSearchResponse[] = [
     {
       no: 1,
       productName: 'productName',
@@ -67,8 +65,8 @@ describe('ProductListingPageComponent', () => {
       endOfSale: true
     }
   ];
-  expectedProductSearchListResponseDto.productSearchResponseDtos = productSearchResponseDto;
-  expectedProductSearchListResponseDto.pageIndex = 1;
+  expectedProductSearchListResponse.productSearchResponses = productSearchResponse;
+  expectedProductSearchListResponse.pageIndex = 1;
 
   let component: ProductListingPageComponent;
   let fixture: ComponentFixture<ProductListingPageComponent>;
@@ -143,7 +141,7 @@ describe('ProductListingPageComponent', () => {
     });
     it('should init search criteria', () => {
       searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(expectedProductListingSearchParams);
-      productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
+      productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponse));
       component.ngOnInit();
 
       expect(component.productName.value).toEqual(expectedProductListingSearchParams.productName);
@@ -164,7 +162,7 @@ describe('ProductListingPageComponent', () => {
         productName: undefined
       };
       searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(expectedProductListingSearchParamsUndefine);
-      productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
+      productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponse));
       component.ngOnInit();
 
       expect(component.productName.value).toEqual('');
@@ -210,22 +208,20 @@ describe('ProductListingPageComponent', () => {
 
   describe('clicks clear button', () => {
     it('should search', () => {
-      productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
+      productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponse));
       component.clickSearchButton();
 
       expect(productServiceSpy.getProductList.calls.count()).toEqual(1);
-      expect(component.productSearchResponseDtos).toEqual(
-        expectedProductSearchListResponseDto.productSearchResponseDtos
-      );
+      expect(component.productSearchResponses).toEqual(expectedProductSearchListResponse.productSearchResponses);
     });
   });
 
   describe('clicks list row', () => {
     it('should move to new page', () => {
-      const expectedProductSearchResponseDto: ProductSearchResponseDto =
-        expectedProductSearchListResponseDto.productSearchResponseDtos[0];
+      const expectedProductSearchResponse: ProductSearchResponse =
+        expectedProductSearchListResponse.productSearchResponses[0];
       spyOn(router, 'navigate').and.returnValue(null);
-      component.clickListRow(expectedProductSearchResponseDto);
+      component.clickListRow(expectedProductSearchResponse);
 
       expect(router.navigate).toHaveBeenCalledTimes(1);
     });

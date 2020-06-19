@@ -303,7 +303,7 @@ describe('ProductListingPageComponent', () => {
   });
 
   describe('DOM input test', () => {
-    it('Should Enter input and create request dto / http params', () => {
+    it('Should Enter input and create request / http params', () => {
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
         fixture,
         '#product-name',

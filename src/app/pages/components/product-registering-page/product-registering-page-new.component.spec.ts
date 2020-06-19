@@ -373,7 +373,7 @@ describe('ProductRegisteringPageComponent', () => {
   });
 
   describe('DOM input/output test', () => {
-    it('Should Enter input and create product register request dto', () => {
+    it('Should Enter input and create product register request', () => {
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
         fixture,
         '#product-code',

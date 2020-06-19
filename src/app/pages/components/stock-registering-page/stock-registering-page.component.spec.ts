@@ -255,7 +255,7 @@ describe('StockRegisteringPageComponent', () => {
       expect(fixture.nativeElement.querySelector('#add-product-stock-quantity').value).toEqual('');
     });
 
-    it('Should Enter input and create product stock request dto', () => {
+    it('Should Enter input and create product stock request', () => {
       productStockServiceSpy.getProductStock.and.returnValue(of(expectedResponse));
 
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'ABCD1234');

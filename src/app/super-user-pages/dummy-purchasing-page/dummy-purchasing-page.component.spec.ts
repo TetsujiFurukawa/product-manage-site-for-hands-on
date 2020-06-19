@@ -317,7 +317,7 @@ describe('DummyPurchasingPageComponent', () => {
       expect(fixture.nativeElement.querySelector('#product-purchase-amount').value).toEqual('');
     });
 
-    it('Should Enter input and create purchase request dto', () => {
+    it('Should Enter input and create purchase request', () => {
       productPurchaseServiceSpy.getProductPurchase.and.returnValue(of(expectedResponse));
 
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'ABCD1234');

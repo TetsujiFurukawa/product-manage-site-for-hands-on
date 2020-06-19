@@ -57,10 +57,10 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
    * Clicks sign in button
    */
   clickSignInButton() {
-    // Creates request dto.
+    // Creates request.
     const signInRequest: SignInRequest = this.createSignInRequest();
 
-    // Signs in using dto.
+    // Signs in using sign in request.
     this.signIn(signInRequest);
   }
 
@@ -90,7 +90,7 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
     // Starts Loading.
     this.loadingService.startLoading();
 
-    // Signs in and gets response dto.
+    // Signs in and gets response.
     const signInResponse: Observable<SignInResponse> = this.accountService.signIn(signInRequest);
     signInResponse.subscribe((response) => {
       if (response != null) {
@@ -105,7 +105,7 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
   }
 
   private createSignInRequest(): SignInRequest {
-    // Creates Request dto.
+    // Creates Request.
     const signInRequest: SignInRequest = {
       Username: this.signInUserAccount.value,
       Password: this.signInUserPassword.value

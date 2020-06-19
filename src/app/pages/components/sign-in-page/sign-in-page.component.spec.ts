@@ -163,7 +163,7 @@ describe('SignInPageComponent', () => {
   });
 
   describe('DOM input test', () => {
-    it('Should Enter input and create request dto', () => {
+    it('Should Enter input and create request', () => {
       HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-account', expectedRequest.Username);
       HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-password', expectedRequest.Password);
 

@@ -1,15 +1,9 @@
-export class SignInResponse {
-  public userAccount: string;
-
-  public userName: string;
-
-  public userLocale: string;
-
-  public userLanguage: string;
-
-  public userTimezone: string;
-
-  public userTimezoneOffset: string;
-
-  public userCurrency: string;
+export interface SignInResponse {
+  userAccount: string;
+  userName: string;
+  userLocale: string;
+  userLanguage: string;
+  userTimezone: string;
+  userTimezoneOffset: string;
+  userCurrency: string;
 }

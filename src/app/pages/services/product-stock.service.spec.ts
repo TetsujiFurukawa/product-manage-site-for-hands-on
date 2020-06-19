@@ -51,14 +51,15 @@ describe('ProductStockService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_STOCK;
 
     it('should return expected response', () => {
-      const expectedResponse: ProductStockResponse = new ProductStockResponse();
-      expectedResponse.productCode = 'productCode';
-      expectedResponse.productColor = 'productColor';
-      expectedResponse.productGenre = '1';
-      expectedResponse.productImage = 'productImage';
-      expectedResponse.productName = 'productName';
-      expectedResponse.productSizeStandard = 'productSizeStandard';
-      expectedResponse.productStockQuantity = 1;
+      const expectedResponse: ProductStockResponse = {
+        productCode: 'productCode',
+        productColor: 'productColor',
+        productGenre: '1',
+        productImage: 'productImage',
+        productName: 'productName',
+        productSizeStandard: 'productSizeStandard',
+        productStockQuantity: 1
+      };
 
       service.getProductStock('productCode').subscribe((response) => {
         expect(response).toEqual(expectedResponse);
@@ -95,15 +96,15 @@ describe('ProductStockService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_STOCK;
 
     it('should return expected response', () => {
-      const expectedResponse: ProductStockResponse = new ProductStockResponse();
-      expectedResponse.productCode = 'productCode';
-      expectedResponse.productColor = 'productColor';
-      expectedResponse.productGenre = '1';
-      expectedResponse.productImage = 'productImage';
-      expectedResponse.productName = 'productName';
-      expectedResponse.productSizeStandard = 'productSizeStandard';
-      expectedResponse.productStockQuantity = 1;
-
+      const expectedResponse: ProductStockResponse = {
+        productCode: 'productCode',
+        productColor: 'productColor',
+        productGenre: '1',
+        productImage: 'productImage',
+        productName: 'productName',
+        productSizeStandard: 'productSizeStandard',
+        productStockQuantity: 1
+      };
       service
         .updateProductStock({ productCode: '', productStockQuantity: 0, addProductStockQuantity: 0 })
         .subscribe((response) => {

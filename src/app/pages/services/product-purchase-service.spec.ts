@@ -58,21 +58,23 @@ describe('ProductPurchaseService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PURCHASE_HISTORY_SEARCH;
 
     it('should return expected response', () => {
-      const productPurchaseResponse: ProductPurchaseHistorySearchResponse = new ProductPurchaseHistorySearchResponse();
-      productPurchaseResponse.no = 1;
-      productPurchaseResponse.productCode = 'productCode';
-      productPurchaseResponse.productImageUrl = 'productImageUrl';
-      productPurchaseResponse.productName = 'productName';
-      productPurchaseResponse.productPurchaseAmount = 1;
-      productPurchaseResponse.productPurchaseDate = new Date();
-      productPurchaseResponse.productPurchaseName = 'productPurchaseName';
-      productPurchaseResponse.productPurchaseQuantity = 1;
-      productPurchaseResponse.productPurchaseUnitPrice = 1;
+      const productPurchaseResponse: ProductPurchaseHistorySearchResponse = {
+        no: 1,
+        productCode: 'productCode',
+        productImageUrl: 'productImageUrl',
+        productName: 'productName',
+        productPurchaseAmount: 1,
+        productPurchaseDate: new Date(),
+        productPurchaseName: 'productPurchaseName',
+        productPurchaseQuantity: 1,
+        productPurchaseUnitPrice: 1
+      };
 
-      const expectedResponse: ProductPurchaseHistorySearchListResponse = new ProductPurchaseHistorySearchListResponse();
-      expectedResponse.productPurchaseHistorySearchResponses = Array(productPurchaseResponse);
-      expectedResponse.pageIndex = 1;
-      expectedResponse.resultsLength = 1;
+      const expectedResponse: ProductPurchaseHistorySearchListResponse = {
+        productPurchaseHistorySearchResponses: Array(productPurchaseResponse),
+        pageIndex: 1,
+        resultsLength: 1
+      };
 
       service.getProductPurchaseHistoryList(new HttpParams()).subscribe((response) => {
         expect(response).toEqual(expectedResponse);
@@ -109,15 +111,16 @@ describe('ProductPurchaseService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PURCHASE;
 
     it('should return expected response', () => {
-      const expectedResponse: ProductPurchaseResponse = new ProductPurchaseResponse();
-      expectedResponse.productCode = 'productCode';
-      expectedResponse.productColor = 'productColor';
-      expectedResponse.productGenre = '1';
-      expectedResponse.productImage = 'productImage';
-      expectedResponse.productName = 'productName';
-      expectedResponse.productPurchaseUnitPrice = 1;
-      expectedResponse.productSizeStandard = 'productSizeStandard';
-      expectedResponse.productStockQuantity = 1;
+      const expectedResponse: ProductPurchaseResponse = {
+        productCode: 'productCode',
+        productColor: 'productColor',
+        productGenre: '1',
+        productImage: 'productImage',
+        productName: 'productName',
+        productPurchaseUnitPrice: 1,
+        productSizeStandard: 'productSizeStandard',
+        productStockQuantity: 1
+      };
 
       service.getProductPurchase('productCode').subscribe((response) => {
         expect(response).toEqual(expectedResponse);
@@ -154,16 +157,16 @@ describe('ProductPurchaseService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PURCHASE;
 
     it('should return expected response', () => {
-      const expectedResponse: ProductPurchaseResponse = new ProductPurchaseResponse();
-
-      expectedResponse.productCode = 'productCode';
-      expectedResponse.productColor = 'productColor';
-      expectedResponse.productGenre = '1';
-      expectedResponse.productImage = 'productImage';
-      expectedResponse.productName = 'productName';
-      expectedResponse.productPurchaseUnitPrice = 1;
-      expectedResponse.productSizeStandard = 'productSizeStandard';
-      expectedResponse.productStockQuantity = 1;
+      const expectedResponse: ProductPurchaseResponse = {
+        productCode: 'productCode',
+        productColor: 'productColor',
+        productGenre: '1',
+        productImage: 'productImage',
+        productName: 'productName',
+        productPurchaseUnitPrice: 1,
+        productSizeStandard: 'productSizeStandard',
+        productStockQuantity: 1
+      };
 
       service
         .createProductPurchase({

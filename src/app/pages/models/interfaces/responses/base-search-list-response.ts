@@ -1,5 +1,4 @@
-export class BaseSearchListResponse {
-  public pageIndex: number;
-
-  public resultsLength: number;
+export interface BaseSearchListResponse {
+  pageIndex: number;
+  resultsLength: number;
 }

@@ -31,13 +31,15 @@ describe('SignInPageComponent', () => {
 
   const expectedRequest: SignInRequest = { Password: 'Password', Username: 'Username' };
 
-  const expectedResponse = new SignInResponse();
-  expectedResponse.userAccount = 'userAccount';
-  expectedResponse.userCurrency = 'JPY';
-  expectedResponse.userLanguage = 'ja';
-  expectedResponse.userLocale = 'ja-JP';
-  expectedResponse.userName = 'userName';
-  expectedResponse.userTimezone = '';
+  const expectedResponse = {
+    userAccount: 'userAccount',
+    userCurrency: 'JPY',
+    userLanguage: 'ja',
+    userLocale: 'ja-JP',
+    userName: 'userName',
+    userTimezone: ''
+  };
+
   let component: SignInPageComponent;
   let fixture: ComponentFixture<SignInPageComponent>;
   let accountServiceSpy: { signIn: jasmine.Spy; setUser: jasmine.Spy };

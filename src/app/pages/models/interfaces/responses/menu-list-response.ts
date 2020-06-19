@@ -1,5 +1,4 @@
-export class MenuListResponse {
-  public menuCode: string;
-
-  public subMenuCodeList: string[];
+export interface MenuListResponse {
+  menuCode: string;
+  subMenuCodeList: string[];
 }

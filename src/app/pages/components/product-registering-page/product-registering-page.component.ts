@@ -222,31 +222,30 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   }
 
   private createProductRegisterRequest(isNew: boolean): Product {
-    const product: Product = new Product();
+    const product: Product = {
+      productSeq: null,
+      productCode: this.productCode.value,
+      productName: this.productName.value,
+      productGenre: this.productGenre.value,
+      productSizeStandard: this.productSizeStandard.value,
+      productColor: this.productColor.value,
+      productUnitPrice: this.formattedCurrencyPipe.parse(this.productUnitPrice.value, this.locale, this.currency),
+      endOfSale: this.endOfSale.value,
+      endOfSaleDate: null,
+      productImage: this.productImage.value,
+      updateDate: this.updateDate.value
+    };
+
     if (!isNew) {
       product.productSeq = this.productSeq.value;
     } else {
       product.productSeq = null;
     }
-    product.productCode = this.productCode.value;
-    product.productName = this.productName.value;
-    product.productGenre = this.productGenre.value;
-    product.productSizeStandard = this.productSizeStandard.value;
-    product.productColor = this.productColor.value;
-    product.productUnitPrice = this.formattedCurrencyPipe.parse(
-      this.productUnitPrice.value,
-      this.locale,
-      this.currency
-    );
-    product.endOfSale = this.endOfSale.value;
     if (this.endOfSaleDate.value === '') {
       product.endOfSaleDate = null;
     } else {
       product.endOfSaleDate = this.endOfSaleDate.value;
     }
-    product.productImage = this.productImage.value;
-    product.updateDate = this.updateDate.value;
-
     return product;
   }
 

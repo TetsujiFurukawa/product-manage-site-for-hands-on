@@ -47,8 +47,7 @@ describe('PurchaseHistoryListingPageComponent', () => {
   const expectedSearchParamsProductName = 'productName';
   const expectedSearchParamsProductCode = 'productCode';
 
-  const expectedProductPurchaseHistorySearchListResponse: ProductPurchaseHistorySearchListResponse = new ProductPurchaseHistorySearchListResponse();
-  const productPurchaseHistorySearchResponses: ProductPurchaseHistorySearchResponse[] = [
+  const searchResponses: ProductPurchaseHistorySearchResponse[] = [
     {
       no: 1,
       productName: 'productName',
@@ -61,7 +60,11 @@ describe('PurchaseHistoryListingPageComponent', () => {
       productPurchaseAmount: 789
     }
   ];
-  expectedProductPurchaseHistorySearchListResponse.productPurchaseHistorySearchResponses = productPurchaseHistorySearchResponses;
+  const expectedProductPurchaseHistorySearchListResponse: ProductPurchaseHistorySearchListResponse = {
+    productPurchaseHistorySearchResponses: searchResponses,
+    pageIndex: 1,
+    resultsLength: 1
+  };
 
   let component: PurchaseHistoryListingPageComponent;
   let fixture: ComponentFixture<PurchaseHistoryListingPageComponent>;

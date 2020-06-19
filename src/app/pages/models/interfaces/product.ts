@@ -1,23 +1,13 @@
-export class Product {
+export interface Product {
   productSeq: number;
-
   productName: string;
-
   productCode: string;
-
   productGenre: string;
-
   productImage: string;
-
   productSizeStandard: string;
-
   productColor: string;
-
   productUnitPrice: number;
-
   endOfSale: boolean;
-
   endOfSaleDate: Date;
-
   updateDate: Date;
 }

@@ -116,12 +116,16 @@ describe('HeaderComponent', () => {
 });
 
 function createExpectedMenu() {
-  const menuListResponse1: MenuListResponse = new MenuListResponse();
-  menuListResponse1.menuCode = 'menu1';
-  menuListResponse1.subMenuCodeList = Array('subMenu1-1', 'subMenu1-2');
-  const menuListResponse2: MenuListResponse = new MenuListResponse();
-  menuListResponse1.menuCode = 'menu2';
-  menuListResponse1.subMenuCodeList = Array('subMenu2-1');
+  const menuListResponse1: MenuListResponse = {
+    menuCode: 'menu1',
+    subMenuCodeList: Array('subMenu1-1', 'subMenu1-2')
+  };
+
+  const menuListResponse2: MenuListResponse = {
+    menuCode: 'menu2',
+    subMenuCodeList: Array('subMenu2-1')
+  };
+
   const expetedMenuListResponses: MenuListResponse[] = Array(menuListResponse1, menuListResponse2);
   return expetedMenuListResponses;
 }

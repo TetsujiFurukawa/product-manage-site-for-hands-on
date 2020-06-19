@@ -50,7 +50,6 @@ describe('ProductListingPageComponent', () => {
     productName: 'productName'
   };
 
-  const expectedProductSearchListResponse: ProductSearchListResponse = new ProductSearchListResponse();
   const productSearchResponse: ProductSearchResponse[] = [
     {
       no: 1,
@@ -65,8 +64,11 @@ describe('ProductListingPageComponent', () => {
       endOfSale: true
     }
   ];
-  expectedProductSearchListResponse.productSearchResponses = productSearchResponse;
-  expectedProductSearchListResponse.pageIndex = 1;
+  const expectedProductSearchListResponse: ProductSearchListResponse = {
+    productSearchResponses: productSearchResponse,
+    pageIndex: 1,
+    resultsLength: 1
+  };
 
   let component: ProductListingPageComponent;
   let fixture: ComponentFixture<ProductListingPageComponent>;

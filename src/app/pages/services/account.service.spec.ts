@@ -182,21 +182,23 @@ describe('AccountService', () => {
 });
 
 function createExpectedSignInResponse() {
-  const signInResponse: SignInResponse = new SignInResponse();
-  signInResponse.userAccount = 'userAccount';
-  signInResponse.userName = 'userName';
-  signInResponse.userLocale = 'ja-JP';
-  signInResponse.userLanguage = 'ja';
-  signInResponse.userTimezone = 'UTC';
-  signInResponse.userCurrency = 'JPY';
-  return signInResponse;
+  return {
+    userAccount: 'userAccount',
+    userName: 'userName',
+    userLocale: 'ja-JP',
+    userLanguage: 'ja',
+    userTimezone: 'UTC',
+    userTimezoneOffset: '0000',
+    userCurrency: 'JPY'
+  };
 }
 
 function createExpectedMenuListResponse() {
-  const subMenuCodeList = new Array('subMenu1', 'subMenu2', 'subMenu3');
-  const menuListResponse: MenuListResponse = new MenuListResponse();
-  menuListResponse.menuCode = 'menu1';
-  menuListResponse.subMenuCodeList = subMenuCodeList;
+  const codeList = new Array('subMenu1', 'subMenu2', 'subMenu3');
+  const menuListResponse: MenuListResponse = {
+    menuCode: 'menu1',
+    subMenuCodeList: codeList
+  };
   const expectedMenuListResponse = Array(menuListResponse);
   return expectedMenuListResponse;
 }

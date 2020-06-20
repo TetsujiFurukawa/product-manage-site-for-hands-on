@@ -1,7 +1,7 @@
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiConst } from 'src/app/pages/constants/api-const';
-import { Product } from 'src/app/pages/models/interfaces/product';
+import { ProductDto } from 'src/app/pages/models/interfaces/product-dto';
 
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -46,58 +46,58 @@ export class ProductService {
    * @param productCode product code
    * @returns product response
    */
-  getProduct(productCode: string): Observable<Product> {
+  getProduct(productCode: string): Observable<ProductDto> {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT;
     this.clearMessageProperty();
 
     return this.http
-      .get<Product>(webApiUrl, { params: { productCode } })
+      .get<ProductDto>(webApiUrl, { params: { productCode } })
       .pipe(
         catchError((error) => {
           this.errorMessageService.setupPageErrorMessageFromResponse(error);
-          return of(null as Product);
+          return of(null as ProductDto);
         })
       );
   }
 
   /**
    * Creates product
-   * @param product product request
+   * @param productDto product request
    * @returns producr response
    */
-  createProduct(product: Product): Observable<Product> {
+  createProduct(productDto: ProductDto): Observable<ProductDto> {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT;
     this.clearMessageProperty();
 
-    return this.http.post<Product>(webApiUrl, product).pipe(
+    return this.http.post<ProductDto>(webApiUrl, productDto).pipe(
       map((res) => {
         this.successMessagingService.setMessageProperty('successMessage.http');
         return res;
       }),
       catchError((error) => {
         this.errorMessageService.setupPageErrorMessageFromResponse(error);
-        return of(null as Product);
+        return of(null as ProductDto);
       })
     );
   }
 
   /**
    * Updates product
-   * @param product  product request
+   * @param productDto  product request
    * @returns producr response
    */
-  updateProduct(product: Product): Observable<Product> {
+  updateProduct(productDto: ProductDto): Observable<ProductDto> {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT;
     this.clearMessageProperty();
 
-    return this.http.put<Product>(webApiUrl, product).pipe(
+    return this.http.put<ProductDto>(webApiUrl, productDto).pipe(
       map((res) => {
         this.successMessagingService.setMessageProperty('successMessage.http');
         return res;
       }),
       catchError((error) => {
         this.errorMessageService.setupPageErrorMessageFromResponse(error);
-        return of(null as Product);
+        return of(null as ProductDto);
       })
     );
   }

@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 import { MaterialModule } from 'src/app/material/material.module';
 import { UrlConst } from 'src/app/pages/constants/url-const';
-import { Product } from 'src/app/pages/models/interfaces/product';
+import { ProductDto } from 'src/app/pages/models/interfaces/product-dto';
 import { User } from 'src/app/pages/models/user';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductService } from 'src/app/pages/services/product.service';
@@ -33,7 +33,7 @@ describe('ProductRegisteringPageComponent', () => {
   user.userLocale = 'ja-JP';
   user.userName = 'userName';
   user.userTimezone = 'UTC';
-  const expectedResponse: Product = {
+  const expectedResponse: ProductDto = {
     endOfSale: true,
     endOfSaleDate: new Date(),
     productCode: 'ABCD1234',
@@ -412,16 +412,16 @@ describe('ProductRegisteringPageComponent', () => {
       fixture.detectChanges();
 
       // tslint:disable-next-line: no-string-literal
-      const productStockRequestDto: Product = component['createProductRegisterRequest'](true);
+      const productRequestDto: ProductDto = component['createProductRegisterRequest'](true);
 
-      expect(productStockRequestDto.productSeq).toBeNull();
-      expect(productStockRequestDto.productName).toEqual(expectedResponse.productName);
-      expect(productStockRequestDto.productGenre).toEqual('1');
-      expect(productStockRequestDto.productSizeStandard).toEqual(expectedResponse.productSizeStandard);
-      expect(productStockRequestDto.productColor).toEqual(expectedResponse.productColor);
-      expect(productStockRequestDto.endOfSale).toBeTruthy();
-      expect(productStockRequestDto.endOfSaleDate.toString()).toEqual(expectedResponse.endOfSaleDate.toString());
-      expect(productStockRequestDto.updateDate).toBeNull();
+      expect(productRequestDto.productSeq).toBeNull();
+      expect(productRequestDto.productName).toEqual(expectedResponse.productName);
+      expect(productRequestDto.productGenre).toEqual('1');
+      expect(productRequestDto.productSizeStandard).toEqual(expectedResponse.productSizeStandard);
+      expect(productRequestDto.productColor).toEqual(expectedResponse.productColor);
+      expect(productRequestDto.endOfSale).toBeTruthy();
+      expect(productRequestDto.endOfSaleDate.toString()).toEqual(expectedResponse.endOfSaleDate.toString());
+      expect(productRequestDto.updateDate).toBeNull();
     });
     it('Should Enter product code and get product stock data then display screen', () => {
       // tslint:disable-next-line: no-string-literal

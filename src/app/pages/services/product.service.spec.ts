@@ -6,7 +6,7 @@ import { TestBed } from '@angular/core/testing';
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
 import { ApiConst } from '../constants/api-const';
-import { Product } from '../models/interfaces/product';
+import { ProductDto } from '../models/interfaces/product-dto';
 import {
     ProductSearchListResponseDto
 } from '../models/interfaces/responses/product-search-list-response-dto';
@@ -112,7 +112,7 @@ describe('ProductService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT;
 
     it('should return expected response', () => {
-      const expectedResponse: Product = createProduct();
+      const expectedResponse: ProductDto = createProductDto();
 
       service.getProduct('productCode').subscribe((response) => {
         expect(response).toEqual(expectedResponse);
@@ -149,7 +149,7 @@ describe('ProductService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT;
 
     it('should return expected response', () => {
-      const expectedResponse: Product = createProduct();
+      const expectedResponse: ProductDto = createProductDto();
 
       service.createProduct(null).subscribe((response) => {
         expect(response).toEqual(expectedResponse);
@@ -188,7 +188,7 @@ describe('ProductService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT;
 
     it('should return expected response', () => {
-      const expectedResponse: Product = createProduct();
+      const expectedResponse: ProductDto = createProductDto();
 
       service.updateProduct(null).subscribe((response) => {
         expect(response).toEqual(expectedResponse);
@@ -261,7 +261,7 @@ describe('ProductService', () => {
   });
 });
 
-function createProduct() {
+function createProductDto() {
   return {
     endOfSale: false,
     endOfSaleDate: new Date(),

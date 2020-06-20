@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 import { MaterialModule } from 'src/app/material/material.module';
 import { UrlConst } from 'src/app/pages/constants/url-const';
-import { Product } from 'src/app/pages/models/interfaces/product';
+import { ProductDto } from 'src/app/pages/models/interfaces/product-dto';
 import { User } from 'src/app/pages/models/user';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductService } from 'src/app/pages/services/product.service';
@@ -31,7 +31,7 @@ describe('ProductRegisteringPageComponent', () => {
   user.userLocale = 'ja-JP';
   user.userName = 'userName';
   user.userTimezone = 'UTC';
-  const expectedResponse: Product = {
+  const expectedResponse: ProductDto = {
     endOfSale: true,
     endOfSaleDate: new Date(),
     productCode: 'ABCD1234',
@@ -47,7 +47,7 @@ describe('ProductRegisteringPageComponent', () => {
     updateDate: new Date()
   };
 
-  const expectedResponseEndOfSaleDateNull: Product = {
+  const expectedResponseEndOfSaleDateNull: ProductDto = {
     endOfSale: false,
     endOfSaleDate: null,
     productCode: 'ABCD1234',

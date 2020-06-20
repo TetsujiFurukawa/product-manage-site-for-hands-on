@@ -1,4 +1,4 @@
-export interface Product {
+export interface ProductDto {
   productSeq: number;
   productName: string;
   productCode: string;

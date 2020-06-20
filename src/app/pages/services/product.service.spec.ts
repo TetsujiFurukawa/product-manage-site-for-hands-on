@@ -6,13 +6,11 @@ import { TestBed } from '@angular/core/testing';
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
 import { ApiConst } from '../constants/api-const';
-import { ProductDto } from '../models/interfaces/product-dto';
+import { ProductDto } from '../models/dtos/product-dto';
 import {
     ProductSearchListResponseDto
-} from '../models/interfaces/responses/product-search-list-response-dto';
-import {
-    ProductSearchResponseDto
-} from '../models/interfaces/responses/product-search-response-dto';
+} from '../models/dtos/responses/product-search-list-response-dto';
+import { ProductSearchResponseDto } from '../models/dtos/responses/product-search-response-dto';
 import { ProductService } from './product.service';
 
 describe('ProductService', () => {

@@ -20,10 +20,8 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 
-import { ProductStockRequestDto } from '../../models/interfaces/requests/product-stock-request-dto';
-import {
-    ProductStockResponseDto
-} from '../../models/interfaces/responses/product-stock-response-dto';
+import { ProductStockRequestDto } from '../../models/dtos/requests/product-stock-request-dto';
+import { ProductStockResponseDto } from '../../models/dtos/responses/product-stock-response-dto';
 
 @Component({
   selector: 'app-stock-registering-page',

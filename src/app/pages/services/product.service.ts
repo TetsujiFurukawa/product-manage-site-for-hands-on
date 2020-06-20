@@ -1,16 +1,16 @@
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiConst } from 'src/app/pages/constants/api-const';
-import { ProductDto } from 'src/app/pages/models/interfaces/product-dto';
 
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
+import { ProductDto } from '../models/dtos/product-dto';
 import {
     ProductSearchListResponseDto
-} from '../models/interfaces/responses/product-search-list-response-dto';
+} from '../models/dtos/responses/product-search-list-response-dto';
 
 @Injectable({
   providedIn: 'root'

@@ -24,13 +24,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import {
     ProductListingSearchParamsDto
-} from '../../models/interfaces/requests/product-listing-search-params-dto';
+} from '../../models/dtos/requests/product-listing-search-params-dto';
 import {
     ProductSearchListResponseDto
-} from '../../models/interfaces/responses/product-search-list-response-dto';
-import {
-    ProductSearchResponseDto
-} from '../../models/interfaces/responses/product-search-response-dto';
+} from '../../models/dtos/responses/product-search-list-response-dto';
+import { ProductSearchResponseDto } from '../../models/dtos/responses/product-search-response-dto';
 import { ProductListingPageComponent } from './product-listing-page.component';
 
 describe('ProductListingPageComponent', () => {

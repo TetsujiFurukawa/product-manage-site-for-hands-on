@@ -7,15 +7,11 @@ import { Injectable } from '@angular/core';
 
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
-import {
-    ProductPurchaseRequestDto
-} from '../models/interfaces/requests/product-purchase-request-dto';
+import { ProductPurchaseRequestDto } from '../models/dtos/requests/product-purchase-request-dto';
 import {
     ProductPurchaseHistorySearchListResponseDto
-} from '../models/interfaces/responses/product-purchase-history-search-list-response-dto';
-import {
-    ProductPurchaseResponseDto
-} from '../models/interfaces/responses/product-purchase-response-dto';
+} from '../models/dtos/responses/product-purchase-history-search-list-response-dto';
+import { ProductPurchaseResponseDto } from '../models/dtos/responses/product-purchase-response-dto';
 
 @Injectable({
   providedIn: 'root'

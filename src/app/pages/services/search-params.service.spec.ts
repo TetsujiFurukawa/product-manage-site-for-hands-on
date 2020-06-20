@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { SessionStrageService } from '../../core/services/session-strage.service';
 import {
     ProductListingSearchParamsDto
-} from '../models/interfaces/requests/product-listing-search-params-dto';
+} from '../models/dtos/requests/product-listing-search-params-dto';
 import { SearchParamsService } from './search-params.service';
 
 describe('SearchParamsService', () => {

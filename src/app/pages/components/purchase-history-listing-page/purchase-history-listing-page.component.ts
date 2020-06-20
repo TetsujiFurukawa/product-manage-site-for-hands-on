@@ -21,7 +21,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import {
     ProductPurchaseHistorySearchResponseDto
-} from '../../models/interfaces/responses/product-purchase-history-search-response-dto';
+} from '../../models/dtos/responses/product-purchase-history-search-response-dto';
 
 @Component({
   selector: 'app-purchase-history-listing-page',

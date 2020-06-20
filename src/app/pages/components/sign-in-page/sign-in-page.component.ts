@@ -10,8 +10,8 @@ import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
-import { SignInRequestDto } from '../../models/interfaces/requests/sign-in-request-dto';
-import { SignInResponseDto } from '../../models/interfaces/responses/sign-in-response-dto';
+import { SignInRequestDto } from '../../models/dtos/requests/sign-in-request-dto';
+import { SignInResponseDto } from '../../models/dtos/responses/sign-in-response-dto';
 
 @Component({
   selector: 'app-sign-in-page',

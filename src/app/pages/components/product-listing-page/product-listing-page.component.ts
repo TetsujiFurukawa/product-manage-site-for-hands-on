@@ -17,10 +17,8 @@ import { TranslateService } from '@ngx-translate/core';
 
 import {
     ProductListingSearchParamsDto
-} from '../../models/interfaces/requests/product-listing-search-params-dto';
-import {
-    ProductSearchResponseDto
-} from '../../models/interfaces/responses/product-search-response-dto';
+} from '../../models/dtos/requests/product-listing-search-params-dto';
+import { ProductSearchResponseDto } from '../../models/dtos/responses/product-search-response-dto';
 
 @Component({
   selector: 'app-product-listing-page',

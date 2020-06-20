@@ -1,4 +1,4 @@
-export interface MenuListResponse {
+export interface MenuListResponseDto {
   menuCode: string;
   subMenuCodeList: string[];
 }

@@ -1,4 +1,4 @@
-export interface BaseSearchListResponse {
+export interface BaseSearchListResponseDto {
   pageIndex: number;
   resultsLength: number;
 }

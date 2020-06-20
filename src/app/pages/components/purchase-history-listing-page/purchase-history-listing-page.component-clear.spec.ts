@@ -24,10 +24,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import {
-    ProductPurchaseHistorySearchListResponse
+    ProductPurchaseHistorySearchListResponseDto
 } from '../../models/interfaces/responses/product-purchase-history-search-list-response';
 import {
-    ProductPurchaseHistorySearchResponse
+    ProductPurchaseHistorySearchResponseDto
 } from '../../models/interfaces/responses/product-purchase-history-search-response';
 import { PurchaseHistoryListingPageComponent } from './purchase-history-listing-page.component';
 
@@ -47,7 +47,7 @@ describe('PurchaseHistoryListingPageComponent', () => {
   const expectedSearchParamsProductName = 'productName';
   const expectedSearchParamsProductCode = 'productCode';
 
-  const searchResponses: ProductPurchaseHistorySearchResponse[] = [
+  const searchResponses: ProductPurchaseHistorySearchResponseDto[] = [
     {
       no: 1,
       productName: 'productName',
@@ -60,8 +60,8 @@ describe('PurchaseHistoryListingPageComponent', () => {
       productPurchaseAmount: 789
     }
   ];
-  const expectedProductPurchaseHistorySearchListResponse: ProductPurchaseHistorySearchListResponse = {
-    productPurchaseHistorySearchResponses: searchResponses,
+  const expectedProductPurchaseHistorySearchListResponseDto: ProductPurchaseHistorySearchListResponseDto = {
+    productPurchaseHistorySearchResponseDtos: searchResponses,
     pageIndex: 1,
     resultsLength: 1
   };

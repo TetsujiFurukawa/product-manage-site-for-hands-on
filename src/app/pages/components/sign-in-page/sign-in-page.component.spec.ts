@@ -16,8 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { SignInRequest } from '../../models/interfaces/requests/sign-in-request';
-import { SignInResponse } from '../../models/interfaces/responses/sign-in-response';
+import { SignInRequestDto } from '../../models/interfaces/requests/sign-in-request';
+import { SignInResponseDto } from '../../models/interfaces/responses/sign-in-response';
 import { SignInPageComponent } from './sign-in-page.component';
 
 describe('SignInPageComponent', () => {
@@ -29,7 +29,7 @@ describe('SignInPageComponent', () => {
   user.userName = 'userName';
   user.userTimezone = 'UTC';
 
-  const expectedRequest: SignInRequest = { Password: 'Password', Username: 'Username' };
+  const expectedRequest: SignInRequestDto = { Password: 'Password', Username: 'Username' };
 
   const expectedResponse = {
     userAccount: 'userAccount',
@@ -169,11 +169,11 @@ describe('SignInPageComponent', () => {
       HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-account', expectedRequest.Username);
       HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-password', expectedRequest.Password);
 
-      const targetMethodName = 'createSignInRequest';
-      const signInRequest: SignInRequest = component[targetMethodName]();
+      const targetMethodName = 'createSignInRequestDto';
+      const signInRequestDto: SignInRequestDto = component[targetMethodName]();
 
-      expect(signInRequest.Username).toEqual(expectedRequest.Username);
-      expect(signInRequest.Password).toEqual(expectedRequest.Password);
+      expect(signInRequestDto.Username).toEqual(expectedRequest.Username);
+      expect(signInRequestDto.Password).toEqual(expectedRequest.Password);
     });
   });
 });

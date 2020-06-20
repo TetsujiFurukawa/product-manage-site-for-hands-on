@@ -1,4 +1,4 @@
-export interface ProductStockResponse {
+export interface ProductStockResponseDto {
   productCode: string;
   productName: string;
   productGenre: string;

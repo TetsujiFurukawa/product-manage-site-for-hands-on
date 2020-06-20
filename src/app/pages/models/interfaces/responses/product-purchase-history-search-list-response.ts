@@ -1,6 +1,8 @@
-import { BaseSearchListResponse } from './base-search-list-response';
-import { ProductPurchaseHistorySearchResponse } from './product-purchase-history-search-response';
+import { BaseSearchListResponseDto } from './base-search-list-response';
+import {
+    ProductPurchaseHistorySearchResponseDto
+} from './product-purchase-history-search-response';
 
-export interface ProductPurchaseHistorySearchListResponse extends BaseSearchListResponse {
-  productPurchaseHistorySearchResponses: ProductPurchaseHistorySearchResponse[];
+export interface ProductPurchaseHistorySearchListResponseDto extends BaseSearchListResponseDto {
+  productPurchaseHistorySearchResponseDtos: ProductPurchaseHistorySearchResponseDto[];
 }

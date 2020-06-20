@@ -5,10 +5,10 @@ import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pip
 import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 import { MaterialModule } from 'src/app/material/material.module';
 import {
-    ProductPurchaseRequest
+    ProductPurchaseRequestDto
 } from 'src/app/pages/models/interfaces/requests/product-purchase-request';
 import {
-    ProductPurchaseResponse
+    ProductPurchaseResponseDto
 } from 'src/app/pages/models/interfaces/responses/product-purchase-response';
 import { User } from 'src/app/pages/models/user';
 import { AccountService } from 'src/app/pages/services/account.service';
@@ -37,7 +37,7 @@ describe('DummyPurchasingPageComponent', () => {
   user.userLocale = 'ja-JP';
   user.userName = 'userName';
   user.userTimezone = 'UTC';
-  const expectedResponse: ProductPurchaseResponse = {
+  const expectedResponse: ProductPurchaseResponseDto = {
     productCode: 'ABCD1234',
     productColor: 'productColor',
     productGenre: '1',
@@ -331,12 +331,12 @@ describe('DummyPurchasingPageComponent', () => {
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-purchase-quantity', '1');
 
       // tslint:disable-next-line: no-string-literal
-      const productPurchaseRequest: ProductPurchaseRequest = component['createPurchaseRequest']();
+      const productPurchaseRequestDto: ProductPurchaseRequestDto = component['createPurchaseRequest']();
 
-      expect(productPurchaseRequest.productCode).toEqual('ABCD1234');
-      expect(productPurchaseRequest.productPurchaseName).toEqual('productPurchaseName');
-      expect(productPurchaseRequest.productStockQuantity.toString()).toEqual('1111');
-      expect(productPurchaseRequest.productPurchaseQuantity.toString()).toEqual('1');
+      expect(productPurchaseRequestDto.productCode).toEqual('ABCD1234');
+      expect(productPurchaseRequestDto.productPurchaseName).toEqual('productPurchaseName');
+      expect(productPurchaseRequestDto.productStockQuantity.toString()).toEqual('1111');
+      expect(productPurchaseRequestDto.productPurchaseQuantity.toString()).toEqual('1');
     });
   });
 });

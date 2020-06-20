@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
 import {
-    ProductSearchListResponse
+    ProductSearchListResponseDto
 } from '../models/interfaces/responses/product-search-list-response';
 
 @Injectable({
@@ -27,16 +27,16 @@ export class ProductService {
    * @param httpParams search params
    * @returns product search response
    */
-  getProductList(httpParams: HttpParams): Observable<ProductSearchListResponse> {
+  getProductList(httpParams: HttpParams): Observable<ProductSearchListResponseDto> {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT_SEARCH;
     this.clearMessageProperty();
 
     return this.http
-      .get<ProductSearchListResponse>(webApiUrl, { params: httpParams })
+      .get<ProductSearchListResponseDto>(webApiUrl, { params: httpParams })
       .pipe(
         catchError((error) => {
           this.errorMessageService.setupPageErrorMessageFromResponse(error);
-          return of(null as ProductSearchListResponse);
+          return of(null as ProductSearchListResponseDto);
         })
       );
   }

@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { SessionStrageService } from '../../core/services/session-strage.service';
 import {
-    ProductListingSearchParams
+    ProductListingSearchParamsDto
 } from '../models/interfaces/requests/product-listing-search-params';
 import { SearchParamsService } from './search-params.service';
 
@@ -26,10 +26,10 @@ describe('SearchParamsService', () => {
 
   describe('#setProductListingSearchParam,#getProductListingSearchParam', () => {
     it('should set value', () => {
-      const expectedProductListingSearchParams: ProductListingSearchParams = createProductListingSearchParams();
+      const expectedProductListingSearchParamsDto: ProductListingSearchParamsDto = createProductListingSearchParamsDto();
 
-      service.setProductListingSearchParam(expectedProductListingSearchParams);
-      const res: ProductListingSearchParams = service.getProductListingSearchParam({
+      service.setProductListingSearchParam(expectedProductListingSearchParamsDto);
+      const res: ProductListingSearchParamsDto = service.getProductListingSearchParam({
         endOfSale: false,
         pageIndex: 1,
         pageSize: 1,
@@ -37,19 +37,19 @@ describe('SearchParamsService', () => {
         productGenre: '',
         productName: ''
       });
-      expect(res.endOfSale).toEqual(expectedProductListingSearchParams.endOfSale);
-      expect(res.pageIndex).toEqual(expectedProductListingSearchParams.pageIndex);
-      expect(res.pageSize).toEqual(expectedProductListingSearchParams.pageSize);
-      expect(res.productCode).toEqual(expectedProductListingSearchParams.productCode);
-      expect(res.productGenre).toEqual(expectedProductListingSearchParams.productGenre);
-      expect(res.productName).toEqual(expectedProductListingSearchParams.productName);
+      expect(res.endOfSale).toEqual(expectedProductListingSearchParamsDto.endOfSale);
+      expect(res.pageIndex).toEqual(expectedProductListingSearchParamsDto.pageIndex);
+      expect(res.pageSize).toEqual(expectedProductListingSearchParamsDto.pageSize);
+      expect(res.productCode).toEqual(expectedProductListingSearchParamsDto.productCode);
+      expect(res.productGenre).toEqual(expectedProductListingSearchParamsDto.productGenre);
+      expect(res.productName).toEqual(expectedProductListingSearchParamsDto.productName);
     });
   });
 
   describe('#removeProductListingSearchParam', () => {
     it('should remove value', () => {
-      const expectedProductListingSearchParams: ProductListingSearchParams = createProductListingSearchParams();
-      service.setProductListingSearchParam(expectedProductListingSearchParams);
+      const expectedProductListingSearchParamsDto: ProductListingSearchParamsDto = createProductListingSearchParamsDto();
+      service.setProductListingSearchParam(expectedProductListingSearchParamsDto);
       service.removeProductListingSearchParam();
       expect(
         service.getProductListingSearchParam({
@@ -65,8 +65,8 @@ describe('SearchParamsService', () => {
   });
 });
 
-function createProductListingSearchParams() {
-  const expectedProductListingSearchParams: ProductListingSearchParams = {
+function createProductListingSearchParamsDto() {
+  const expectedProductListingSearchParamsDto: ProductListingSearchParamsDto = {
     endOfSale: true,
     pageIndex: 1,
     pageSize: 1,
@@ -74,5 +74,5 @@ function createProductListingSearchParams() {
     productGenre: '1',
     productName: 'productName'
   };
-  return expectedProductListingSearchParams;
+  return expectedProductListingSearchParamsDto;
 }

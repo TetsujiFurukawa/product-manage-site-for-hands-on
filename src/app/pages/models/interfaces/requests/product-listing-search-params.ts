@@ -1,8 +1,8 @@
 import { Optional } from '@angular/core';
 
-import { BaseSearchParams } from './base-search-params';
+import { BaseSearchParamsDto } from './base-search-params';
 
-export interface ProductListingSearchParams extends BaseSearchParams {
+export interface ProductListingSearchParamsDto extends BaseSearchParamsDto {
   productName: string;
   productCode: string;
   productGenre: string;

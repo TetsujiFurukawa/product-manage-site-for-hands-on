@@ -1,4 +1,4 @@
-export interface SignInResponse {
+export interface SignInResponseDto {
   userAccount: string;
   userName: string;
   userLocale: string;

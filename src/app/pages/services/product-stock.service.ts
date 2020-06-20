@@ -7,8 +7,8 @@ import { Injectable } from '@angular/core';
 
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
-import { ProductStockRequest } from '../models/interfaces/requests/product-stock-request';
-import { ProductStockResponse } from '../models/interfaces/responses/product-stock-response';
+import { ProductStockRequestDto } from '../models/interfaces/requests/product-stock-request';
+import { ProductStockResponseDto } from '../models/interfaces/responses/product-stock-response';
 
 @Injectable({
   providedIn: 'root'
@@ -25,37 +25,37 @@ export class ProductStockService {
    * @param productCode  product code
    * @returns product stock response
    */
-  getProductStock(productCode: string): Observable<ProductStockResponse> {
+  getProductStock(productCode: string): Observable<ProductStockResponseDto> {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_STOCK;
     this.clearMessageProperty();
 
     return this.http
-      .get<ProductStockResponse>(webApiUrl, { params: { productCode } })
+      .get<ProductStockResponseDto>(webApiUrl, { params: { productCode } })
       .pipe(
         catchError((error) => {
           this.errorMessageService.setupPageErrorMessageFromResponse(error);
-          return of(null as ProductStockResponse);
+          return of(null as ProductStockResponseDto);
         })
       );
   }
 
   /**
    * Updates product stock
-   * @param productStockRequest product Stock request
+   * @param productStockRequestDto product Stock request
    * @returns product stock response
    */
-  updateProductStock(productStockRequest: ProductStockRequest): Observable<ProductStockResponse> {
+  updateProductStock(productStockRequestDto: ProductStockRequestDto): Observable<ProductStockResponseDto> {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_STOCK;
     this.clearMessageProperty();
 
-    return this.http.put<ProductStockResponse>(webApiUrl, productStockRequest).pipe(
+    return this.http.put<ProductStockResponseDto>(webApiUrl, productStockRequestDto).pipe(
       map((res) => {
         this.successMessagingService.setMessageProperty('successMessage.http');
         return res;
       }),
       catchError((error) => {
         this.errorMessageService.setupPageErrorMessageFromResponse(error);
-        return of(null as ProductStockResponse);
+        return of(null as ProductStockResponseDto);
       })
     );
   }

@@ -7,12 +7,14 @@ import { ErrorMessagingService } from '../../core/services/error-messaging.servi
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
 import { ApiConst } from '../constants/api-const';
 import {
-    ProductPurchaseHistorySearchListResponse
+    ProductPurchaseHistorySearchListResponseDto
 } from '../models/interfaces/responses/product-purchase-history-search-list-response';
 import {
-    ProductPurchaseHistorySearchResponse
+    ProductPurchaseHistorySearchResponseDto
 } from '../models/interfaces/responses/product-purchase-history-search-response';
-import { ProductPurchaseResponse } from '../models/interfaces/responses/product-purchase-response';
+import {
+    ProductPurchaseResponseDto
+} from '../models/interfaces/responses/product-purchase-response';
 import { ProductPurchaseService } from './product-purchase.service';
 
 describe('ProductPurchaseService', () => {
@@ -58,7 +60,7 @@ describe('ProductPurchaseService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PURCHASE_HISTORY_SEARCH;
 
     it('should return expected response', () => {
-      const productPurchaseResponse: ProductPurchaseHistorySearchResponse = {
+      const productPurchaseResponseDto: ProductPurchaseHistorySearchResponseDto = {
         no: 1,
         productCode: 'productCode',
         productImageUrl: 'productImageUrl',
@@ -70,8 +72,8 @@ describe('ProductPurchaseService', () => {
         productPurchaseUnitPrice: 1
       };
 
-      const expectedResponse: ProductPurchaseHistorySearchListResponse = {
-        productPurchaseHistorySearchResponses: Array(productPurchaseResponse),
+      const expectedResponse: ProductPurchaseHistorySearchListResponseDto = {
+        productPurchaseHistorySearchResponseDtos: Array(productPurchaseResponseDto),
         pageIndex: 1,
         resultsLength: 1
       };
@@ -111,7 +113,7 @@ describe('ProductPurchaseService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PURCHASE;
 
     it('should return expected response', () => {
-      const expectedResponse: ProductPurchaseResponse = {
+      const expectedResponse: ProductPurchaseResponseDto = {
         productCode: 'productCode',
         productColor: 'productColor',
         productGenre: '1',
@@ -157,7 +159,7 @@ describe('ProductPurchaseService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PURCHASE;
 
     it('should return expected response', () => {
-      const expectedResponse: ProductPurchaseResponse = {
+      const expectedResponse: ProductPurchaseResponseDto = {
         productCode: 'productCode',
         productColor: 'productColor',
         productGenre: '1',

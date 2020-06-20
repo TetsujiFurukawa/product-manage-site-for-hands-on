@@ -20,7 +20,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { TranslateService } from '@ngx-translate/core';
 
 import {
-    ProductPurchaseHistorySearchResponse
+    ProductPurchaseHistorySearchResponseDto
 } from '../../models/interfaces/responses/product-purchase-history-search-response';
 
 @Component({
@@ -74,7 +74,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
   ];
 
   // Search result
-  purchaseHistorySearchResponses: ProductPurchaseHistorySearchResponse[];
+  purchaseHistorySearchResponses: ProductPurchaseHistorySearchResponseDto[];
   resultsLength = 0;
 
   // Loading and pagenation
@@ -120,7 +120,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
           this.loadingService.stopLoading();
           this.resultsLength = data.resultsLength;
           this.paginator.pageIndex = data.pageIndex;
-          return data.productPurchaseHistorySearchResponses;
+          return data.productPurchaseHistorySearchResponseDtos;
         })
       )
       .subscribe((data) => (this.purchaseHistorySearchResponses = data));

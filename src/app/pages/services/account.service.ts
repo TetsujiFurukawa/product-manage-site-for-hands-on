@@ -9,9 +9,9 @@ import { Injectable } from '@angular/core';
 
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SessionStrageService } from '../../core/services/session-strage.service';
-import { SignInRequest } from '../models/interfaces/requests/sign-in-request';
-import { MenuListResponse } from '../models/interfaces/responses/menu-list-response';
-import { SignInResponse } from '../models/interfaces/responses/sign-in-response';
+import { SignInRequestDto } from '../models/interfaces/requests/sign-in-request';
+import { MenuListResponseDto } from '../models/interfaces/responses/menu-list-response';
+import { SignInResponseDto } from '../models/interfaces/responses/sign-in-response';
 
 @Injectable({
   providedIn: 'root'
@@ -21,21 +21,21 @@ export class AccountService {
 
   /**
    * Signs in
-   * @param SignInRequest sign in request
+   * @param SignInRequestDto sign in request
    * @returns sign in response
    */
-  signIn(signInRequest: SignInRequest): Observable<SignInResponse> {
+  signIn(signInRequestDto: SignInRequestDto): Observable<SignInResponseDto> {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_SIGN_IN;
     const headers = new HttpHeaders({
-      authorization: 'Basic ' + btoa(signInRequest.Username + ':' + signInRequest.Password)
+      authorization: 'Basic ' + btoa(signInRequestDto.Username + ':' + signInRequestDto.Password)
     });
 
     return this.http
-      .post<SignInResponse>(webApiUrl, signInRequest, { headers })
+      .post<SignInResponseDto>(webApiUrl, signInRequestDto, { headers })
       .pipe(
         catchError((error) => {
           this.errorMessageService.setupPageErrorMessageFromResponse(error);
-          return of(null as SignInResponse);
+          return of(null as SignInResponseDto);
         })
       );
   }
@@ -44,13 +44,13 @@ export class AccountService {
    * Gets menu
    * @returns menu response
    */
-  getMenu(): Observable<MenuListResponse[]> {
+  getMenu(): Observable<MenuListResponseDto[]> {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_MENU;
 
-    return this.http.get<MenuListResponse[]>(webApiUrl).pipe(
+    return this.http.get<MenuListResponseDto[]>(webApiUrl).pipe(
       catchError((error) => {
         this.errorMessageService.setupPageErrorMessageFromResponse(error);
-        return of(null as MenuListResponse[]);
+        return of(null as MenuListResponseDto[]);
       })
     );
   }

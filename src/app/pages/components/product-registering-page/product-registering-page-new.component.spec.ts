@@ -412,16 +412,16 @@ describe('ProductRegisteringPageComponent', () => {
       fixture.detectChanges();
 
       // tslint:disable-next-line: no-string-literal
-      const productStockRequest: Product = component['createProductRegisterRequest'](true);
+      const productStockRequestDto: Product = component['createProductRegisterRequest'](true);
 
-      expect(productStockRequest.productSeq).toBeNull();
-      expect(productStockRequest.productName).toEqual(expectedResponse.productName);
-      expect(productStockRequest.productGenre).toEqual('1');
-      expect(productStockRequest.productSizeStandard).toEqual(expectedResponse.productSizeStandard);
-      expect(productStockRequest.productColor).toEqual(expectedResponse.productColor);
-      expect(productStockRequest.endOfSale).toBeTruthy();
-      expect(productStockRequest.endOfSaleDate.toString()).toEqual(expectedResponse.endOfSaleDate.toString());
-      expect(productStockRequest.updateDate).toBeNull();
+      expect(productStockRequestDto.productSeq).toBeNull();
+      expect(productStockRequestDto.productName).toEqual(expectedResponse.productName);
+      expect(productStockRequestDto.productGenre).toEqual('1');
+      expect(productStockRequestDto.productSizeStandard).toEqual(expectedResponse.productSizeStandard);
+      expect(productStockRequestDto.productColor).toEqual(expectedResponse.productColor);
+      expect(productStockRequestDto.endOfSale).toBeTruthy();
+      expect(productStockRequestDto.endOfSaleDate.toString()).toEqual(expectedResponse.endOfSaleDate.toString());
+      expect(productStockRequestDto.updateDate).toBeNull();
     });
     it('Should Enter product code and get product stock data then display screen', () => {
       // tslint:disable-next-line: no-string-literal

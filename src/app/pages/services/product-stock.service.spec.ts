@@ -5,7 +5,7 @@ import { TestBed } from '@angular/core/testing';
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
 import { ApiConst } from '../constants/api-const';
-import { ProductStockResponse } from '../models/interfaces/responses/product-stock-response';
+import { ProductStockResponseDto } from '../models/interfaces/responses/product-stock-response';
 import { ProductStockService } from './product-stock.service';
 
 describe('ProductStockService', () => {
@@ -51,7 +51,7 @@ describe('ProductStockService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_STOCK;
 
     it('should return expected response', () => {
-      const expectedResponse: ProductStockResponse = {
+      const expectedResponse: ProductStockResponseDto = {
         productCode: 'productCode',
         productColor: 'productColor',
         productGenre: '1',
@@ -96,7 +96,7 @@ describe('ProductStockService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_STOCK;
 
     it('should return expected response', () => {
-      const expectedResponse: ProductStockResponse = {
+      const expectedResponse: ProductStockResponseDto = {
         productCode: 'productCode',
         productColor: 'productColor',
         productGenre: '1',

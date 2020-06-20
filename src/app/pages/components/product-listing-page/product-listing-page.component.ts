@@ -16,9 +16,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { TranslateService } from '@ngx-translate/core';
 
 import {
-    ProductListingSearchParams
+    ProductListingSearchParamsDto
 } from '../../models/interfaces/requests/product-listing-search-params';
-import { ProductSearchResponse } from '../../models/interfaces/responses/product-search-response';
+import {
+    ProductSearchResponseDto
+} from '../../models/interfaces/responses/product-search-response';
 
 @Component({
   selector: 'app-product-listing-page',
@@ -71,7 +73,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
   ];
 
   // Search result
-  productSearchResponses: ProductSearchResponse[];
+  productSearchResponseDtos: ProductSearchResponseDto[];
   resultsLength = 0;
 
   // Loading and pagenation
@@ -104,22 +106,22 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
         startWith({}),
         switchMap(() => {
           this.loadingService.startLoading();
-          const productListingSearchParams: ProductListingSearchParams = this.createSearchParams();
-          this.searchParamsService.setProductListingSearchParam(productListingSearchParams);
+          const productListingSearchParamsDto: ProductListingSearchParamsDto = this.createSearchParams();
+          this.searchParamsService.setProductListingSearchParam(productListingSearchParamsDto);
 
-          return this.productService.getProductList(this.createHttpParams(productListingSearchParams));
+          return this.productService.getProductList(this.createHttpParams(productListingSearchParamsDto));
         }),
         map((data) => {
           this.loadingService.stopLoading();
           this.resultsLength = data.resultsLength;
           this.paginator.pageIndex = data.pageIndex;
-          return data.productSearchResponses;
+          return data.productSearchResponseDtos;
         })
       )
-      .subscribe((data) => (this.productSearchResponses = data));
+      .subscribe((data) => (this.productSearchResponseDtos = data));
   }
 
-  clickListRow(productResponse: ProductSearchResponse) {
+  clickListRow(productResponse: ProductSearchResponseDto) {
     this.routingService.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING, productResponse.productCode]);
   }
 
@@ -140,7 +142,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
   }
 
   private initSearchCriteria() {
-    let productListingSearchParams: ProductListingSearchParams = {
+    let productListingSearchParamsDto: ProductListingSearchParamsDto = {
       productName: '',
       productCode: '',
       productGenre: '',
@@ -148,30 +150,32 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
       pageSize: 0,
       pageIndex: 0
     };
-    productListingSearchParams = this.searchParamsService.getProductListingSearchParam(productListingSearchParams);
-    if (productListingSearchParams !== null && productListingSearchParams !== undefined) {
-      if (productListingSearchParams.productName !== undefined) {
-        this.productName.setValue(productListingSearchParams.productName);
+    productListingSearchParamsDto = this.searchParamsService.getProductListingSearchParam(
+      productListingSearchParamsDto
+    );
+    if (productListingSearchParamsDto !== null && productListingSearchParamsDto !== undefined) {
+      if (productListingSearchParamsDto.productName !== undefined) {
+        this.productName.setValue(productListingSearchParamsDto.productName);
       }
-      if (productListingSearchParams.productCode !== undefined) {
-        this.productCode.setValue(productListingSearchParams.productCode);
+      if (productListingSearchParamsDto.productCode !== undefined) {
+        this.productCode.setValue(productListingSearchParamsDto.productCode);
       }
-      if (productListingSearchParams.productGenre !== undefined) {
-        this.productGenre.setValue(productListingSearchParams.productGenre);
+      if (productListingSearchParamsDto.productGenre !== undefined) {
+        this.productGenre.setValue(productListingSearchParamsDto.productGenre);
       }
       // Observes pagenator change events.
-      this.paginator.pageIndex = productListingSearchParams.pageIndex;
-      this.paginator.pageSize = productListingSearchParams.pageSize;
+      this.paginator.pageIndex = productListingSearchParamsDto.pageIndex;
+      this.paginator.pageSize = productListingSearchParamsDto.pageSize;
       setTimeout(() => {
-        this.paginator._changePageSize(productListingSearchParams.pageSize);
+        this.paginator._changePageSize(productListingSearchParamsDto.pageSize);
       }, 0);
-      this.endOfSale.setValue(productListingSearchParams.endOfSale);
+      this.endOfSale.setValue(productListingSearchParamsDto.endOfSale);
       this.clickSearchButton();
     }
   }
 
-  private createSearchParams(): ProductListingSearchParams {
-    const productListingSearchParams: ProductListingSearchParams = {
+  private createSearchParams(): ProductListingSearchParamsDto {
+    const productListingSearchParamsDto: ProductListingSearchParamsDto = {
       productName: this.productName.value,
       productCode: this.productCode.value,
       productGenre: this.productGenre.value,
@@ -179,17 +183,17 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
       pageSize: this.paginator.pageSize,
       pageIndex: this.paginator.pageIndex
     };
-    return productListingSearchParams;
+    return productListingSearchParamsDto;
   }
 
-  private createHttpParams(productListingSearchParams: ProductListingSearchParams) {
+  private createHttpParams(productListingSearchParamsDto: ProductListingSearchParamsDto) {
     const conditions = {
-      productName: productListingSearchParams.productName,
-      productCode: productListingSearchParams.productCode,
-      productGenre: productListingSearchParams.productGenre,
-      endOfSale: productListingSearchParams.endOfSale,
-      pageSize: productListingSearchParams.pageSize,
-      pageIndex: productListingSearchParams.pageIndex
+      productName: productListingSearchParamsDto.productName,
+      productCode: productListingSearchParamsDto.productCode,
+      productGenre: productListingSearchParamsDto.productGenre,
+      endOfSale: productListingSearchParamsDto.endOfSale,
+      pageSize: productListingSearchParamsDto.pageSize,
+      pageIndex: productListingSearchParamsDto.pageIndex
     };
     const paramsOptions = { fromObject: conditions } as any;
     const params = new HttpParams(paramsOptions);
@@ -204,7 +208,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
   }
 
   private clearSearchResultList() {
-    this.productSearchResponses = null;
+    this.productSearchResponseDtos = null;
     this.resultsLength = 0;
   }
 }

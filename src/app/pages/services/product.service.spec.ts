@@ -8,9 +8,9 @@ import { SuccessMessagingService } from '../../core/services/success-messaging.s
 import { ApiConst } from '../constants/api-const';
 import { Product } from '../models/interfaces/product';
 import {
-    ProductSearchListResponse
+    ProductSearchListResponseDto
 } from '../models/interfaces/responses/product-search-list-response';
-import { ProductSearchResponse } from '../models/interfaces/responses/product-search-response';
+import { ProductSearchResponseDto } from '../models/interfaces/responses/product-search-response';
 import { ProductService } from './product.service';
 
 describe('ProductService', () => {
@@ -56,7 +56,7 @@ describe('ProductService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT_SEARCH;
 
     it('should return expected response', () => {
-      const productSearchResponse: ProductSearchResponse = {
+      const productSearchResponseDto: ProductSearchResponseDto = {
         endOfSale: false,
         no: 1,
         productCode: 'productCode',
@@ -69,8 +69,8 @@ describe('ProductService', () => {
         productUnitPrice: 1
       };
 
-      const expectedResponse: ProductSearchListResponse = {
-        productSearchResponses: Array(productSearchResponse),
+      const expectedResponse: ProductSearchListResponseDto = {
+        productSearchResponseDtos: Array(productSearchResponseDto),
         pageIndex: 1,
         resultsLength: 1
       };

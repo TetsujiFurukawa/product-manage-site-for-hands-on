@@ -1,4 +1,4 @@
-export interface BaseSearchParams {
+export interface BaseSearchParamsDto {
   pageSize: number;
   pageIndex: number;
 }

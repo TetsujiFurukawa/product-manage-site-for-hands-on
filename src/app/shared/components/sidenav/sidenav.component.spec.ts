@@ -1,7 +1,7 @@
 import { of } from 'rxjs';
 import { MaterialModule } from 'src/app/material/material.module';
 import { HttpLoaderFactory } from 'src/app/ngx-translate/ngx-translate.module';
-import { MenuListResponse } from 'src/app/pages/models/interfaces/responses/menu-list-response';
+import { MenuListResponseDto } from 'src/app/pages/models/interfaces/responses/menu-list-response';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { SearchParamsService } from 'src/app/pages/services/search-params.service';
 
@@ -65,11 +65,11 @@ describe('SidenavComponent', () => {
 
   describe('#ngOnInit', () => {
     it('should init', () => {
-      const expetedMenuListResponses: MenuListResponse[] = createExpectedMenu();
-      accountServiceSpy.getMenu.and.returnValue(of(expetedMenuListResponses));
+      const expetedMenuListResponseDtos: MenuListResponseDto[] = createExpectedMenu();
+      accountServiceSpy.getMenu.and.returnValue(of(expetedMenuListResponseDtos));
 
       component.ngOnInit();
-      expect(component.menuListResponse).toEqual(expetedMenuListResponses);
+      expect(component.menuListResponseDto).toEqual(expetedMenuListResponseDtos);
       expect(accountServiceSpy.getMenu.calls.count()).toBe(1);
     });
   });
@@ -91,14 +91,14 @@ describe('SidenavComponent', () => {
 });
 
 function createExpectedMenu() {
-  const menuListResponse1: MenuListResponse = {
+  const menuListResponseDto1: MenuListResponseDto = {
     menuCode: 'menu1',
     subMenuCodeList: Array('subMenu1-1', 'subMenu1-2')
   };
-  const menuListResponse2: MenuListResponse = {
+  const menuListResponseDto2: MenuListResponseDto = {
     menuCode: 'menu2',
     subMenuCodeList: Array('subMenu2-1')
   };
-  const expetedMenuListResponses: MenuListResponse[] = Array(menuListResponse1, menuListResponse2);
-  return expetedMenuListResponses;
+  const expetedMenuListResponseDtos: MenuListResponseDto[] = Array(menuListResponseDto1, menuListResponseDto2);
+  return expetedMenuListResponseDtos;
 }

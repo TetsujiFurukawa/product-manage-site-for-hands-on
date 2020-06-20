@@ -1,4 +1,4 @@
-export interface ProductSearchResponse {
+export interface ProductSearchResponseDto {
   no: number;
   productName: string;
   productCode: string;

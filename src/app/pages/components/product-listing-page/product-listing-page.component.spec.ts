@@ -23,12 +23,14 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import {
-    ProductListingSearchParams
+    ProductListingSearchParamsDto
 } from '../../models/interfaces/requests/product-listing-search-params';
 import {
-    ProductSearchListResponse
+    ProductSearchListResponseDto
 } from '../../models/interfaces/responses/product-search-list-response';
-import { ProductSearchResponse } from '../../models/interfaces/responses/product-search-response';
+import {
+    ProductSearchResponseDto
+} from '../../models/interfaces/responses/product-search-response';
 import { ProductListingPageComponent } from './product-listing-page.component';
 
 describe('ProductListingPageComponent', () => {
@@ -41,7 +43,7 @@ describe('ProductListingPageComponent', () => {
   user.userName = 'userName';
   user.userTimezone = 'UTC';
 
-  const expectedProductListingSearchParams: ProductListingSearchParams = {
+  const expectedProductListingSearchParamsDto: ProductListingSearchParamsDto = {
     endOfSale: true,
     pageIndex: 1,
     pageSize: 50,
@@ -50,7 +52,7 @@ describe('ProductListingPageComponent', () => {
     productName: 'productName'
   };
 
-  const productSearchResponse: ProductSearchResponse[] = [
+  const productSearchResponseDto: ProductSearchResponseDto[] = [
     {
       no: 1,
       productName: 'productName',
@@ -64,8 +66,8 @@ describe('ProductListingPageComponent', () => {
       endOfSale: true
     }
   ];
-  const expectedProductSearchListResponse: ProductSearchListResponse = {
-    productSearchResponses: productSearchResponse,
+  const expectedProductSearchListResponseDto: ProductSearchListResponseDto = {
+    productSearchResponseDtos: productSearchResponseDto,
     pageIndex: 1,
     resultsLength: 1
   };
@@ -142,20 +144,20 @@ describe('ProductListingPageComponent', () => {
       expect(component.clickSearchButton).toHaveBeenCalledTimes(0);
     });
     it('should init search criteria', () => {
-      searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(expectedProductListingSearchParams);
-      productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponse));
+      searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(expectedProductListingSearchParamsDto);
+      productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
       component.ngOnInit();
 
-      expect(component.productName.value).toEqual(expectedProductListingSearchParams.productName);
-      expect(component.productCode.value).toEqual(expectedProductListingSearchParams.productCode);
-      expect(component.productGenre.value).toEqual(expectedProductListingSearchParams.productGenre);
-      expect(component.endOfSale.value).toEqual(expectedProductListingSearchParams.endOfSale);
-      expect(component.paginator.pageIndex).toEqual(expectedProductListingSearchParams.pageIndex);
-      expect(component.paginator.pageSize).toEqual(expectedProductListingSearchParams.pageSize);
+      expect(component.productName.value).toEqual(expectedProductListingSearchParamsDto.productName);
+      expect(component.productCode.value).toEqual(expectedProductListingSearchParamsDto.productCode);
+      expect(component.productGenre.value).toEqual(expectedProductListingSearchParamsDto.productGenre);
+      expect(component.endOfSale.value).toEqual(expectedProductListingSearchParamsDto.endOfSale);
+      expect(component.paginator.pageIndex).toEqual(expectedProductListingSearchParamsDto.pageIndex);
+      expect(component.paginator.pageSize).toEqual(expectedProductListingSearchParamsDto.pageSize);
     });
 
     it('should init search criteria partly undefined', () => {
-      const expectedProductListingSearchParamsUndefine: ProductListingSearchParams = {
+      const expectedProductListingSearchParamsDtoUndefine: ProductListingSearchParamsDto = {
         endOfSale: true,
         pageIndex: 1,
         pageSize: 50,
@@ -163,16 +165,18 @@ describe('ProductListingPageComponent', () => {
         productGenre: undefined,
         productName: undefined
       };
-      searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(expectedProductListingSearchParamsUndefine);
-      productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponse));
+      searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(
+        expectedProductListingSearchParamsDtoUndefine
+      );
+      productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
       component.ngOnInit();
 
       expect(component.productName.value).toEqual('');
       expect(component.productCode.value).toEqual('');
       expect(component.productGenre.value).toEqual('');
-      expect(component.endOfSale.value).toEqual(expectedProductListingSearchParams.endOfSale);
-      expect(component.paginator.pageIndex).toEqual(expectedProductListingSearchParams.pageIndex);
-      expect(component.paginator.pageSize).toEqual(expectedProductListingSearchParams.pageSize);
+      expect(component.endOfSale.value).toEqual(expectedProductListingSearchParamsDto.endOfSale);
+      expect(component.paginator.pageIndex).toEqual(expectedProductListingSearchParamsDto.pageIndex);
+      expect(component.paginator.pageSize).toEqual(expectedProductListingSearchParamsDto.pageSize);
     });
   });
 
@@ -210,20 +214,22 @@ describe('ProductListingPageComponent', () => {
 
   describe('clicks clear button', () => {
     it('should search', () => {
-      productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponse));
+      productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
       component.clickSearchButton();
 
       expect(productServiceSpy.getProductList.calls.count()).toEqual(1);
-      expect(component.productSearchResponses).toEqual(expectedProductSearchListResponse.productSearchResponses);
+      expect(component.productSearchResponseDtos).toEqual(
+        expectedProductSearchListResponseDto.productSearchResponseDtos
+      );
     });
   });
 
   describe('clicks list row', () => {
     it('should move to new page', () => {
-      const expectedProductSearchResponse: ProductSearchResponse =
-        expectedProductSearchListResponse.productSearchResponses[0];
+      const expectedProductSearchResponseDto: ProductSearchResponseDto =
+        expectedProductSearchListResponseDto.productSearchResponseDtos[0];
       spyOn(router, 'navigate').and.returnValue(null);
-      component.clickListRow(expectedProductSearchResponse);
+      component.clickListRow(expectedProductSearchResponseDto);
 
       expect(router.navigate).toHaveBeenCalledTimes(1);
     });
@@ -279,12 +285,12 @@ describe('ProductListingPageComponent', () => {
 
   describe('DOM input test', () => {
     it('product name', () => {
-      const expectedValue = expectedProductListingSearchParams.productName;
+      const expectedValue = expectedProductListingSearchParamsDto.productName;
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', expectedValue);
       expect(component.productName.value).toEqual(expectedValue);
     });
     it('product code', () => {
-      const expectedValue = expectedProductListingSearchParams.productCode;
+      const expectedValue = expectedProductListingSearchParamsDto.productCode;
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedValue);
       expect(component.productCode.value).toEqual(expectedValue.toUpperCase());
     });
@@ -293,9 +299,9 @@ describe('ProductListingPageComponent', () => {
         fixture,
         '#product-genre',
         '.product-genre-option',
-        Number(expectedProductListingSearchParams.productGenre)
+        Number(expectedProductListingSearchParamsDto.productGenre)
       );
-      expect(component.productGenre.value).toEqual(expectedProductListingSearchParams.productGenre);
+      expect(component.productGenre.value).toEqual(expectedProductListingSearchParamsDto.productGenre);
     });
     it('end of sale', () => {
       // Clicks checkbox's label
@@ -309,40 +315,44 @@ describe('ProductListingPageComponent', () => {
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
         fixture,
         '#product-name',
-        expectedProductListingSearchParams.productName
+        expectedProductListingSearchParamsDto.productName
       );
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
         fixture,
         '#product-code',
-        expectedProductListingSearchParams.productCode
+        expectedProductListingSearchParamsDto.productCode
       );
       HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(
         fixture,
         '#product-genre',
         '.product-genre-option',
-        Number(expectedProductListingSearchParams.productGenre)
+        Number(expectedProductListingSearchParamsDto.productGenre)
       );
       HtmlElementUtility.clickHtmlElement<typeof component>(fixture, '#end-of-sale label');
 
       fixture.detectChanges();
       // tslint:disable-next-line: no-string-literal
-      const actualProductListingSearchParams: ProductListingSearchParams = component['createSearchParams']();
+      const actualProductListingSearchParamsDto: ProductListingSearchParamsDto = component['createSearchParams']();
 
-      expect(actualProductListingSearchParams.productName).toEqual(expectedProductListingSearchParams.productName);
-      expect(actualProductListingSearchParams.productCode).toEqual(
-        expectedProductListingSearchParams.productCode.toUpperCase()
+      expect(actualProductListingSearchParamsDto.productName).toEqual(
+        expectedProductListingSearchParamsDto.productName
       );
-      expect(actualProductListingSearchParams.productGenre).toEqual('1');
-      expect(actualProductListingSearchParams.endOfSale).toEqual(true);
-      expect(actualProductListingSearchParams.pageIndex).toEqual(0);
-      expect(actualProductListingSearchParams.pageSize).toEqual(50);
+      expect(actualProductListingSearchParamsDto.productCode).toEqual(
+        expectedProductListingSearchParamsDto.productCode.toUpperCase()
+      );
+      expect(actualProductListingSearchParamsDto.productGenre).toEqual('1');
+      expect(actualProductListingSearchParamsDto.endOfSale).toEqual(true);
+      expect(actualProductListingSearchParamsDto.pageIndex).toEqual(0);
+      expect(actualProductListingSearchParamsDto.pageSize).toEqual(50);
 
       // testing http params part
       // tslint:disable-next-line: no-string-literal
-      const actualHttpParams: HttpParams = component['createHttpParams'](actualProductListingSearchParams);
+      const actualHttpParams: HttpParams = component['createHttpParams'](actualProductListingSearchParamsDto);
 
-      expect(actualHttpParams.get('productName')).toEqual(expectedProductListingSearchParams.productName);
-      expect(actualHttpParams.get('productCode')).toEqual(expectedProductListingSearchParams.productCode.toUpperCase());
+      expect(actualHttpParams.get('productName')).toEqual(expectedProductListingSearchParamsDto.productName);
+      expect(actualHttpParams.get('productCode')).toEqual(
+        expectedProductListingSearchParamsDto.productCode.toUpperCase()
+      );
       expect(actualHttpParams.get('productGenre')).toEqual('1');
       expect(actualHttpParams.get('endOfSale')).toBeTruthy();
       expect(actualHttpParams.get('pageSize').toString()).toEqual('50');

@@ -1,6 +1,6 @@
-import { BaseSearchListResponse } from './base-search-list-response';
-import { ProductSearchResponse } from './product-search-response';
+import { BaseSearchListResponseDto } from './base-search-list-response';
+import { ProductSearchResponseDto } from './product-search-response';
 
-export interface ProductSearchListResponse extends BaseSearchListResponse {
-  productSearchResponses: ProductSearchResponse[];
+export interface ProductSearchListResponseDto extends BaseSearchListResponseDto {
+  productSearchResponseDtos: ProductSearchResponseDto[];
 }

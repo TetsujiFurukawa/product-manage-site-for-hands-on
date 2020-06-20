@@ -10,8 +10,8 @@ import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
-import { SignInRequest } from '../../models/interfaces/requests/sign-in-request';
-import { SignInResponse } from '../../models/interfaces/responses/sign-in-response';
+import { SignInRequestDto } from '../../models/interfaces/requests/sign-in-request';
+import { SignInResponseDto } from '../../models/interfaces/responses/sign-in-response';
 
 @Component({
   selector: 'app-sign-in-page',
@@ -58,10 +58,10 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
    */
   clickSignInButton() {
     // Creates request.
-    const signInRequest: SignInRequest = this.createSignInRequest();
+    const signInRequestDto: SignInRequestDto = this.createSignInRequestDto();
 
     // Signs in using sign in request.
-    this.signIn(signInRequest);
+    this.signIn(signInRequestDto);
   }
 
   // --------------------------------------------------------------------------------
@@ -86,13 +86,13 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
     return language;
   }
 
-  private signIn(signInRequest: SignInRequest) {
+  private signIn(signInRequestDto: SignInRequestDto) {
     // Starts Loading.
     this.loadingService.startLoading();
 
     // Signs in and gets response.
-    const signInResponse: Observable<SignInResponse> = this.accountService.signIn(signInRequest);
-    signInResponse.subscribe((response) => {
+    const signInResponseDto: Observable<SignInResponseDto> = this.accountService.signIn(signInRequestDto);
+    signInResponseDto.subscribe((response) => {
       if (response != null) {
         // Sets account information.
         this.setUpUserAccount(response);
@@ -104,16 +104,16 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  private createSignInRequest(): SignInRequest {
+  private createSignInRequestDto(): SignInRequestDto {
     // Creates Request.
-    const signInRequest: SignInRequest = {
+    const signInRequestDto: SignInRequestDto = {
       Username: this.signInUserAccount.value,
       Password: this.signInUserPassword.value
     };
-    return signInRequest;
+    return signInRequestDto;
   }
 
-  private setUpUserAccount(response: SignInResponse) {
+  private setUpUserAccount(response: SignInResponseDto) {
     const user: User = new User();
     user.userAccount = response.userAccount;
     user.userName = response.userName;

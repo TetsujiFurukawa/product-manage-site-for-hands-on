@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 
 import { SessionStrageService } from '../../core/services/session-strage.service';
 import {
-    ProductListingSearchParams
+    ProductListingSearchParamsDto
 } from '../models/interfaces/requests/product-listing-search-params';
 
 @Injectable({
@@ -14,12 +14,14 @@ export class SearchParamsService {
   constructor() {}
 
   /** Product */
-  setProductListingSearchParam(productListingSearchParams: ProductListingSearchParams): void {
-    SessionStrageService.setItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST, productListingSearchParams);
+  setProductListingSearchParam(productListingSearchParamsDto: ProductListingSearchParamsDto): void {
+    SessionStrageService.setItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST, productListingSearchParamsDto);
   }
 
-  getProductListingSearchParam(productListingSearchParams: ProductListingSearchParams): ProductListingSearchParams {
-    return SessionStrageService.getItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST, productListingSearchParams);
+  getProductListingSearchParam(
+    productListingSearchParamsDto: ProductListingSearchParamsDto
+  ): ProductListingSearchParamsDto {
+    return SessionStrageService.getItem(AppConst.STRAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST, productListingSearchParamsDto);
   }
 
   removeProductListingSearchParam(): void {

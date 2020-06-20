@@ -1,4 +1,4 @@
-export interface ProductPurchaseResponse {
+export interface ProductPurchaseResponseDto {
   productCode: string;
   productName: string;
   productGenre: string;

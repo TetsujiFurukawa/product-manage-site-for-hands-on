@@ -5,8 +5,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { ApiConst } from '../constants/api-const';
-import { MenuListResponse } from '../models/interfaces/responses/menu-list-response';
-import { SignInResponse } from '../models/interfaces/responses/sign-in-response';
+import { MenuListResponseDto } from '../models/interfaces/responses/menu-list-response';
+import { SignInResponseDto } from '../models/interfaces/responses/sign-in-response';
 import { User } from '../models/user';
 import { AccountService } from './account.service';
 
@@ -40,18 +40,18 @@ describe('AccountService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_SIGN_IN;
 
     it('should return expected response', () => {
-      const expectedSignInResponse: SignInResponse = createExpectedSignInResponse();
+      const expectedSignInResponseDto: SignInResponseDto = createExpectedSignInResponseDto();
 
       // Subscribes to api.
-      service.signIn({ Username: '', Password: '' }).subscribe((signInResponse) => {
-        expect(signInResponse).toEqual(expectedSignInResponse);
+      service.signIn({ Username: '', Password: '' }).subscribe((signInResponseDto) => {
+        expect(signInResponseDto).toEqual(expectedSignInResponseDto);
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
       // Responds with the mock.
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('POST');
-      req.flush(expectedSignInResponse);
+      req.flush(expectedSignInResponseDto);
     });
 
     it('should return null when response is 401 Unauthorized error', () => {
@@ -59,8 +59,8 @@ describe('AccountService', () => {
       const errorMessage = '401 Unauthorized';
 
       // Subscribes to api.
-      service.signIn({ Username: '', Password: '' }).subscribe((signInResponse) => {
-        expect(signInResponse).toBeNull();
+      service.signIn({ Username: '', Password: '' }).subscribe((signInResponseDto) => {
+        expect(signInResponseDto).toBeNull();
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
       }, fail);
 
@@ -75,18 +75,18 @@ describe('AccountService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_MENU;
 
     it('should return expected response', () => {
-      const expectedMenuListResponse = createExpectedMenuListResponse();
+      const expectedMenuListResponseDto = createExpectedMenuListResponseDto();
 
       // Subscribes to api.
       service.getMenu().subscribe((response) => {
-        expect(response).toEqual(expectedMenuListResponse);
+        expect(response).toEqual(expectedMenuListResponseDto);
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
       // Responds with the mock
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('GET');
-      req.flush(expectedMenuListResponse);
+      req.flush(expectedMenuListResponseDto);
     });
 
     it('should return null when response is 404 Not Found', () => {
@@ -181,7 +181,7 @@ describe('AccountService', () => {
   });
 });
 
-function createExpectedSignInResponse() {
+function createExpectedSignInResponseDto() {
   return {
     userAccount: 'userAccount',
     userName: 'userName',
@@ -193,14 +193,14 @@ function createExpectedSignInResponse() {
   };
 }
 
-function createExpectedMenuListResponse() {
+function createExpectedMenuListResponseDto() {
   const codeList = new Array('subMenu1', 'subMenu2', 'subMenu3');
-  const menuListResponse: MenuListResponse = {
+  const menuListResponseDto: MenuListResponseDto = {
     menuCode: 'menu1',
     subMenuCodeList: codeList
   };
-  const expectedMenuListResponse = Array(menuListResponse);
-  return expectedMenuListResponse;
+  const expectedMenuListResponseDto = Array(menuListResponseDto);
+  return expectedMenuListResponseDto;
 }
 
 function createExpectedUser() {

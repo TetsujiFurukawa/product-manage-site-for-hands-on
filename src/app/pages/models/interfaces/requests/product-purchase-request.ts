@@ -1,4 +1,4 @@
-export interface ProductPurchaseRequest {
+export interface ProductPurchaseRequestDto {
   productCode: string;
   productPurchaseName: string;
   productStockQuantity: number;

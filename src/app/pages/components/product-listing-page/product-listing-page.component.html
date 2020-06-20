@@ -57,7 +57,8 @@
     </div>
   </div>
   <div class="search-results-wrapper">
-    <table id="results" class="search-results" mat-table *ngIf="resultsLength>0" [dataSource]="productSearchResponses">
+    <table id="results" class="search-results" mat-table *ngIf="resultsLength>0"
+      [dataSource]="productSearchResponseDtos">
       <ng-container matColumnDef="no">
         <th class="width-no" mat-header-cell *matHeaderCellDef>
           {{ 'productListingPage.no' | translate }}

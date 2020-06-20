@@ -18,8 +18,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { ProductStockRequest } from '../../models/interfaces/requests/product-stock-request';
-import { ProductStockResponse } from '../../models/interfaces/responses/product-stock-response';
+import { ProductStockRequestDto } from '../../models/interfaces/requests/product-stock-request';
+import { ProductStockResponseDto } from '../../models/interfaces/responses/product-stock-response';
 import { StockRegisteringPageComponent } from './stock-registering-page.component';
 
 describe('StockRegisteringPageComponent', () => {
@@ -31,7 +31,7 @@ describe('StockRegisteringPageComponent', () => {
   user.userLocale = 'ja-JP';
   user.userName = 'userName';
   user.userTimezone = 'UTC';
-  const expectedResponse: ProductStockResponse = {
+  const expectedResponse: ProductStockResponseDto = {
     productCode: 'ABCD1234',
     productColor: 'productColor',
     productGenre: '1',
@@ -264,11 +264,11 @@ describe('StockRegisteringPageComponent', () => {
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#add-product-stock-quantity', '123');
 
       // tslint:disable-next-line: no-string-literal
-      const productStockRequest: ProductStockRequest = component['createProductStockRequest']();
+      const productStockRequestDto: ProductStockRequestDto = component['createProductStockRequestDto']();
 
-      expect(productStockRequest.productCode).toEqual('ABCD1234');
-      expect(productStockRequest.productStockQuantity.toString()).toEqual('1111');
-      expect(productStockRequest.addProductStockQuantity.toString()).toEqual('123');
+      expect(productStockRequestDto.productCode).toEqual('ABCD1234');
+      expect(productStockRequestDto.productStockQuantity.toString()).toEqual('1111');
+      expect(productStockRequestDto.addProductStockQuantity.toString()).toEqual('123');
     });
   });
 });

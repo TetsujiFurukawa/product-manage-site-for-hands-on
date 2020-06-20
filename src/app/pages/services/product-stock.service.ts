@@ -7,8 +7,8 @@ import { Injectable } from '@angular/core';
 
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
-import { ProductStockRequestDto } from '../models/interfaces/requests/product-stock-request';
-import { ProductStockResponseDto } from '../models/interfaces/responses/product-stock-response';
+import { ProductStockRequestDto } from '../models/interfaces/requests/product-stock-request-dto';
+import { ProductStockResponseDto } from '../models/interfaces/responses/product-stock-response-dto';
 
 @Injectable({
   providedIn: 'root'

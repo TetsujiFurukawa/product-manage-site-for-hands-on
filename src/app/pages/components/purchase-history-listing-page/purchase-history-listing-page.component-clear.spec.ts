@@ -25,10 +25,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import {
     ProductPurchaseHistorySearchListResponseDto
-} from '../../models/interfaces/responses/product-purchase-history-search-list-response';
+} from '../../models/interfaces/responses/product-purchase-history-search-list-response-dto';
 import {
     ProductPurchaseHistorySearchResponseDto
-} from '../../models/interfaces/responses/product-purchase-history-search-response';
+} from '../../models/interfaces/responses/product-purchase-history-search-response-dto';
 import { PurchaseHistoryListingPageComponent } from './purchase-history-listing-page.component';
 
 describe('PurchaseHistoryListingPageComponent', () => {

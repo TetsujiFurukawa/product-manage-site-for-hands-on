@@ -6,7 +6,9 @@ import { LoadingService } from 'src/app/core/services/loading.service';
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { AppConst } from 'src/app/pages/constants/app-const';
 import { UrlConst } from 'src/app/pages/constants/url-const';
-import { MenuListResponseDto } from 'src/app/pages/models/interfaces/responses/menu-list-response';
+import {
+    MenuListResponseDto
+} from 'src/app/pages/models/interfaces/responses/menu-list-response-dto';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { SearchParamsService } from 'src/app/pages/services/search-params.service';
 

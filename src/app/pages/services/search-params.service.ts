@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { SessionStrageService } from '../../core/services/session-strage.service';
 import {
     ProductListingSearchParamsDto
-} from '../models/interfaces/requests/product-listing-search-params';
+} from '../models/interfaces/requests/product-listing-search-params-dto';
 
 @Injectable({
   providedIn: 'root'

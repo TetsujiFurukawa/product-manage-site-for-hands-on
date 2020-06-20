@@ -8,13 +8,13 @@ import { SuccessMessagingService } from '../../core/services/success-messaging.s
 import { ApiConst } from '../constants/api-const';
 import {
     ProductPurchaseHistorySearchListResponseDto
-} from '../models/interfaces/responses/product-purchase-history-search-list-response';
+} from '../models/interfaces/responses/product-purchase-history-search-list-response-dto';
 import {
     ProductPurchaseHistorySearchResponseDto
-} from '../models/interfaces/responses/product-purchase-history-search-response';
+} from '../models/interfaces/responses/product-purchase-history-search-response-dto';
 import {
     ProductPurchaseResponseDto
-} from '../models/interfaces/responses/product-purchase-response';
+} from '../models/interfaces/responses/product-purchase-response-dto';
 import { ProductPurchaseService } from './product-purchase.service';
 
 describe('ProductPurchaseService', () => {

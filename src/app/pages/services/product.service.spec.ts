@@ -9,8 +9,10 @@ import { ApiConst } from '../constants/api-const';
 import { Product } from '../models/interfaces/product';
 import {
     ProductSearchListResponseDto
-} from '../models/interfaces/responses/product-search-list-response';
-import { ProductSearchResponseDto } from '../models/interfaces/responses/product-search-response';
+} from '../models/interfaces/responses/product-search-list-response-dto';
+import {
+    ProductSearchResponseDto
+} from '../models/interfaces/responses/product-search-response-dto';
 import { ProductService } from './product.service';
 
 describe('ProductService', () => {

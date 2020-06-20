@@ -10,7 +10,7 @@ import { ErrorMessagingService } from '../../core/services/error-messaging.servi
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
 import {
     ProductSearchListResponseDto
-} from '../models/interfaces/responses/product-search-list-response';
+} from '../models/interfaces/responses/product-search-list-response-dto';
 
 @Injectable({
   providedIn: 'root'

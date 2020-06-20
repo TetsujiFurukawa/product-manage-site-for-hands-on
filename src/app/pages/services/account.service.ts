@@ -9,9 +9,9 @@ import { Injectable } from '@angular/core';
 
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SessionStrageService } from '../../core/services/session-strage.service';
-import { SignInRequestDto } from '../models/interfaces/requests/sign-in-request';
-import { MenuListResponseDto } from '../models/interfaces/responses/menu-list-response';
-import { SignInResponseDto } from '../models/interfaces/responses/sign-in-response';
+import { SignInRequestDto } from '../models/interfaces/requests/sign-in-request-dto';
+import { MenuListResponseDto } from '../models/interfaces/responses/menu-list-response-dto';
+import { SignInResponseDto } from '../models/interfaces/responses/sign-in-response-dto';
 
 @Injectable({
   providedIn: 'root'

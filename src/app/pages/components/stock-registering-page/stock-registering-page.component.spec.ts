@@ -18,8 +18,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { ProductStockRequestDto } from '../../models/interfaces/requests/product-stock-request';
-import { ProductStockResponseDto } from '../../models/interfaces/responses/product-stock-response';
+import { ProductStockRequestDto } from '../../models/interfaces/requests/product-stock-request-dto';
+import {
+    ProductStockResponseDto
+} from '../../models/interfaces/responses/product-stock-response-dto';
 import { StockRegisteringPageComponent } from './stock-registering-page.component';
 
 describe('StockRegisteringPageComponent', () => {

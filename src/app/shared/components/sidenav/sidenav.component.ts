@@ -1,6 +1,8 @@
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { UrlConst } from 'src/app/pages/constants/url-const';
-import { MenuListResponseDto } from 'src/app/pages/models/interfaces/responses/menu-list-response';
+import {
+    MenuListResponseDto
+} from 'src/app/pages/models/interfaces/responses/menu-list-response-dto';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { SearchParamsService } from 'src/app/pages/services/search-params.service';
 

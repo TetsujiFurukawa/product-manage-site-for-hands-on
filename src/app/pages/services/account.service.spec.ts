@@ -5,8 +5,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { ApiConst } from '../constants/api-const';
-import { MenuListResponseDto } from '../models/interfaces/responses/menu-list-response';
-import { SignInResponseDto } from '../models/interfaces/responses/sign-in-response';
+import { MenuListResponseDto } from '../models/interfaces/responses/menu-list-response-dto';
+import { SignInResponseDto } from '../models/interfaces/responses/sign-in-response-dto';
 import { User } from '../models/user';
 import { AccountService } from './account.service';
 

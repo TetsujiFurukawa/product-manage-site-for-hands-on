@@ -16,8 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { SignInRequestDto } from '../../models/interfaces/requests/sign-in-request';
-import { SignInResponseDto } from '../../models/interfaces/responses/sign-in-response';
+import { SignInRequestDto } from '../../models/interfaces/requests/sign-in-request-dto';
+import { SignInResponseDto } from '../../models/interfaces/responses/sign-in-response-dto';
 import { SignInPageComponent } from './sign-in-page.component';
 
 describe('SignInPageComponent', () => {

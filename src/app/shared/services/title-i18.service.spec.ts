@@ -23,11 +23,11 @@ describe('TitleI18Service', () => {
   describe('#setTitle', () => {
     it('should set title', () => {
       const screenName = 'sign-in';
-      const expectedTitle = '【Example Site】';
-      const expectedSubTitle = 'ログイン';
+      const expectedTitleSystem = '【Example Site】';
+      const expectedTitleSub = 'ログイン';
 
       service.setTitle(screenName);
-      expect(service.title.getTitle()).toEqual(expectedTitle + expectedSubTitle);
+      expect(service.title.getTitle()).toEqual(expectedTitleSystem + expectedTitleSub);
     });
   });
 });

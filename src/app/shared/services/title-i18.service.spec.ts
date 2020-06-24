@@ -1,32 +1,17 @@
-import { HttpLoaderFactory } from 'src/app/ngx-translate/ngx-translate.module';
+import { TranslateTestingModule } from 'ngx-translate-testing';
 
-import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { TitleI18Service } from './title-i18.service';
 
 describe('TitleI18Service', () => {
   let service: TitleI18Service;
-  let translateService: TranslateService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
-      ],
-      providers: [TranslateService]
+      imports: [TranslateTestingModule.withTranslations({ ja: require('src/assets/i18n/ja.json') })]
     });
     service = TestBed.inject(TitleI18Service);
-    translateService = TestBed.inject(TranslateService);
   });
 
   describe('#constractor', () => {
@@ -37,14 +22,11 @@ describe('TitleI18Service', () => {
 
   describe('#setTitle', () => {
     it('should set title', () => {
-      const subTitle = 'subTitle';
-      const expectedTitle = 'テストサイト名';
-      const expectedSubTitle = 'テスト画面名';
+      const screenName = 'sign-in';
+      const expectedTitle = '【Example Site】';
+      const expectedSubTitle = 'ログイン';
 
-      translateService.setTranslation('ja', { 'title.system': expectedTitle, 'title.subTitle': expectedSubTitle });
-      translateService.use('ja');
-
-      service.setTitle(subTitle);
+      service.setTitle(screenName);
       expect(service.title.getTitle()).toEqual(expectedTitle + expectedSubTitle);
     });
   });

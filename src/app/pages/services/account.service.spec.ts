@@ -166,7 +166,7 @@ describe('AccountService', () => {
 
   describe('#getUser,#setUser', () => {
     it('should return expected data', () => {
-      const user: User = createExpectedUser();
+      const user: User = createUser();
       service.setUser(user);
       assertUser(service, service.getUser());
     });
@@ -174,7 +174,7 @@ describe('AccountService', () => {
 
   describe('#removeUser', () => {
     it('should remove user', () => {
-      const user: User = createExpectedUser();
+      const user: User = createUser();
       service.setUser(user);
       assertUser(service, service.getUser());
 
@@ -210,7 +210,7 @@ function createExpectedMenuListResponseDto() {
   return expectedMenuListResponseDto;
 }
 
-function createExpectedUser() {
+function createUser() {
   const user: User = new User();
   user.userAccount = 'userAccount';
   user.userName = 'userName';

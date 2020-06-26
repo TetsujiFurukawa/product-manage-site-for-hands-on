@@ -20,7 +20,7 @@ describe('AccountService', () => {
     errorMessagingServiceSpy = jasmine.createSpyObj('ErrorMessagingService', ['setupPageErrorMessageFromResponse']);
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [AccountService, { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }]
+      providers: [{ provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }]
     });
     service = TestBed.inject(AccountService);
     httpTestingController = TestBed.inject(HttpTestingController);

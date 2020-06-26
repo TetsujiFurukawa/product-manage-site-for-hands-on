@@ -27,7 +27,6 @@ describe('ProductStockService', () => {
       schemas: [NO_ERRORS_SCHEMA],
       imports: [HttpClientTestingModule],
       providers: [
-        ProductStockService,
         { provide: SuccessMessagingService, useValue: successMessagingServiceSpy },
         { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }
       ]

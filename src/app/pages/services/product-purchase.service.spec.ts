@@ -34,7 +34,6 @@ describe('ProductPurchaseService', () => {
       schemas: [NO_ERRORS_SCHEMA],
       imports: [HttpClientTestingModule],
       providers: [
-        ProductPurchaseService,
         { provide: SuccessMessagingService, useValue: successMessagingServiceSpy },
         { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }
       ]

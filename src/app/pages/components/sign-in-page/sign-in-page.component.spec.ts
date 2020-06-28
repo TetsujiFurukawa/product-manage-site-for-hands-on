@@ -119,12 +119,12 @@ describe('SignInPageComponent', () => {
 
   describe('DOM input test', () => {
     it('sign in user account', () => {
-      const expectedValue = expectedResponse.userAccount;
+      const expectedValue = 'Username';
       HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-account', expectedValue);
       expect(component.signInUserAccount.value).toEqual(expectedValue);
     });
     it('sign in user password', () => {
-      const expectedValue = 'productName';
+      const expectedValue = 'Password';
       HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-password', expectedValue);
       expect(component.signInUserPassword.value).toEqual(expectedValue);
     });
@@ -162,7 +162,7 @@ describe('SignInPageComponent', () => {
 });
 
 function createExpectedRequestDto(): SignInRequestDto {
-  return { Password: 'Password', Username: 'Username' };
+  return { Username: 'Username', Password: 'Password' };
 }
 
 function createExpectedResponseDto(): SignInResponseDto {

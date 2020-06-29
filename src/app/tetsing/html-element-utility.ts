@@ -1,7 +1,7 @@
 import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-export const HtmlElementUtility = {
+export class HtmlElementUtility {
   /**
    * Sets value to htmlinput element
    * @template T type of target component
@@ -9,13 +9,13 @@ export const HtmlElementUtility = {
    * @param querySelector css selector string
    * @param setValue value to set element
    */
-  setValueToHTMLInputElement<T>(fixture: ComponentFixture<T>, querySelector: string, setValue: any) {
+  static setValueToHTMLInputElement<T>(fixture: ComponentFixture<T>, querySelector: string, setValue: any) {
     const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css(querySelector)).nativeElement;
     htmlInputElement.value = setValue;
     htmlInputElement.dispatchEvent(new Event('input'));
     htmlInputElement.dispatchEvent(new Event('blur'));
     fixture.detectChanges();
-  },
+  }
 
   /**
    * Sets value to html select element
@@ -25,7 +25,7 @@ export const HtmlElementUtility = {
    * @param querySelectorOption css selector string for options
    * @param selectIndex index no to set element
    */
-  setValueToHtmlSelectElement<T>(
+  static setValueToHtmlSelectElement<T>(
     fixture: ComponentFixture<T>,
     querySelector: string,
     querySelectorOption: string,
@@ -39,7 +39,7 @@ export const HtmlElementUtility = {
     const selectOptions = fixture.debugElement.queryAll(By.css(querySelectorOption));
     selectOptions[selectIndex].nativeElement.click();
     fixture.detectChanges();
-  },
+  }
 
   /**
    * Clicks html element
@@ -47,10 +47,10 @@ export const HtmlElementUtility = {
    * @param fixture target fixture
    * @param querySelector css selector string
    */
-  clickHtmlElement<T>(fixture: ComponentFixture<T>, querySelector: string) {
+  static clickHtmlElement<T>(fixture: ComponentFixture<T>, querySelector: string) {
     const htmlElement: HTMLElement = fixture.debugElement.query(By.css(querySelector)).nativeElement;
     // Clicks checkbox's label
     htmlElement.click();
     fixture.detectChanges();
   }
-};
+}

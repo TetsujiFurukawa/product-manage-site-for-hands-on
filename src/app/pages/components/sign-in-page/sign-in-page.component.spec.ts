@@ -57,11 +57,7 @@ describe('SignInPageComponent', () => {
   });
 
   describe('#constractor', () => {
-    it('should create when navigator.langage returns ja', () => {
-      expect(component).toBeTruthy();
-    });
-    it('should create when navigator.langage returns ja-JP', () => {
-      setupBrowserLanguage('ja-jp');
+    it('should create', () => {
       expect(component).toBeTruthy();
     });
   });
@@ -91,6 +87,21 @@ describe('SignInPageComponent', () => {
     });
   });
 
+  describe('#getLangage', () => {
+    const privateMethodName = 'getLangage';
+
+    it('lang without hypen', () => {
+      const language = 'ja';
+      const expectedLanguage = 'ja';
+      expect(component[privateMethodName](language)).toEqual(expectedLanguage);
+    });
+
+    it('lang with hypen', () => {
+      const language = 'ja-JP';
+      const expectedLanguage = 'ja';
+      expect(component[privateMethodName](language)).toEqual(expectedLanguage);
+    });
+  });
   // --------------------------------------------------------------------------------
   // DOM test cases
   // --------------------------------------------------------------------------------
@@ -152,8 +163,8 @@ describe('SignInPageComponent', () => {
         expectedSignInRequestDto.Password
       );
 
-      const targetMethodName = 'createSignInRequestDto';
-      const signInRequestDto: SignInRequestDto = component[targetMethodName]();
+      const privateMethodName = 'createSignInRequestDto';
+      const signInRequestDto: SignInRequestDto = component[privateMethodName]();
 
       expect(signInRequestDto.Username).toEqual(expectedSignInRequestDto.Username);
       expect(signInRequestDto.Password).toEqual(expectedSignInRequestDto.Password);

@@ -19,7 +19,7 @@ import { SignInPageComponent } from './sign-in-page.component';
 
 describe('SignInPageComponent', () => {
   const expectedSignInRequestDto: SignInRequestDto = createExpectedRequestDto();
-  const expectedResponse: SignInResponseDto = createExpectedResponseDto();
+  const expectedSignInResponseDto: SignInResponseDto = createExpectedResponseDto();
 
   let component: SignInPageComponent;
   let fixture: ComponentFixture<SignInPageComponent>;
@@ -77,7 +77,7 @@ describe('SignInPageComponent', () => {
     });
 
     it('should sign in', () => {
-      accountServiceSpy.signIn.and.returnValue(of(expectedResponse));
+      accountServiceSpy.signIn.and.returnValue(of(expectedSignInResponseDto));
       spyOn(router, 'navigate');
 
       component.clickSignInButton();
@@ -144,12 +144,12 @@ describe('SignInPageComponent', () => {
   describe('DOM input validation test', () => {
     it('sign in user account', () => {
       HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-account', '');
-      const validationError = fixture.nativeElement.querySelector('.validation-error');
+      const validationError = fixture.debugElement.query(By.css('.validation-error')).nativeElement;
       expect(validationError).toBeTruthy();
     });
     it('sign in user password', () => {
       HtmlElementUtility.setValueToHTMLInputElement(fixture, '#signin-user-password', '');
-      const validationError = fixture.nativeElement.querySelector('.validation-error');
+      const validationError = fixture.debugElement.query(By.css('.validation-error')).nativeElement;
       expect(validationError).toBeTruthy();
     });
   });
@@ -162,12 +162,9 @@ describe('SignInPageComponent', () => {
         '#signin-user-password',
         expectedSignInRequestDto.Password
       );
-
       const privateMethodName = 'createSignInRequestDto';
       const signInRequestDto: SignInRequestDto = component[privateMethodName]();
-
-      expect(signInRequestDto.Username).toEqual(expectedSignInRequestDto.Username);
-      expect(signInRequestDto.Password).toEqual(expectedSignInRequestDto.Password);
+      expect(signInRequestDto).toEqual(expectedSignInRequestDto);
     });
   });
 });

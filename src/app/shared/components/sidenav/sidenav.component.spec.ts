@@ -1,17 +1,13 @@
+import { TranslateTestingModule } from 'ngx-translate-testing';
 import { of } from 'rxjs';
-import { MaterialModule } from 'src/app/material/material.module';
-import { HttpLoaderFactory } from 'src/app/ngx-translate/ngx-translate.module';
 import { MenuListResponseDto } from 'src/app/pages/models/dtos/responses/menu-list-response-dto';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { SearchParamsService } from 'src/app/pages/services/search-params.service';
 
-import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { SidenavComponent } from './sidenav.component';
 
@@ -29,19 +25,10 @@ describe('SidenavComponent', () => {
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       imports: [
-        MaterialModule,
         RouterTestingModule,
-        HttpClientTestingModule,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+        TranslateTestingModule.withTranslations({ ja: require('src/assets/i18n/ja.json') })
       ],
       providers: [
-        TranslateService,
         { provide: AccountService, useValue: accountServiceSpy },
         { provide: SearchParamsService, useValue: searchParamsServiceSpy }
       ],
@@ -92,13 +79,15 @@ describe('SidenavComponent', () => {
 
 function createExpectedMenu() {
   const menuListResponseDto1: MenuListResponseDto = {
-    menuCode: 'menu1',
-    subMenuCodeList: Array('subMenu1-1', 'subMenu1-2')
+    menuCode: 'product',
+    subMenuCodeList: Array('product-listing')
   };
+
   const menuListResponseDto2: MenuListResponseDto = {
-    menuCode: 'menu2',
-    subMenuCodeList: Array('subMenu2-1')
+    menuCode: 'purchase',
+    subMenuCodeList: Array('purchase-history-listing', 'dummy-purchasing')
   };
+
   const expetedMenuListResponseDtos: MenuListResponseDto[] = Array(menuListResponseDto1, menuListResponseDto2);
   return expetedMenuListResponseDtos;
 }

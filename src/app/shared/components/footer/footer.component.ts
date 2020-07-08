@@ -1,7 +1,4 @@
-import { RoutingService } from 'src/app/core/services/routing.service';
-
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -9,7 +6,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-  constructor(public routingService: RoutingService) {}
+  constructor() {}
 
   ngOnInit() {}
 }

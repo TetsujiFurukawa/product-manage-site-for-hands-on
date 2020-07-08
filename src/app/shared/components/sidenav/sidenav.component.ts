@@ -5,7 +5,6 @@ import { AccountService } from 'src/app/pages/services/account.service';
 import { SearchParamsService } from 'src/app/pages/services/search-params.service';
 
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidenav',
@@ -13,19 +12,20 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent implements OnInit {
+  // Clicks sidenav and throw event
+  @Output() sidenavClose = new EventEmitter();
+
+  // Initial display screen URL
+  initialDisplayScreenUrl: string = UrlConst.SLASH + UrlConst.PATH_PRODUCT_LISTING;
+
   // Menu response data
   menuListResponseDto: MenuListResponseDto[];
 
   constructor(
     private accountService: AccountService,
-    private translateService: TranslateService,
     private searchParamsService: SearchParamsService,
     public routingService: RoutingService
   ) {}
-
-  @Output() sidenavClose = new EventEmitter();
-
-  urlHome: string = UrlConst.PATH_PRODUCT_LISTING;
 
   /**
    * on init

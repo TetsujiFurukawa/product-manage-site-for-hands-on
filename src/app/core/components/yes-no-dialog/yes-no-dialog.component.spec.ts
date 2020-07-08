@@ -1,13 +1,8 @@
-import { HttpLoaderFactory } from 'src/app/ngx-translate/ngx-translate.module';
+import { TranslateTestingModule } from 'ngx-translate-testing';
 
-import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
-import { MatMenuModule } from '@angular/material/menu';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { YesNoDialogComponent } from './yes-no-dialog.component';
 
@@ -18,19 +13,7 @@ describe('YesNoDialogComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [
-        BrowserAnimationsModule,
-        MatMenuModule,
-        MatDialogModule,
-        HttpClientTestingModule,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
-      ],
+      imports: [MatDialogModule, TranslateTestingModule.withTranslations({ ja: require('src/assets/i18n/ja.json') })],
       providers: [{ provide: MAT_DIALOG_DATA, useValue: {} }],
       declarations: [YesNoDialogComponent]
     }).compileComponents();

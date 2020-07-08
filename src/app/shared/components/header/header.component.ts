@@ -22,7 +22,9 @@ import { TranslateService } from '@ngx-translate/core';
 export class HeaderComponent implements OnInit {
   // Clicks sidenav and throw event
   @Output() sidenavToggle = new EventEmitter();
-  urlHome: string = UrlConst.PATH_PRODUCT_LISTING;
+
+  // Initial display screen URL
+  initialDisplayScreenUrl: string = UrlConst.SLASH + UrlConst.PATH_PRODUCT_LISTING;
 
   // Menu response data
   menuListResponseDto: MenuListResponseDto[];

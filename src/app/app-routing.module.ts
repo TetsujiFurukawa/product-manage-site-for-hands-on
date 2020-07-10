@@ -37,8 +37,9 @@ const routes: Routes = [
     path: UrlConst.PATH_DUMMY_PURCHASING,
     loadChildren: () =>
       import('./super-user-pages/dummy-purchasing-page/dummy-purchasing-page.module').then(
-        m => m.DummyPurchasingPageModule
-      )
+        (m) => m.DummyPurchasingPageModule
+      ),
+    canActivate: [AuthGuard]
   }
 ];
 

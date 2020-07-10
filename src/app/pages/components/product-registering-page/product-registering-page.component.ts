@@ -89,7 +89,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   fileReader: FileReader = new FileReader();
 
   /** Called new or update? */
-  isNew = this.routingService.router.url === '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW;
+  isNew = this.routingService.router.url === UrlConst.SLASH + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW;
   messagePropertytitle = 'productRegisteringPage.title.new';
   messagePropertySaveButton = 'productRegisteringPage.saveButton.new';
 

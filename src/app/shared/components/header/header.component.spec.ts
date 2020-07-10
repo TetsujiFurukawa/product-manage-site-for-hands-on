@@ -89,7 +89,7 @@ describe('HeaderComponent', () => {
       component.clickSignOut();
       expect(matDialogSpy.open.calls.count()).toBe(1);
       expect(accountServiceSpy.signOut.calls.count()).toBe(1);
-      expect(router.navigate).toHaveBeenCalledWith(['/' + UrlConst.PATH_SIGN_IN]);
+      expect(router.navigate).toHaveBeenCalledWith([UrlConst.SLASH + UrlConst.PATH_SIGN_IN]);
     }));
 
     it('should not sign out', () => {

@@ -96,7 +96,10 @@ describe('ProductRegisteringPageComponent', () => {
           provide: ActivatedRoute,
           useValue: { snapshot: { paramMap: convertToParamMap({ productCode: 'ABCD1234' }) } }
         },
-        { provide: Router, useValue: { url: '/' + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW, navigate(): void {} } }
+        {
+          provide: Router,
+          useValue: { url: UrlConst.SLASH + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW, navigate(): void {} }
+        }
       ],
       declarations: [ProductRegisteringPageComponent]
     }).compileComponents();

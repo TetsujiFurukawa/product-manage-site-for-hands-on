@@ -112,7 +112,7 @@ describe('ProductRegisteringPageComponent', () => {
         },
         {
           provide: Router,
-          useValue: { url: '/' + UrlConst.PATH_PRODUCT_REGISTERING + '/:123456', navigate(): void {} }
+          useValue: { url: UrlConst.SLASH + UrlConst.PATH_PRODUCT_REGISTERING + '/:123456', navigate(): void {} }
         }
       ],
       declarations: [ProductRegisteringPageComponent]

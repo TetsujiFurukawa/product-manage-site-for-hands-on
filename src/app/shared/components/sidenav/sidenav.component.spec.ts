@@ -63,8 +63,10 @@ describe('SidenavComponent', () => {
 
   describe('#clickSubmenu', () => {
     it('should remove search param', () => {
+      spyOn(component.sidenavClose, 'emit').and.callThrough();
       component.clickSubmenu();
       expect(searchParamsServiceSpy.removeProductListingSearchParam.calls.count()).toBe(1);
+      expect(component.sidenavClose.emit).toHaveBeenCalled();
     });
   });
 

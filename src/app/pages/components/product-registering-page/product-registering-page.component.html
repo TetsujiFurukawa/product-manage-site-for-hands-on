@@ -108,13 +108,13 @@
           <p>{{ 'productRegisteringPage.productImage' | translate }}</p>
           <img src="../../../../assets/images/no_image.png" class="image-preview" *ngIf="!productImage.value" />
           <img id="product-image" [src]="productImage.value" class="image-preview" *ngIf="productImage.value" />
-          <button mat-flat-button id="file-input-button" class="flat-button" type="button"
-            (click)="fileInputElement.click()" [disabled]="productImage.value"
+          <button mat-flat-button id="file-input-button" class="flat-button" (click)="fileInputElement.click()"
+            [disabled]="productImage.value"
             matTooltip="{{ 'productRegisteringPage.tooltip.imageUploadButton' | translate }}">{{ 'productRegisteringPage.imageUploadButton' | translate }}</button>
           <input hidden (change)="clickProductImageButton(fileInputElement.files)" #fileInputElement type="file"
             accept='image/*'>
-          <button mat-flat-button id="file-input-clear-button" class="flat-button" type="button"
-            (click)="clickClearButton()" [disabled]="!productImage.value"
+          <button mat-flat-button id="file-input-clear-button" class="flat-button" (click)="clickClearButton()"
+            [disabled]="!productImage.value"
             matTooltip="{{ 'productRegisteringPage.tooltip.imageClearButton' | translate }}">{{ 'productRegisteringPage.imageClearButton' | translate }}</button>
         </div>
       </form>
@@ -122,9 +122,9 @@
   </div>
   <div class="registering-functions-wrapper">
     <div class="registering-functions">
-      <button mat-flat-button id="return-button" class="flat-button" type="button" (click)="clickReturnButton()"
+      <button mat-flat-button id="return-button" class="flat-button" (click)="clickReturnButton()"
         matTooltip="{{ 'productRegisteringPage.tooltip.returnButton' | translate }}">{{ 'productRegisteringPage.returnButton' | translate }}</button>
-      <button mat-flat-button id="save-button" class="flat-button active" type="button" (click)="clickSaveButton()"
+      <button mat-flat-button id="save-button" class="flat-button active" (click)="clickSaveButton()"
         [disabled]="!registeringForm.valid"
         matTooltip="{{ 'productRegisteringPage.tooltip.saveButton' | translate }}">{{ messagePropertySaveButton | translate }}</button>
     </div>

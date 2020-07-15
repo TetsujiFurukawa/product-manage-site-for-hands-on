@@ -1,9 +1,6 @@
-export class YesNoDialogData {
-  public title: string;
-
-  public message: string;
-
-  public captionYes: string;
-
-  public captionNo: string;
+export interface YesNoDialogData {
+  title: string;
+  message: string;
+  captionYes: string;
+  captionNo: string;
 }

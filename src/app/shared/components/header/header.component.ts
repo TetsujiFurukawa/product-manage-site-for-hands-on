@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private accountService: AccountService,
-    private dialog: MatDialog,
+    private matDialog: MatDialog,
     private loadingService: LoadingService,
     private searchParamsService: SearchParamsService,
     private translateService: TranslateService,
@@ -70,7 +70,7 @@ export class HeaderComponent implements OnInit {
       captionYes: this.translateService.instant('menu.saveYesNoDialog.captionYes')
     };
 
-    const dialogRef = this.dialog.open(YesNoDialogComponent, {
+    const dialogRef = this.matDialog.open(YesNoDialogComponent, {
       height: AppConst.YES_NO_DIALOG_HEIGHT,
       width: AppConst.YES_NO_DIALOG_WIDTH,
       data: dialogData

@@ -44,9 +44,9 @@ export class SidenavComponent implements OnInit {
   }
 
   /**
-   * Sidenavs closed
+   * Clicks home
    */
-  public sidenavClosed() {
+  public clickHome() {
     this.sidenavClose.emit();
   }
   // --------------------------------------------------------------------------------

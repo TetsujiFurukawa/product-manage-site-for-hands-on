@@ -70,10 +70,10 @@ describe('SidenavComponent', () => {
     });
   });
 
-  describe('#sidenavClosed', () => {
+  describe('#clickHome', () => {
     it('should close side nav', () => {
       spyOn(component.sidenavClose, 'emit').and.callThrough();
-      component.sidenavClosed();
+      component.clickHome();
       expect(component.sidenavClose.emit).toHaveBeenCalled();
     });
   });

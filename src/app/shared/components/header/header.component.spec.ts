@@ -66,10 +66,10 @@ describe('HeaderComponent', () => {
     });
   });
 
-  describe('#clickToggleSidenav', () => {
+  describe('#clickSidenav', () => {
     it('should show side navi', () => {
       spyOn(component.sidenavToggle, 'emit').and.callThrough();
-      component.clickToggleSidenav();
+      component.clickSidenav();
       expect(component.sidenavToggle.emit).toHaveBeenCalled();
     });
   });

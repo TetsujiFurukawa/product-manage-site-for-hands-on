@@ -79,7 +79,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
    */
   ngOnInit() {
     this.loadData();
-    this.setupLangage();
+    this.setupLanguage();
   }
 
   /**
@@ -131,7 +131,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     this.productService.getGenres().subscribe((data) => (this.genres = data));
   }
 
-  private setupLangage() {
+  private setupLanguage() {
     const lang = this.accountService.getUser().userLanguage;
     this.translateService.setDefaultLang(lang);
     this.translateService.use(lang);

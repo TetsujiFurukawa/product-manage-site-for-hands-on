@@ -98,7 +98,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
    */
   ngOnInit() {
     this.loadData();
-    this.setupLangage();
+    this.setupLanguage();
     if (!this.isNew) {
       this.setupButtonTextToEdit();
       this.getProduct();
@@ -184,7 +184,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     this.productService.getGenres().subscribe((data) => (this.genres = data));
   }
 
-  private setupLangage() {
+  private setupLanguage() {
     const lang = this.accountService.getUser().userLanguage;
     this.translateService.setDefaultLang(lang);
     this.translateService.use(lang);

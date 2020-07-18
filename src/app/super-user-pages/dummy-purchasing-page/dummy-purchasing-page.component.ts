@@ -95,7 +95,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
    */
   ngOnInit() {
     this.loadData();
-    this.setupLangage();
+    this.setupLanguage();
   }
 
   /**
@@ -158,7 +158,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   private loadData() {
     this.productService.getGenres().subscribe((data) => (this.genres = data));
   }
-  private setupLangage() {
+  private setupLanguage() {
     const lang = this.accountService.getUser().userLanguage;
     this.translateService.setDefaultLang(lang);
     this.translateService.use(lang);

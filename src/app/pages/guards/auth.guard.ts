@@ -26,7 +26,9 @@ export class AuthGuard implements CanActivate {
         if (availablePages === null) {
           return this.cantActivate();
         }
-        const filteredMenu = availablePages.filter((availablePage) => next.url.toString().startsWith(availablePage));
+        const filteredMenu = availablePages.filter((availablePage) =>
+          state.url.toString().startsWith(UrlConst.SLASH + availablePage)
+        );
         if (filteredMenu.length === 0) {
           return this.cantActivate();
         }

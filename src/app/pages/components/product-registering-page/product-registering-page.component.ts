@@ -96,7 +96,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   /**
    * on init
    */
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadData();
     this.setupLanguage();
     if (!this.isNew) {
@@ -108,7 +108,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   /**
    * after view checked
    */
-  ngAfterViewChecked() {
+  ngAfterViewChecked(): void {
     this.titleI18Service.setTitle(UrlConst.PATH_PRODUCT_REGISTERING);
   }
 
@@ -116,7 +116,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
    * Clicks product image button
    * @param files image file
    */
-  clickProductImageButton(files: File[]) {
+  clickProductImageButton(files: File[]): void {
     if (files.length === 0) {
       return;
     }
@@ -133,7 +133,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   /**
    * Clicks clear button
    */
-  clickClearButton() {
+  clickClearButton(): void {
     this.fileInputElement.nativeElement.value = '';
     this.productImage.setValue(null);
   }
@@ -141,14 +141,14 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   /**
    * Clicks return button
    */
-  clickReturnButton() {
+  clickReturnButton(): void {
     this.routingService.router.navigate([UrlConst.PATH_PRODUCT_LISTING]);
   }
 
   /**
    * Clicks save button
    */
-  clickSaveButton() {
+  clickSaveButton(): void {
     const dialogData: YesNoDialogData = {
       title: this.translateService.instant('productRegisteringPage.saveYesNoDialog.title'),
       message: this.translateService.instant('productRegisteringPage.saveYesNoDialog.message'),
@@ -170,27 +170,27 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     });
   }
 
-  receivedEventFromChild(eventData: string) {
+  receivedEventFromChild(eventData: string): void {
     this.endOfSaleDate.setValue(eventData);
   }
 
-  resetEndOfSaleDate() {
+  resetEndOfSaleDate(): void {
     this.endOfSaleDate.setValue('');
   }
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------
-  private loadData() {
+  private loadData(): void {
     this.productService.getGenres().subscribe((data) => (this.genres = data));
   }
 
-  private setupLanguage() {
+  private setupLanguage(): void {
     const lang = this.accountService.getUser().userLanguage;
     this.translateService.setDefaultLang(lang);
     this.translateService.use(lang);
   }
 
-  private getProduct() {
+  private getProduct(): void {
     const productCode = this.route.snapshot.paramMap.get('productCode');
     this.loadingService.startLoading();
     this.productService.getProduct(productCode).subscribe((data) => {
@@ -199,7 +199,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     });
   }
 
-  private registerProduct(productDto: ProductDto) {
+  private registerProduct(productDto: ProductDto): void {
     this.loadingService.startLoading();
 
     if (productDto.productSeq === null) {
@@ -216,7 +216,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     }
   }
 
-  private setupButtonTextToEdit() {
+  private setupButtonTextToEdit(): void {
     this.messagePropertytitle = 'productRegisteringPage.title.edit';
     this.messagePropertySaveButton = 'productRegisteringPage.saveButton.edit';
   }
@@ -249,7 +249,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     return productDto;
   }
 
-  private extractGetProductResponse(productDto: ProductDto) {
+  private extractGetProductResponse(productDto: ProductDto): void {
     if (productDto === null) {
       return;
     }

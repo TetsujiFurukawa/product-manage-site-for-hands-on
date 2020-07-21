@@ -41,28 +41,28 @@ export class HeaderComponent implements OnInit {
   /**
    * on init
    */
-  ngOnInit() {
+  ngOnInit(): void {
     this.getMenu();
   }
 
   /**
    * Clicks toggle sidenav
    */
-  clickSidenav() {
+  clickSidenav(): void {
     this.sidenavToggle.emit();
   }
 
   /**
    * Clicks submenu
    */
-  clickSubmenu() {
+  clickSubmenu(): void {
     this.searchParamsService.removeProductListingSearchParam();
   }
 
   /**
    * Clicks sign out
    */
-  clickSignOut() {
+  clickSignOut(): void {
     const dialogData: YesNoDialogData = {
       title: this.translateService.instant('menu.saveYesNoDialog.title'),
       message: this.translateService.instant('menu.saveYesNoDialog.message'),
@@ -86,13 +86,13 @@ export class HeaderComponent implements OnInit {
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------
-  private getMenu() {
+  private getMenu(): void {
     this.accountService.getMenu().subscribe((menuListResponseDto) => {
       this.menuListResponseDto = menuListResponseDto;
     });
   }
 
-  private signOut() {
+  private signOut(): void {
     this.loadingService.startLoading();
     this.accountService.signOut().subscribe((res) => {
       this.searchParamsService.removeProductListingSearchParam();

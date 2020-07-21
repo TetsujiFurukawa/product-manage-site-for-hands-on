@@ -84,21 +84,21 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
   /**
    * on init
    */
-  ngOnInit() {
+  ngOnInit(): void {
     this.setupLanguage();
   }
 
   /**
    * after view checked
    */
-  ngAfterViewChecked() {
+  ngAfterViewChecked(): void {
     this.titleI18Service.setTitle(UrlConst.PATH_PURCHASE_HISTORY_LISTING);
   }
 
   /**
    * Clicks clear button
    */
-  clickClearButton() {
+  clickClearButton(): void {
     this.searchParamsService.removeProductListingSearchParam();
     this.clearSearchCondition();
     this.clearSearchResultList();
@@ -107,7 +107,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
   /**
    * Clicks search button
    */
-  clickSearchButton() {
+  clickSearchButton(): void {
     merge(this.paginator.page)
       .pipe(
         startWith({}),
@@ -130,7 +130,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
    * Received event from child from
    * @param eventData event data
    */
-  receivedEventFromChildFrom(eventData: string) {
+  receivedEventFromChildFrom(eventData: string): void {
     this.productPurchaseDateFrom.setValue(eventData);
   }
 
@@ -138,19 +138,19 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
    * Received event from child to
    * @param eventData event data
    */
-  receivedEventFromChildTo(eventData: string) {
+  receivedEventFromChildTo(eventData: string): void {
     this.productPurchaseDateTo.setValue(eventData);
   }
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------
-  private setupLanguage() {
+  private setupLanguage(): void {
     const lang = this.accountService.getUser().userLanguage;
     this.translateService.setDefaultLang(lang);
     this.translateService.use(lang);
   }
 
-  private createHttpParams() {
+  private createHttpParams(): HttpParams {
     const conditions: any = {
       productPurchaseName: this.productPurchaseName.value,
       productName: this.productName.value,
@@ -176,7 +176,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
     return params;
   }
 
-  private clearSearchCondition() {
+  private clearSearchCondition(): void {
     this.productPurchaseName.setValue('');
     this.matDatePickerComponents.map((fn) => fn.reset());
     this.productPurchaseDateFrom.setValue('');
@@ -185,7 +185,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
     this.productCode.setValue('');
   }
 
-  private clearSearchResultList() {
+  private clearSearchResultList(): void {
     this.purchaseHistorySearchResponses = null;
     this.resultsLength = 0;
   }

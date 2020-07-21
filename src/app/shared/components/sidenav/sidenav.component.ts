@@ -30,7 +30,7 @@ export class SidenavComponent implements OnInit {
   /**
    * on init
    */
-  ngOnInit() {
+  ngOnInit(): void {
     this.getMenu();
     // }
   }
@@ -38,7 +38,7 @@ export class SidenavComponent implements OnInit {
   /**
    * Clicks submenu
    */
-  clickSubmenu() {
+  clickSubmenu(): void {
     this.searchParamsService.removeProductListingSearchParam();
     this.sidenavClose.emit();
   }
@@ -46,13 +46,13 @@ export class SidenavComponent implements OnInit {
   /**
    * Clicks home
    */
-  public clickHome() {
+  public clickHome(): void {
     this.sidenavClose.emit();
   }
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------
-  private getMenu() {
+  private getMenu(): void {
     this.accountService.getMenu().subscribe((menuListResponseDto) => {
       this.menuListResponseDto = menuListResponseDto;
     });

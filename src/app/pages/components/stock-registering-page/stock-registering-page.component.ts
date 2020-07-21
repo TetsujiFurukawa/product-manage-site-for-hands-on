@@ -77,7 +77,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   /**
    * on init
    */
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadData();
     this.setupLanguage();
   }
@@ -85,14 +85,14 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   /**
    * after view checked
    */
-  ngAfterViewChecked() {
+  ngAfterViewChecked(): void {
     this.titleI18Service.setTitle(UrlConst.PATH_STOCK_REGISTERING);
   }
 
   /**
    * Blurs product code
    */
-  blurProductCode() {
+  blurProductCode(): void {
     if (this.productCode.value === '') {
       return;
     }
@@ -103,7 +103,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   /**
    * Clicks save button
    */
-  clickSaveButton() {
+  clickSaveButton(): void {
     const dialogData: YesNoDialogData = {
       title: this.translateService.instant('productRegisteringPage.saveYesNoDialog.title'),
       message: this.translateService.instant('productRegisteringPage.saveYesNoDialog.message'),
@@ -127,17 +127,17 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------
-  private loadData() {
+  private loadData(): void {
     this.productService.getGenres().subscribe((data) => (this.genres = data));
   }
 
-  private setupLanguage() {
+  private setupLanguage(): void {
     const lang = this.accountService.getUser().userLanguage;
     this.translateService.setDefaultLang(lang);
     this.translateService.use(lang);
   }
 
-  private getProductStock() {
+  private getProductStock(): void {
     this.loadingService.startLoading();
 
     this.productStockService.getProductStock(this.productCode.value).subscribe((data) => {
@@ -146,7 +146,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  private updateProductStock(productStockRequestDto: ProductStockRequestDto) {
+  private updateProductStock(productStockRequestDto: ProductStockRequestDto): void {
     this.loadingService.startLoading();
 
     this.productStockService.updateProductStock(productStockRequestDto).subscribe((data) => {
@@ -164,7 +164,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     return productStockRequestDto;
   }
 
-  private extractGetProductStockResponseDto(productStockResponseDto: ProductStockResponseDto) {
+  private extractGetProductStockResponseDto(productStockResponseDto: ProductStockResponseDto): void {
     if (productStockResponseDto === null) {
       return;
     }
@@ -177,7 +177,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     this.productImage.setValue(productStockResponseDto.productImage);
   }
 
-  private extractUpdateProductStockResponseDto(productStockResponseDto: ProductStockResponseDto) {
+  private extractUpdateProductStockResponseDto(productStockResponseDto: ProductStockResponseDto): void {
     if (productStockResponseDto === null) {
       return;
     }
@@ -187,7 +187,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     this.addProductStockQuantity.reset();
   }
 
-  private resetStockRegisteringControls() {
+  private resetStockRegisteringControls(): void {
     this.productName.reset();
     this.productGenre.reset();
     this.productSizeStandard.reset();

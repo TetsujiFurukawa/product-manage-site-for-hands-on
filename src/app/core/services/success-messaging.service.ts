@@ -23,7 +23,7 @@ export class SuccessMessagingService {
     this.messageProperty = '';
   }
 
-  public hideStart() {
+  public hideStart(): void {
     setTimeout(() => {
       this.clearMessageProperty();
     }, INTERVAL_TIME);

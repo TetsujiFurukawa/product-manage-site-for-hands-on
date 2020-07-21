@@ -23,22 +23,22 @@ export class MatDatePickerComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private adapter: DateAdapter<any>) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.adapter.setLocale(this.locale);
     // this.event.emit(this.date.value);
     this.setupDatevalue();
     this.setupValidators();
   }
 
-  reset() {
+  reset(): void {
     this.setupDatevalue();
   }
 
-  addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+  addEvent(type: string, event: MatDatepickerInputEvent<Date>): void {
     this.event.emit(this.date.value);
   }
 
-  private setupDatevalue() {
+  private setupDatevalue(): void {
     if (this.isBlank) {
       this.date.setValue('');
     } else {
@@ -46,7 +46,7 @@ export class MatDatePickerComponent implements OnInit {
     }
   }
 
-  private setupValidators() {
+  private setupValidators(): void {
     if (this.required) {
       this.date.setValidators([Validators.required]);
     }

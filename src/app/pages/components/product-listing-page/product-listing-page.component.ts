@@ -77,28 +77,28 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
   // Loading and pagenation
   @ViewChild(MatPaginator, { static: true }) public paginator: MatPaginator;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadData();
     this.setupLanguage();
     this.initSearchCriteria();
   }
 
-  ngAfterViewChecked() {
+  ngAfterViewChecked(): void {
     this.titleI18Service.setTitle(UrlConst.PATH_PRODUCT_LISTING);
   }
 
-  clickNewButton() {
+  clickNewButton(): void {
     this.searchParamsService.removeProductListingSearchParam();
     this.routingService.navigate(UrlConst.PATH_PRODUCT_REGISTERING_NEW);
   }
 
-  clickClearButton() {
+  clickClearButton(): void {
     this.searchParamsService.removeProductListingSearchParam();
     this.clearSearchCondition();
     this.clearSearchResultList();
   }
 
-  clickSearchButton() {
+  clickSearchButton(): void {
     merge(this.paginator.page)
       .pipe(
         startWith({}),
@@ -119,27 +119,27 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
       .subscribe((data) => (this.productSearchResponseDtos = data));
   }
 
-  clickListRow(productResponse: ProductSearchResponseDto) {
+  clickListRow(productResponse: ProductSearchResponseDto): void {
     this.routingService.router.navigate([UrlConst.PATH_PRODUCT_REGISTERING, productResponse.productCode]);
   }
 
-  unselectProductGenre() {
+  unselectProductGenre(): void {
     this.productGenre.setValue('');
   }
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------
-  private loadData() {
+  private loadData(): void {
     this.productService.getGenres().subscribe((data) => (this.genres = data));
   }
 
-  private setupLanguage() {
+  private setupLanguage(): void {
     const lang = this.accountService.getUser().userLanguage;
     this.translateService.setDefaultLang(lang);
     this.translateService.use(lang);
   }
 
-  private initSearchCriteria() {
+  private initSearchCriteria(): void {
     let productListingSearchParamsDto: ProductListingSearchParamsDto = {
       productName: '',
       productCode: '',
@@ -184,7 +184,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
     return productListingSearchParamsDto;
   }
 
-  private createHttpParams(productListingSearchParamsDto: ProductListingSearchParamsDto) {
+  private createHttpParams(productListingSearchParamsDto: ProductListingSearchParamsDto): HttpParams {
     const conditions = {
       productName: productListingSearchParamsDto.productName,
       productCode: productListingSearchParamsDto.productCode,
@@ -198,14 +198,14 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
     return params;
   }
 
-  private clearSearchCondition() {
+  private clearSearchCondition(): void {
     this.productName.setValue('');
     this.productCode.setValue('');
     this.productGenre.setValue('');
     this.endOfSale.setValue(false);
   }
 
-  private clearSearchResultList() {
+  private clearSearchResultList(): void {
     this.productSearchResponseDtos = null;
     this.resultsLength = 0;
   }

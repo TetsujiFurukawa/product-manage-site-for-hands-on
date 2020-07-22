@@ -172,27 +172,27 @@ describe('StockRegisteringPageComponent', () => {
 
     it('product code', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-code');
-      expect(htmlInputElement.placeholder).toContain('商品コード');
+      expect(htmlInputElement.dataset.placeholder).toContain('商品コード');
     });
     it('product name', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-name');
-      expect(htmlInputElement.placeholder).toContain('商品名');
+      expect(htmlInputElement.dataset.placeholder).toContain('商品名');
     });
     it('product genre', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-genre');
-      expect(htmlInputElement.placeholder).toContain('ジャンル');
+      expect(htmlInputElement.dataset.placeholder).toContain('ジャンル');
     });
     it('product size standard', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-size-standard');
-      expect(htmlInputElement.placeholder).toContain('サイズ・規格');
+      expect(htmlInputElement.dataset.placeholder).toContain('サイズ・規格');
     });
     it('product stock quantity', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-stock-quantity');
-      expect(htmlInputElement.placeholder).toContain('在庫数');
+      expect(htmlInputElement.dataset.placeholder).toContain('在庫数');
     });
     it('product add stock quantity', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#add-product-stock-quantity');
-      expect(htmlInputElement.placeholder).toContain('在庫追加数');
+      expect(htmlInputElement.dataset.placeholder).toContain('在庫追加数');
     });
 
     it('saveBtn', () => {

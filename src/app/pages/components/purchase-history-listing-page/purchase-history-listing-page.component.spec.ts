@@ -183,7 +183,7 @@ describe('PurchaseHistoryListingPageComponent', () => {
 
     it('product purchase name', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-purchase-name');
-      expect(htmlInputElement.placeholder).toContain('購入者');
+      expect(htmlInputElement.dataset.placeholder).toContain('購入者');
     });
     it('product purchase date from', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-purchase-date-from');
@@ -195,11 +195,11 @@ describe('PurchaseHistoryListingPageComponent', () => {
     });
     it('product code', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-code');
-      expect(htmlInputElement.placeholder).toContain('商品コード');
+      expect(htmlInputElement.dataset.placeholder).toContain('商品コード');
     });
     it('product name', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-name');
-      expect(htmlInputElement.placeholder).toContain('商品名');
+      expect(htmlInputElement.dataset.placeholder).toContain('商品名');
     });
   });
 

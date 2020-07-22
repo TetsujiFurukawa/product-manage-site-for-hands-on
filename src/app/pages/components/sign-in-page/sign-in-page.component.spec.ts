@@ -1,5 +1,6 @@
 import { TranslateTestingModule } from 'ngx-translate-testing';
 import { of } from 'rxjs';
+import { MaterialModule } from 'src/app/material/material.module';
 import { UrlConst } from 'src/app/pages/constants/url-const';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
@@ -36,6 +37,7 @@ describe('SignInPageComponent', () => {
       imports: [
         RouterTestingModule,
         TranslateTestingModule.withTranslations({ ja: require('src/assets/i18n/ja.json') }),
+        MaterialModule,
         BrowserAnimationsModule,
         ReactiveFormsModule
       ],
@@ -115,12 +117,12 @@ describe('SignInPageComponent', () => {
     it('sign in user account', () => {
       const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#signin-user-account'))
         .nativeElement;
-      expect(htmlInputElement.placeholder).toContain('ユーザアカウント');
+      expect(htmlInputElement.dataset.placeholder).toContain('ユーザアカウント');
     });
     it('sign in user password', () => {
       const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#signin-user-password'))
         .nativeElement;
-      expect(htmlInputElement.placeholder).toContain('パスワード');
+      expect(htmlInputElement.dataset.placeholder).toContain('パスワード');
     });
     it('saveBtn', () => {
       const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#sign-in-button')).nativeElement;

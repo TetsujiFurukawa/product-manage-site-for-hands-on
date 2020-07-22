@@ -195,39 +195,39 @@ describe('DummyPurchasingPageComponent', () => {
 
     it('product code', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-code');
-      expect(htmlInputElement.placeholder).toContain('商品コード');
+      expect(htmlInputElement.dataset.placeholder).toContain('商品コード');
     });
     it('product name', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-name');
-      expect(htmlInputElement.placeholder).toContain('商品名');
+      expect(htmlInputElement.dataset.placeholder).toContain('商品名');
     });
     it('product genre', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-genre');
-      expect(htmlInputElement.placeholder).toContain('ジャンル');
+      expect(htmlInputElement.dataset.placeholder).toContain('ジャンル');
     });
     it('product size standard', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-size-standard');
-      expect(htmlInputElement.placeholder).toContain('サイズ・規格');
+      expect(htmlInputElement.dataset.placeholder).toContain('サイズ・規格');
     });
     it('product unit price', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-unit-price');
-      expect(htmlInputElement.placeholder).toContain('購入単価');
+      expect(htmlInputElement.dataset.placeholder).toContain('購入単価');
     });
     it('product Stock quantity', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-stock-quantity');
-      expect(htmlInputElement.placeholder).toContain('在庫数');
+      expect(htmlInputElement.dataset.placeholder).toContain('在庫数');
     });
     it('product Purchase name', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-Purchase-name');
-      expect(htmlInputElement.placeholder).toContain('購入者');
+      expect(htmlInputElement.dataset.placeholder).toContain('購入者');
     });
     it('product purchase quantity', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-purchase-quantity');
-      expect(htmlInputElement.placeholder).toContain('購入数量');
+      expect(htmlInputElement.dataset.placeholder).toContain('購入数量');
     });
     it('product purchase amount', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-purchase-amount');
-      expect(htmlInputElement.placeholder).toContain('購入金額');
+      expect(htmlInputElement.dataset.placeholder).toContain('購入金額');
     });
 
     it('saveBtn', () => {

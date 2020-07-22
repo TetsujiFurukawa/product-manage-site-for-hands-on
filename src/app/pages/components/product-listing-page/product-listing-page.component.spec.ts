@@ -252,11 +252,11 @@ describe('ProductListingPageComponent', () => {
 
     it('product name', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-name');
-      expect(htmlInputElement.placeholder).toContain('商品名');
+      expect(htmlInputElement.dataset.placeholder).toContain('商品名');
     });
     it('product code', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-code');
-      expect(htmlInputElement.placeholder).toContain('商品コード');
+      expect(htmlInputElement.dataset.placeholder).toContain('商品コード');
     });
     it('product genre', () => {
       const hTMLLabelElement: HTMLLabelElement = fixture.nativeElement.querySelector('#product-genre-label');

@@ -240,11 +240,11 @@ describe('ProductRegisteringPageComponent', () => {
 
     it('product code', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-code');
-      expect(htmlInputElement.placeholder).toContain('商品コード');
+      expect(htmlInputElement.dataset.placeholder).toContain('商品コード');
     });
     it('product name', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-name');
-      expect(htmlInputElement.placeholder).toContain('商品名');
+      expect(htmlInputElement.dataset.placeholder).toContain('商品名');
     });
     it('product genre', () => {
       const hTMLLabelElement: HTMLLabelElement = fixture.nativeElement.querySelector('#product-genre-label');
@@ -252,15 +252,15 @@ describe('ProductRegisteringPageComponent', () => {
     });
     it('product size standard', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-size-standard');
-      expect(htmlInputElement.placeholder).toContain('サイズ・規格');
+      expect(htmlInputElement.dataset.placeholder).toContain('サイズ・規格');
     });
     it('product color', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-color');
-      expect(htmlInputElement.placeholder).toContain('色');
+      expect(htmlInputElement.dataset.placeholder).toContain('色');
     });
     it('product unit price', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-unit-price');
-      expect(htmlInputElement.placeholder).toContain('単価');
+      expect(htmlInputElement.dataset.placeholder).toContain('単価');
     });
     it('product end of sale', () => {
       const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#end-of-sale');

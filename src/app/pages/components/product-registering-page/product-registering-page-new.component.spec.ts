@@ -17,6 +17,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -234,53 +235,57 @@ describe('ProductRegisteringPageComponent', () => {
   // --------------------------------------------------------------------------------
   describe('DOM placeholder', () => {
     it('title', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#title');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#title')).nativeElement;
       expect(htmlInputElement.innerText).toContain('商品登録');
     });
 
     it('product code', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-code');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#product-code')).nativeElement;
       expect(htmlInputElement.dataset.placeholder).toContain('商品コード');
     });
     it('product name', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-name');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#product-name')).nativeElement;
       expect(htmlInputElement.dataset.placeholder).toContain('商品名');
     });
     it('product genre', () => {
-      const hTMLLabelElement: HTMLLabelElement = fixture.nativeElement.querySelector('#product-genre-label');
+      const hTMLLabelElement: HTMLLabelElement = fixture.debugElement.query(By.css('#product-genre-label'))
+        .nativeElement;
       expect(hTMLLabelElement.innerText).toContain('ジャンル');
     });
     it('product size standard', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-size-standard');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#product-size-standard'))
+        .nativeElement;
       expect(htmlInputElement.dataset.placeholder).toContain('サイズ・規格');
     });
     it('product color', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-color');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#product-color')).nativeElement;
       expect(htmlInputElement.dataset.placeholder).toContain('色');
     });
     it('product unit price', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-unit-price');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#product-unit-price'))
+        .nativeElement;
       expect(htmlInputElement.dataset.placeholder).toContain('単価');
     });
     it('product end of sale', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#end-of-sale');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#end-of-sale')).nativeElement;
       expect(htmlInputElement.innerText).toContain('終了');
     });
     it('product end of sale date', () => {
-      const htmlElement: HTMLElement = fixture.nativeElement.querySelector('#end-of-sale label');
+      const htmlElement: HTMLElement = fixture.debugElement.query(By.css('#end-of-sale label')).nativeElement;
       // Clicks checkbox's label
       htmlElement.click();
       fixture.detectChanges();
 
       fixture.whenStable().then(() => {
-        const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#end-of-sale-date');
+        const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#end-of-sale-date'))
+          .nativeElement;
         expect(htmlInputElement.placeholder).toContain('販売終了日');
       });
       expect(component.endOfSale.value).toBeTruthy();
     });
 
     it('saveBtn', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#save-button');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#save-button')).nativeElement;
       expect(htmlInputElement.innerText).toContain('登録');
     });
   });
@@ -331,25 +336,25 @@ describe('ProductRegisteringPageComponent', () => {
     it('product code', () => {
       const expectedValue = 'PRODUCT_';
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'PRODUCT_');
-      const validationError = fixture.nativeElement.querySelector('.validation-error');
+      const validationError = fixture.debugElement.query(By.css('.validation-error')).nativeElement;
       expect(validationError).toBeTruthy();
     });
     it('product name', () => {
       const expectedValue = '';
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', '');
-      const validationError = fixture.nativeElement.querySelector('.validation-error');
+      const validationError = fixture.debugElement.query(By.css('.validation-error')).nativeElement;
       expect(validationError).toBeTruthy();
     });
     it('product size standard', () => {
       const expectedValue = '';
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-size-standard', '');
-      const validationError = fixture.nativeElement.querySelector('.validation-error');
+      const validationError = fixture.debugElement.query(By.css('.validation-error')).nativeElement;
       expect(validationError).toBeTruthy();
     });
     it('product unit price', () => {
       const expectedValue = '';
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-unit-price', '');
-      const validationError = fixture.nativeElement.querySelector('.validation-error');
+      const validationError = fixture.debugElement.query(By.css('.validation-error')).nativeElement;
       expect(validationError).toBeTruthy();
     });
     it('EndOfSaleEndOfSaleDateValidator', async () => {
@@ -432,17 +437,27 @@ describe('ProductRegisteringPageComponent', () => {
       fixture.detectChanges();
 
       fixture.whenStable().then(() => {
-        expect(fixture.nativeElement.querySelector('#product-code').value).toEqual(expectedResponse.productCode);
-        expect(fixture.nativeElement.querySelector('#product-name').value).toEqual(expectedResponse.productName);
-        expect(fixture.nativeElement.querySelector('#product-genre').innerText).toContain('靴・スニーカー');
-        expect(fixture.nativeElement.querySelector('#product-size-standard').value).toEqual(
+        expect(fixture.debugElement.query(By.css('#product-code')).nativeElement.value).toEqual(
+          expectedResponse.productCode
+        );
+        expect(fixture.debugElement.query(By.css('#product-name')).nativeElement.value).toEqual(
+          expectedResponse.productName
+        );
+        expect(fixture.debugElement.query(By.css('#product-genre')).nativeElement.innerText).toContain(
+          '靴・スニーカー'
+        );
+        expect(fixture.debugElement.query(By.css('#product-size-standard')).nativeElement.value).toEqual(
           expectedResponse.productSizeStandard
         );
-        expect(fixture.nativeElement.querySelector('#product-color').value).toEqual(expectedResponse.productColor);
-        expect(fixture.nativeElement.querySelector('#product-unit-price').value).toEqual('1,000');
+        expect(fixture.debugElement.query(By.css('#product-color')).nativeElement.value).toEqual(
+          expectedResponse.productColor
+        );
+        expect(fixture.debugElement.query(By.css('#product-unit-price')).nativeElement.value).toEqual('1,000');
         //
-        expect(fixture.nativeElement.querySelector('#end-of-sale-input').checked).toBeTruthy();
-        expect(fixture.nativeElement.querySelector('#product-image').src).toEqual(expectedResponse.productImage);
+        expect(fixture.debugElement.query(By.css('#end-of-sale-input')).nativeElement.checked).toBeTruthy();
+        expect(fixture.debugElement.query(By.css('#product-image')).nativeElement.src).toEqual(
+          expectedResponse.productImage
+        );
       });
       expect(component).toBeTruthy();
     });

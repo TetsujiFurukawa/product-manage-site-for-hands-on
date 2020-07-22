@@ -18,16 +18,12 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { HAMMER_LOADER } from '@angular/platform-browser';
+import { By, HAMMER_LOADER } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import {
-    ProductPurchaseHistorySearchListResponseDto
-} from '../../models/dtos/responses/product-purchase-history-search-list-response-dto';
-import {
-    ProductPurchaseHistorySearchResponseDto
-} from '../../models/dtos/responses/product-purchase-history-search-response-dto';
+import { ProductPurchaseHistorySearchListResponseDto } from '../../models/dtos/responses/product-purchase-history-search-list-response-dto';
+import { ProductPurchaseHistorySearchResponseDto } from '../../models/dtos/responses/product-purchase-history-search-response-dto';
 import { PurchaseHistoryListingPageComponent } from './purchase-history-listing-page.component';
 
 describe('PurchaseHistoryListingPageComponent', () => {
@@ -177,28 +173,31 @@ describe('PurchaseHistoryListingPageComponent', () => {
   // --------------------------------------------------------------------------------
   describe('DOM placeholder', () => {
     it('title', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#title');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#title')).nativeElement;
       expect(htmlInputElement.innerText).toContain('購入履歴一覧');
     });
 
     it('product purchase name', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-purchase-name');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#product-purchase-name'))
+        .nativeElement;
       expect(htmlInputElement.dataset.placeholder).toContain('購入者');
     });
     it('product purchase date from', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-purchase-date-from');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#product-purchase-date-from'))
+        .nativeElement;
       expect(htmlInputElement.placeholder).toContain('購入日From');
     });
     it('product purchase date to', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-purchase-date-to');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#product-purchase-date-to'))
+        .nativeElement;
       expect(htmlInputElement.placeholder).toContain('購入日To');
     });
     it('product code', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-code');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#product-code')).nativeElement;
       expect(htmlInputElement.dataset.placeholder).toContain('商品コード');
     });
     it('product name', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-name');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#product-name')).nativeElement;
       expect(htmlInputElement.dataset.placeholder).toContain('商品名');
     });
   });

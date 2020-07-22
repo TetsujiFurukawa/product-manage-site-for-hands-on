@@ -15,6 +15,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -183,11 +184,11 @@ describe('ProductRegisteringPageComponent', () => {
   // --------------------------------------------------------------------------------
   describe('DOM placeholder', () => {
     it('title', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#title');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#title')).nativeElement;
       expect(htmlInputElement.innerText).toContain('商品更新');
     });
     it('saveBtn', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#save-button');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#save-button')).nativeElement;
       expect(htmlInputElement.innerText).toContain('更新');
     });
   });

@@ -15,6 +15,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -166,37 +167,40 @@ describe('StockRegisteringPageComponent', () => {
   // --------------------------------------------------------------------------------
   describe('DOM placeholder', () => {
     it('title', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#title');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#title')).nativeElement;
       expect(htmlInputElement.innerText).toContain('在庫登録');
     });
 
     it('product code', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-code');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#product-code')).nativeElement;
       expect(htmlInputElement.dataset.placeholder).toContain('商品コード');
     });
     it('product name', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-name');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#product-name')).nativeElement;
       expect(htmlInputElement.dataset.placeholder).toContain('商品名');
     });
     it('product genre', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-genre');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#product-genre')).nativeElement;
       expect(htmlInputElement.dataset.placeholder).toContain('ジャンル');
     });
     it('product size standard', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-size-standard');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#product-size-standard'))
+        .nativeElement;
       expect(htmlInputElement.dataset.placeholder).toContain('サイズ・規格');
     });
     it('product stock quantity', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#product-stock-quantity');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#product-stock-quantity'))
+        .nativeElement;
       expect(htmlInputElement.dataset.placeholder).toContain('在庫数');
     });
     it('product add stock quantity', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#add-product-stock-quantity');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#add-product-stock-quantity'))
+        .nativeElement;
       expect(htmlInputElement.dataset.placeholder).toContain('在庫追加数');
     });
 
     it('saveBtn', () => {
-      const htmlInputElement: HTMLInputElement = fixture.nativeElement.querySelector('#save-button');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#save-button')).nativeElement;
       expect(htmlInputElement.innerText).toContain('登録');
     });
   });
@@ -226,14 +230,14 @@ describe('StockRegisteringPageComponent', () => {
     it('add product stock quantity', () => {
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#add-product-stock-quantity', 'あいう');
 
-      const validationError = fixture.nativeElement.querySelector('.validation-error');
+      const validationError = fixture.debugElement.query(By.css('.validation-error')).nativeElement;
       expect(validationError).toBeTruthy();
     });
     it('ProductCodeProductNameValidator(product code)', () => {
       productStockServiceSpy.getProductStock.and.returnValue(of(null));
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'PRODUCTCODE0001');
 
-      const validationError = fixture.nativeElement.querySelector('.validation-error');
+      const validationError = fixture.debugElement.query(By.css('.validation-error')).nativeElement;
       expect(validationError).toBeTruthy();
     });
   });
@@ -245,15 +249,21 @@ describe('StockRegisteringPageComponent', () => {
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#add-product-stock-quantity', '123');
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'abcd1234');
 
-      expect(fixture.nativeElement.querySelector('#product-code').value).toEqual(expectedResponse.productCode);
-      expect(fixture.nativeElement.querySelector('#product-name').value).toEqual(expectedResponse.productName);
-      expect(fixture.nativeElement.querySelector('#product-genre').value).toEqual('靴・スニーカー');
-      expect(fixture.nativeElement.querySelector('#product-size-standard').value).toEqual(
+      expect(fixture.debugElement.query(By.css('#product-code')).nativeElement.value).toEqual(
+        expectedResponse.productCode
+      );
+      expect(fixture.debugElement.query(By.css('#product-name')).nativeElement.value).toEqual(
+        expectedResponse.productName
+      );
+      expect(fixture.debugElement.query(By.css('#product-genre')).nativeElement.value).toEqual('靴・スニーカー');
+      expect(fixture.debugElement.query(By.css('#product-size-standard')).nativeElement.value).toEqual(
         expectedResponse.productSizeStandard
       );
-      expect(fixture.nativeElement.querySelector('#product-stock-quantity').value).toEqual('2,000');
-      expect(fixture.nativeElement.querySelector('#product-image').src).toEqual(expectedResponse.productImage);
-      expect(fixture.nativeElement.querySelector('#add-product-stock-quantity').value).toEqual('');
+      expect(fixture.debugElement.query(By.css('#product-stock-quantity')).nativeElement.value).toEqual('2,000');
+      expect(fixture.debugElement.query(By.css('#product-image')).nativeElement.src).toEqual(
+        expectedResponse.productImage
+      );
+      expect(fixture.debugElement.query(By.css('#add-product-stock-quantity')).nativeElement.value).toEqual('');
     });
 
     it('Should Enter input and create product stock request', () => {

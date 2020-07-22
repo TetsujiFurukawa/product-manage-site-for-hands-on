@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed, tick } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
 import { FormattedCurrencyPipe } from '../pipes/formatted-currency.pipe';
 import { FormattedCurrencyInputDirective } from './formatted-currency-input.directive';
@@ -24,7 +25,7 @@ describe('FormattedCurrencyInputDirective', () => {
     });
     fixture = TestBed.createComponent(TestFormattedCurrencyInputComponent);
     component = fixture.componentInstance;
-    hTMLInputElement = fixture.nativeElement.querySelector('input');
+    hTMLInputElement = fixture.debugElement.query(By.css('input')).nativeElement;
     fixture.detectChanges();
   });
 

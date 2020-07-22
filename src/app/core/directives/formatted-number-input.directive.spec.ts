@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
 import { FormattedNumberPipe } from '../pipes/formatted-number.pipe';
 import { FormattedNumberInputDirective } from './formatted-number-input.directive';
@@ -24,7 +25,7 @@ describe('FormattedNumberInputDirective', () => {
     });
     fixture = TestBed.createComponent(TestFormattedNumberInputComponent);
     component = fixture.componentInstance;
-    hTMLInputElement = fixture.nativeElement.querySelector('input');
+    hTMLInputElement = fixture.debugElement.query(By.css('input')).nativeElement;
     fixture.detectChanges();
   });
 

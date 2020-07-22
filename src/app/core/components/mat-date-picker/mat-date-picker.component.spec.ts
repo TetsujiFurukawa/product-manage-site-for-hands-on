@@ -7,6 +7,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule, NativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
@@ -81,8 +82,7 @@ describe('MatDatePickerComponent', () => {
     it('should clear date', () => {
       spyOn(component.event, 'emit').and.callThrough();
 
-      const nativeElement = fixture.nativeElement;
-      const button = nativeElement.querySelector('input');
+      const button = fixture.debugElement.query(By.css('input')).nativeElement;
       button.dispatchEvent(new Event('change'));
       fixture.detectChanges();
 

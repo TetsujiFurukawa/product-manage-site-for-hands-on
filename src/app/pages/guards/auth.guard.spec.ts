@@ -11,8 +11,8 @@ import { AuthGuard } from './auth.guard';
 describe('AuthGuard', () => {
   let authGuard: AuthGuard;
   let accountServiceSpy: { getAvailablePages: jasmine.Spy };
-  let routerStateSnapshotSpy: RouterStateSnapshot;
   let router: Router;
+  let routerStateSnapshotSpy: RouterStateSnapshot;
 
   beforeEach(() => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getAvailablePages']);
@@ -33,33 +33,41 @@ describe('AuthGuard', () => {
   });
 
   describe('#canActivate', () => {
-    it('No menu', () => {
-      accountServiceSpy.getAvailablePages.and.returnValue(of(null));
-      spyOn(router, 'navigate');
-      authGuard.canActivate(null, null).subscribe((res) => {
-        expect(router.navigate).toHaveBeenCalledWith([UrlConst.SLASH + UrlConst.PATH_SIGN_IN]);
+    describe('no page is available to the user', () => {
+      it('should return false if no page is available to the user', () => {
+        accountServiceSpy.getAvailablePages.and.returnValue(of(null));
+        spyOn(router, 'navigate');
+        authGuard.canActivate(null, null).subscribe((res) => {
+          expect(router.navigate).toHaveBeenCalledWith([UrlConst.SLASH + UrlConst.PATH_SIGN_IN]);
+          expect(res).toBeFalsy();
+        });
       });
     });
-    it('Can activate', () => {
-      routerStateSnapshotSpy.url = UrlConst.SLASH + UrlConst.PATH_PRODUCT_LISTING;
-      accountServiceSpy.getAvailablePages.and.returnValue(of(Array(UrlConst.PATH_PRODUCT_LISTING)));
-      authGuard.canActivate(null, routerStateSnapshotSpy).subscribe((res) => {
-        expect(res).toBeTruthy();
+
+    describe('else', () => {
+      it('should return true if the current url is on a page available to the user', () => {
+        routerStateSnapshotSpy.url = UrlConst.SLASH + UrlConst.PATH_PRODUCT_LISTING;
+        accountServiceSpy.getAvailablePages.and.returnValue(of(Array(UrlConst.PATH_PRODUCT_LISTING)));
+        authGuard.canActivate(null, routerStateSnapshotSpy).subscribe((res) => {
+          expect(res).toBeTruthy();
+        });
       });
-    });
-    it('Can activate /:productCode', () => {
-      routerStateSnapshotSpy.url = UrlConst.SLASH + UrlConst.PATH_PRODUCT_REGISTERING + UrlConst.SLASH + ':productCode';
-      accountServiceSpy.getAvailablePages.and.returnValue(of(Array(UrlConst.PATH_PRODUCT_REGISTERING)));
-      authGuard.canActivate(null, routerStateSnapshotSpy).subscribe((res) => {
-        expect(res).toBeTruthy();
+      it('should return true if the current url + /:productCode is on a page available to the user', () => {
+        routerStateSnapshotSpy.url =
+          UrlConst.SLASH + UrlConst.PATH_PRODUCT_REGISTERING + UrlConst.SLASH + ':productCode';
+        accountServiceSpy.getAvailablePages.and.returnValue(of(Array(UrlConst.PATH_PRODUCT_REGISTERING)));
+        authGuard.canActivate(null, routerStateSnapshotSpy).subscribe((res) => {
+          expect(res).toBeTruthy();
+        });
       });
-    });
-    it('Can not activate', () => {
-      routerStateSnapshotSpy.url = UrlConst.SLASH + UrlConst.PATH_PRODUCT_LISTING;
-      accountServiceSpy.getAvailablePages.and.returnValue(of(Array(UrlConst.PATH_DUMMY_PURCHASING)));
-      spyOn(router, 'navigate');
-      authGuard.canActivate(null, routerStateSnapshotSpy).subscribe((res) => {
-        expect(router.navigate).toHaveBeenCalledWith([UrlConst.SLASH + UrlConst.PATH_SIGN_IN]);
+      it('should return false if the current url is not on a page available to the user', () => {
+        routerStateSnapshotSpy.url = UrlConst.SLASH + UrlConst.PATH_PRODUCT_LISTING;
+        accountServiceSpy.getAvailablePages.and.returnValue(of(Array(UrlConst.PATH_DUMMY_PURCHASING)));
+        spyOn(router, 'navigate');
+        authGuard.canActivate(null, routerStateSnapshotSpy).subscribe((res) => {
+          expect(router.navigate).toHaveBeenCalledWith([UrlConst.SLASH + UrlConst.PATH_SIGN_IN]);
+          expect(res).toBeFalsy();
+        });
       });
     });
   });

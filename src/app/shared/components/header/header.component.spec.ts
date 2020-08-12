@@ -18,13 +18,13 @@ describe('HeaderComponent', () => {
   let fixture: ComponentFixture<HeaderComponent>;
   let accountServiceSpy: { getMenu: jasmine.Spy; signOut: jasmine.Spy };
   let matDialogSpy: { open: jasmine.Spy };
-  let searchParamsServiceSpy: { removeProductListingSearchParam: jasmine.Spy };
+  let searchParamsServiceSpy: { removeProductListingSearchParams: jasmine.Spy };
   let router: Router;
 
   beforeEach(async(() => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getMenu', 'signOut']);
     matDialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
-    searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', ['removeProductListingSearchParam']);
+    searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', ['removeProductListingSearchParams']);
 
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
@@ -77,7 +77,7 @@ describe('HeaderComponent', () => {
   describe('#clickSubmenu', () => {
     it('should remove search param', () => {
       component.clickSubmenu();
-      expect(searchParamsServiceSpy.removeProductListingSearchParam.calls.count()).toBe(1);
+      expect(searchParamsServiceSpy.removeProductListingSearchParams.calls.count()).toBe(1);
     });
   });
 

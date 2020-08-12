@@ -22,8 +22,12 @@ import { By, HAMMER_LOADER } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { ProductPurchaseHistorySearchListResponseDto } from '../../models/dtos/responses/product-purchase-history-search-list-response-dto';
-import { ProductPurchaseHistorySearchResponseDto } from '../../models/dtos/responses/product-purchase-history-search-response-dto';
+import {
+    ProductPurchaseHistorySearchListResponseDto
+} from '../../models/dtos/responses/product-purchase-history-search-list-response-dto';
+import {
+    ProductPurchaseHistorySearchResponseDto
+} from '../../models/dtos/responses/product-purchase-history-search-response-dto';
 import { PurchaseHistoryListingPageComponent } from './purchase-history-listing-page.component';
 
 describe('PurchaseHistoryListingPageComponent', () => {
@@ -72,9 +76,9 @@ describe('PurchaseHistoryListingPageComponent', () => {
   let productServiceSpy: { getGenres: jasmine.Spy; getProductList: jasmine.Spy };
   let titleI18ServiceSpy: { setTitle: jasmine.Spy };
   let searchParamsServiceSpy: {
-    getProductListingSearchParam: jasmine.Spy;
-    removeProductListingSearchParam: jasmine.Spy;
-    setProductListingSearchParam: jasmine.Spy;
+    getProductListingSearchParams: jasmine.Spy;
+    removeProductListingSearchParams: jasmine.Spy;
+    setProductListingSearchParams: jasmine.Spy;
   };
   let productPurchaseServiceSpy: { getProductPurchaseHistoryList: jasmine.Spy };
 
@@ -83,9 +87,9 @@ describe('PurchaseHistoryListingPageComponent', () => {
     productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres', 'getProductList']);
     titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);
     searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', [
-      'getProductListingSearchParam',
-      'removeProductListingSearchParam',
-      'setProductListingSearchParam'
+      'getProductListingSearchParams',
+      'removeProductListingSearchParams',
+      'setProductListingSearchParams'
     ]);
     productPurchaseServiceSpy = jasmine.createSpyObj('PurchaseService', ['getProductPurchaseHistoryList']);
 
@@ -135,7 +139,7 @@ describe('PurchaseHistoryListingPageComponent', () => {
 
   describe('#ngAfterViewChecked', () => {
     it('should set title', () => {
-      searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(null);
+      searchParamsServiceSpy.getProductListingSearchParams.and.returnValue(null);
       component.ngAfterViewChecked();
       expect(titleI18ServiceSpy.setTitle.calls.count()).toBeGreaterThan(1);
     });

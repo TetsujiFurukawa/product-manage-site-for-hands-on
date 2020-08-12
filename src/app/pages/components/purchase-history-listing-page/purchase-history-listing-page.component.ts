@@ -99,8 +99,8 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
    * Clicks clear button
    */
   clickClearButton(): void {
-    this.searchParamsService.removeProductListingSearchParam();
-    this.clearSearchCondition();
+    this.searchParamsService.removeProductListingSearchParams();
+    this.clearSearchConditions();
     this.clearSearchResultList();
   }
 
@@ -176,7 +176,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
     return params;
   }
 
-  private clearSearchCondition(): void {
+  private clearSearchConditions(): void {
     this.productPurchaseName.setValue('');
     this.matDatePickerComponents.map((fn) => fn.reset());
     this.productPurchaseDateFrom.setValue('');

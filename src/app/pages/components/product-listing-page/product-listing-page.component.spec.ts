@@ -23,8 +23,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { ProductListingSearchParamsDto } from '../../models/dtos/requests/product-listing-search-params-dto';
-import { ProductSearchListResponseDto } from '../../models/dtos/responses/product-search-list-response-dto';
+import {
+    ProductListingSearchParamsDto
+} from '../../models/dtos/requests/product-listing-search-params-dto';
+import {
+    ProductSearchListResponseDto
+} from '../../models/dtos/responses/product-search-list-response-dto';
 import { ProductSearchResponseDto } from '../../models/dtos/responses/product-search-response-dto';
 import { ProductListingPageComponent } from './product-listing-page.component';
 
@@ -73,9 +77,9 @@ describe('ProductListingPageComponent', () => {
   let productServiceSpy: { getGenres: jasmine.Spy; getProductList: jasmine.Spy };
   let titleI18ServiceSpy: { setTitle: jasmine.Spy };
   let searchParamsServiceSpy: {
-    getProductListingSearchParam: jasmine.Spy;
-    removeProductListingSearchParam: jasmine.Spy;
-    setProductListingSearchParam: jasmine.Spy;
+    getProductListingSearchParams: jasmine.Spy;
+    removeProductListingSearchParams: jasmine.Spy;
+    setProductListingSearchParams: jasmine.Spy;
   };
   let router: Router;
 
@@ -84,9 +88,9 @@ describe('ProductListingPageComponent', () => {
     productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres', 'getProductList']);
     titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);
     searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', [
-      'getProductListingSearchParam',
-      'removeProductListingSearchParam',
-      'setProductListingSearchParam'
+      'getProductListingSearchParams',
+      'removeProductListingSearchParams',
+      'setProductListingSearchParams'
     ]);
 
     TestBed.configureTestingModule({
@@ -118,7 +122,7 @@ describe('ProductListingPageComponent', () => {
   beforeEach(() => {
     accountServiceSpy.getUser.and.returnValue(user);
     productServiceSpy.getGenres.and.returnValue(of(expectedGenres));
-    searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(null);
+    searchParamsServiceSpy.getProductListingSearchParams.and.returnValue(null);
     fixture = TestBed.createComponent(ProductListingPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -132,14 +136,14 @@ describe('ProductListingPageComponent', () => {
 
   describe('#ngOnInit', () => {
     it('should not init search criteria', () => {
-      searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(null);
+      searchParamsServiceSpy.getProductListingSearchParams.and.returnValue(null);
       spyOn(component, 'clickSearchButton').and.callThrough();
       component.ngOnInit();
 
       expect(component.clickSearchButton).toHaveBeenCalledTimes(0);
     });
     it('should init search criteria', () => {
-      searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(expectedProductListingSearchParamsDto);
+      searchParamsServiceSpy.getProductListingSearchParams.and.returnValue(expectedProductListingSearchParamsDto);
       productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
       component.ngOnInit();
 
@@ -160,7 +164,7 @@ describe('ProductListingPageComponent', () => {
         productGenre: undefined,
         productName: undefined
       };
-      searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(
+      searchParamsServiceSpy.getProductListingSearchParams.and.returnValue(
         expectedProductListingSearchParamsDtoUndefine
       );
       productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
@@ -177,7 +181,7 @@ describe('ProductListingPageComponent', () => {
 
   describe('#ngAfterViewChecked', () => {
     it('should set title', () => {
-      searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(null);
+      searchParamsServiceSpy.getProductListingSearchParams.and.returnValue(null);
       component.ngAfterViewChecked();
       expect(titleI18ServiceSpy.setTitle.calls.count()).toBeGreaterThan(1);
     });
@@ -185,10 +189,10 @@ describe('ProductListingPageComponent', () => {
 
   describe('clicks new button', () => {
     it('should move to new page', () => {
-      searchParamsServiceSpy.getProductListingSearchParam.and.returnValue(null);
+      searchParamsServiceSpy.getProductListingSearchParams.and.returnValue(null);
       spyOn(router, 'navigate').and.returnValue(null);
       component.clickNewButton();
-      expect(searchParamsServiceSpy.removeProductListingSearchParam.calls.count()).toEqual(1);
+      expect(searchParamsServiceSpy.removeProductListingSearchParams.calls.count()).toEqual(1);
       expect(router.navigate).toHaveBeenCalledWith([UrlConst.SLASH + UrlConst.PATH_PRODUCT_REGISTERING_NEW]);
     });
   });
@@ -202,7 +206,7 @@ describe('ProductListingPageComponent', () => {
 
       component.clickClearButton();
 
-      expect(searchParamsServiceSpy.removeProductListingSearchParam.calls.count()).toEqual(1);
+      expect(searchParamsServiceSpy.removeProductListingSearchParams.calls.count()).toEqual(1);
       expect(component.productName.value).toEqual('');
     });
   });

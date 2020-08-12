@@ -88,13 +88,13 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
   }
 
   clickNewButton(): void {
-    this.searchParamsService.removeProductListingSearchParam();
+    this.searchParamsService.removeProductListingSearchParams();
     this.routingService.navigate(UrlConst.PATH_PRODUCT_REGISTERING_NEW);
   }
 
   clickClearButton(): void {
-    this.searchParamsService.removeProductListingSearchParam();
-    this.clearSearchCondition();
+    this.searchParamsService.removeProductListingSearchParams();
+    this.clearSearchConditions();
     this.clearSearchResultList();
   }
 
@@ -105,7 +105,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
         switchMap(() => {
           this.loadingService.startLoading();
           const productListingSearchParamsDto: ProductListingSearchParamsDto = this.createSearchParams();
-          this.searchParamsService.setProductListingSearchParam(productListingSearchParamsDto);
+          this.searchParamsService.setProductListingSearchParams(productListingSearchParamsDto);
 
           return this.productService.getProductList(this.createHttpParams(productListingSearchParamsDto));
         }),
@@ -148,7 +148,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
       pageSize: 0,
       pageIndex: 0
     };
-    productListingSearchParamsDto = this.searchParamsService.getProductListingSearchParam(
+    productListingSearchParamsDto = this.searchParamsService.getProductListingSearchParams(
       productListingSearchParamsDto
     );
     if (productListingSearchParamsDto !== null && productListingSearchParamsDto !== undefined) {
@@ -198,7 +198,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked {
     return params;
   }
 
-  private clearSearchCondition(): void {
+  private clearSearchConditions(): void {
     this.productName.setValue('');
     this.productCode.setValue('');
     this.productGenre.setValue('');

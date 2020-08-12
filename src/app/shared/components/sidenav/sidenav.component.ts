@@ -39,7 +39,7 @@ export class SidenavComponent implements OnInit {
    * Clicks submenu
    */
   clickSubmenu(): void {
-    this.searchParamsService.removeProductListingSearchParam();
+    this.searchParamsService.removeProductListingSearchParams();
     this.sidenavClose.emit();
   }
 

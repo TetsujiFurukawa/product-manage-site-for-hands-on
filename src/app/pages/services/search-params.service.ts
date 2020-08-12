@@ -13,12 +13,20 @@ import {
 export class SearchParamsService {
   constructor() {}
 
-  /** Product */
-  setProductListingSearchParam(productListingSearchParamsDto: ProductListingSearchParamsDto): void {
+  /**
+   * Sets product listing search params
+   * @param productListingSearchParamsDto product listing search params
+   */
+  setProductListingSearchParams(productListingSearchParamsDto: ProductListingSearchParamsDto): void {
     SessionStorageService.setItem(AppConst.STORAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST, productListingSearchParamsDto);
   }
 
-  getProductListingSearchParam(
+  /**
+   * Gets product listing search params
+   * @param productListingSearchParamsDto product listing search params
+   * @returns product listing search params
+   */
+  getProductListingSearchParams(
     productListingSearchParamsDto: ProductListingSearchParamsDto
   ): ProductListingSearchParamsDto {
     return SessionStorageService.getItem(
@@ -27,7 +35,10 @@ export class SearchParamsService {
     );
   }
 
-  removeProductListingSearchParam(): void {
+  /**
+   * Removes product listing search params
+   */
+  removeProductListingSearchParams(): void {
     SessionStorageService.removeItem(AppConst.STORAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST);
   }
 }

@@ -15,12 +15,12 @@ describe('SidenavComponent', () => {
   let component: SidenavComponent;
   let fixture: ComponentFixture<SidenavComponent>;
   let accountServiceSpy: { getMenu: jasmine.Spy };
-  let searchParamsServiceSpy: { removeProductListingSearchParams: jasmine.Spy };
+  let searchParamsServiceSpy: { removeProductListingSearchParamsDto: jasmine.Spy };
   let router: Router;
 
   beforeEach(async(() => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getMenu']);
-    searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', ['removeProductListingSearchParams']);
+    searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', ['removeProductListingSearchParamsDto']);
 
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
@@ -65,7 +65,7 @@ describe('SidenavComponent', () => {
     it('should remove search param', () => {
       spyOn(component.sidenavClose, 'emit').and.callThrough();
       component.clickSubmenu();
-      expect(searchParamsServiceSpy.removeProductListingSearchParams.calls.count()).toBe(1);
+      expect(searchParamsServiceSpy.removeProductListingSearchParamsDto.calls.count()).toBe(1);
       expect(component.sidenavClose.emit).toHaveBeenCalled();
     });
   });

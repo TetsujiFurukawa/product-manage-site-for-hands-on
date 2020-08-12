@@ -72,9 +72,9 @@ describe('PurchaseHistoryListingPageComponent', () => {
   let productServiceSpy: { getGenres: jasmine.Spy; getProductList: jasmine.Spy };
   let titleI18ServiceSpy: { setTitle: jasmine.Spy };
   let searchParamsServiceSpy: {
-    getProductListingSearchParams: jasmine.Spy;
-    removeProductListingSearchParams: jasmine.Spy;
-    setProductListingSearchParams: jasmine.Spy;
+    getProductListingSearchParamsDto: jasmine.Spy;
+    removeProductListingSearchParamsDto: jasmine.Spy;
+    setProductListingSearchParamsDto: jasmine.Spy;
   };
   let productPurchaseServiceSpy: { getProductPurchaseHistoryList: jasmine.Spy };
 
@@ -83,9 +83,9 @@ describe('PurchaseHistoryListingPageComponent', () => {
     productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres', 'getProductList']);
     titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);
     searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', [
-      'getProductListingSearchParams',
-      'removeProductListingSearchParams',
-      'setProductListingSearchParams'
+      'getProductListingSearchParamsDto',
+      'removeProductListingSearchParamsDto',
+      'setProductListingSearchParamsDto'
     ]);
     productPurchaseServiceSpy = jasmine.createSpyObj('PurchaseService', ['getProductPurchaseHistoryList']);
 
@@ -145,7 +145,7 @@ describe('PurchaseHistoryListingPageComponent', () => {
 
       component.clickClearButton();
 
-      expect(searchParamsServiceSpy.removeProductListingSearchParams.calls.count()).toEqual(1);
+      expect(searchParamsServiceSpy.removeProductListingSearchParamsDto.calls.count()).toEqual(1);
       expect(component.productPurchaseName.value).toEqual('');
       expect(component.productPurchaseDateFrom.value).toEqual('');
       expect(component.productPurchaseDateTo.value).toEqual('');

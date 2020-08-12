@@ -76,9 +76,9 @@ describe('PurchaseHistoryListingPageComponent', () => {
   let productServiceSpy: { getGenres: jasmine.Spy; getProductList: jasmine.Spy };
   let titleI18ServiceSpy: { setTitle: jasmine.Spy };
   let searchParamsServiceSpy: {
-    getProductListingSearchParams: jasmine.Spy;
-    removeProductListingSearchParams: jasmine.Spy;
-    setProductListingSearchParams: jasmine.Spy;
+    getProductListingSearchParamsDto: jasmine.Spy;
+    removeProductListingSearchParamsDto: jasmine.Spy;
+    setProductListingSearchParamsDto: jasmine.Spy;
   };
   let productPurchaseServiceSpy: { getProductPurchaseHistoryList: jasmine.Spy };
 
@@ -87,9 +87,9 @@ describe('PurchaseHistoryListingPageComponent', () => {
     productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres', 'getProductList']);
     titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);
     searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', [
-      'getProductListingSearchParams',
-      'removeProductListingSearchParams',
-      'setProductListingSearchParams'
+      'getProductListingSearchParamsDto',
+      'removeProductListingSearchParamsDto',
+      'setProductListingSearchParamsDto'
     ]);
     productPurchaseServiceSpy = jasmine.createSpyObj('PurchaseService', ['getProductPurchaseHistoryList']);
 
@@ -139,7 +139,7 @@ describe('PurchaseHistoryListingPageComponent', () => {
 
   describe('#ngAfterViewChecked', () => {
     it('should set title', () => {
-      searchParamsServiceSpy.getProductListingSearchParams.and.returnValue(null);
+      searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(null);
       component.ngAfterViewChecked();
       expect(titleI18ServiceSpy.setTitle.calls.count()).toBeGreaterThan(1);
     });

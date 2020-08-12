@@ -24,12 +24,12 @@ describe('SearchParamsService', () => {
     });
   });
 
-  describe('#setProductListingSearchParams,#getProductListingSearchParams', () => {
+  describe('#setProductListingSearchParamsDto,#getProductListingSearchParamsDto', () => {
     it('should set value', () => {
       const expectedProductListingSearchParamsDto: ProductListingSearchParamsDto = createProductListingSearchParamsDto();
 
-      service.setProductListingSearchParams(expectedProductListingSearchParamsDto);
-      const res: ProductListingSearchParamsDto = service.getProductListingSearchParams({
+      service.setProductListingSearchParamsDto(expectedProductListingSearchParamsDto);
+      const res: ProductListingSearchParamsDto = service.getProductListingSearchParamsDto({
         endOfSale: false,
         pageIndex: 1,
         pageSize: 1,
@@ -46,13 +46,13 @@ describe('SearchParamsService', () => {
     });
   });
 
-  describe('#removeProductListingSearchParams', () => {
+  describe('#removeProductListingSearchParamsDto', () => {
     it('should remove value', () => {
       const expectedProductListingSearchParamsDto: ProductListingSearchParamsDto = createProductListingSearchParamsDto();
-      service.setProductListingSearchParams(expectedProductListingSearchParamsDto);
-      service.removeProductListingSearchParams();
+      service.setProductListingSearchParamsDto(expectedProductListingSearchParamsDto);
+      service.removeProductListingSearchParamsDto();
       expect(
-        service.getProductListingSearchParams({
+        service.getProductListingSearchParamsDto({
           endOfSale: false,
           pageIndex: 1,
           pageSize: 1,

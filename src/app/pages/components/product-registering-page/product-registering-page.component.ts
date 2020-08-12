@@ -79,12 +79,14 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     }
   );
 
-  /** other informations */
+  /** Locale, Currency */
   locale: string = this.accountService.getUser().userLocale;
   currency: string = this.accountService.getUser().userCurrency;
 
+  /** Select item of genre */
   genres: string[];
 
+  /** FileInput and FileReader */
   @ViewChild('fileInputElement', { static: true }) public fileInputElement: ElementRef;
   fileReader: FileReader = new FileReader();
 

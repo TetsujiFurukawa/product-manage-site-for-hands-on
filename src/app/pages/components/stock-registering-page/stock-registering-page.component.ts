@@ -69,9 +69,10 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     }
   );
 
-  /** other informations */
+  /** Locale */
   locale: string = this.accountService.getUser().userLocale;
 
+  /** Select item of genre */
   genres: string[];
 
   /**
@@ -96,7 +97,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     if (this.productCode.value === '') {
       return;
     }
-    this.resetStockRegisteringControls();
+    this.clearStockRegisteringConditions();
     this.getProductStock();
   }
 
@@ -187,11 +188,10 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     this.addProductStockQuantity.reset();
   }
 
-  private resetStockRegisteringControls(): void {
+  private clearStockRegisteringConditions(): void {
     this.productName.reset();
     this.productGenre.reset();
     this.productSizeStandard.reset();
-    this.productStockQuantity.reset();
     this.productStockQuantity.reset();
     this.addProductStockQuantity.reset();
   }

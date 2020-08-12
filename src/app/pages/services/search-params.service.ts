@@ -17,7 +17,7 @@ export class SearchParamsService {
    * Sets product listing search params
    * @param productListingSearchParamsDto product listing search params
    */
-  setProductListingSearchParams(productListingSearchParamsDto: ProductListingSearchParamsDto): void {
+  setProductListingSearchParamsDto(productListingSearchParamsDto: ProductListingSearchParamsDto): void {
     SessionStorageService.setItem(AppConst.STORAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST, productListingSearchParamsDto);
   }
 
@@ -26,7 +26,7 @@ export class SearchParamsService {
    * @param productListingSearchParamsDto product listing search params
    * @returns product listing search params
    */
-  getProductListingSearchParams(
+  getProductListingSearchParamsDto(
     productListingSearchParamsDto: ProductListingSearchParamsDto
   ): ProductListingSearchParamsDto {
     return SessionStorageService.getItem(
@@ -38,7 +38,7 @@ export class SearchParamsService {
   /**
    * Removes product listing search params
    */
-  removeProductListingSearchParams(): void {
+  removeProductListingSearchParamsDto(): void {
     SessionStorageService.removeItem(AppConst.STORAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST);
   }
 }

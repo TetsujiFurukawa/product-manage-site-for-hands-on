@@ -30,13 +30,13 @@ import {
 })
 export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChecked {
   constructor(
+    private accountService: AccountService,
+    public formattedCurrencyPipe: FormattedCurrencyPipe,
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
     private productPurchaseService: ProductPurchaseService,
-    private accountService: AccountService,
     private searchParamsService: SearchParamsService,
     private titleI18Service: TitleI18Service,
-    public formattedCurrencyPipe: FormattedCurrencyPipe,
     public translateService: TranslateService
   ) {}
 
@@ -54,13 +54,13 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
     productCode: this.productCode
   });
 
-  /** other informations */
+  /** Locale, Currency, Timezone */
   locale: string = this.accountService.getUser().userLocale;
   currency: string = this.accountService.getUser().userCurrency;
   timezone: string = this.accountService.getUser().userTimezone;
   timezoneOffset: string = this.accountService.getUser().userTimezoneOffset;
 
-  // Material table's header
+  /** Material table's header */
   displayColumns: string[] = [
     'no',
     'productName',
@@ -73,11 +73,11 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
     'productPurchaseAmount'
   ];
 
-  // Search result
+  /** Search result */
   purchaseHistorySearchResponses: ProductPurchaseHistorySearchResponseDto[];
   resultsLength = 0;
 
-  // Loading and pagenation
+  /** Pagenator and DatePicker */
   @ViewChild(MatPaginator, { static: true }) public paginator: MatPaginator;
   @ViewChildren(MatDatePickerComponent) matDatePickerComponents!: QueryList<MatDatePickerComponent>;
 
@@ -99,7 +99,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
    * Clicks clear button
    */
   clickClearButton(): void {
-    this.searchParamsService.removeProductListingSearchParams();
+    this.searchParamsService.removeProductListingSearchParamsDto();
     this.clearSearchConditions();
     this.clearSearchResultList();
   }
@@ -113,7 +113,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
         startWith({}),
         switchMap(() => {
           this.loadingService.startLoading();
-          // const purchaseHistoryListingSearchParams: ProductPurchaseHistoryListingSearchParams = this.createSearchParams();
+          // const purchaseHistoryListingSearchParams: ProductPurchaseHistoryListingSearchParams = this.createSearchParamsDto();
           return this.productPurchaseService.getProductPurchaseHistoryList(this.createHttpParams());
         }),
         map((data) => {
@@ -127,7 +127,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
   }
 
   /**
-   * Received event from child from
+   * Received event from child date from
    * @param eventData event data
    */
   receivedEventFromChildFrom(eventData: string): void {
@@ -135,7 +135,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
   }
 
   /**
-   * Received event from child to
+   * Received event from child date to
    * @param eventData event data
    */
   receivedEventFromChildTo(eventData: string): void {

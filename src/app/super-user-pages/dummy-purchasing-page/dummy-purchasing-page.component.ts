@@ -37,14 +37,14 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   constructor(
-    private formBuilder: FormBuilder,
-    private loadingService: LoadingService,
-    private productService: ProductService,
-    private productPurchaseService: ProductPurchaseService,
     private accountService: AccountService,
     private dialog: MatDialog,
+    private formBuilder: FormBuilder,
     private formattedCurrencyPipe: FormattedCurrencyPipe,
     private formattedNumberPipe: FormattedNumberPipe,
+    private loadingService: LoadingService,
+    private productPurchaseService: ProductPurchaseService,
+    private productService: ProductService,
     private titleI18Service: TitleI18Service,
     public translateService: TranslateService
   ) {}
@@ -85,9 +85,11 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     }
   );
 
-  /** other informations */
+  /** Locale, Currency */
   locale: string = this.accountService.getUser().userLocale;
   currency: string = this.accountService.getUser().userCurrency;
+
+  /** Select item of genre */
   genres: string[];
 
   /**

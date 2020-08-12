@@ -56,7 +56,7 @@ export class HeaderComponent implements OnInit {
    * Clicks submenu
    */
   clickSubmenu(): void {
-    this.searchParamsService.removeProductListingSearchParams();
+    this.searchParamsService.removeProductListingSearchParamsDto();
   }
 
   /**
@@ -95,7 +95,7 @@ export class HeaderComponent implements OnInit {
   private signOut(): void {
     this.loadingService.startLoading();
     this.accountService.signOut().subscribe((res) => {
-      this.searchParamsService.removeProductListingSearchParams();
+      this.searchParamsService.removeProductListingSearchParamsDto();
       this.loadingService.stopLoading();
       this.routingService.navigate(UrlConst.PATH_SIGN_IN);
     });

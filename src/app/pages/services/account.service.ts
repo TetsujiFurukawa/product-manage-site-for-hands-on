@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
-import { SessionStrageService } from '../../core/services/session-strage.service';
+import { SessionStorageService } from '../../core/services/session-storage.service';
 import { SignInRequestDto } from '../models/dtos/requests/sign-in-request-dto';
 import { MenuListResponseDto } from '../models/dtos/responses/menu-list-response-dto';
 import { SignInResponseDto } from '../models/dtos/responses/sign-in-response-dto';
@@ -86,24 +86,24 @@ export class AccountService {
 
   /**
    * Gets user
-   * @returns user informations from session strage
+   * @returns user informations from session storage
    */
   getUser(): User {
-    return SessionStrageService.getItem(AppConst.STRAGE_KEY_USER, new User());
+    return SessionStorageService.getItem(AppConst.STORAGE_KEY_USER, new User());
   }
 
   /**
    * Sets user
-   * @param user infomatios to save session strage
+   * @param user infomatios to save session storage
    */
   setUser(user: User): void {
-    SessionStrageService.setItem(AppConst.STRAGE_KEY_USER, user);
+    SessionStorageService.setItem(AppConst.STORAGE_KEY_USER, user);
   }
 
   /**
    * Removes user
    */
   removeUser(): void {
-    SessionStrageService.removeItem(AppConst.STRAGE_KEY_USER);
+    SessionStorageService.removeItem(AppConst.STORAGE_KEY_USER);
   }
 }

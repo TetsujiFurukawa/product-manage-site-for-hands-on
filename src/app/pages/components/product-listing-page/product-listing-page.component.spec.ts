@@ -135,17 +135,58 @@ describe('ProductListingPageComponent', () => {
   });
 
   describe('#ngOnInit', () => {
+    // it('should not init search criteria', () => {
+    //   searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(null);
+    //   spyOn(component, 'clickSearchButton').and.callThrough();
+    //   component.ngOnInit();
+    //   expect(component.clickSearchButton).toHaveBeenCalledTimes(0);
+    // });
+    // it('should init search criteria', () => {
+    //   searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(expectedProductListingSearchParamsDto);
+    //   productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
+    //   component.ngOnInit();
+    //   expect(component.productName.value).toEqual(expectedProductListingSearchParamsDto.productName);
+    //   expect(component.productCode.value).toEqual(expectedProductListingSearchParamsDto.productCode);
+    //   expect(component.productGenre.value).toEqual(expectedProductListingSearchParamsDto.productGenre);
+    //   expect(component.endOfSale.value).toEqual(expectedProductListingSearchParamsDto.endOfSale);
+    //   expect(component.paginator.pageIndex).toEqual(expectedProductListingSearchParamsDto.pageIndex);
+    //   expect(component.paginator.pageSize).toEqual(expectedProductListingSearchParamsDto.pageSize);
+    // });
+    // it('should init search criteria partly undefined', () => {
+    //   const expectedProductListingSearchParamsDtoUndefine: ProductListingSearchParamsDto = {
+    //     endOfSale: true,
+    //     pageIndex: 1,
+    //     pageSize: 50,
+    //     productCode: undefined,
+    //     productGenre: undefined,
+    //     productName: undefined
+    //   };
+    //   searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(
+    //     expectedProductListingSearchParamsDtoUndefine
+    //   );
+    //   productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
+    //   component.ngOnInit();
+    //   expect(component.productName.value).toEqual('');
+    //   expect(component.productCode.value).toEqual('');
+    //   expect(component.productGenre.value).toEqual('');
+    //   expect(component.endOfSale.value).toEqual(expectedProductListingSearchParamsDto.endOfSale);
+    //   expect(component.paginator.pageIndex).toEqual(expectedProductListingSearchParamsDto.pageIndex);
+    //   expect(component.paginator.pageSize).toEqual(expectedProductListingSearchParamsDto.pageSize);
+    // });
+  });
+
+  describe('#ngAfterViewChecked', () => {
     it('should not init search criteria', () => {
       searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(null);
       spyOn(component, 'clickSearchButton').and.callThrough();
-      component.ngOnInit();
+      component.ngAfterViewInit();
 
       expect(component.clickSearchButton).toHaveBeenCalledTimes(0);
     });
     it('should init search criteria', () => {
       searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(expectedProductListingSearchParamsDto);
       productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
-      component.ngOnInit();
+      component.ngAfterViewInit();
 
       expect(component.productName.value).toEqual(expectedProductListingSearchParamsDto.productName);
       expect(component.productCode.value).toEqual(expectedProductListingSearchParamsDto.productCode);
@@ -168,7 +209,7 @@ describe('ProductListingPageComponent', () => {
         expectedProductListingSearchParamsDtoUndefine
       );
       productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
-      component.ngOnInit();
+      component.ngAfterViewInit();
 
       expect(component.productName.value).toEqual('');
       expect(component.productCode.value).toEqual('');

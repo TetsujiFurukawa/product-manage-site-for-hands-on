@@ -3,7 +3,7 @@ import { RegexConst } from 'src/app/pages/constants/regex-const';
 import { CurrencyPipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { NumberUtility } from '../utilities/number-utility';
+import { ParseHelper } from '../utilities/parse-helper';
 
 @Pipe({
   name: 'formattedCurrency'
@@ -18,7 +18,7 @@ export class FormattedCurrencyPipe implements PipeTransform {
   }
 
   parse(value: any, locale: string, currency: string): any {
-    return NumberUtility.parseCurrencyToNumber(value.toString(), locale, currency);
+    return ParseHelper.parseCurrencyToNumber(value.toString(), locale, currency);
     // return value.toString().replace(/,/g, '');
   }
 }

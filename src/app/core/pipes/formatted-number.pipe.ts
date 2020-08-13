@@ -3,7 +3,7 @@ import { RegexConst } from 'src/app/pages/constants/regex-const';
 import { DecimalPipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { NumberUtility } from '../utilities/number-utility';
+import { ParseHelper } from '../utilities/parse-helper';
 
 @Pipe({
   name: 'formattedNumber'
@@ -18,6 +18,6 @@ export class FormattedNumberPipe implements PipeTransform {
   }
 
   parse(value: any, locale: string): any {
-    return NumberUtility.parseNumber(value.toString(), locale);
+    return ParseHelper.parseNumber(value.toString(), locale);
   }
 }

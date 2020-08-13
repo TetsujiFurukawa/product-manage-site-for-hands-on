@@ -33,44 +33,6 @@ import { ProductSearchResponseDto } from '../../models/dtos/responses/product-se
 import { ProductListingPageComponent } from './product-listing-page.component';
 
 describe('ProductListingPageComponent', () => {
-  const expectedGenres = Array('1', '2', '3');
-  const user: User = new User();
-  user.userAccount = 'userAccount';
-  user.userCurrency = 'JPY';
-  user.userLanguage = 'ja';
-  user.userLocale = 'ja-JP';
-  user.userName = 'userName';
-  user.userTimezone = 'UTC';
-
-  const expectedProductListingSearchParamsDto: ProductListingSearchParamsDto = {
-    endOfSale: true,
-    pageIndex: 1,
-    pageSize: 50,
-    productCode: 'productCode',
-    productGenre: '1',
-    productName: 'productName'
-  };
-
-  const productSearchResponseDto: ProductSearchResponseDto[] = [
-    {
-      no: 1,
-      productName: 'productName',
-      productCode: 'productCode',
-      productGenre: '1',
-      productImageUrl: 'productImageUrl',
-      productSizeStandard: 'productSizeStandard',
-      productColor: 'productColor',
-      productUnitPrice: 123,
-      productStockQuantity: 456,
-      endOfSale: true
-    }
-  ];
-  const expectedProductSearchListResponseDto: ProductSearchListResponseDto = {
-    productSearchResponseDtos: productSearchResponseDto,
-    pageIndex: 1,
-    resultsLength: 1
-  };
-
   let component: ProductListingPageComponent;
   let fixture: ComponentFixture<ProductListingPageComponent>;
   let accountServiceSpy: { getUser: jasmine.Spy };
@@ -82,6 +44,21 @@ describe('ProductListingPageComponent', () => {
     setProductListingSearchParamsDto: jasmine.Spy;
   };
   let router: Router;
+
+  /** Initial values */
+  const INITIAL_VALUE_PAGE_INDEX = 0;
+  const INITIAL_VALUE_PAGE_SIZE = 50;
+
+  /** Expected values */
+  const expectedUser = createExpectedUser();
+  const expectedGenres = createExpectedGenres();
+
+  /** Expected values of search params */
+  const expectedProductListingSearchParamsDto = createExpectedProductListingSearchParamsDto();
+  const expectedSearchParamsDtoPartlyUndefined = createExpectedSearchParamsDtoPartlyUndefined();
+
+  /** Expected values of search results */
+  const expectedProductSearchListResponseDto = createExpectedProductSearchListResponseDto();
 
   beforeEach(async(() => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
@@ -120,7 +97,7 @@ describe('ProductListingPageComponent', () => {
   }));
 
   beforeEach(() => {
-    accountServiceSpy.getUser.and.returnValue(user);
+    accountServiceSpy.getUser.and.returnValue(expectedUser);
     productServiceSpy.getGenres.and.returnValue(of(expectedGenres));
     searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(null);
     fixture = TestBed.createComponent(ProductListingPageComponent);
@@ -135,88 +112,71 @@ describe('ProductListingPageComponent', () => {
   });
 
   describe('#ngOnInit', () => {
-    // it('should not init search criteria', () => {
-    //   searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(null);
-    //   spyOn(component, 'clickSearchButton').and.callThrough();
-    //   component.ngOnInit();
-    //   expect(component.clickSearchButton).toHaveBeenCalledTimes(0);
-    // });
-    // it('should init search criteria', () => {
-    //   searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(expectedProductListingSearchParamsDto);
-    //   productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
-    //   component.ngOnInit();
-    //   expect(component.productName.value).toEqual(expectedProductListingSearchParamsDto.productName);
-    //   expect(component.productCode.value).toEqual(expectedProductListingSearchParamsDto.productCode);
-    //   expect(component.productGenre.value).toEqual(expectedProductListingSearchParamsDto.productGenre);
-    //   expect(component.endOfSale.value).toEqual(expectedProductListingSearchParamsDto.endOfSale);
-    //   expect(component.paginator.pageIndex).toEqual(expectedProductListingSearchParamsDto.pageIndex);
-    //   expect(component.paginator.pageSize).toEqual(expectedProductListingSearchParamsDto.pageSize);
-    // });
-    // it('should init search criteria partly undefined', () => {
-    //   const expectedProductListingSearchParamsDtoUndefine: ProductListingSearchParamsDto = {
-    //     endOfSale: true,
-    //     pageIndex: 1,
-    //     pageSize: 50,
-    //     productCode: undefined,
-    //     productGenre: undefined,
-    //     productName: undefined
-    //   };
-    //   searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(
-    //     expectedProductListingSearchParamsDtoUndefine
-    //   );
-    //   productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
-    //   component.ngOnInit();
-    //   expect(component.productName.value).toEqual('');
-    //   expect(component.productCode.value).toEqual('');
-    //   expect(component.productGenre.value).toEqual('');
-    //   expect(component.endOfSale.value).toEqual(expectedProductListingSearchParamsDto.endOfSale);
-    //   expect(component.paginator.pageIndex).toEqual(expectedProductListingSearchParamsDto.pageIndex);
-    //   expect(component.paginator.pageSize).toEqual(expectedProductListingSearchParamsDto.pageSize);
-    // });
+    it('should get genre on init', () => {
+      component.ngOnInit();
+      expect(component.genres).toEqual(expectedGenres);
+    });
+    it('should set user lang to default of translate service on init', () => {
+      component.ngOnInit();
+      expect(component.translateService.getDefaultLang()).toEqual(expectedUser.userLanguage);
+    });
   });
 
   describe('#ngAfterViewChecked', () => {
-    it('should not init search criteria', () => {
-      searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(null);
-      spyOn(component, 'clickSearchButton').and.callThrough();
-      component.ngAfterViewInit();
+    describe('When SearchParamsDto is not registered in SearchParamsService', () => {
+      it('should not init search criteria', () => {
+        searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(null);
+        spyOn(component, 'clickSearchButton').and.callThrough();
+        component.ngAfterViewInit();
 
-      expect(component.clickSearchButton).toHaveBeenCalledTimes(0);
+        expect(component.productName.value).toEqual('');
+        expect(component.productCode.value).toEqual('');
+        expect(component.productGenre.value).toEqual('');
+        expect(component.endOfSale.value).toBeFalsy();
+        expect(component.paginator.pageIndex).toEqual(INITIAL_VALUE_PAGE_INDEX);
+        expect(component.paginator.pageSize).toEqual(INITIAL_VALUE_PAGE_SIZE);
+      });
+      it('should not search', () => {
+        searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(null);
+        spyOn(component, 'clickSearchButton').and.callThrough();
+        component.ngAfterViewInit();
+
+        expect(component.clickSearchButton).toHaveBeenCalledTimes(0);
+      });
     });
-    it('should init search criteria', () => {
-      searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(expectedProductListingSearchParamsDto);
-      productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
-      component.ngAfterViewInit();
 
-      expect(component.productName.value).toEqual(expectedProductListingSearchParamsDto.productName);
-      expect(component.productCode.value).toEqual(expectedProductListingSearchParamsDto.productCode);
-      expect(component.productGenre.value).toEqual(expectedProductListingSearchParamsDto.productGenre);
-      expect(component.endOfSale.value).toEqual(expectedProductListingSearchParamsDto.endOfSale);
-      expect(component.paginator.pageIndex).toEqual(expectedProductListingSearchParamsDto.pageIndex);
-      expect(component.paginator.pageSize).toEqual(expectedProductListingSearchParamsDto.pageSize);
-    });
+    describe('When SearchParamsDto is registered in SearchParamsService', () => {
+      it('should init search criteria', () => {
+        searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(expectedProductListingSearchParamsDto);
+        productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
+        component.ngAfterViewInit();
 
-    it('should init search criteria partly undefined', () => {
-      const expectedProductListingSearchParamsDtoUndefine: ProductListingSearchParamsDto = {
-        endOfSale: true,
-        pageIndex: 1,
-        pageSize: 50,
-        productCode: undefined,
-        productGenre: undefined,
-        productName: undefined
-      };
-      searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(
-        expectedProductListingSearchParamsDtoUndefine
-      );
-      productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
-      component.ngAfterViewInit();
+        expect(component.productName.value).toEqual(expectedProductListingSearchParamsDto.productName);
+        expect(component.productCode.value).toEqual(expectedProductListingSearchParamsDto.productCode);
+        expect(component.productGenre.value).toEqual(expectedProductListingSearchParamsDto.productGenre);
+        expect(component.endOfSale.value).toEqual(expectedProductListingSearchParamsDto.endOfSale);
+        expect(component.paginator.pageIndex).toEqual(expectedProductListingSearchParamsDto.pageIndex);
+        expect(component.paginator.pageSize).toEqual(expectedProductListingSearchParamsDto.pageSize);
+      });
 
-      expect(component.productName.value).toEqual('');
-      expect(component.productCode.value).toEqual('');
-      expect(component.productGenre.value).toEqual('');
-      expect(component.endOfSale.value).toEqual(expectedProductListingSearchParamsDto.endOfSale);
-      expect(component.paginator.pageIndex).toEqual(expectedProductListingSearchParamsDto.pageIndex);
-      expect(component.paginator.pageSize).toEqual(expectedProductListingSearchParamsDto.pageSize);
+      it('should set blank to search criteria when search param is undefined', () => {
+        searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(expectedSearchParamsDtoPartlyUndefined);
+        productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
+        component.ngAfterViewInit();
+
+        expect(component.productName.value).toEqual('');
+        expect(component.productCode.value).toEqual('');
+        expect(component.productGenre.value).toEqual('');
+      });
+
+      it('should search', () => {
+        searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(expectedProductListingSearchParamsDto);
+        productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
+        spyOn(component, 'clickSearchButton').and.callThrough();
+        component.ngAfterViewInit();
+
+        expect(component.clickSearchButton).toHaveBeenCalledTimes(1);
+      });
     });
   });
 
@@ -228,7 +188,7 @@ describe('ProductListingPageComponent', () => {
     });
   });
 
-  describe('clicks new button', () => {
+  describe('#clickNewButton', () => {
     it('should move to new page', () => {
       searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(null);
       spyOn(router, 'navigate').and.returnValue(null);
@@ -238,7 +198,7 @@ describe('ProductListingPageComponent', () => {
     });
   });
 
-  describe('clicks clear button', () => {
+  describe('#clickClearButton', () => {
     it('should clear', () => {
       component.productName.setValue('productName');
       component.productCode.setValue('productCode');
@@ -249,10 +209,13 @@ describe('ProductListingPageComponent', () => {
 
       expect(searchParamsServiceSpy.removeProductListingSearchParamsDto.calls.count()).toEqual(1);
       expect(component.productName.value).toEqual('');
+      expect(component.productCode.value).toEqual('');
+      expect(component.productGenre.value).toEqual('');
+      expect(component.endOfSale.value).toBeFalsy();
     });
   });
 
-  describe('clicks clear button', () => {
+  describe('#clickSearchButton', () => {
     it('should search', () => {
       productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
       component.clickSearchButton();
@@ -264,7 +227,7 @@ describe('ProductListingPageComponent', () => {
     });
   });
 
-  describe('clicks list row', () => {
+  describe('#clickListRow', () => {
     it('should move to new page', () => {
       const expectedProductSearchResponseDto: ProductSearchResponseDto =
         expectedProductSearchListResponseDto.productSearchResponseDtos[0];
@@ -274,7 +237,8 @@ describe('ProductListingPageComponent', () => {
       expect(router.navigate).toHaveBeenCalledTimes(1);
     });
   });
-  describe('unselectProductGenre', () => {
+
+  describe('#unselectProductGenre', () => {
     it('should unselect genre', () => {
       component.productGenre.setValue('1');
       component.unselectProductGenre();
@@ -401,3 +365,66 @@ describe('ProductListingPageComponent', () => {
     });
   });
 });
+
+function createExpectedGenres() {
+  return Array('1', '2', '3');
+}
+
+function createExpectedUser(): User {
+  const user: User = new User();
+  user.userAccount = 'userAccount';
+  user.userCurrency = 'JPY';
+  user.userLanguage = 'ja';
+  user.userLocale = 'ja-JP';
+  user.userName = 'userName';
+  user.userTimezone = 'UTC';
+  return user;
+}
+
+function createExpectedProductListingSearchParamsDto() {
+  const productListingSearchParamsDto: ProductListingSearchParamsDto = {
+    endOfSale: true,
+    pageIndex: 1,
+    pageSize: 50,
+    productCode: 'productCode',
+    productGenre: '1',
+    productName: 'productName'
+  };
+  return productListingSearchParamsDto;
+}
+
+function createExpectedSearchParamsDtoPartlyUndefined() {
+  const productListingSearchParamsDto: ProductListingSearchParamsDto = {
+    endOfSale: true,
+    pageIndex: 1,
+    pageSize: 50,
+    productCode: undefined,
+    productGenre: undefined,
+    productName: undefined
+  };
+  return productListingSearchParamsDto;
+}
+
+function createExpectedProductSearchListResponseDto(): ProductSearchListResponseDto {
+  const productSearchResponseDto: ProductSearchResponseDto[] = [
+    {
+      no: 1,
+      productName: 'productName',
+      productCode: 'productCode',
+      productGenre: '1',
+      productImageUrl: 'productImageUrl',
+      productSizeStandard: 'productSizeStandard',
+      productColor: 'productColor',
+      productUnitPrice: 123,
+      productStockQuantity: 456,
+      endOfSale: false
+    }
+  ];
+  const productSearchListResponseDto: ProductSearchListResponseDto = {
+    productSearchResponseDtos: productSearchResponseDto,
+    pageIndex: 1,
+    resultsLength: 1
+  };
+
+  return productSearchListResponseDto;
+}

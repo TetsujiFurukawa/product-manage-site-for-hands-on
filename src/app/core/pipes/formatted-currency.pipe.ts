@@ -11,10 +11,15 @@ import { ParseHelper } from '../utilities/parse-helper';
 export class FormattedCurrencyPipe implements PipeTransform {
   transform(value: any, locale: string, currency: string): any {
     const regexp = new RegExp(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD);
+
+    // If the format is not proper, returnes the character string without conversion.
     if (!value.toString().match(regexp)) {
       return value;
     }
-    return new CurrencyPipe(locale).transform(this.parse(value.toString(), locale, currency), currency, '', '', locale);
+    // Converts after parsing once
+    const parsedValue = this.parse(value.toString(), locale, currency);
+
+    return new CurrencyPipe(locale).transform(parsedValue, currency, '', '', locale);
   }
 
   parse(value: any, locale: string, currency: string): any {

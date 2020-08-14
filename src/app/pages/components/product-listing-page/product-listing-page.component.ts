@@ -75,7 +75,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked, Af
   productSearchResponseDtos: ProductSearchResponseDto[];
   resultsLength = 0;
 
-  /** Pagenator */
+  /** Paginator */
   @ViewChild(MatPaginator)
   public paginator: MatPaginator;
   initialPageSize = 50;

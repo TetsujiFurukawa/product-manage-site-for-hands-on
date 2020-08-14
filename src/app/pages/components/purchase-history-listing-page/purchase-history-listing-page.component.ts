@@ -77,7 +77,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
   purchaseHistorySearchResponses: ProductPurchaseHistorySearchResponseDto[];
   resultsLength = 0;
 
-  /** Pagenator and DatePicker */
+  /** Paginator and DatePicker */
   @ViewChild(MatPaginator, { static: true }) public paginator: MatPaginator;
   @ViewChildren(MatDatePickerComponent) matDatePickerComponents!: QueryList<MatDatePickerComponent>;
 

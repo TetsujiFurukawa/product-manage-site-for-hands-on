@@ -69,7 +69,7 @@ describe('MatPaginatorI18nService', () => {
   });
 
   describe('#getAndInitTranslations', () => {
-    it('should set pagenator labels', () => {
+    it('should set paginator labels', () => {
       service.getAndInitTranslations();
       expect(service.itemsPerPageLabel).toBe('Items per page:');
       expect(service.nextPageLabel).toBe('Next page');

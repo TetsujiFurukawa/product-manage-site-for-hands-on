@@ -23,12 +23,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import {
-    ProductListingSearchParamsDto
-} from '../../models/dtos/requests/product-listing-search-params-dto';
-import {
-    ProductSearchListResponseDto
-} from '../../models/dtos/responses/product-search-list-response-dto';
+import { ProductListingSearchParamsDto } from '../../models/dtos/requests/product-listing-search-params-dto';
+import { ProductSearchListResponseDto } from '../../models/dtos/responses/product-search-list-response-dto';
 import { ProductSearchResponseDto } from '../../models/dtos/responses/product-search-response-dto';
 import { ProductListingPageComponent } from './product-listing-page.component';
 
@@ -425,6 +421,5 @@ function createExpectedProductSearchListResponseDto(): ProductSearchListResponse
     pageIndex: 1,
     resultsLength: 1
   };
-
   return productSearchListResponseDto;
 }

@@ -11,10 +11,15 @@ import { ParseHelper } from '../utilities/parse-helper';
 export class FormattedNumberPipe implements PipeTransform {
   transform(value: any, locale: string): any {
     const regexp = new RegExp(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD);
+
+    // If the format is not proper, returnes the character string without conversion.
     if (!value.toString().match(regexp)) {
       return value;
     }
-    return new DecimalPipe(locale).transform(this.parse(value.toString(), locale), '1.0-0', locale);
+    // Converts after parsing once
+    const parsedValue = this.parse(value.toString(), locale);
+
+    return new DecimalPipe(locale).transform(parsedValue, '1.0-0', locale);
   }
 
   parse(value: any, locale: string): any {

@@ -10,13 +10,13 @@ import { FormattedNumberInputDirective } from './formatted-number-input.directiv
 })
 class TestFormattedNumberInputComponent {}
 
-const formattedValue = '1,234,567';
-const nonFormattedValue = '1234567';
+const expectFormattedValue = '1,234,567';
+const expectNotFormattedValue = '1234567';
 
 describe('FormattedNumberInputDirective', () => {
   let component: TestFormattedNumberInputComponent;
   let fixture: ComponentFixture<TestFormattedNumberInputComponent>;
-  let hTMLInputElement: HTMLInputElement;
+  let htmlInputElement: HTMLInputElement;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -25,50 +25,50 @@ describe('FormattedNumberInputDirective', () => {
     });
     fixture = TestBed.createComponent(TestFormattedNumberInputComponent);
     component = fixture.componentInstance;
-    hTMLInputElement = fixture.debugElement.query(By.css('input')).nativeElement;
+    htmlInputElement = fixture.debugElement.query(By.css('input')).nativeElement;
     fixture.detectChanges();
   });
 
   describe('#onFocus', () => {
     it('should parse', () => {
-      hTMLInputElement.value = formattedValue;
-      hTMLInputElement.dispatchEvent(new Event('focus', {}));
+      htmlInputElement.value = expectFormattedValue;
+      htmlInputElement.dispatchEvent(new Event('focus', {}));
       fixture.detectChanges();
 
-      expect(hTMLInputElement.value).toBe(nonFormattedValue);
+      expect(htmlInputElement.value).toBe(expectNotFormattedValue);
     });
   });
 
   describe('#onBlur', () => {
     it('should transfer', () => {
-      hTMLInputElement.value = nonFormattedValue;
-      hTMLInputElement.dispatchEvent(new Event('blur', {}));
+      htmlInputElement.value = expectNotFormattedValue;
+      htmlInputElement.dispatchEvent(new Event('blur', {}));
       fixture.detectChanges();
 
-      expect(hTMLInputElement.value).toBe(formattedValue);
+      expect(htmlInputElement.value).toBe(expectFormattedValue);
     });
   });
 
   describe('#beforePaste', () => {
     it('should transfer', () => {
-      hTMLInputElement.value = formattedValue;
+      htmlInputElement.value = expectFormattedValue;
       const dataTransfer = new DataTransfer();
       dataTransfer.setData('text/plain', '');
       const clipboardEvent = new ClipboardEvent('paste', { clipboardData: dataTransfer });
-      hTMLInputElement.dispatchEvent(clipboardEvent);
+      htmlInputElement.dispatchEvent(clipboardEvent);
       fixture.detectChanges();
 
-      expect(hTMLInputElement.value).toBe(nonFormattedValue);
+      expect(htmlInputElement.value).toBe(expectNotFormattedValue);
     });
   });
 
   describe('#onKeyUp', () => {
     it('should transfer', () => {
-      hTMLInputElement.value = formattedValue;
-      hTMLInputElement.dispatchEvent(new Event('keyup', {}));
+      htmlInputElement.value = expectFormattedValue;
+      htmlInputElement.dispatchEvent(new Event('keyup', {}));
       fixture.detectChanges();
 
-      expect(hTMLInputElement.value).toBe(nonFormattedValue);
+      expect(htmlInputElement.value).toBe(expectNotFormattedValue);
     });
   });
 });

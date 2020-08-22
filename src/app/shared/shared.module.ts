@@ -15,7 +15,7 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 
 @NgModule({
   declarations: [HeaderComponent, FooterComponent, SidenavComponent],
-  imports: [CommonModule, HttpClientModule, MaterialModule, RouterModule, CoreModule, NgxTranslateModule],
+  imports: [CommonModule, MaterialModule, RouterModule, CoreModule, NgxTranslateModule],
   exports: [HeaderComponent, FooterComponent, SidenavComponent]
 })
 export class SharedModule {}

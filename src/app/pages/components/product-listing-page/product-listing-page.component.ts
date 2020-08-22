@@ -28,7 +28,6 @@ import { ProductSearchResponseDto } from '../../models/dtos/responses/product-se
 export class ProductListingPageComponent implements OnInit, AfterViewChecked, AfterViewInit {
   constructor(
     private accountService: AccountService,
-    public formattedCurrencyPipe: FormattedCurrencyPipe,
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
     private productService: ProductService,

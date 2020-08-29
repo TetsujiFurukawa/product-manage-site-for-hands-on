@@ -119,7 +119,9 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
         map((data) => {
           this.loadingService.stopLoading();
           this.resultsLength = data.resultsLength;
-          this.paginator.pageIndex = data.pageIndex;
+          if (this.paginator.pageIndex !== data.pageIndex) {
+            this.paginator.pageIndex = data.pageIndex;
+          }
           return data.productPurchaseHistorySearchResponseDtos;
         })
       )

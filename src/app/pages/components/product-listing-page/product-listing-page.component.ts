@@ -135,7 +135,9 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked, Af
         map((data) => {
           this.loadingService.stopLoading();
           this.resultsLength = data.resultsLength;
-          this.paginator.pageIndex = data.pageIndex;
+          if (this.paginator.pageIndex !== data.pageIndex) {
+            this.paginator.pageIndex = data.pageIndex;
+          }
 
           return data.productSearchResponseDtos;
         })
@@ -216,15 +218,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked, Af
   }
 
   private createHttpParams(productListingSearchParamsDto: ProductListingSearchParamsDto): HttpParams {
-    const conditions = {
-      productName: productListingSearchParamsDto.productName,
-      productCode: productListingSearchParamsDto.productCode,
-      productGenre: productListingSearchParamsDto.productGenre,
-      endOfSale: productListingSearchParamsDto.endOfSale,
-      pageSize: productListingSearchParamsDto.pageSize,
-      pageIndex: productListingSearchParamsDto.pageIndex
-    };
-    const paramsOptions = { fromObject: conditions } as any;
+    const paramsOptions = { fromObject: productListingSearchParamsDto } as any;
     const params = new HttpParams(paramsOptions);
     return params;
   }

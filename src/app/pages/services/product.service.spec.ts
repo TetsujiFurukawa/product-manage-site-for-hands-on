@@ -240,10 +240,10 @@ describe('ProductService', () => {
       req.flush(expectedResponse);
     });
 
-    it('should return null 404 Not Found', () => {
+    it('should return [] 404 Not Found', () => {
       const msg = '404 Not Found';
       service.getGenres().subscribe((response) => {
-        expect(response).toBeNull();
+        expect(response).toEqual([]);
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
       }, fail);
 

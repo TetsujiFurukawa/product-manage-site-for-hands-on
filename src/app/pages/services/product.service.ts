@@ -113,7 +113,7 @@ export class ProductService {
     return this.http.get<string[]>(webApiUrl).pipe(
       catchError((error) => {
         this.errorMessageService.setupPageErrorMessageFromResponse(error);
-        return of(null as string[]);
+        return of([] as string[]);
       })
     );
   }

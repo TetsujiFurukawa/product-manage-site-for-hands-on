@@ -28,7 +28,7 @@ export class ParseHelper {
 
   private static parse(actualThousandsSeparator: string, value: any): string {
     const HalfWidthBlank = ' ';
-    const actualThousandSeparatorRegex = ParseHelper.createThousandSeparatorRegex(actualThousandsSeparator);
+    const escapedActualThousandSeparator = ParseHelper.escapePeriod(actualThousandsSeparator);
 
     return (
       value
@@ -36,19 +36,15 @@ export class ParseHelper {
         // First converts with half-width blank
         .replace(new RegExp(HalfWidthBlank, 'g'), '')
         // Converts with actual thousand separator regex
-        .replace(new RegExp(actualThousandSeparatorRegex, 'g'), '')
+        .replace(new RegExp(escapedActualThousandSeparator, 'g'), '')
     );
   }
 
-  private static createThousandSeparatorRegex(thousandSeparator: string): string {
-    let thousandSeparatorRegex: string;
-
+  private static escapePeriod(thousandSeparator: string): string {
     if (thousandSeparator === '.') {
-      // Escapes if thousand separator is dot
-      thousandSeparatorRegex = '\\' + thousandSeparator;
-    } else {
-      thousandSeparatorRegex = thousandSeparator;
+      // Escapes if thousand separator is Period
+      return '\\' + thousandSeparator;
     }
-    return thousandSeparatorRegex;
+    return thousandSeparator;
   }
 }

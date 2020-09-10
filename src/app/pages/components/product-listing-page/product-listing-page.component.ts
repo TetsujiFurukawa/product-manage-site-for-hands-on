@@ -173,19 +173,8 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked, Af
   }
 
   private setupSearchConditions(): void {
-    // Creates an initial object of productListingSearchParamsDto.
-    let productListingSearchParamsDto: ProductListingSearchParamsDto = {
-      productName: '',
-      productCode: '',
-      productGenre: '',
-      endOfSale: false,
-      pageSize: this.initialPageSize,
-      pageIndex: 0
-    };
     // Gets past search conditions from searchParamsService.
-    productListingSearchParamsDto = this.searchParamsService.getProductListingSearchParamsDto(
-      productListingSearchParamsDto
-    );
+    const productListingSearchParamsDto = this.searchParamsService.getProductListingSearchParamsDto();
     // If the past search conditions can be acquired, the value is set on the screen.
     if (productListingSearchParamsDto) {
       if (productListingSearchParamsDto.productName) {

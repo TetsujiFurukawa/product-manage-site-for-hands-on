@@ -23,16 +23,17 @@ export class SearchParamsService {
 
   /**
    * Gets product listing search params
-   * @param productListingSearchParamsDto product listing search params
    * @returns product listing search params
    */
-  getProductListingSearchParamsDto(
-    productListingSearchParamsDto: ProductListingSearchParamsDto
-  ): ProductListingSearchParamsDto {
-    return SessionStorageService.getItem(
-      AppConst.STORAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST,
-      productListingSearchParamsDto
-    );
+  getProductListingSearchParamsDto(): ProductListingSearchParamsDto {
+    return SessionStorageService.getItem(AppConst.STORAGE_KEY_SEARCH_PARAMS_PRODUCT_LIST, {
+      productName: '',
+      productCode: '',
+      productGenre: '',
+      endOfSale: false,
+      pageSize: 0,
+      pageIndex: 0
+    });
   }
 
   /**

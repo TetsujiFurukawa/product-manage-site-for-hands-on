@@ -231,7 +231,9 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
       productGenre: this.productGenre.value,
       productSizeStandard: this.productSizeStandard.value,
       productColor: this.productColor.value,
-      productUnitPrice: this.formattedCurrencyPipe.parse(this.productUnitPrice.value, this.locale, this.currency),
+      productUnitPrice: Number(
+        this.formattedCurrencyPipe.parse(this.productUnitPrice.value, this.locale, this.currency).replace(',', '.')
+      ),
       endOfSale: this.endOfSale.value,
       endOfSaleDate: null,
       productImage: this.productImage.value,

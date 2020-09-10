@@ -9,7 +9,7 @@ import { ParseHelper } from '../utilities/parse-helper';
   name: 'formattedCurrency'
 })
 export class FormattedCurrencyPipe implements PipeTransform {
-  transform(value: any, locale: string, currency: string): any {
+  transform(value: any, locale: string, currency: string): string {
     const regexp = new RegExp(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD);
 
     // If the format is not proper, returnes the character string without conversion.
@@ -22,7 +22,7 @@ export class FormattedCurrencyPipe implements PipeTransform {
     return new CurrencyPipe(locale).transform(parsedValue, currency, '', '', locale);
   }
 
-  parse(value: any, locale: string, currency: string): any {
+  parse(value: any, locale: string, currency: string): string {
     return ParseHelper.parseCurrencyToNumber(value.toString(), locale, currency);
     // return value.toString().replace(/,/g, '');
   }

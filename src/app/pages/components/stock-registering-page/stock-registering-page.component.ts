@@ -159,8 +159,8 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   private createProductStockRequestDto(): ProductStockRequestDto {
     const productStockRequestDto: ProductStockRequestDto = {
       productCode: this.productCode.value,
-      productStockQuantity: this.formattedNumberPipe.parse(this.productStockQuantity.value, this.locale),
-      addProductStockQuantity: this.formattedNumberPipe.parse(this.addProductStockQuantity.value, this.locale)
+      productStockQuantity: Number(this.formattedNumberPipe.parse(this.productStockQuantity.value, this.locale)),
+      addProductStockQuantity: Number(this.formattedNumberPipe.parse(this.addProductStockQuantity.value, this.locale))
     };
     return productStockRequestDto;
   }

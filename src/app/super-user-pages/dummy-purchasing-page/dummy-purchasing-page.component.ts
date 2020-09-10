@@ -148,8 +148,8 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
    */
   blurProductPurchaseQuantity(): void {
     const productPurchaseAmount =
-      this.formattedCurrencyPipe.parse(this.productPurchaseUnitPrice.value, this.locale, this.currency) *
-      this.formattedCurrencyPipe.parse(this.productPurchaseQuantity.value, this.locale, this.currency);
+      Number(this.formattedCurrencyPipe.parse(this.productPurchaseUnitPrice.value, this.locale, this.currency)) *
+      Number(this.formattedCurrencyPipe.parse(this.productPurchaseQuantity.value, this.locale, this.currency));
     this.productPurchaseAmount.setValue(
       this.formattedCurrencyPipe.transform(String(productPurchaseAmount), this.locale, this.currency)
     );
@@ -188,11 +188,9 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     const productPurchaseRequestDto: ProductPurchaseRequestDto = {
       productCode: this.productCode.value,
       productPurchaseName: this.productPurchaseName.value,
-      productStockQuantity: this.formattedNumberPipe.parse(this.productStockQuantity.value, this.locale),
-      productPurchaseQuantity: this.formattedCurrencyPipe.parse(
-        this.productPurchaseQuantity.value,
-        this.locale,
-        this.currency
+      productStockQuantity: Number(this.formattedNumberPipe.parse(this.productStockQuantity.value, this.locale)),
+      productPurchaseQuantity: Number(
+        this.formattedCurrencyPipe.parse(this.productPurchaseQuantity.value, this.locale, this.currency)
       )
     };
     return productPurchaseRequestDto;

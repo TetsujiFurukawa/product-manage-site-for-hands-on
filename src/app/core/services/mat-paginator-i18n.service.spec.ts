@@ -37,8 +37,6 @@ describe('MatPaginatorI18nService', () => {
     it('should be created', () => {
       spyOn(translate.onLangChange, 'emit').and.callThrough();
       expect(service).toBeTruthy();
-      expect(service.getAndInitTranslations).not.toBeNull();
-
       translate.onLangChange.emit();
       expect(translate.onLangChange.emit).toHaveBeenCalled();
     });
@@ -70,7 +68,8 @@ describe('MatPaginatorI18nService', () => {
 
   describe('#getAndInitTranslations', () => {
     it('should set paginator labels', () => {
-      service.getAndInitTranslations();
+      const setupLabels = 'setupLabels';
+      service[setupLabels]();
       expect(service.itemsPerPageLabel).toBe('Items per page:');
       expect(service.nextPageLabel).toBe('Next page');
       expect(service.previousPageLabel).toBe('Previous page');

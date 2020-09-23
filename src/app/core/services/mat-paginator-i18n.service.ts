@@ -5,8 +5,6 @@ import { TranslateService } from '@ngx-translate/core';
 const ITEMS_PER_PAGE = 'Items per page:';
 const NEXT_PAGE = 'Next page';
 const PREV_PAGE = 'Previous page';
-const FIRST_PAGE = 'First page';
-const LAST_PAGE = 'Last page';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +35,5 @@ export class MatPaginatorI18nService extends MatPaginatorIntl {
     this.itemsPerPageLabel = this.translate.instant(ITEMS_PER_PAGE);
     this.nextPageLabel = this.translate.instant(NEXT_PAGE);
     this.previousPageLabel = this.translate.instant(PREV_PAGE);
-    this.firstPageLabel = this.translate.instant(FIRST_PAGE);
-    this.lastPageLabel = this.translate.instant(LAST_PAGE);
   }
 }

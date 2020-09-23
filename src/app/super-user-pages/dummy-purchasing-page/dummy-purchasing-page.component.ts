@@ -60,7 +60,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     Validators.required,
     Validators.min(1),
     Validators.max(99999999),
-    Validators.pattern(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD)
+    Validators.pattern(RegexConst.SINGLE_BYTE_NUMERIC_COMMA_PERIOD_SPACE)
   ]);
   productPurchaseAmount = new FormControl('');
   productImage = new FormControl(null);

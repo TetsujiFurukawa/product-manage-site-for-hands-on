@@ -10,7 +10,7 @@ import { ParseHelper } from '../utilities/parse-helper';
 })
 export class FormattedCurrencyPipe implements PipeTransform {
   transform(value: any, locale: string, currency: string): string {
-    const regexp = new RegExp(RegexConst.HALF_WIDTH_ALPHANUMERIC_COMMA_PERIOD);
+    const regexp = new RegExp(RegexConst.SINGLE_BYTE_NUMERIC_COMMA_PERIOD_SPACE);
 
     // If the format is not proper, returnes the character string without conversion.
     if (!value.toString().match(regexp)) {

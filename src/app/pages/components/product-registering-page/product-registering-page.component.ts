@@ -1,12 +1,12 @@
 import {
     YesNoDialogComponent
 } from 'src/app/core/components/yes-no-dialog/yes-no-dialog.component';
+import { RegexConst } from 'src/app/core/constants/regex-const';
 import { YesNoDialogData } from 'src/app/core/models/yes-no-dialog-data';
 import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { AppConst } from 'src/app/pages/constants/app-const';
-import { RegexConst } from 'src/app/pages/constants/regex-const';
 import { UrlConst } from 'src/app/pages/constants/url-const';
 import { ProductDto } from 'src/app/pages/models/dtos/product-dto';
 import { AccountService } from 'src/app/pages/services/account.service';

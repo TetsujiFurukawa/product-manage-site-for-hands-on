@@ -1,11 +1,11 @@
 import {
     YesNoDialogComponent
 } from 'src/app/core/components/yes-no-dialog/yes-no-dialog.component';
+import { RegexConst } from 'src/app/core/constants/regex-const';
 import { YesNoDialogData } from 'src/app/core/models/yes-no-dialog-data';
 import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { AppConst } from 'src/app/pages/constants/app-const';
-import { RegexConst } from 'src/app/pages/constants/regex-const';
 import { UrlConst } from 'src/app/pages/constants/url-const';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductStockService } from 'src/app/pages/services/product-stock.service';

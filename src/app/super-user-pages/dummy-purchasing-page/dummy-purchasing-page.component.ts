@@ -1,12 +1,12 @@
 import {
     YesNoDialogComponent
 } from 'src/app/core/components/yes-no-dialog/yes-no-dialog.component';
+import { RegexConst } from 'src/app/core/constants/regex-const';
 import { YesNoDialogData } from 'src/app/core/models/yes-no-dialog-data';
 import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { AppConst } from 'src/app/pages/constants/app-const';
-import { RegexConst } from 'src/app/pages/constants/regex-const';
 import { UrlConst } from 'src/app/pages/constants/url-const';
 import {
     ProductPurchaseRequestDto
@@ -149,7 +149,12 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   blurProductPurchaseQuantity(): void {
     const productPurchaseAmount =
       Number(this.formattedCurrencyPipe.parse(this.productPurchaseUnitPrice.value, this.locale, this.currency)) *
-      Number(this.formattedCurrencyPipe.parse(this.productPurchaseQuantity.value, this.locale, this.currency));
+      Number(
+        this.formattedNumberPipe.parse(
+          this.formattedNumberPipe.transform(this.productPurchaseQuantity.value, this.locale),
+          this.locale
+        )
+      );
     this.productPurchaseAmount.setValue(
       this.formattedCurrencyPipe.transform(String(productPurchaseAmount), this.locale, this.currency)
     );

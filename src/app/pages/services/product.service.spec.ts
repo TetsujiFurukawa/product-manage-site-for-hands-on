@@ -14,6 +14,16 @@ import { ProductSearchResponseDto } from '../models/dtos/responses/product-searc
 import { ProductService } from './product.service';
 
 describe('ProductService', () => {
+  const expectedProductSearchResponseDto: ProductSearchResponseDto = createProductSearchResponseDto();
+  const expectedProductSearchListResponseDto: ProductSearchListResponseDto = {
+    productSearchResponseDtos: Array(expectedProductSearchResponseDto),
+    pageIndex: 0,
+    resultsLength: 1
+  };
+  const expectedGenresArrayResponse: string[] = createGenresArray();
+
+  const expectedProductDtoResponse: ProductDto = createProductDto();
+
   let httpTestingController: HttpTestingController;
   let service: ProductService;
   let successMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setMessageProperty: jasmine.Spy };
@@ -55,27 +65,8 @@ describe('ProductService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT_SEARCH;
 
     it('should return expected response', () => {
-      const productSearchResponseDto: ProductSearchResponseDto = {
-        endOfSale: false,
-        no: 1,
-        productCode: 'productCode',
-        productColor: 'productColor',
-        productGenre: '1',
-        productImageUrl: 'productImageUrl',
-        productName: 'productName',
-        productSizeStandard: 'productSizeStandard',
-        productStockQuantity: 1,
-        productUnitPrice: 1
-      };
-
-      const expectedResponse: ProductSearchListResponseDto = {
-        productSearchResponseDtos: Array(productSearchResponseDto),
-        pageIndex: 1,
-        resultsLength: 1
-      };
-
       service.getProductList(new HttpParams()).subscribe((response) => {
-        expect(response).toEqual(expectedResponse);
+        expect(response).toEqual(expectedProductSearchListResponseDto);
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
@@ -85,7 +76,7 @@ describe('ProductService', () => {
       expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
-      req.flush(expectedResponse);
+      req.flush(expectedProductSearchListResponseDto);
     });
 
     it('should return null 404 Not Found', () => {
@@ -109,10 +100,8 @@ describe('ProductService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT;
 
     it('should return expected response', () => {
-      const expectedResponse: ProductDto = createProductDto();
-
       service.getProduct('productCode').subscribe((response) => {
-        expect(response).toEqual(expectedResponse);
+        expect(response).toEqual(expectedProductDtoResponse);
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
@@ -122,7 +111,7 @@ describe('ProductService', () => {
       expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
-      req.flush(expectedResponse);
+      req.flush(expectedProductDtoResponse);
     });
 
     it('should return null 404 Not Found', () => {
@@ -224,10 +213,8 @@ describe('ProductService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_GENRE;
 
     it('should return expected response', () => {
-      const expectedResponse: string[] = Array('1', '2', '3');
-
       service.getGenres().subscribe((response) => {
-        expect(response).toEqual(expectedResponse);
+        expect(response).toEqual(expectedGenresArrayResponse);
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
@@ -237,7 +224,7 @@ describe('ProductService', () => {
       expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
-      req.flush(expectedResponse);
+      req.flush(expectedGenresArrayResponse);
     });
 
     it('should return [] 404 Not Found', () => {
@@ -258,18 +245,37 @@ describe('ProductService', () => {
   });
 });
 
-function createProductDto() {
+function createProductSearchResponseDto(): ProductSearchResponseDto {
   return {
     endOfSale: false,
-    endOfSaleDate: new Date(),
+    no: 1,
     productCode: 'productCode',
     productColor: 'productColor',
     productGenre: '1',
-    productImage: 'productImage',
+    productImageUrl: 'productImageUrl',
     productName: 'productName',
-    productSeq: 1,
     productSizeStandard: 'productSizeStandard',
+    productStockQuantity: 1,
+    productUnitPrice: 1
+  };
+}
+
+function createGenresArray(): string[] {
+  return Array('1', '2', '3');
+}
+
+function createProductDto() {
+  return {
+    productSeq: 1,
+    productCode: 'productCode',
+    productName: 'productName',
+    productGenre: '1',
+    productImage: 'productImage',
+    productSizeStandard: 'productSizeStandard',
+    productColor: 'productColor',
     productUnitPrice: 1,
+    endOfSale: false,
+    endOfSaleDate: new Date(),
     updateDate: new Date()
   };
 }

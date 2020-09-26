@@ -23,8 +23,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { ProductListingSearchParamsDto } from '../../models/dtos/requests/product-listing-search-params-dto';
-import { ProductSearchListResponseDto } from '../../models/dtos/responses/product-search-list-response-dto';
+import {
+    ProductListingSearchParamsDto
+} from '../../models/dtos/requests/product-listing-search-params-dto';
+import {
+    ProductSearchListResponseDto
+} from '../../models/dtos/responses/product-search-list-response-dto';
 import { ProductSearchResponseDto } from '../../models/dtos/responses/product-search-response-dto';
 import { ProductListingPageComponent } from './product-listing-page.component';
 
@@ -42,6 +46,10 @@ describe('ProductListingPageComponent', () => {
   let router: Router;
 
   /** Initial values */
+  const VALUE_PRODUCT_CODE = 'productCode';
+  const VALUE_PRODUCT_NAME = 'productName';
+  const VALUE_PRODUCT_GENRE = '1';
+  const VALUE_END_OF_SALE_TRUE = true;
   const INITIAL_VALUE_PAGE_INDEX = 0;
   const INITIAL_VALUE_PAGE_SIZE = 50;
 
@@ -118,7 +126,7 @@ describe('ProductListingPageComponent', () => {
     });
   });
 
-  describe('#ngAfterViewChecked', () => {
+  describe('#ngAfterViewInit', () => {
     describe('When SearchParamsDto is not registered in SearchParamsService', () => {
       it('should not init search criteria', () => {
         searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(null);
@@ -196,10 +204,10 @@ describe('ProductListingPageComponent', () => {
 
   describe('#clickClearButton', () => {
     it('should clear', () => {
-      component.productName.setValue('productName');
-      component.productCode.setValue('productCode');
-      component.productGenre.setValue('1');
-      component.endOfSale.setValue(true);
+      component.productName.setValue(VALUE_PRODUCT_NAME);
+      component.productCode.setValue(VALUE_PRODUCT_CODE);
+      component.productGenre.setValue(VALUE_PRODUCT_GENRE);
+      component.endOfSale.setValue(VALUE_END_OF_SALE_TRUE);
 
       component.clickClearButton();
 
@@ -212,14 +220,25 @@ describe('ProductListingPageComponent', () => {
   });
 
   describe('#clickSearchButton', () => {
-    it('should search', () => {
-      productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
-      component.clickSearchButton();
+    describe('If the page index does not change after searching, the paginator pageindex does not change', () => {
+      it('should search', () => {
+        productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
+        component.clickSearchButton();
 
-      expect(productServiceSpy.getProductList.calls.count()).toEqual(1);
-      expect(component.productSearchResponseDtos).toEqual(
-        expectedProductSearchListResponseDto.productSearchResponseDtos
-      );
+        expect(productServiceSpy.getProductList.calls.count()).toEqual(1);
+        expect(component.productSearchResponseDtos).toEqual(
+          expectedProductSearchListResponseDto.productSearchResponseDtos
+        );
+      });
+    });
+    describe('If the page index change after searching, paginator pageindex will be overwritten', () => {
+      it('should search', () => {
+        component.paginator.pageIndex = 1;
+        productServiceSpy.getProductList.and.returnValue(of(expectedProductSearchListResponseDto));
+        component.clickSearchButton();
+
+        expect(component.paginator.pageIndex).toEqual(expectedProductSearchListResponseDto.pageIndex);
+      });
     });
   });
 
@@ -236,7 +255,7 @@ describe('ProductListingPageComponent', () => {
 
   describe('#unselectProductGenre', () => {
     it('should unselect genre', () => {
-      component.productGenre.setValue('1');
+      component.productGenre.setValue(VALUE_PRODUCT_GENRE);
       component.unselectProductGenre();
 
       expect(component.productGenre.value).toEqual('');
@@ -286,78 +305,51 @@ describe('ProductListingPageComponent', () => {
 
   describe('DOM input test', () => {
     it('product name', () => {
-      const expectedValue = expectedProductListingSearchParamsDto.productName;
+      const expectedValue = VALUE_PRODUCT_NAME;
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', expectedValue);
       expect(component.productName.value).toEqual(expectedValue);
     });
     it('product code', () => {
-      const expectedValue = expectedProductListingSearchParamsDto.productCode;
+      const expectedValue = VALUE_PRODUCT_CODE;
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedValue);
       expect(component.productCode.value).toEqual(expectedValue.toUpperCase());
     });
     it('product genre', () => {
+      const expectedValue = VALUE_PRODUCT_GENRE;
       HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(
         fixture,
         '#product-genre',
         '.product-genre-option',
-        Number(expectedProductListingSearchParamsDto.productGenre)
+        Number(expectedValue)
       );
-      expect(component.productGenre.value).toEqual(expectedProductListingSearchParamsDto.productGenre);
+      expect(component.productGenre.value).toEqual(expectedValue);
     });
     it('end of sale', () => {
       // Clicks checkbox's label
       HtmlElementUtility.clickHtmlElement<typeof component>(fixture, '#end-of-sale label');
-      expect(component.endOfSale.value).toEqual(true);
+      expect(component.endOfSale.value).toEqual(VALUE_END_OF_SALE_TRUE);
     });
   });
 
   describe('DOM input test', () => {
-    it('Should Enter input and create request / http params', () => {
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
-        fixture,
-        '#product-name',
-        expectedProductListingSearchParamsDto.productName
-      );
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
-        fixture,
-        '#product-code',
-        expectedProductListingSearchParamsDto.productCode
-      );
-      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(
-        fixture,
-        '#product-genre',
-        '.product-genre-option',
-        Number(expectedProductListingSearchParamsDto.productGenre)
-      );
-      HtmlElementUtility.clickHtmlElement<typeof component>(fixture, '#end-of-sale label');
+    describe('#createSearchParamsDto', () => {
+      it('Should create product listing search params dto correctly', () => {
+        HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', VALUE_PRODUCT_NAME);
+        HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', VALUE_PRODUCT_CODE);
+        HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(
+          fixture,
+          '#product-genre',
+          '.product-genre-option',
+          Number(VALUE_PRODUCT_GENRE)
+        );
+        HtmlElementUtility.clickHtmlElement<typeof component>(fixture, '#end-of-sale label');
 
-      fixture.detectChanges();
-      // tslint:disable-next-line: no-string-literal
-      const actualProductListingSearchParamsDto: ProductListingSearchParamsDto = component['createSearchParamsDto']();
+        fixture.detectChanges();
 
-      expect(actualProductListingSearchParamsDto.productName).toEqual(
-        expectedProductListingSearchParamsDto.productName
-      );
-      expect(actualProductListingSearchParamsDto.productCode).toEqual(
-        expectedProductListingSearchParamsDto.productCode.toUpperCase()
-      );
-      expect(actualProductListingSearchParamsDto.productGenre).toEqual('1');
-      expect(actualProductListingSearchParamsDto.endOfSale).toEqual(true);
-      expect(actualProductListingSearchParamsDto.pageIndex).toEqual(0);
-      expect(actualProductListingSearchParamsDto.pageSize).toEqual(50);
-
-      // testing http params part
-      // tslint:disable-next-line: no-string-literal
-      const actualHttpParams: HttpParams = component['createHttpParams'](actualProductListingSearchParamsDto);
-
-      expect(actualHttpParams.get('productName')).toEqual(expectedProductListingSearchParamsDto.productName);
-      expect(actualHttpParams.get('productCode')).toEqual(
-        expectedProductListingSearchParamsDto.productCode.toUpperCase()
-      );
-      expect(actualHttpParams.get('productGenre')).toEqual('1');
-      expect(actualHttpParams.get('endOfSale')).toBeTruthy();
-      expect(actualHttpParams.get('pageSize').toString()).toEqual('50');
-      expect(actualHttpParams.get('pageIndex').toString()).toEqual('0');
+        const privateMethodName = 'createSearchParamsDto';
+        const resultProductListingSearchParamsDto: ProductListingSearchParamsDto = component[privateMethodName]();
+        expect(resultProductListingSearchParamsDto).toEqual(expectedProductListingSearchParamsDto);
+      });
     });
   });
 });
@@ -379,24 +371,24 @@ function createExpectedUser(): User {
 
 function createExpectedProductListingSearchParamsDto() {
   const productListingSearchParamsDto: ProductListingSearchParamsDto = {
-    endOfSale: true,
-    pageIndex: 1,
-    pageSize: 50,
-    productCode: 'productCode',
+    productCode: 'PRODUCTCODE',
+    productName: 'productName',
     productGenre: '1',
-    productName: 'productName'
+    endOfSale: true,
+    pageIndex: 0,
+    pageSize: 50
   };
   return productListingSearchParamsDto;
 }
 
 function createExpectedSearchParamsDtoPartlyUndefined() {
   const productListingSearchParamsDto: ProductListingSearchParamsDto = {
-    endOfSale: true,
-    pageIndex: 1,
-    pageSize: 50,
     productCode: undefined,
+    productName: undefined,
     productGenre: undefined,
-    productName: undefined
+    endOfSale: true,
+    pageIndex: 0,
+    pageSize: 50
   };
   return productListingSearchParamsDto;
 }
@@ -406,7 +398,7 @@ function createExpectedProductSearchListResponseDto(): ProductSearchListResponse
     {
       no: 1,
       productName: 'productName',
-      productCode: 'productCode',
+      productCode: 'PRODUCTCODE',
       productGenre: '1',
       productImageUrl: 'productImageUrl',
       productSizeStandard: 'productSizeStandard',
@@ -418,7 +410,7 @@ function createExpectedProductSearchListResponseDto(): ProductSearchListResponse
   ];
   const productSearchListResponseDto: ProductSearchListResponseDto = {
     productSearchResponseDtos: productSearchResponseDto,
-    pageIndex: 1,
+    pageIndex: 0,
     resultsLength: 1
   };
   return productSearchListResponseDto;

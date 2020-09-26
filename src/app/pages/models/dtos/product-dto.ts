@@ -1,7 +1,7 @@
 export interface ProductDto {
   productSeq: number;
-  productName: string;
   productCode: string;
+  productName: string;
   productGenre: string;
   productImage: string;
   productSizeStandard: string;

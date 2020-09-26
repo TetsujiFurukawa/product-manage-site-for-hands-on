@@ -1,80 +1,122 @@
-import { HttpLoaderFactory } from 'src/app/ngx-translate/ngx-translate.module';
+import { TranslateTestingModule } from 'ngx-translate-testing';
 
-import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 import { MatPaginatorI18nService } from './mat-paginator-i18n.service';
 
 describe('MatPaginatorI18nService', () => {
+  const privateMethodNameSetupLabels = 'setupLabels';
+
   let service: MatPaginatorI18nService;
-  let translate: TranslateService;
-  let http: HttpTestingController;
+  let translateService: TranslateService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [
-        HttpClientTestingModule,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
-      ],
-      providers: [TranslateService]
+      imports: [TranslateTestingModule.withTranslations({ ja: require('src/assets/i18n/ja.json') })]
     });
     service = TestBed.inject(MatPaginatorI18nService);
-    translate = TestBed.inject(TranslateService);
-    http = TestBed.inject(HttpTestingController);
+    translateService = TestBed.inject(TranslateService);
   });
 
   describe('#constractor', () => {
     it('should be created', () => {
-      spyOn(translate.onLangChange, 'emit').and.callThrough();
+      spyOn(translateService.onLangChange, 'emit').and.callThrough();
       expect(service).toBeTruthy();
-      translate.onLangChange.emit();
-      expect(translate.onLangChange.emit).toHaveBeenCalled();
+      translateService.onLangChange.emit();
+      expect(translateService.onLangChange.emit).toHaveBeenCalled();
     });
   });
 
   describe('#getRangeLabel', () => {
-    it('should return 0,0,0', () => {
-      expect(service.getRangeLabel(0, 0, 0)).toBe('0 / 0');
-    });
-    it('should return 0,0,1', () => {
-      expect(service.getRangeLabel(0, 0, 1)).toBe('0 / 1');
-    });
-    it('should return 1,10,1', () => {
-      expect(service.getRangeLabel(1, 10, 1)).toBe('11 – 20 / 1');
-    });
-    it('should return 0,10,1', () => {
-      expect(service.getRangeLabel(0, 10, 1)).toBe('1 – 1 / 1');
-    });
-    it('should return 0,50,1', () => {
-      expect(service.getRangeLabel(0, 50, 1)).toBe('1 – 1 / 1');
-    });
-    it('should return 1,10,20', () => {
-      expect(service.getRangeLabel(1, 10, 20)).toBe('11 – 20 / 20');
-    });
-    it('should return 1,50,100', () => {
-      expect(service.getRangeLabel(1, 50, 100)).toBe('51 – 100 / 100');
+    const parameters = [
+      {
+        page: 0,
+        pageSize: 10,
+        length: 0,
+        expectedValue: '0 / 0',
+        no: 1
+      },
+      {
+        page: 0,
+        pageSize: 10,
+        length: 1,
+        expectedValue: '1 – 1 / 1',
+        no: 2
+      },
+      {
+        page: 1,
+        pageSize: 10,
+        length: 11,
+        expectedValue: '11 – 11 / 11',
+        no: 3
+      },
+      {
+        page: 2,
+        pageSize: 10,
+        length: 21,
+        expectedValue: '21 – 21 / 21',
+        no: 4
+      },
+      {
+        page: 0,
+        pageSize: 50,
+        length: 1,
+        expectedValue: '1 – 1 / 1',
+        no: 5
+      },
+      {
+        page: 1,
+        pageSize: 10,
+        length: 20,
+        expectedValue: '11 – 20 / 20',
+        no: 6
+      },
+      {
+        page: 1,
+        pageSize: 50,
+        length: 100,
+        expectedValue: '51 – 100 / 100',
+        no: 7
+      }
+    ];
+
+    parameters.forEach((parameter) => {
+      it(
+        'should be displayed correctly as ' +
+          parameter.expectedValue +
+          ', When the page is ' +
+          parameter.page +
+          ' and pageSize is ' +
+          parameter.pageSize +
+          ' and length is ' +
+          parameter.length +
+          ' (no = ' +
+          parameter.no +
+          ')',
+        () => {
+          expect(service.getRangeLabel(parameter.page, parameter.pageSize, parameter.length)).toBe(
+            parameter.expectedValue
+          );
+        }
+      );
     });
   });
 
   describe('#getAndInitTranslations', () => {
-    it('should set paginator labels', () => {
-      const setupLabels = 'setupLabels';
-      service[setupLabels]();
-      expect(service.itemsPerPageLabel).toBe('Items per page:');
-      expect(service.nextPageLabel).toBe('Next page');
-      expect(service.previousPageLabel).toBe('Previous page');
-      expect(service.firstPageLabel).toBe('First page');
-      expect(service.lastPageLabel).toBe('Last page');
+    it('should set Japanese on the itemsPerPageLabel', () => {
+      service[privateMethodNameSetupLabels]();
+      expect(service.itemsPerPageLabel).toBe('件数：');
+    });
+    it('should set Japanese on the nextPageLabel', () => {
+      service[privateMethodNameSetupLabels]();
+      expect(service.nextPageLabel).toBe('次ページへ');
+    });
+    it('should set Japanese on the previousPageLabel', () => {
+      service[privateMethodNameSetupLabels]();
+      expect(service.previousPageLabel).toBe('前ページへ');
     });
   });
 });

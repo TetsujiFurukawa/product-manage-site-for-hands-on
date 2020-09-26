@@ -3,7 +3,13 @@ import { TestBed } from '@angular/core/testing';
 import { FormattedNumberPipe } from './formatted-number.pipe';
 
 describe('FormattedNumberPipe', () => {
+  const LOCALE_JP = 'ja-JP';
+  const LOCALE_EN = 'en-US';
+  const LOCALE_FR = 'fr-FR';
+  const LOCALE_DE = 'de-DE';
+
   let pipe: FormattedNumberPipe;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [FormattedNumberPipe]
@@ -17,18 +23,69 @@ describe('FormattedNumberPipe', () => {
     });
   });
   describe('#transform', () => {
-    it('should return transform result', () => {
-      const value = '1234567';
-      const locale = 'ja-JP';
-      const currency = 'JPY';
-      expect(pipe.transform(value, locale)).toEqual('1,234,567');
+    describe('When the value to be converted is a number, it should return transformed result', () => {
+      const parameters = [
+        {
+          value: '1234567',
+          locale: LOCALE_JP,
+          expectedValue: '1,234,567'
+        },
+        {
+          value: '1234,567',
+          locale: LOCALE_JP,
+          expectedValue: '1,234,567'
+        },
+        {
+          value: '1234567',
+          locale: LOCALE_EN,
+          expectedValue: '1,234,567'
+        },
+        {
+          value: '1,234567',
+          locale: LOCALE_EN,
+          expectedValue: '1,234,567'
+        },
+        {
+          value: '1234567',
+          locale: LOCALE_FR,
+          expectedValue: '1 234 567'
+        },
+        {
+          value: '1234567',
+          locale: LOCALE_DE,
+          expectedValue: '1.234.567'
+        }
+      ];
+
+      parameters.forEach((parameter) => {
+        it(
+          'should correctly converted from ' +
+            parameter.value +
+            ' to ' +
+            parameter.expectedValue +
+            ' in locale ' +
+            parameter.locale,
+          () => {
+            expect(pipe.transform(parameter.value, parameter.locale)).toEqual(parameter.expectedValue);
+          }
+        );
+      });
     });
 
-    it('should return transform result', () => {
-      const value = 'あいうえお';
+    describe('When the value to be converted is not a number, it should return non transformed result', () => {
+      it('should return non transformed result when the value to be converted is Japanese', () => {
+        const value = 'あいうえお';
+        const locale = 'ja-JP';
+        expect(pipe.transform(value, locale)).toEqual('あいうえお');
+      });
+    });
+  });
+
+  describe('#parse', () => {
+    it('should return parsed result', () => {
+      const value = '1,234,567';
       const locale = 'ja-JP';
-      const currency = 'JPY';
-      expect(pipe.transform(value, locale)).toEqual('あいうえお');
+      expect(pipe.parse(value, locale)).toEqual('1234567');
     });
   });
 });

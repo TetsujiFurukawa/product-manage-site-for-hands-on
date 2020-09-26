@@ -23,7 +23,7 @@ describe('ParseHelper', () => {
       },
       {
         locale: LOCALE_FR,
-        inputValue: '1 234 567',
+        inputValue: '1 234 567',
         expectedValue: '1234567'
       },
       {
@@ -57,14 +57,14 @@ describe('ParseHelper', () => {
       {
         locale: LOCALE_FR,
         currency: CURRENCY_EUR,
-        inputValue: '1 234 567,89',
-        expectedValue: '1234567,89'
+        inputValue: '1 234 567,89',
+        expectedValue: '1234567.89'
       },
       {
         locale: LOCALE_DE,
         currency: CURRENCY_EUR,
         inputValue: '1.234.567,89',
-        expectedValue: '1234567,89'
+        expectedValue: '1234567.89'
       }
     ];
 

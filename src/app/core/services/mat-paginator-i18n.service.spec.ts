@@ -7,8 +7,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatPaginatorI18nService } from './mat-paginator-i18n.service';
 
 describe('MatPaginatorI18nService', () => {
-  const privateMethodNameSetupLabels = 'setupLabels';
-
   let service: MatPaginatorI18nService;
   let translateService: TranslateService;
 
@@ -106,16 +104,18 @@ describe('MatPaginatorI18nService', () => {
   });
 
   describe('#getAndInitTranslations', () => {
+    const privateMethodName = 'setupLabels';
+
     it('should set Japanese on the itemsPerPageLabel', () => {
-      service[privateMethodNameSetupLabels]();
+      service[privateMethodName]();
       expect(service.itemsPerPageLabel).toBe('件数：');
     });
     it('should set Japanese on the nextPageLabel', () => {
-      service[privateMethodNameSetupLabels]();
+      service[privateMethodName]();
       expect(service.nextPageLabel).toBe('次ページへ');
     });
     it('should set Japanese on the previousPageLabel', () => {
-      service[privateMethodNameSetupLabels]();
+      service[privateMethodName]();
       expect(service.previousPageLabel).toBe('前ページへ');
     });
   });

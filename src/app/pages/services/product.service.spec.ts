@@ -24,8 +24,8 @@ describe('ProductService', () => {
 
   const expectedProductDtoResponse: ProductDto = createProductDto();
 
-  let httpTestingController: HttpTestingController;
   let service: ProductService;
+  let httpTestingController: HttpTestingController;
   let successMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setMessageProperty: jasmine.Spy };
   let errorMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setupPageErrorMessageFromResponse: jasmine.Spy };
 
@@ -46,8 +46,8 @@ describe('ProductService', () => {
         { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }
       ]
     });
-    httpTestingController = TestBed.inject(HttpTestingController);
     service = TestBed.inject(ProductService);
+    httpTestingController = TestBed.inject(HttpTestingController);
   });
 
   afterEach(() => {

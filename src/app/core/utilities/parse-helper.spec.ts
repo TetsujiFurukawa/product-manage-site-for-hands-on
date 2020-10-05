@@ -13,29 +13,29 @@ describe('ParseHelper', () => {
     const parameters = [
       {
         locale: LOCALE_JP,
-        inputValue: '1,234,567',
+        value: '1,234,567',
         expectedValue: '1234567'
       },
       {
         locale: LOCALE_EN,
-        inputValue: '1,234,567',
+        value: '1,234,567',
         expectedValue: '1234567'
       },
       {
         locale: LOCALE_FR,
-        inputValue: '1 234 567',
+        value: '1 234 567',
         expectedValue: '1234567'
       },
       {
         locale: LOCALE_DE,
-        inputValue: '1.234.567',
+        value: '1.234.567',
         expectedValue: '1234567'
       }
     ];
 
     parameters.forEach((parameter) => {
       it('should correctly converted in locale ' + parameter.locale, () => {
-        expect(ParseHelper.parseNumber(parameter.inputValue, parameter.locale)).toEqual(parameter.expectedValue);
+        expect(ParseHelper.parseNumber(parameter.value, parameter.locale)).toEqual(parameter.expectedValue);
       });
     });
   });
@@ -45,32 +45,32 @@ describe('ParseHelper', () => {
       {
         locale: LOCALE_JP,
         currency: CURRENCY_JPY,
-        inputValue: '1,234,567',
+        value: '1,234,567',
         expectedValue: '1234567'
       },
       {
         locale: LOCALE_EN,
         currency: CURRENCY_USD,
-        inputValue: '1,234,567.89',
+        value: '1,234,567.89',
         expectedValue: '1234567.89'
       },
       {
         locale: LOCALE_FR,
         currency: CURRENCY_EUR,
-        inputValue: '1 234 567,89',
+        value: '1 234 567,89',
         expectedValue: '1234567.89'
       },
       {
         locale: LOCALE_DE,
         currency: CURRENCY_EUR,
-        inputValue: '1.234.567,89',
+        value: '1.234.567,89',
         expectedValue: '1234567.89'
       }
     ];
 
     parameters.forEach((parameter) => {
       it('should correctly converted in locale ' + parameter.locale + ' and in currency ' + parameter.currency, () => {
-        expect(ParseHelper.parseCurrencyToNumber(parameter.inputValue, parameter.locale, parameter.currency)).toEqual(
+        expect(ParseHelper.parseCurrencyToNumber(parameter.value, parameter.locale, parameter.currency)).toEqual(
           parameter.expectedValue
         );
       });

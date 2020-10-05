@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SessionStorageService } from '../../core/services/session-storage.service';
 import {
     ProductListingSearchParamsDto
 } from '../models/dtos/requests/product-listing-search-params-dto';
@@ -10,14 +9,10 @@ describe('SearchParamsService', () => {
   const expectedProductListingSearchParamsDto: ProductListingSearchParamsDto = createProductListingSearchParamsDto();
 
   let service: SearchParamsService;
-  let sessionStorageService: SessionStorageService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [SessionStorageService]
-    });
+    TestBed.configureTestingModule({});
     service = TestBed.inject(SearchParamsService);
-    sessionStorageService = TestBed.inject(SessionStorageService);
   });
 
   describe('#constractor', () => {

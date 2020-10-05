@@ -76,7 +76,7 @@ describe('FormattedNumberPipe', () => {
       it('should return non transformed result when the value to be converted is Japanese', () => {
         const value = 'あいうえお';
         const locale = 'ja-JP';
-        expect(pipe.transform(value, locale)).toEqual('あいうえお');
+        expect(pipe.transform(value, locale)).toEqual(value);
       });
     });
   });

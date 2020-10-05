@@ -43,7 +43,7 @@ describe('FormattedCurrencyPipe', () => {
         {
           value: '1234567.12',
           locale: LOCALE_EN,
-          currency: 'USD',
+          currency: CURRENCY_USD,
           expectedValue: '1,234,567.12'
         },
         {
@@ -90,7 +90,7 @@ describe('FormattedCurrencyPipe', () => {
         const value = 'あいうえお';
         const locale = 'ja-JP';
         const currency = 'JPY';
-        expect(pipe.transform(value, locale, currency)).toEqual('あいうえお');
+        expect(pipe.transform(value, locale, currency)).toEqual(value);
       });
     });
   });

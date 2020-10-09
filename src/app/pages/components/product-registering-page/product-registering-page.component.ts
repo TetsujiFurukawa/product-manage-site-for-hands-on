@@ -232,7 +232,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
       productSizeStandard: this.productSizeStandard.value,
       productColor: this.productColor.value,
       productUnitPrice: Number(
-        this.formattedCurrencyPipe.parse(this.productUnitPrice.value, this.locale, this.currency).replace(',', '.')
+        this.formattedCurrencyPipe.parse(this.productUnitPrice.value, this.locale).replace(',', '.')
       ),
       endOfSale: this.endOfSale.value,
       endOfSaleDate: null,

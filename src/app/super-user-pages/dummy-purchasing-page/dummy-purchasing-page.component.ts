@@ -148,7 +148,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
    */
   blurProductPurchaseQuantity(): void {
     const productPurchaseAmount =
-      Number(this.formattedCurrencyPipe.parse(this.productPurchaseUnitPrice.value, this.locale, this.currency)) *
+      Number(this.formattedCurrencyPipe.parse(this.productPurchaseUnitPrice.value, this.locale)) *
       Number(
         this.formattedNumberPipe.parse(
           this.formattedNumberPipe.transform(this.productPurchaseQuantity.value, this.locale),
@@ -194,9 +194,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
       productCode: this.productCode.value,
       productPurchaseName: this.productPurchaseName.value,
       productStockQuantity: Number(this.formattedNumberPipe.parse(this.productStockQuantity.value, this.locale)),
-      productPurchaseQuantity: Number(
-        this.formattedCurrencyPipe.parse(this.productPurchaseQuantity.value, this.locale, this.currency)
-      )
+      productPurchaseQuantity: Number(this.formattedCurrencyPipe.parse(this.productPurchaseQuantity.value, this.locale))
     };
     return productPurchaseRequestDto;
   }

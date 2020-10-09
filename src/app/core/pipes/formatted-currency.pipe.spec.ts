@@ -99,8 +99,7 @@ describe('FormattedCurrencyPipe', () => {
     it('should return parsed result', () => {
       const value = '1,234,567';
       const locale = 'ja-JP';
-      const currency = 'JPY';
-      expect(pipe.parse(value, locale, currency)).toEqual('1234567');
+      expect(pipe.parse(value, locale)).toEqual('1234567');
     });
   });
 });

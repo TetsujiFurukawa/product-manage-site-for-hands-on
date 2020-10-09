@@ -32,11 +32,7 @@ export class FormattedCurrencyInputDirective implements OnInit {
    */
   @HostListener('focus', ['$event.target.value'])
   onFocus(value: any): void {
-    const editedValue = this.formattedCurrencyPipe.parse(
-      value,
-      this.element.getAttribute(LOCALE),
-      this.element.getAttribute(CURRENCY)
-    );
+    const editedValue = this.formattedCurrencyPipe.parse(value, this.element.getAttribute(LOCALE));
     this.element.value = editedValue;
   }
 
@@ -68,11 +64,7 @@ export class FormattedCurrencyInputDirective implements OnInit {
    */
   @HostListener('keyup', ['$event'])
   onKeyUp(): void {
-    const editedValue = this.formattedCurrencyPipe.parse(
-      this.element.value,
-      this.element.getAttribute(LOCALE),
-      this.element.getAttribute(CURRENCY)
-    );
+    const editedValue = this.formattedCurrencyPipe.parse(this.element.value, this.element.getAttribute(LOCALE));
     this.element.value = editedValue;
     this.element.dispatchEvent(new Event('input'));
   }

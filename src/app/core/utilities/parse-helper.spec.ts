@@ -9,69 +9,72 @@ describe('ParseHelper', () => {
   const CURRENCY_USD = 'USD';
   const CURRENCY_EUR = 'EUR';
 
-  describe('#parseNumber', () => {
-    const parameters = [
-      {
-        locale: LOCALE_JP,
-        value: '1,234,567',
-        expectedValue: '1234567'
-      },
-      {
-        locale: LOCALE_EN,
-        value: '1,234,567',
-        expectedValue: '1234567'
-      },
-      {
-        locale: LOCALE_FR,
-        value: '1 234 567',
-        expectedValue: '1234567'
-      },
-      {
-        locale: LOCALE_DE,
-        value: '1.234.567',
-        expectedValue: '1234567'
-      }
-    ];
+  describe('#parse', () => {
+    describe('When the value is number', () => {
+      const parameters = [
+        {
+          locale: LOCALE_JP,
+          value: '1,234,567',
+          expectedValue: '1234567'
+        },
+        {
+          locale: LOCALE_EN,
+          value: '1,234,567',
+          expectedValue: '1234567'
+        },
+        {
+          locale: LOCALE_FR,
+          value: '1 234 567',
+          expectedValue: '1234567'
+        },
+        {
+          locale: LOCALE_DE,
+          value: '1.234.567',
+          expectedValue: '1234567'
+        }
+      ];
 
-    parameters.forEach((parameter) => {
-      it('should correctly converted in locale ' + parameter.locale, () => {
-        expect(ParseHelper.parseNumber(parameter.value, parameter.locale)).toEqual(parameter.expectedValue);
+      parameters.forEach((parameter) => {
+        it('should correctly converted in locale ' + parameter.locale, () => {
+          expect(ParseHelper.parse(parameter.value, parameter.locale)).toEqual(parameter.expectedValue);
+        });
       });
     });
-  });
 
-  describe('#parseCurrencyToNumber', () => {
-    const parameters = [
-      {
-        locale: LOCALE_JP,
-        currency: CURRENCY_JPY,
-        value: '1,234,567',
-        expectedValue: '1234567'
-      },
-      {
-        locale: LOCALE_EN,
-        currency: CURRENCY_USD,
-        value: '1,234,567.89',
-        expectedValue: '1234567.89'
-      },
-      {
-        locale: LOCALE_FR,
-        currency: CURRENCY_EUR,
-        value: '1 234 567,89',
-        expectedValue: '1234567.89'
-      },
-      {
-        locale: LOCALE_DE,
-        currency: CURRENCY_EUR,
-        value: '1.234.567,89',
-        expectedValue: '1234567.89'
-      }
-    ];
+    describe('When the value is currency', () => {
+      const parameters = [
+        {
+          locale: LOCALE_JP,
+          currency: CURRENCY_JPY,
+          value: '1,234,567',
+          expectedValue: '1234567'
+        },
+        {
+          locale: LOCALE_EN,
+          currency: CURRENCY_USD,
+          value: '1,234,567.89',
+          expectedValue: '1234567.89'
+        },
+        {
+          locale: LOCALE_FR,
+          currency: CURRENCY_EUR,
+          value: '1 234 567,89',
+          expectedValue: '1234567.89'
+        },
+        {
+          locale: LOCALE_DE,
+          currency: CURRENCY_EUR,
+          value: '1.234.567,89',
+          expectedValue: '1234567.89'
+        }
+      ];
 
-    parameters.forEach((parameter) => {
-      it('should correctly converted in locale ' + parameter.locale + ' and in currency ' + parameter.currency, () => {
-        expect(ParseHelper.parseCurrencyToNumber(parameter.value, parameter.locale, parameter.currency)).toEqual(
-          parameter.expectedValue
+      parameters.forEach((parameter) => {
+        it(
+          'should correctly converted in locale ' + parameter.locale + ' and in currency ' + parameter.currency,
+          () => {
+            expect(ParseHelper.parse(parameter.value, parameter.locale)).toEqual(parameter.expectedValue);
+          }
         );
       });
     });

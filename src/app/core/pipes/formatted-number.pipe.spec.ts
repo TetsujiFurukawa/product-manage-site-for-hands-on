@@ -1,5 +1,8 @@
+import { NgxTranslateModule } from 'src/app/ngx-translate/ngx-translate.module';
+
 import { TestBed } from '@angular/core/testing';
 
+import { ParseHelper } from '../utilities/parse-helper';
 import { FormattedNumberPipe } from './formatted-number.pipe';
 
 describe('FormattedNumberPipe', () => {
@@ -12,6 +15,7 @@ describe('FormattedNumberPipe', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [NgxTranslateModule],
       providers: [FormattedNumberPipe]
     });
     pipe = TestBed.inject(FormattedNumberPipe);
@@ -82,10 +86,12 @@ describe('FormattedNumberPipe', () => {
   });
 
   describe('#parse', () => {
-    it('should return parsed result', () => {
+    it('should have been called', () => {
       const value = '1,234,567';
       const locale = 'ja-JP';
-      expect(pipe.parse(value, locale)).toEqual('1234567');
+      spyOn(ParseHelper, 'parse');
+      pipe.parse(value, locale);
+      expect(ParseHelper.parse).toHaveBeenCalledWith(value, locale);
     });
   });
 });

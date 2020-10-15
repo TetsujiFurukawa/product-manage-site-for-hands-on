@@ -1,5 +1,8 @@
+import { NgxTranslateModule } from 'src/app/ngx-translate/ngx-translate.module';
+
 import { TestBed } from '@angular/core/testing';
 
+import { ParseHelper } from '../utilities/parse-helper';
 import { FormattedCurrencyPipe } from './formatted-currency.pipe';
 
 describe('FormattedCurrencyPipe', () => {
@@ -15,6 +18,7 @@ describe('FormattedCurrencyPipe', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [NgxTranslateModule],
       providers: [FormattedCurrencyPipe]
     });
     pipe = TestBed.inject(FormattedCurrencyPipe);
@@ -96,10 +100,12 @@ describe('FormattedCurrencyPipe', () => {
   });
 
   describe('#parse', () => {
-    it('should return parsed result', () => {
+    it('should have been called', () => {
       const value = '1,234,567';
       const locale = 'ja-JP';
-      expect(pipe.parse(value, locale)).toEqual('1234567');
+      spyOn(ParseHelper, 'parse');
+      pipe.parse(value, locale);
+      expect(ParseHelper.parse).toHaveBeenCalledWith(value, locale);
     });
   });
 });

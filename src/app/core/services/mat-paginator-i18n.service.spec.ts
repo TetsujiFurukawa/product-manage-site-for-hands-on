@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatPaginatorI18nService } from './mat-paginator-i18n.service';
 
 describe('MatPaginatorI18nService', () => {
+  const privateMethodName = 'setupLabels';
   let service: MatPaginatorI18nService;
   let translateService: TranslateService;
 
@@ -21,10 +22,17 @@ describe('MatPaginatorI18nService', () => {
 
   describe('#constractor', () => {
     it('should be created', () => {
-      spyOn(translateService.onLangChange, 'emit').and.callThrough();
       expect(service).toBeTruthy();
+    });
+  });
+
+  describe('translateService#onLangChange', () => {
+    it('should catch lang change event', () => {
+      spyOn<any>(service, privateMethodName).and.callThrough();
+      expect(service[privateMethodName]).toHaveBeenCalledTimes(0);
+
       translateService.onLangChange.emit();
-      expect(translateService.onLangChange.emit).toHaveBeenCalled();
+      expect(service[privateMethodName]).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -52,24 +60,24 @@ describe('MatPaginatorI18nService', () => {
         no: 3
       },
       {
+        page: 1,
+        pageSize: 10,
+        length: 20,
+        expectedValue: '11 – 20 / 20',
+        no: 4
+      },
+      {
         page: 2,
         pageSize: 10,
         length: 21,
         expectedValue: '21 – 21 / 21',
-        no: 4
+        no: 5
       },
       {
         page: 0,
         pageSize: 50,
         length: 1,
         expectedValue: '1 – 1 / 1',
-        no: 5
-      },
-      {
-        page: 1,
-        pageSize: 10,
-        length: 20,
-        expectedValue: '11 – 20 / 20',
         no: 6
       },
       {
@@ -78,6 +86,13 @@ describe('MatPaginatorI18nService', () => {
         length: 100,
         expectedValue: '51 – 100 / 100',
         no: 7
+      },
+      {
+        page: 2,
+        pageSize: 50,
+        length: 100,
+        expectedValue: '101 – 150 / 100',
+        no: 8
       }
     ];
 
@@ -103,9 +118,7 @@ describe('MatPaginatorI18nService', () => {
     });
   });
 
-  describe('#getAndInitTranslations', () => {
-    const privateMethodName = 'setupLabels';
-
+  describe('#setupLabels', () => {
     it('should set Japanese on the itemsPerPageLabel', () => {
       service[privateMethodName]();
       expect(service.itemsPerPageLabel).toBe('件数：');

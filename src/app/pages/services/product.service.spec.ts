@@ -15,13 +15,10 @@ import { ProductService } from './product.service';
 
 describe('ProductService', () => {
   const expectedProductSearchResponseDto: ProductSearchResponseDto = createProductSearchResponseDto();
-  const expectedProductSearchListResponseDto: ProductSearchListResponseDto = {
-    productSearchResponseDtos: Array(expectedProductSearchResponseDto),
-    pageIndex: 0,
-    resultsLength: 1
-  };
+  const expectedProductSearchListResponseDto: ProductSearchListResponseDto = createProductSearchListResponseDto(
+    expectedProductSearchResponseDto
+  );
   const expectedGenresArrayResponse: string[] = createGenresArray();
-
   const expectedProductDtoResponse: ProductDto = createProductDto();
 
   let service: ProductService;
@@ -39,7 +36,6 @@ describe('ProductService', () => {
       'setupPageErrorMessageFromResponse'
     ]);
     TestBed.configureTestingModule({
-      schemas: [NO_ERRORS_SCHEMA],
       imports: [HttpClientTestingModule],
       providers: [
         { provide: SuccessMessagingService, useValue: successMessagingServiceSpy },
@@ -247,16 +243,26 @@ describe('ProductService', () => {
 
 function createProductSearchResponseDto(): ProductSearchResponseDto {
   return {
-    endOfSale: false,
     no: 1,
+    productName: 'productName',
     productCode: 'productCode',
-    productColor: 'productColor',
     productGenre: '1',
     productImageUrl: 'productImageUrl',
-    productName: 'productName',
     productSizeStandard: 'productSizeStandard',
+    productColor: 'productColor',
+    productUnitPrice: 1,
     productStockQuantity: 1,
-    productUnitPrice: 1
+    endOfSale: false
+  };
+}
+
+function createProductSearchListResponseDto(
+  expectedProductSearchResponseDto: ProductSearchResponseDto
+): ProductSearchListResponseDto {
+  return {
+    productSearchResponseDtos: Array(expectedProductSearchResponseDto),
+    pageIndex: 0,
+    resultsLength: 1
   };
 }
 

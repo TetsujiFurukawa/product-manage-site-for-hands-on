@@ -31,7 +31,27 @@ import {
 import { ProductSearchResponseDto } from '../../models/dtos/responses/product-search-response-dto';
 import { ProductListingPageComponent } from './product-listing-page.component';
 
+/** Initial values */
+const VALUE_PRODUCT_CODE_UPPER = 'PRODUCTCODE';
+const VALUE_PRODUCT_CODE_LOWER = 'productCode';
+const VALUE_PRODUCT_NAME = 'productName';
+const VALUE_PRODUCT_GENRE = '1';
+const VALUE_END_OF_SALE_TRUE = true;
+const VALUE_PAGE_INDEX = 0;
+const VALUE_PAGE_SIZE = 50;
+
 describe('ProductListingPageComponent', () => {
+  /** Expected values */
+  const expectedUser = createExpectedUser();
+  const expectedGenres = createExpectedGenres();
+
+  /** Expected values of search params */
+  const expectedProductListingSearchParamsDto = createExpectedProductListingSearchParamsDto();
+  const expectedSearchParamsDtoPartlyUndefined = createExpectedSearchParamsDtoPartlyUndefined();
+
+  /** Expected values of search results */
+  const expectedProductSearchListResponseDto = createExpectedProductSearchListResponseDto();
+
   let component: ProductListingPageComponent;
   let fixture: ComponentFixture<ProductListingPageComponent>;
   let accountServiceSpy: { getUser: jasmine.Spy };
@@ -43,25 +63,6 @@ describe('ProductListingPageComponent', () => {
     setProductListingSearchParamsDto: jasmine.Spy;
   };
   let router: Router;
-
-  /** Initial values */
-  const VALUE_PRODUCT_CODE = 'productCode';
-  const VALUE_PRODUCT_NAME = 'productName';
-  const VALUE_PRODUCT_GENRE = '1';
-  const VALUE_END_OF_SALE_TRUE = true;
-  const INITIAL_VALUE_PAGE_INDEX = 0;
-  const INITIAL_VALUE_PAGE_SIZE = 50;
-
-  /** Expected values */
-  const expectedUser = createExpectedUser();
-  const expectedGenres = createExpectedGenres();
-
-  /** Expected values of search params */
-  const expectedProductListingSearchParamsDto = createExpectedProductListingSearchParamsDto();
-  const expectedSearchParamsDtoPartlyUndefined = createExpectedSearchParamsDtoPartlyUndefined();
-
-  /** Expected values of search results */
-  const expectedProductSearchListResponseDto = createExpectedProductSearchListResponseDto();
 
   beforeEach(async(() => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
@@ -136,8 +137,8 @@ describe('ProductListingPageComponent', () => {
         expect(component.productCode.value).toEqual('');
         expect(component.productGenre.value).toEqual('');
         expect(component.endOfSale.value).toBeFalsy();
-        expect(component.paginator.pageIndex).toEqual(INITIAL_VALUE_PAGE_INDEX);
-        expect(component.paginator.pageSize).toEqual(INITIAL_VALUE_PAGE_SIZE);
+        expect(component.paginator.pageIndex).toEqual(VALUE_PAGE_INDEX);
+        expect(component.paginator.pageSize).toEqual(VALUE_PAGE_SIZE);
       });
       it('should not search', () => {
         searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(null);
@@ -204,7 +205,7 @@ describe('ProductListingPageComponent', () => {
   describe('#clickClearButton', () => {
     it('should clear', () => {
       component.productName.setValue(VALUE_PRODUCT_NAME);
-      component.productCode.setValue(VALUE_PRODUCT_CODE);
+      component.productCode.setValue(VALUE_PRODUCT_CODE_LOWER);
       component.productGenre.setValue(VALUE_PRODUCT_GENRE);
       component.endOfSale.setValue(VALUE_END_OF_SALE_TRUE);
 
@@ -309,7 +310,7 @@ describe('ProductListingPageComponent', () => {
       expect(component.productName.value).toEqual(expectedValue);
     });
     it('product code', () => {
-      const expectedValue = VALUE_PRODUCT_CODE;
+      const expectedValue = VALUE_PRODUCT_CODE_LOWER;
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedValue);
       expect(component.productCode.value).toEqual(expectedValue.toUpperCase());
     });
@@ -334,7 +335,11 @@ describe('ProductListingPageComponent', () => {
     describe('#createSearchParamsDto', () => {
       it('Should create product listing search params dto correctly', () => {
         HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', VALUE_PRODUCT_NAME);
-        HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', VALUE_PRODUCT_CODE);
+        HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+          fixture,
+          '#product-code',
+          VALUE_PRODUCT_CODE_LOWER
+        );
         HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(
           fixture,
           '#product-genre',
@@ -370,24 +375,24 @@ function createExpectedUser(): User {
 
 function createExpectedProductListingSearchParamsDto() {
   const productListingSearchParamsDto: ProductListingSearchParamsDto = {
-    productCode: 'PRODUCTCODE',
-    productName: 'productName',
-    productGenre: '1',
-    endOfSale: true,
-    pageIndex: 0,
-    pageSize: 50
+    productName: VALUE_PRODUCT_NAME,
+    productCode: VALUE_PRODUCT_CODE_UPPER,
+    productGenre: VALUE_PRODUCT_GENRE,
+    endOfSale: VALUE_END_OF_SALE_TRUE,
+    pageIndex: VALUE_PAGE_INDEX,
+    pageSize: VALUE_PAGE_SIZE
   };
   return productListingSearchParamsDto;
 }
 
 function createExpectedSearchParamsDtoPartlyUndefined() {
   const productListingSearchParamsDto: ProductListingSearchParamsDto = {
-    productCode: undefined,
     productName: undefined,
+    productCode: undefined,
     productGenre: undefined,
-    endOfSale: true,
-    pageIndex: 0,
-    pageSize: 50
+    endOfSale: VALUE_END_OF_SALE_TRUE,
+    pageIndex: VALUE_PAGE_INDEX,
+    pageSize: VALUE_PAGE_SIZE
   };
   return productListingSearchParamsDto;
 }
@@ -396,9 +401,9 @@ function createExpectedProductSearchListResponseDto(): ProductSearchListResponse
   const productSearchResponseDto: ProductSearchResponseDto[] = [
     {
       no: 1,
-      productName: 'productName',
-      productCode: 'PRODUCTCODE',
-      productGenre: '1',
+      productName: VALUE_PRODUCT_NAME,
+      productCode: VALUE_PRODUCT_CODE_UPPER,
+      productGenre: VALUE_PRODUCT_GENRE,
       productImageUrl: 'productImageUrl',
       productSizeStandard: 'productSizeStandard',
       productColor: 'productColor',
@@ -409,7 +414,7 @@ function createExpectedProductSearchListResponseDto(): ProductSearchListResponse
   ];
   const productSearchListResponseDto: ProductSearchListResponseDto = {
     productSearchResponseDtos: productSearchResponseDto,
-    pageIndex: 0,
+    pageIndex: VALUE_PAGE_INDEX,
     resultsLength: 1
   };
   return productSearchListResponseDto;

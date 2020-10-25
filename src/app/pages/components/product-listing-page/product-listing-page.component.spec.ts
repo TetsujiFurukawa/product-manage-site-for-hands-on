@@ -21,8 +21,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { ProductListingSearchParamsDto } from '../../models/dtos/requests/product-listing-search-params-dto';
-import { ProductSearchListResponseDto } from '../../models/dtos/responses/product-search-list-response-dto';
+import {
+    ProductListingSearchParamsDto
+} from '../../models/dtos/requests/product-listing-search-params-dto';
+import {
+    ProductSearchListResponseDto
+} from '../../models/dtos/responses/product-search-list-response-dto';
 import { ProductSearchResponseDto } from '../../models/dtos/responses/product-search-response-dto';
 import { ProductListingPageComponent } from './product-listing-page.component';
 
@@ -299,7 +303,6 @@ describe('ProductListingPageComponent', () => {
       HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(
         fixture,
         '#product-genre',
-        '.product-genre-option',
         Number(expectedValue)
       );
       expect(component.productGenre.value).toEqual(expectedValue);
@@ -322,7 +325,6 @@ describe('ProductListingPageComponent', () => {
       HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(
         fixture,
         '#product-genre',
-        '.product-genre-option',
         Number(VALUE_PRODUCT_GENRE)
       );
       HtmlElementUtility.clickHtmlElement<typeof component>(fixture, '#end-of-sale label');

@@ -302,12 +302,7 @@ describe('ProductRegisteringPageComponent', () => {
       expect(component.productName.value).toEqual(expectedValue);
     });
     it('product genre', () => {
-      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(
-        fixture,
-        '#product-genre',
-        '.product-genre-option',
-        0
-      );
+      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(fixture, '#product-genre', 0);
       expect(component.productGenre.value).toEqual('1');
     });
     it('product size standard', () => {
@@ -360,12 +355,7 @@ describe('ProductRegisteringPageComponent', () => {
     it('EndOfSaleEndOfSaleDateValidator', async () => {
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', 'PRODUCTCODE0001');
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', 'productName');
-      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(
-        fixture,
-        '#product-genre',
-        '.product-genre-option',
-        0
-      );
+      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(fixture, '#product-genre', 0);
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
         fixture,
         '#product-size-standard',
@@ -393,12 +383,7 @@ describe('ProductRegisteringPageComponent', () => {
         '#product-name',
         expectedResponse.productName
       );
-      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(
-        fixture,
-        '#product-genre',
-        '.product-genre-option',
-        0
-      );
+      HtmlElementUtility.setValueToHtmlSelectElement<typeof component>(fixture, '#product-genre', 0);
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
         fixture,
         '#product-size-standard',

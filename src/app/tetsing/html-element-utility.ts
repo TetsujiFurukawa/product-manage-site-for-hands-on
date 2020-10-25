@@ -22,21 +22,16 @@ export class HtmlElementUtility {
    * @template T type of target component
    * @param fixture target fixture
    * @param querySelector css selector string
-   * @param querySelectorOption css selector string for options
    * @param selectIndex index no to set element
    */
-  static setValueToHtmlSelectElement<T>(
-    fixture: ComponentFixture<T>,
-    querySelector: string,
-    querySelectorOption: string,
-    selectIndex: number
-  ) {
-    const htmlInputElement: HTMLSelectElement = fixture.debugElement.query(By.css(querySelector)).nativeElement;
-    htmlInputElement.click();
-    htmlInputElement.dispatchEvent(new Event('change'));
+  static setValueToHtmlSelectElement<T>(fixture: ComponentFixture<T>, querySelector: string, selectIndex: number) {
+    const optionSelector = '.mat-option';
+    const htmlSelectElement: HTMLSelectElement = fixture.debugElement.query(By.css(querySelector)).nativeElement;
+    htmlSelectElement.click();
+    htmlSelectElement.dispatchEvent(new Event('change'));
     fixture.detectChanges();
 
-    const selectOptions = fixture.debugElement.queryAll(By.css(querySelectorOption));
+    const selectOptions = fixture.debugElement.queryAll(By.css(optionSelector));
     selectOptions[selectIndex].nativeElement.click();
     fixture.detectChanges();
   }

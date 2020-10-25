@@ -1,6 +1,5 @@
 import { HttpParams } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';

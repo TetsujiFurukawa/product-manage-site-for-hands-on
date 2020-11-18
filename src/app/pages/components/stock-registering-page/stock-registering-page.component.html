@@ -45,7 +45,7 @@
                             <input id="product-stock-quantity" class="align-right" matInput type="text"
                                 appFormattedNumberInput formControlName="productStockQuantity"
                                 placeholder="{{ 'stockRegisteringPage.productStockQuantity' | translate }}"
-                                [attr.locale]='locale' [readonly]=true>
+                                [attr.locale]="locale" [readonly]=true>
                         </mat-form-field>
                     </div>
                     <div class="registering-condition-wrapper">
@@ -54,7 +54,7 @@
                                 appFormattedNumberInput formControlName="addProductStockQuantity"
                                 placeholder="{{ 'stockRegisteringPage.addStockQuantity' | translate }}"
                                 matTooltip="{{ 'tooltip.registerValue.input.numeric' | translate }}"
-                                [attr.locale]='locale' maxlength=11>
+                                [attr.locale]="locale" maxlength=11>
                             <mat-error class="validation-error" *ngIf="addProductStockQuantity.hasError('required')">
                                 {{'validationError.required'|translate}}
                             </mat-error>

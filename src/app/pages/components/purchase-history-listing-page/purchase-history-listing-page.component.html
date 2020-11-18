@@ -15,12 +15,13 @@
         </div>
         <div class="search-condition-wrapper">
           <div class="form-field-dates">
-            <app-mat-date-picker id="product-purchase-date-from" [locale]='locale' class="date-from"
-              placeholder="{{ 'PurchaseHistoryListingPage.productPurchaseDateFrom' | translate }}" [isBlank]=true
-              [required]=false (event)=" receivedEventFromChildFrom($event)"></app-mat-date-picker>
-            <app-mat-date-picker id="product-purchase-date-to" [locale]='locale' class="date-to"
-              placeholder="{{ 'PurchaseHistoryListingPage.productPurchaseDateTo' | translate }}" [isBlank]=true
-              [required]=false (event)=" receivedEventFromChildTo($event)"></app-mat-date-picker>
+            <app-mat-date-picker id="product-purchase-date-from" [locale]="locale" class="date-from"
+              placeholder="{{ 'PurchaseHistoryListingPage.productPurchaseDateFrom' | translate }}" [initialValue]=""
+              [required]=false (event)="receivedEventFromChildFrom($event)">
+            </app-mat-date-picker>
+            <app-mat-date-picker id="product-purchase-date-to" [locale]="locale" class="date-to"
+              placeholder="{{ 'PurchaseHistoryListingPage.productPurchaseDateTo' | translate }}" [initialValue]=""
+              [required]=false (event)="receivedEventFromChildTo($event)"></app-mat-date-picker>
           </div>
         </div>
         <div class="search-condition-wrapper">

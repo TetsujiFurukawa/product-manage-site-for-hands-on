@@ -9,11 +9,10 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
   styleUrls: ['./mat-date-picker.component.scss']
 })
 export class MatDatePickerComponent implements OnInit {
-  @Input() isBlank: boolean;
-  @Input() required: boolean;
-  @Input() locale: string;
   @Input() placeholder: string;
   @Input() initialValue: string;
+  @Input() required: boolean;
+  @Input() locale: string;
   @Output() event = new EventEmitter<string>();
 
   date = new FormControl('');
@@ -25,24 +24,23 @@ export class MatDatePickerComponent implements OnInit {
 
   ngOnInit(): void {
     this.adapter.setLocale(this.locale);
-    // this.event.emit(this.date.value);
-    this.setupDatevalue();
+    this.setupDateValue();
     this.setupValidators();
   }
 
   reset(): void {
-    this.setupDatevalue();
+    this.setupDateValue();
   }
 
   addEvent(type: string, event: MatDatepickerInputEvent<Date>): void {
     this.event.emit(this.date.value);
   }
 
-  private setupDatevalue(): void {
-    if (this.isBlank) {
-      this.date.setValue('');
-    } else {
+  private setupDateValue(): void {
+    if (this.initialValue) {
       this.date.setValue(new Date(this.initialValue));
+    } else {
+      this.date.setValue('');
     }
   }
 

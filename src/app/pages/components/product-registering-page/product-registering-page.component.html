@@ -74,7 +74,7 @@
               <input id="product-unit-price" matInput type="text" appFormattedCurrencyInput
                 formControlName="productUnitPrice"
                 placeholder="{{ 'productRegisteringPage.productUnitPrice' | translate }}"
-                matTooltip="{{ 'tooltip.registerValue.input.numeric' | translate }}" maxlength=11 [attr.locale]='locale'
+                matTooltip="{{ 'tooltip.registerValue.input.numeric' | translate }}" maxlength=11 [attr.locale]="locale"
                 [attr.currency]="currency">
               <mat-error class="validation-error" *ngIf="productUnitPrice.hasError('required')">
                 {{'validationError.required'|translate}}
@@ -97,10 +97,10 @@
             </mat-checkbox>
           </div>
           <div class="registering-condition-wrapper">
-            <app-mat-date-picker id="end-of-sale-date" *ngIf="endOfSale.value" [locale]='locale'
+            <app-mat-date-picker id="end-of-sale-date" *ngIf="endOfSale.value" [locale]="locale"
               placeholder="{{ 'productRegisteringPage.endOfSaleDate' | translate }}"
-              matTooltip="{{ 'productRegisteringPage.tooltip.endOfSaleDate' | translate }}" [isBlank]=false
-              [required]=true [initialValue]="endOfSaleDate.value" (event)="receivedEventFromChild($event)">
+              matTooltip="{{ 'productRegisteringPage.tooltip.endOfSaleDate' | translate }}" [required]=true
+              [initialValue]="endOfSaleDate.value" (event)="receivedEventFromChild($event)">
             </app-mat-date-picker>
           </div>
         </div>

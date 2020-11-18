@@ -67,12 +67,12 @@ describe('MatDatePickerComponent', () => {
 
   describe('#reset', () => {
     it('should clear date', () => {
-      component.isBlank = true;
+      component.initialValue = '';
       component.reset();
       expect(component.date.value).toEqual('');
     });
     it('should create new date', () => {
-      component.isBlank = false;
+      component.initialValue = '2002/1/1';
       component.reset();
       expect(component.date.value).not.toEqual('');
     });

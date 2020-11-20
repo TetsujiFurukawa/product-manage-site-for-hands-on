@@ -16,7 +16,7 @@ import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
 import { CurrencyPipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
@@ -55,7 +55,7 @@ describe('DummyPurchasingPageComponent', () => {
   let matDialogSpy: { open: jasmine.Spy };
   let productPurchaseServiceSpy: { getProductPurchase: jasmine.Spy; createProductPurchase: jasmine.Spy };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
     productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres']);
     titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);

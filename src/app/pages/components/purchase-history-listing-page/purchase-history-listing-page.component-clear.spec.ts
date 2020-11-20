@@ -17,7 +17,7 @@ import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 import { CurrencyPipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { HAMMER_LOADER } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -78,7 +78,7 @@ describe('PurchaseHistoryListingPageComponent', () => {
   };
   let productPurchaseServiceSpy: { getProductPurchaseHistoryList: jasmine.Spy };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
     productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres', 'getProductList']);
     titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);

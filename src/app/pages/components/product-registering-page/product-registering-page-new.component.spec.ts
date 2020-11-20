@@ -14,7 +14,7 @@ import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
 import { CurrencyPipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
@@ -63,7 +63,7 @@ describe('ProductRegisteringPageComponent', () => {
   let matDialogSpy: { open: jasmine.Spy };
   let router: Router;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
     productServiceSpy = jasmine.createSpyObj('ProductService', [
       'getGenres',

@@ -14,7 +14,7 @@ import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -59,7 +59,7 @@ describe('ProductListingPageComponent', () => {
   };
   let router: Router;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
     productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres', 'getProductList']);
     titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);

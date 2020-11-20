@@ -1,12 +1,13 @@
 import {
     YesNoDialogComponent
 } from 'src/app/core/components/yes-no-dialog/yes-no-dialog.component';
-import { RegexConst } from 'src/app/core/constants/regex-const';
+import { RegexConst as RegexConstBiz } from 'src/app/core/constants/regex-const';
 import { YesNoDialogData } from 'src/app/core/models/yes-no-dialog-data';
 import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { RoutingService } from 'src/app/core/services/routing.service';
 import { AppConst } from 'src/app/pages/constants/app-const';
+import { RegexConst } from 'src/app/pages/constants/regex-const';
 import { UrlConst } from 'src/app/pages/constants/url-const';
 import { ProductDto } from 'src/app/pages/models/dtos/product-dto';
 import { AccountService } from 'src/app/pages/services/account.service';
@@ -21,8 +22,6 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-
-const CHAR_NEW = '/new';
 
 @Component({
   selector: 'app-product-registering-page',
@@ -44,7 +43,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   ) {}
 
   productSeq = new FormControl('');
-  productCode = new FormControl('', [Validators.required, Validators.pattern(RegexConst.SINGLE_BYTE_ALPHANUMERIC)]);
+  productCode = new FormControl('', [Validators.required, Validators.pattern(RegexConstBiz.SINGLE_BYTE_ALPHANUMERIC)]);
   productName = new FormControl('', [Validators.required]);
   productGenre = new FormControl('', [Validators.required]);
   productSizeStandard = new FormControl('', [Validators.required]);
@@ -53,7 +52,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     Validators.required,
     Validators.min(1),
     Validators.max(99999999),
-    Validators.pattern(RegexConst.SINGLE_BYTE_NUMERIC_COMMA_PERIOD_SPACE)
+    Validators.pattern(RegexConstBiz.SINGLE_BYTE_NUMERIC_COMMA_PERIOD_SPACE)
   ]);
   endOfSale = new FormControl(false);
   endOfSaleDate = new FormControl('');
@@ -90,10 +89,12 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   @ViewChild('fileInputElement', { static: true }) public fileInputElement: ElementRef;
   fileReader: FileReader = new FileReader();
 
-  /** Called new or update? */
-  isNew = this.routingService.router.url === UrlConst.SLASH + UrlConst.PATH_PRODUCT_REGISTERING + CHAR_NEW;
+  /** Title and button text */
   messagePropertytitle = 'productRegisteringPage.title.new';
   messagePropertySaveButton = 'productRegisteringPage.saveButton.new';
+
+  /** Called new or update? */
+  isNew = this.routingService.router.url === UrlConst.SLASH + UrlConst.PATH_PRODUCT_REGISTERING_NEW;
 
   /**
    * on init
@@ -102,7 +103,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     this.loadData();
     this.setupLanguage();
     if (!this.isNew) {
-      this.setupButtonTextToEdit();
+      this.setupUpdateMode();
       this.getProduct();
     }
   }
@@ -123,7 +124,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
       return;
     }
     const mimeType = files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
+    if (mimeType.match(RegexConst.MIME_TYPE_FILE_UPLOAD) == null) {
       return;
     }
     this.fileReader.readAsDataURL(files[0]);
@@ -167,7 +168,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const productDto: ProductDto = this.createProductRegisterRequest(this.isNew);
-        this.registerProduct(productDto);
+        this.registerProduct(this.isNew, productDto);
       }
     });
   }
@@ -201,16 +202,17 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     });
   }
 
-  private registerProduct(productDto: ProductDto): void {
+  private registerProduct(isNew: boolean, productDto: ProductDto): void {
     this.loadingService.startLoading();
 
-    if (productDto.productSeq === null) {
+    if (isNew) {
       // Creates product.
       this.productService.createProduct(productDto).subscribe((data) => {
         this.extractGetProductResponse(data);
         this.loadingService.stopLoading();
       });
     } else {
+      // Updates product.
       this.productService.updateProduct(productDto).subscribe((data) => {
         this.extractGetProductResponse(data);
         this.loadingService.stopLoading();
@@ -218,7 +220,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     }
   }
 
-  private setupButtonTextToEdit(): void {
+  private setupUpdateMode(): void {
     this.messagePropertytitle = 'productRegisteringPage.title.edit';
     this.messagePropertySaveButton = 'productRegisteringPage.saveButton.edit';
   }
@@ -232,7 +234,9 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
       productSizeStandard: this.productSizeStandard.value,
       productColor: this.productColor.value,
       productUnitPrice: Number(
-        this.formattedCurrencyPipe.parse(this.productUnitPrice.value, this.locale).replace(',', '.')
+        this.formattedCurrencyPipe
+          .parse(this.productUnitPrice.value, this.locale)
+          .replace(RegexConstBiz.HalfWidthComma, RegexConstBiz.HalfWidthPeriod)
       ),
       endOfSale: this.endOfSale.value,
       endOfSaleDate: null,
@@ -240,10 +244,10 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
       updateDate: this.updateDate.value
     };
 
-    if (!isNew) {
-      productDto.productSeq = this.productSeq.value;
-    } else {
+    if (isNew) {
       productDto.productSeq = null;
+    } else {
+      productDto.productSeq = this.productSeq.value;
     }
     if (this.endOfSaleDate.value === '') {
       productDto.endOfSaleDate = null;
@@ -254,7 +258,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   }
 
   private extractGetProductResponse(productDto: ProductDto): void {
-    if (productDto === null) {
+    if (!productDto) {
       return;
     }
     this.productSeq.setValue(productDto.productSeq);
@@ -267,10 +271,10 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
       this.formattedCurrencyPipe.transform(productDto.productUnitPrice.toString(), this.locale, this.currency)
     );
     this.endOfSale.setValue(productDto.endOfSale);
-    if (productDto.endOfSaleDate === null) {
-      this.endOfSaleDate.setValue('');
-    } else {
+    if (productDto.endOfSaleDate) {
       this.endOfSaleDate.setValue(productDto.endOfSaleDate);
+    } else {
+      this.endOfSaleDate.setValue('');
     }
     this.productImage.setValue(productDto.productImage);
     this.updateDate.setValue(productDto.updateDate);

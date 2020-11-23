@@ -11,36 +11,38 @@ import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
-import { MatDatePickerComponent } from './mat-date-picker.component';
+import { MatDatepickerComponent } from './mat-datepicker.component';
 
-describe('MatDatePickerComponent', () => {
-  let component: MatDatePickerComponent;
-  let fixture: ComponentFixture<MatDatePickerComponent>;
+describe('MatDatepickerComponent', () => {
+  let component: MatDatepickerComponent;
+  let fixture: ComponentFixture<MatDatepickerComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      schemas: [NO_ERRORS_SCHEMA],
-      imports: [
-        ReactiveFormsModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        RouterTestingModule,
-        HttpClientTestingModule,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
-      ],
-      providers: [FormBuilder, NativeDateAdapter],
-      declarations: [MatDatePickerComponent]
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        schemas: [NO_ERRORS_SCHEMA],
+        imports: [
+          ReactiveFormsModule,
+          MatDatepickerModule,
+          MatNativeDateModule,
+          RouterTestingModule,
+          HttpClientTestingModule,
+          TranslateModule.forRoot({
+            loader: {
+              provide: TranslateLoader,
+              useFactory: HttpLoaderFactory,
+              deps: [HttpClient]
+            }
+          })
+        ],
+        providers: [FormBuilder, NativeDateAdapter],
+        declarations: [MatDatepickerComponent]
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MatDatePickerComponent);
+    fixture = TestBed.createComponent(MatDatepickerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,8 +1,8 @@
 import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import {
-    MatDatePickerComponent
-} from 'src/app/core/components/mat-date-picker/mat-date-picker.component';
+    MatDatepickerComponent
+} from 'src/app/core/components/mat-datepicker/mat-datepicker.component';
 import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { UrlConst } from 'src/app/pages/constants/url-const';
@@ -79,7 +79,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
 
   /** Paginator and DatePicker */
   @ViewChild(MatPaginator, { static: true }) public paginator: MatPaginator;
-  @ViewChildren(MatDatePickerComponent) matDatePickerComponents!: QueryList<MatDatePickerComponent>;
+  @ViewChildren(MatDatepickerComponent) matDatePickerComponents!: QueryList<MatDatepickerComponent>;
 
   /**
    * on init

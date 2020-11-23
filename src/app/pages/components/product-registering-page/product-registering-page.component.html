@@ -97,11 +97,11 @@
             </mat-checkbox>
           </div>
           <div class="registering-condition-wrapper">
-            <app-mat-date-picker id="end-of-sale-date" *ngIf="endOfSale.value" [locale]="locale"
+            <app-mat-datepicker id="end-of-sale-date" *ngIf="endOfSale.value" [locale]="locale"
               placeholder="{{ 'productRegisteringPage.endOfSaleDate' | translate }}"
               matTooltip="{{ 'productRegisteringPage.tooltip.endOfSaleDate' | translate }}" [required]=true
               [initialValue]="endOfSaleDate.value" (event)="receivedEventFromChild($event)">
-            </app-mat-date-picker>
+            </app-mat-datepicker>
           </div>
         </div>
         <div class="registering-area-wrapper right">

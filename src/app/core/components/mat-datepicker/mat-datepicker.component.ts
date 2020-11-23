@@ -4,11 +4,11 @@ import { DateAdapter } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
-  selector: 'app-mat-date-picker',
-  templateUrl: './mat-date-picker.component.html',
-  styleUrls: ['./mat-date-picker.component.scss']
+  selector: 'app-mat-datepicker',
+  templateUrl: './mat-datepicker.component.html',
+  styleUrls: ['./mat-datepicker.component.scss']
 })
-export class MatDatePickerComponent implements OnInit {
+export class MatDatepickerComponent implements OnInit {
   @Input() placeholder: string;
   @Input() initialValue: string;
   @Input() required: boolean;
@@ -35,7 +35,9 @@ export class MatDatePickerComponent implements OnInit {
   addEvent(type: string, event: MatDatepickerInputEvent<Date>): void {
     this.event.emit(this.date.value);
   }
-
+  // --------------------------------------------------------------------------------
+  // private methods
+  // --------------------------------------------------------------------------------
   private setupDateValue(): void {
     if (this.initialValue) {
       this.date.setValue(new Date(this.initialValue));

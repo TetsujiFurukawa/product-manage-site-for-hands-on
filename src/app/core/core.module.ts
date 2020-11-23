@@ -7,7 +7,7 @@ import { MaterialModule } from '../material/material.module';
 import { NgxTranslateModule } from '../ngx-translate/ngx-translate.module';
 import { ErrorMessagingComponent } from './components/error-messaging/error-messaging.component';
 import { LoadingComponent } from './components/loading/loading.component';
-import { MatDatePickerComponent } from './components/mat-date-picker/mat-date-picker.component';
+import { MatDatepickerComponent } from './components/mat-datepicker/mat-datepicker.component';
 import {
     SuccessMessagingComponent
 } from './components/success-messaging/success-messaging.component';
@@ -22,7 +22,7 @@ import { FormattedNumberPipe } from './pipes/formatted-number.pipe';
   declarations: [
     ErrorMessagingComponent,
     LoadingComponent,
-    MatDatePickerComponent,
+    MatDatepickerComponent,
     SuccessMessagingComponent,
     YesNoDialogComponent,
     FormattedCurrencyPipe,
@@ -41,7 +41,7 @@ import { FormattedNumberPipe } from './pipes/formatted-number.pipe';
   exports: [
     ErrorMessagingComponent,
     LoadingComponent,
-    MatDatePickerComponent,
+    MatDatepickerComponent,
     SuccessMessagingComponent,
     YesNoDialogComponent,
     FormattedCurrencyPipe,

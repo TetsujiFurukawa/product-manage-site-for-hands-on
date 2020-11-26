@@ -3,7 +3,7 @@ import { HttpLoaderFactory } from 'src/app/ngx-translate/ngx-translate.module';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule, NativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -17,29 +17,27 @@ describe('MatDatepickerComponent', () => {
   let component: MatDatepickerComponent;
   let fixture: ComponentFixture<MatDatepickerComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        schemas: [NO_ERRORS_SCHEMA],
-        imports: [
-          ReactiveFormsModule,
-          MatDatepickerModule,
-          MatNativeDateModule,
-          RouterTestingModule,
-          HttpClientTestingModule,
-          TranslateModule.forRoot({
-            loader: {
-              provide: TranslateLoader,
-              useFactory: HttpLoaderFactory,
-              deps: [HttpClient]
-            }
-          })
-        ],
-        providers: [FormBuilder, NativeDateAdapter],
-        declarations: [MatDatepickerComponent]
-      }).compileComponents();
-    })
-  );
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [
+        ReactiveFormsModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        RouterTestingModule,
+        HttpClientTestingModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        })
+      ],
+      providers: [FormBuilder, NativeDateAdapter],
+      declarations: [MatDatepickerComponent]
+    }).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MatDatepickerComponent);

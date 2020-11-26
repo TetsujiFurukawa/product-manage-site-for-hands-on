@@ -6,7 +6,7 @@ import { AccountService } from 'src/app/pages/services/account.service';
 import { SearchParamsService } from 'src/app/pages/services/search-params.service';
 
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -21,28 +21,26 @@ describe('HeaderComponent', () => {
   let searchParamsServiceSpy: { removeProductListingSearchParamsDto: jasmine.Spy };
   let router: Router;
 
-  beforeEach(
-    waitForAsync(() => {
-      accountServiceSpy = jasmine.createSpyObj('AccountService', ['getMenu', 'signOut']);
-      matDialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
-      searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', ['removeProductListingSearchParamsDto']);
+  beforeEach(async () => {
+    accountServiceSpy = jasmine.createSpyObj('AccountService', ['getMenu', 'signOut']);
+    matDialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
+    searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', ['removeProductListingSearchParamsDto']);
 
-      TestBed.configureTestingModule({
-        schemas: [NO_ERRORS_SCHEMA],
-        imports: [
-          RouterTestingModule,
-          TranslateTestingModule.withTranslations({ ja: require('src/assets/i18n/ja.json') })
-        ],
-        providers: [
-          { provide: MatDialog, useValue: matDialogSpy },
-          { provide: AccountService, useValue: accountServiceSpy },
-          { provide: SearchParamsService, useValue: searchParamsServiceSpy }
-        ],
-        declarations: [HeaderComponent]
-      }).compileComponents();
-      router = TestBed.inject(Router);
-    })
-  );
+    await TestBed.configureTestingModule({
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [
+        RouterTestingModule,
+        TranslateTestingModule.withTranslations({ ja: require('src/assets/i18n/ja.json') })
+      ],
+      providers: [
+        { provide: MatDialog, useValue: matDialogSpy },
+        { provide: AccountService, useValue: accountServiceSpy },
+        { provide: SearchParamsService, useValue: searchParamsServiceSpy }
+      ],
+      declarations: [HeaderComponent]
+    }).compileComponents();
+    router = TestBed.inject(Router);
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HeaderComponent);

@@ -12,7 +12,7 @@ import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 import { CurrencyPipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
@@ -77,7 +77,7 @@ describe('ProductRegisteringPageComponent', () => {
   let matDialogSpy: { open: jasmine.Spy };
   let router: Router;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
     productServiceSpy = jasmine.createSpyObj('ProductService', [
       'getGenres',
@@ -88,7 +88,7 @@ describe('ProductRegisteringPageComponent', () => {
     titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);
     matDialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       imports: [
         NgxUpperCaseDirectiveModule,
@@ -119,7 +119,7 @@ describe('ProductRegisteringPageComponent', () => {
       declarations: [ProductRegisteringPageComponent]
     }).compileComponents();
     router = TestBed.inject(Router);
-  }));
+  });
 
   beforeEach(() => {
     accountServiceSpy.getUser.and.returnValue(user);

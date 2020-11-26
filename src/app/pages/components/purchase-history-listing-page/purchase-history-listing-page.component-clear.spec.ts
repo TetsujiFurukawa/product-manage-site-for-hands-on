@@ -17,7 +17,7 @@ import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 import { CurrencyPipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { HAMMER_LOADER } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -78,53 +78,51 @@ describe('PurchaseHistoryListingPageComponent', () => {
   };
   let productPurchaseServiceSpy: { getProductPurchaseHistoryList: jasmine.Spy };
 
-  beforeEach(
-    waitForAsync(() => {
-      accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
-      productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres', 'getProductList']);
-      titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);
-      searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', [
-        'getProductListingSearchParamsDto',
-        'removeProductListingSearchParamsDto',
-        'setProductListingSearchParamsDto'
-      ]);
-      productPurchaseServiceSpy = jasmine.createSpyObj('PurchaseService', ['getProductPurchaseHistoryList']);
+  beforeEach(async () => {
+    accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
+    productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres', 'getProductList']);
+    titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);
+    searchParamsServiceSpy = jasmine.createSpyObj('SearchParamsService', [
+      'getProductListingSearchParamsDto',
+      'removeProductListingSearchParamsDto',
+      'setProductListingSearchParamsDto'
+    ]);
+    productPurchaseServiceSpy = jasmine.createSpyObj('PurchaseService', ['getProductPurchaseHistoryList']);
 
-      TestBed.configureTestingModule({
-        schemas: [NO_ERRORS_SCHEMA],
-        imports: [
-          NgxUpperCaseDirectiveModule,
-          HttpClientTestingModule,
-          RouterTestingModule,
-          TranslateTestingModule.withTranslations({ ja: require('src/assets/i18n/ja.json') }),
-          MaterialModule,
-          BrowserAnimationsModule,
-          ReactiveFormsModule
-        ],
-        providers: [
-          FormBuilder,
-          FormattedCurrencyPipe,
-          FormattedNumberPipe,
-          CurrencyPipe,
-          {
-            provide: HAMMER_LOADER,
-            useValue: () => new Promise(() => {})
-          },
-          { provide: AccountService, useValue: accountServiceSpy },
-          { provide: ProductService, useValue: productServiceSpy },
-          { provide: TitleI18Service, useValue: titleI18ServiceSpy },
-          { provide: SearchParamsService, useValue: searchParamsServiceSpy },
-          { provide: ProductPurchaseService, useValue: productPurchaseServiceSpy }
-        ],
-        declarations: [
-          PurchaseHistoryListingPageComponent,
-          FormattedCurrencyPipe,
-          FormattedNumberPipe,
-          MatDatepickerComponent
-        ]
-      }).compileComponents();
-    })
-  );
+    await TestBed.configureTestingModule({
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [
+        NgxUpperCaseDirectiveModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+        TranslateTestingModule.withTranslations({ ja: require('src/assets/i18n/ja.json') }),
+        MaterialModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule
+      ],
+      providers: [
+        FormBuilder,
+        FormattedCurrencyPipe,
+        FormattedNumberPipe,
+        CurrencyPipe,
+        {
+          provide: HAMMER_LOADER,
+          useValue: () => new Promise(() => {})
+        },
+        { provide: AccountService, useValue: accountServiceSpy },
+        { provide: ProductService, useValue: productServiceSpy },
+        { provide: TitleI18Service, useValue: titleI18ServiceSpy },
+        { provide: SearchParamsService, useValue: searchParamsServiceSpy },
+        { provide: ProductPurchaseService, useValue: productPurchaseServiceSpy }
+      ],
+      declarations: [
+        PurchaseHistoryListingPageComponent,
+        FormattedCurrencyPipe,
+        FormattedNumberPipe,
+        MatDatepickerComponent
+      ]
+    }).compileComponents();
+  });
 
   beforeEach(() => {
     accountServiceSpy.getUser.and.returnValue(user);

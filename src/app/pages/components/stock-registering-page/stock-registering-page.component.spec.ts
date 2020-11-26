@@ -12,7 +12,7 @@ import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
@@ -52,14 +52,14 @@ describe('StockRegisteringPageComponent', () => {
   let matDialogSpy: { open: jasmine.Spy };
   let productStockServiceSpy: { getProductStock: jasmine.Spy; updateProductStock: jasmine.Spy };
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
     productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres']);
     titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);
     matDialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
     productStockServiceSpy = jasmine.createSpyObj('ProductStockService', ['getProductStock', 'updateProductStock']);
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       imports: [
         NgxUpperCaseDirectiveModule,
@@ -81,7 +81,7 @@ describe('StockRegisteringPageComponent', () => {
       ],
       declarations: [StockRegisteringPageComponent]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     accountServiceSpy.getUser.and.returnValue(user);

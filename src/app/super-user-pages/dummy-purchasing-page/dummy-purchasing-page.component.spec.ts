@@ -4,8 +4,12 @@ import { of } from 'rxjs';
 import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 import { MaterialModule } from 'src/app/material/material.module';
-import { ProductPurchaseRequestDto } from 'src/app/pages/models/dtos/requests/product-purchase-request-dto';
-import { ProductPurchaseResponseDto } from 'src/app/pages/models/dtos/responses/product-purchase-response-dto';
+import {
+    ProductPurchaseRequestDto
+} from 'src/app/pages/models/dtos/requests/product-purchase-request-dto';
+import {
+    ProductPurchaseResponseDto
+} from 'src/app/pages/models/dtos/responses/product-purchase-response-dto';
 import { User } from 'src/app/pages/models/user';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductPurchaseService } from 'src/app/pages/services/product-purchase.service';
@@ -16,7 +20,7 @@ import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
 import { CurrencyPipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
@@ -55,7 +59,7 @@ describe('DummyPurchasingPageComponent', () => {
   let matDialogSpy: { open: jasmine.Spy };
   let productPurchaseServiceSpy: { getProductPurchase: jasmine.Spy; createProductPurchase: jasmine.Spy };
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
     productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres']);
     titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);
@@ -65,7 +69,7 @@ describe('DummyPurchasingPageComponent', () => {
       'createProductPurchase'
     ]);
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       imports: [
         NgxUpperCaseDirectiveModule,
@@ -89,7 +93,7 @@ describe('DummyPurchasingPageComponent', () => {
       ],
       declarations: [DummyPurchasingPageComponent]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     accountServiceSpy.getUser.and.returnValue(user);

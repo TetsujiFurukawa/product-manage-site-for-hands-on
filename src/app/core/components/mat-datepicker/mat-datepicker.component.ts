@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-mat-datepicker',
@@ -13,7 +12,7 @@ export class MatDatepickerComponent implements OnInit {
   @Input() initialValue: string;
   @Input() required: boolean;
   @Input() locale: string;
-  @Output() event = new EventEmitter<string>();
+  @Output() event: EventEmitter<string> = new EventEmitter<string>();
 
   date = new FormControl('');
   myForm = this.formBuilder.group({
@@ -32,7 +31,7 @@ export class MatDatepickerComponent implements OnInit {
     this.setupDateValue();
   }
 
-  addEvent(type: string, event: MatDatepickerInputEvent<Date>): void {
+  addEvent(): void {
     this.event.emit(this.date.value);
   }
   // --------------------------------------------------------------------------------

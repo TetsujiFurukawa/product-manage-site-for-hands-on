@@ -1,7 +1,7 @@
 import {
     YesNoDialogComponent
 } from 'src/app/core/components/yes-no-dialog/yes-no-dialog.component';
-import { RegexConst as RegexConstBiz } from 'src/app/core/constants/regex-const';
+import { RegexConst as RegexConstCore } from 'src/app/core/constants/regex-const';
 import { YesNoDialogData } from 'src/app/core/models/yes-no-dialog-data';
 import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 import { LoadingService } from 'src/app/core/services/loading.service';
@@ -43,7 +43,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   ) {}
 
   productSeq = new FormControl('');
-  productCode = new FormControl('', [Validators.required, Validators.pattern(RegexConstBiz.SINGLE_BYTE_ALPHANUMERIC)]);
+  productCode = new FormControl('', [Validators.required, Validators.pattern(RegexConstCore.SINGLE_BYTE_ALPHANUMERIC)]);
   productName = new FormControl('', [Validators.required]);
   productGenre = new FormControl('', [Validators.required]);
   productSizeStandard = new FormControl('', [Validators.required]);
@@ -52,7 +52,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     Validators.required,
     Validators.min(1),
     Validators.max(99999999),
-    Validators.pattern(RegexConstBiz.SINGLE_BYTE_NUMERIC_COMMA_PERIOD_SPACE)
+    Validators.pattern(RegexConstCore.SINGLE_BYTE_NUMERIC_COMMA_PERIOD_SPACE)
   ]);
   endOfSale = new FormControl(false);
   endOfSaleDate = new FormControl('');
@@ -236,7 +236,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
       productUnitPrice: Number(
         this.formattedCurrencyPipe
           .parse(this.productUnitPrice.value, this.locale)
-          .replace(RegexConstBiz.HalfWidthComma, RegexConstBiz.HalfWidthPeriod)
+          .replace(RegexConstCore.HalfWidthComma, RegexConstCore.HalfWidthPeriod)
       ),
       endOfSale: this.endOfSale.value,
       endOfSaleDate: null,

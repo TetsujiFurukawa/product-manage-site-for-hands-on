@@ -1,4 +1,6 @@
-import { YesNoDialogComponent } from 'src/app/core/components/yes-no-dialog/yes-no-dialog.component';
+import {
+    YesNoDialogComponent
+} from 'src/app/core/components/yes-no-dialog/yes-no-dialog.component';
 import { RegexConst as RegexConstCore } from 'src/app/core/constants/regex-const';
 import { YesNoDialogData } from 'src/app/core/models/yes-no-dialog-data';
 import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
@@ -10,7 +12,9 @@ import { UrlConst } from 'src/app/pages/constants/url-const';
 import { ProductDto } from 'src/app/pages/models/dtos/product-dto';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductService } from 'src/app/pages/services/product.service';
-import { EndOfSaleEndOfSaleDateValidator } from 'src/app/pages/validators/end-of-sale-end-of-sale-date-validator';
+import {
+    EndOfSaleEndOfSaleDateValidator
+} from 'src/app/pages/validators/end-of-sale-end-of-sale-date-validator';
 import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
@@ -235,20 +239,15 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
           .replace(RegexConstCore.HalfWidthComma, RegexConstCore.HalfWidthPeriod)
       ),
       endOfSale: this.endOfSale.value,
-      endOfSaleDate: null,
+      endOfSaleDate: this.endOfSaleDate.value === '' ? null : this.endOfSaleDate.value,
       productImage: this.productImage.value,
-      updateDate: this.updateDate.value
+      updateDate: null
     };
 
-    if (isNew) {
-      productDto.productSeq = null;
-    } else {
+    if (!isNew) {
+      // for update
       productDto.productSeq = this.productSeq.value;
-    }
-    if (this.endOfSaleDate.value === '') {
-      productDto.endOfSaleDate = null;
-    } else {
-      productDto.endOfSaleDate = this.endOfSaleDate.value;
+      productDto.updateDate = this.updateDate.value;
     }
     return productDto;
   }
@@ -267,11 +266,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
       this.formattedCurrencyPipe.transform(productDto.productUnitPrice.toString(), this.locale, this.currency)
     );
     this.endOfSale.setValue(productDto.endOfSale);
-    if (productDto.endOfSaleDate) {
-      this.endOfSaleDate.setValue(productDto.endOfSaleDate);
-    } else {
-      this.endOfSaleDate.setValue('');
-    }
+    this.endOfSaleDate.setValue(productDto.endOfSaleDate ? productDto.endOfSaleDate : '');
     this.productImage.setValue(productDto.productImage);
     this.updateDate.setValue(productDto.updateDate);
   }

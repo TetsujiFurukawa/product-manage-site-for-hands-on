@@ -8,7 +8,7 @@ export const EndOfSaleEndOfSaleDateValidator: ValidatorFn = (control: FormGroup)
   const endOfSaleDate = control.get(END_OF_SALE_DATE).value;
 
   if (!endOfSale) {
-    return;
+    return null;
   }
 
   if (!endOfSaleDate) {
@@ -16,4 +16,6 @@ export const EndOfSaleEndOfSaleDateValidator: ValidatorFn = (control: FormGroup)
     control.get(END_OF_SALE_DATE).setErrors(validateError);
     return validateError;
   }
+
+  return null;
 };

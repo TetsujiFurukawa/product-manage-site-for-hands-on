@@ -43,19 +43,19 @@ export class FormattedNumberInputDirective implements OnInit {
 
   /**
    * before paste
-   * @param clipboardEvent clipboard event
    */
-  @HostListener('paste', ['$event'])
-  beforePaste(clipboardEvent: ClipboardEvent): void {
+  @HostListener('paste')
+  beforePaste(): void {
     this.element.dispatchEvent(new Event('keyup'));
   }
 
   /**
    * on key up
+   * @param value element's value
    */
-  @HostListener('keyup', ['$event'])
-  onKeyUp(): void {
-    const editedValue = this.formattedNumberPipe.parse(this.element.value, this.element.getAttribute(LOCALE));
+  @HostListener('keyup', ['$event.target.value'])
+  onKeyUp(value: any): void {
+    const editedValue = this.formattedNumberPipe.parse(value, this.element.getAttribute(LOCALE));
     this.element.value = editedValue;
   }
 }

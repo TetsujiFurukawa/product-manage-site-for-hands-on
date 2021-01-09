@@ -11,6 +11,9 @@ import { TranslateService } from '@ngx-translate/core';
 export class SuccessMessagingComponent implements OnInit {
   constructor(public translateService: TranslateService, public successMessagingService: SuccessMessagingService) {}
 
+  /**
+   * on init
+   */
   ngOnInit(): void {
     this.successMessagingService.clearMessageProperty();
   }

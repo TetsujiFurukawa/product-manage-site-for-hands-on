@@ -48,13 +48,16 @@
     </div>
     <div class="search-functions-buttons">
       <button mat-flat-button id="new-button" class="flat-button" (click)="clickNewButton()"
-        matTooltip="{{ 'productListingPage.tooltip.newBtn' | translate }}">{{ 'productListingPage.newButton' | translate }}</button>
+        matTooltip="{{ 'productListingPage.tooltip.newBtn' | translate }}">{{ 'productListingPage.newButton' | translate
+        }}</button>
 
       <button mat-flat-button id="clear-button" class="flat-button" (click)="clickClearButton()"
-        matTooltip="{{ 'tooltip.searchBtn.clearBtn' | translate }}">{{ 'productListingPage.clearButton' | translate }}</button>
+        matTooltip="{{ 'tooltip.searchBtn.clearBtn' | translate }}">{{ 'productListingPage.clearButton' | translate
+        }}</button>
 
       <button mat-flat-button id="search-button" class="flat-button active" (click)="clickSearchButton()"
-        matTooltip="{{ 'tooltip.searchBtn.searchBtn' | translate }}">{{ 'productListingPage.searchButton' | translate }}</button>
+        matTooltip="{{ 'tooltip.searchBtn.searchBtn' | translate }}">{{ 'productListingPage.searchButton' | translate
+        }}</button>
     </div>
   </div>
   <div class="search-results-wrapper">
@@ -110,12 +113,19 @@
           [attr.data-label]="translateService.instant( 'productListingPage.productColor')">
           {{element.productColor}} </td>
       </ng-container>
+      <ng-container matColumnDef="productCurrency">
+        <th class="width-product-currency" mat-header-cell *matHeaderCellDef>
+          {{ 'productListingPage.productCurrency' | translate }}</th>
+        <td class="width-product-currency" mat-cell *matCellDef="let element"
+          [attr.data-label]="translateService.instant( 'productListingPage.productCurrency')">
+          {{element.productCurrency}}</td>
+      </ng-container>
       <ng-container matColumnDef="productUnitPrice">
         <th class="width-product-unit-price" mat-header-cell *matHeaderCellDef>
           {{ 'productListingPage.productUnitPrice' | translate }}</th>
         <td class="width-product-unit-price" mat-cell *matCellDef="let element"
           [attr.data-label]="translateService.instant( 'productListingPage.productUnitPrice')">
-          {{element.productUnitPrice | formattedCurrency:locale:currency }}</td>
+          {{element.productUnitPrice | formattedCurrency:locale:element.productCurrency }}</td>
       </ng-container>
       <ng-container matColumnDef="productStockQuantity">
         <th class="width-product-stock" mat-header-cell *matHeaderCellDef>

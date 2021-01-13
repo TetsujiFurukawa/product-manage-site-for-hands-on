@@ -6,6 +6,7 @@ export interface ProductSearchResponseDto {
   productImageUrl: string;
   productSizeStandard: string;
   productColor: string;
+  productCurrency: string;
   productUnitPrice: number;
   productStockQuantity: number;
   endOfSale: boolean;

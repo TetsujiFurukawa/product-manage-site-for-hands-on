@@ -48,6 +48,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   productGenre = new FormControl('', [Validators.required]);
   productSizeStandard = new FormControl('', [Validators.required]);
   productColor = new FormControl('');
+  productCurrency = new FormControl('', [Validators.required]);
   productUnitPrice = new FormControl('', [
     Validators.required,
     Validators.min(1),
@@ -67,6 +68,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
       productGenre: this.productGenre,
       productSizeStandard: this.productSizeStandard,
       productColor: this.productColor,
+      productCurrency: this.productCurrency,
       productUnitPrice: this.productUnitPrice,
       endOfSale: this.endOfSale,
       endOfSaleDate: this.endOfSaleDate,
@@ -80,10 +82,12 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
 
   /** Locale, Currency */
   locale: string = this.accountService.getUser().userLocale;
-  currency: string = this.accountService.getUser().userCurrency;
 
   /** Select item of genre */
   genres: string[];
+
+  /** Select item of currency */
+  currencies: string[];
 
   /** FileInput and FileReader */
   @ViewChild('fileInputElement', { static: false }) public fileInputElement: ElementRef;
@@ -102,7 +106,9 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   ngOnInit(): void {
     this.loadData();
     this.setupLanguage();
-    if (!this.isNew) {
+    if (this.isNew) {
+      this.setupDefaultCurrecy();
+    } else {
       this.setupUpdateMode();
       this.getProduct();
     }
@@ -185,12 +191,17 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   // --------------------------------------------------------------------------------
   private loadData(): void {
     this.productService.getGenres().subscribe((data) => (this.genres = data));
+    this.productService.getCurrencies().subscribe((data) => (this.currencies = data));
   }
 
   private setupLanguage(): void {
     const lang = this.accountService.getUser().userLanguage;
     this.translateService.setDefaultLang(lang);
     this.translateService.use(lang);
+  }
+
+  private setupDefaultCurrecy() {
+    this.productCurrency.setValue(this.accountService.getUser().userCurrency);
   }
 
   private getProduct(): void {
@@ -233,6 +244,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
       productGenre: this.productGenre.value,
       productSizeStandard: this.productSizeStandard.value,
       productColor: this.productColor.value,
+      productCurrency: this.productCurrency.value,
       productUnitPrice: Number(
         this.formattedCurrencyPipe
           .parse(this.productUnitPrice.value, this.locale)
@@ -262,8 +274,13 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     this.productGenre.setValue(productDto.productGenre);
     this.productSizeStandard.setValue(productDto.productSizeStandard);
     this.productColor.setValue(productDto.productColor);
+    this.productCurrency.setValue(productDto.productCurrency);
     this.productUnitPrice.setValue(
-      this.formattedCurrencyPipe.transform(productDto.productUnitPrice.toString(), this.locale, this.currency)
+      this.formattedCurrencyPipe.transform(
+        productDto.productUnitPrice.toString(),
+        this.locale,
+        this.productCurrency.value
+      )
     );
     this.endOfSale.setValue(productDto.endOfSale);
     this.endOfSaleDate.setValue(productDto.endOfSaleDate ? productDto.endOfSaleDate : '');

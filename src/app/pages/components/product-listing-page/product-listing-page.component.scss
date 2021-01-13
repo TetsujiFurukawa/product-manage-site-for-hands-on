@@ -66,6 +66,11 @@
   width: 10%;
 }
 
+/* product　currency */
+.search-results-wrapper .search-results .width-product-currency {
+  min-width: 60px;
+}
+
 /* product unit price */
 .search-results-wrapper .search-results .width-product-unit-price {
   max-width: 10%;
@@ -106,6 +111,7 @@
   .search-results-wrapper .search-results .width-product-image,
   .search-results-wrapper .search-results .width-product-size,
   .search-results-wrapper .search-results .width-product-color,
+  .search-results-wrapper .search-results .width-product-currency,
   .search-results-wrapper .search-results .width-product-unit-price,
   .search-results-wrapper .search-results .width-product-stock,
   .search-results-wrapper .search-results td.width-endOfSale {

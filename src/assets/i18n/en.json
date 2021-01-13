@@ -50,8 +50,9 @@
     "productImage": "Product Image",
     "productSizeStandard": "Product Size/Standard",
     "productColor": "Product Color",
+    "productCurrency": "Currency",
     "productUnitPrice": "Product Unit Price",
-    "productStockQuantity": "Product Stock Quantity",
+    "productStockQuantity": "Stock Quantity",
     "endOfSale": "End of Sale",
     "endOfSaleValue": {
       "true": "Ended",
@@ -76,6 +77,7 @@
     "productImage": "Product Image",
     "productSizeStandard": "* Product Size/Standard",
     "productColor": "Product Color",
+    "productCurrency":"* Product Currency",
     "productUnitPrice": "* Product Unit Price",
     "endOfSale": "End of Sale",
     "endOfSaleDate": "* End of Sale Date",

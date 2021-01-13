@@ -64,6 +64,7 @@ export class ProductListingPageComponent implements OnInit, AfterViewChecked, Af
     'productImage',
     'productSizeStandard',
     'productColor',
+    'productCurrency',
     'productUnitPrice',
     'productStockQuantity',
     'endOfSale'

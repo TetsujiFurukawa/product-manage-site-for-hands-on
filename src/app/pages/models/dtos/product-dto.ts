@@ -5,6 +5,7 @@ export interface ProductDto {
   productGenre: string;
   productImage: string;
   productSizeStandard: string;
+  productCurrency: string;
   productColor: string;
   productUnitPrice: number;
   endOfSale: boolean;

@@ -117,6 +117,22 @@ export class ProductService {
       })
     );
   }
+
+  /**
+   * Gets currencies
+   * @returns currencies
+   */
+  getCurrencies(): Observable<string[]> {
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_CURRENCY;
+    this.clearMessageProperty();
+
+    return this.http.get<string[]>(webApiUrl).pipe(
+      catchError((error) => {
+        this.errorMessageService.setupPageErrorMessageFromResponse(error);
+        return of([] as string[]);
+      })
+    );
+  }
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------

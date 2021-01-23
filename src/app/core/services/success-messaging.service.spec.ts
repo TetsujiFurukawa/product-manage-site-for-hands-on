@@ -28,6 +28,7 @@ describe('SuccessMessagingService', () => {
     it('should clear value', () => {
       const expectedValue = 'messageProperty';
       service.setMessageProperty(expectedValue);
+      expect(service.getMessageProperty()).toEqual(expectedValue);
       service.clearMessageProperty();
       expect(service.getMessageProperty()).toEqual('');
     });

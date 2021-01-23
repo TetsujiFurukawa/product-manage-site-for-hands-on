@@ -1,4 +1,3 @@
-import { TestBed } from '@angular/core/testing';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { ProductCodeProductNameValidator } from './product-code-product-name-validator';
@@ -6,29 +5,21 @@ import { ProductCodeProductNameValidator } from './product-code-product-name-val
 const PRODUCT_CODE = 'productCode';
 
 describe('ProductCodeProductNameValidator', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [ProductCodeProductNameValidator]
-    });
+  const formBuilder: FormBuilder = new FormBuilder();
+  const testingForm: FormGroup = formBuilder.group({
+    productCode: new FormControl(''),
+    productName: new FormControl('')
   });
 
-  describe('#match', () => {
+  describe('#validate', () => {
     it('should have error', () => {
-      const formBuilder: FormBuilder = new FormBuilder();
-      const testingForm: FormGroup = formBuilder.group({
-        productCode: new FormControl('productCode'),
-        productName: new FormControl(null)
-      });
+      testingForm.setValue({ productCode: 'productCode', productName: null });
       ProductCodeProductNameValidator(testingForm);
       expect(testingForm.get(PRODUCT_CODE).getError('productNotExistError')).toBeTruthy();
     });
 
     it('should not have error', () => {
-      const formBuilder: FormBuilder = new FormBuilder();
-      const testingForm: FormGroup = formBuilder.group({
-        productCode: new FormControl('productCode'),
-        productName: new FormControl('productName')
-      });
+      testingForm.setValue({ productCode: 'productCode', productName: 'productName' });
       ProductCodeProductNameValidator(testingForm);
       expect(testingForm.get(PRODUCT_CODE).getError('productNotExistError')).toBeNull();
     });

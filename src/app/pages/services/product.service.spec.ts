@@ -265,10 +265,6 @@ function createProductSearchListResponseDto(
   };
 }
 
-function createGenresArray(): string[] {
-  return Array('1', '2', '3');
-}
-
 function createProductDto() {
   return {
     productSeq: 1,
@@ -283,4 +279,8 @@ function createProductDto() {
     endOfSaleDate: new Date(),
     updateDate: new Date()
   };
+}
+
+function createGenresArray(): string[] {
+  return Array('1', '2', '3');
 }

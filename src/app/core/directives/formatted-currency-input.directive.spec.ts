@@ -29,6 +29,12 @@ describe('FormattedCurrencyInputDirective', () => {
     fixture.detectChanges();
   });
 
+  describe('#constractor', () => {
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
+  });
+
   describe('#onFocus', () => {
     it('should parse', () => {
       htmlInputElement.value = expectFormattedValue;

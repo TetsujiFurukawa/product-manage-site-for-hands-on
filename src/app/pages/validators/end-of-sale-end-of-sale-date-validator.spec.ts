@@ -14,13 +14,13 @@ describe('EndOfSaleEndOfSaleDateValidator', () => {
   describe('#validate', () => {
     it('should not have error', () => {
       testingForm.setValue({ endOfSale: false, endOfSaleDate: null });
-      EndOfSaleEndOfSaleDateValidator(testingForm);
+      expect(EndOfSaleEndOfSaleDateValidator(testingForm)).toBeNull();
       expect(testingForm.get(END_OF_SALE_DATE).getError('required')).toBeNull();
     });
 
     it('should have error', () => {
       testingForm.setValue({ endOfSale: true, endOfSaleDate: null });
-      EndOfSaleEndOfSaleDateValidator(testingForm);
+      expect(EndOfSaleEndOfSaleDateValidator(testingForm)).toEqual({ required: true });
       expect(testingForm.get(END_OF_SALE_DATE).getError('required')).toBeTruthy();
     });
   });

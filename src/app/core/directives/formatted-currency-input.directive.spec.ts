@@ -6,12 +6,12 @@ import { FormattedCurrencyPipe } from '../pipes/formatted-currency.pipe';
 import { FormattedCurrencyInputDirective } from './formatted-currency-input.directive';
 
 @Component({
-  template: ` <input type="text" appFormattedCurrencyInput locale="ja-JP" currency="JPY" /> `
+  template: ` <input type="text" appFormattedCurrencyInput locale="en-US" currency="USD" /> `
 })
 class TestFormattedCurrencyInputComponent {}
 
-const expectFormattedValue = '1,234,567';
-const expectNotFormattedValue = '1234567';
+const expectFormattedValue = '1,234,567.89';
+const expectNotFormattedValue = '1234567.89';
 
 describe('FormattedCurrencyInputDirective', () => {
   let component: TestFormattedCurrencyInputComponent;
@@ -58,13 +58,10 @@ describe('FormattedCurrencyInputDirective', () => {
   describe('#beforePaste', () => {
     it('should transfer', () => {
       htmlInputElement.value = expectFormattedValue;
-      const dataTransfer = new DataTransfer();
-      dataTransfer.setData('text/plain', '');
-      const clipboardEvent = new ClipboardEvent('paste', { clipboardData: dataTransfer });
-      htmlInputElement.dispatchEvent(clipboardEvent);
+      htmlInputElement.dispatchEvent(new ClipboardEvent('paste', {}));
       fixture.detectChanges();
 
-      expect(htmlInputElement.value).toEqual(expectNotFormattedValue);
+      expect(htmlInputElement.value).toBe(expectNotFormattedValue);
     });
   });
 

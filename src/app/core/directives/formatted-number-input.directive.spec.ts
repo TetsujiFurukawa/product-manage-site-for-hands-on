@@ -58,10 +58,7 @@ describe('FormattedNumberInputDirective', () => {
   describe('#beforePaste', () => {
     it('should transfer', () => {
       htmlInputElement.value = expectFormattedValue;
-      const dataTransfer = new DataTransfer();
-      dataTransfer.setData('text/plain', '');
-      const clipboardEvent = new ClipboardEvent('paste', { clipboardData: dataTransfer });
-      htmlInputElement.dispatchEvent(clipboardEvent);
+      htmlInputElement.dispatchEvent(new ClipboardEvent('paste', {}));
       fixture.detectChanges();
 
       expect(htmlInputElement.value).toBe(expectNotFormattedValue);

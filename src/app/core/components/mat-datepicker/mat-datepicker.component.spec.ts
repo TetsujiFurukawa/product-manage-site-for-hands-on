@@ -15,6 +15,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MatDatepickerComponent } from './mat-datepicker.component';
 
 const expectedDate = '2021/01/01';
+const temporaryValue = '2022/12/31';
 
 describe('MatDatepickerComponent', () => {
   let component: MatDatepickerComponent;
@@ -62,7 +63,6 @@ describe('MatDatepickerComponent', () => {
         expect(formatDate(component.date.value, 'yyyy/MM/dd', 'ja-JP')).toEqual(expectedDate);
       });
       it('should not set initial value', () => {
-        component.initialValue = '';
         component.ngOnInit();
         expect(component.date.value).toEqual('');
       });
@@ -85,24 +85,25 @@ describe('MatDatepickerComponent', () => {
   });
 
   describe('#reset', () => {
-    it('should clear date', () => {
-      component.initialValue = '';
-      component.reset();
-      expect(component.date.value).toEqual('');
-    });
-    it('should create new date', () => {
+    it('Should return to the initial value', () => {
       component.initialValue = expectedDate;
+      component.date.setValue(new Date(temporaryValue));
       component.reset();
       expect(formatDate(component.date.value, 'yyyy/MM/dd', 'ja-JP')).toEqual(expectedDate);
+    });
+    it('Should return to empty', () => {
+      component.date.setValue(new Date(temporaryValue));
+      component.reset();
+      expect(component.date.value).toEqual('');
     });
   });
 
   describe('#addEvent', () => {
-    it('should clear date', () => {
+    it('should raise the event', () => {
       spyOn(component.event, 'emit').and.callThrough();
 
-      const button = fixture.debugElement.query(By.css('input')).nativeElement;
-      button.dispatchEvent(new Event('change'));
+      const htmlInputElemtnt = fixture.debugElement.query(By.css('input')).nativeElement;
+      htmlInputElemtnt.dispatchEvent(new Event('change'));
       fixture.detectChanges();
 
       expect(component.event.emit).toHaveBeenCalledWith(component.date.value);

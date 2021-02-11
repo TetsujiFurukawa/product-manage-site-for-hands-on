@@ -91,16 +91,17 @@ describe('ProductService', () => {
     });
   });
 
-  describe('#getProductPurchase', () => {
-    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT;
+  describe('#getProduct', () => {
+    const testProductCode = 'ABCD123';
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PRODUCT + '?productCode=' + testProductCode;
 
     it('should return expected response', () => {
-      service.getProduct('productCode').subscribe((response) => {
+      service.getProduct(testProductCode).subscribe((response) => {
         expect(response).toEqual(expectedProductDtoResponse);
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
-      const req = httpTestingController.expectOne(webApiUrl + '?productCode=productCode');
+      const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('GET');
       expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
       expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
@@ -111,12 +112,12 @@ describe('ProductService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      service.getProduct('productCode').subscribe((response) => {
+      service.getProduct(testProductCode).subscribe((response) => {
         expect(response).toBeNull();
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
       }, fail);
 
-      const req = httpTestingController.expectOne(webApiUrl + '?productCode=productCode');
+      const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('GET');
       expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
       expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);

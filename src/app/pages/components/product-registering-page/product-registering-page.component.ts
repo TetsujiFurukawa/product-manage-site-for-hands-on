@@ -1,3 +1,4 @@
+import { Observable, Subject } from 'rxjs';
 import {
     YesNoDialogComponent
 } from 'src/app/core/components/yes-no-dialog/yes-no-dialog.component';
@@ -85,9 +86,8 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   /** Select item of genre */
   genres: string[];
 
-  /** FileInput and FileReader */
+  /** FileInput */
   @ViewChild('fileInputElement', { static: false }) public fileInputElement: ElementRef;
-  fileReader: FileReader = new FileReader();
 
   /** Title and button text */
   messagePropertytitle = 'productRegisteringPage.title.new';
@@ -127,10 +127,9 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     if (mimeType.match(RegexConst.MIME_TYPE_FILE_UPLOAD) == null) {
       return;
     }
-    this.fileReader.readAsDataURL(files[0]);
-    this.fileReader.onload = (e: any) => {
-      this.productImage.setValue(e.target.result);
-    };
+    this.readFile(files[0]).subscribe((output) => {
+      this.productImage.setValue(output);
+    });
   }
 
   /**
@@ -191,6 +190,19 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     const lang = this.accountService.getUser().userLanguage;
     this.translateService.setDefaultLang(lang);
     this.translateService.use(lang);
+  }
+
+  private readFile(file: File): Observable<string> {
+    const observable = new Observable<string>((subscriber) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const content: string = reader.result as string;
+        subscriber.next(content);
+        subscriber.complete();
+      };
+      reader.readAsDataURL(file);
+    });
+    return observable;
   }
 
   private getProduct(): void {

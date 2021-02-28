@@ -1,9 +1,7 @@
 import { TranslateTestingModule } from 'ngx-translate-testing';
 import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 import { of } from 'rxjs';
-import {
-    MatDatepickerComponent
-} from 'src/app/core/components/mat-datepicker/mat-datepicker.component';
+import { MatDatepickerComponent } from 'src/app/core/components/mat-datepicker/mat-datepicker.component';
 import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 import { MaterialModule } from 'src/app/material/material.module';
@@ -23,12 +21,8 @@ import { HAMMER_LOADER } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import {
-    ProductPurchaseHistorySearchListResponseDto
-} from '../../models/dtos/responses/product-purchase-history-search-list-response-dto';
-import {
-    ProductPurchaseHistorySearchResponseDto
-} from '../../models/dtos/responses/product-purchase-history-search-response-dto';
+import { ProductPurchaseHistorySearchListResponseDto } from '../../models/dtos/responses/product-purchase-history-search-list-response-dto';
+import { ProductPurchaseHistorySearchResponseDto } from '../../models/dtos/responses/product-purchase-history-search-response-dto';
 import { PurchaseHistoryListingPageComponent } from './purchase-history-listing-page.component';
 
 describe('PurchaseHistoryListingPageComponent', () => {
@@ -94,7 +88,7 @@ describe('PurchaseHistoryListingPageComponent', () => {
       imports: [
         NgxUpperCaseDirectiveModule,
         HttpClientTestingModule,
-        RouterTestingModule,
+        // RouterTestingModule,
         TranslateTestingModule.withTranslations({ ja: require('src/assets/i18n/ja.json') }),
         MaterialModule,
         BrowserAnimationsModule,

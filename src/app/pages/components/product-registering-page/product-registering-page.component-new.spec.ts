@@ -419,7 +419,7 @@ describe('ProductRegisteringPageComponent_new', () => {
   });
 
   describe('DOM input/output test', () => {
-    it('Should Enter input and create product register request', () => {
+    it('Should create product dto correctly', () => {
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
         fixture,
         IDS.PRODUCT_CODE,
@@ -463,7 +463,7 @@ describe('ProductRegisteringPageComponent_new', () => {
       expect(productRequestDto.endOfSaleDate.toString()).toEqual(expectedProductDto.endOfSaleDate.toString());
       expect(productRequestDto.updateDate).toBeNull();
     });
-    it('Should Enter product code and get product stock data then display screen', () => {
+    it('Should set correctly on the screen', () => {
       const privateMethodName = 'extractGetProductResponse';
       component[privateMethodName](expectedProductDto);
       fixture.detectChanges();

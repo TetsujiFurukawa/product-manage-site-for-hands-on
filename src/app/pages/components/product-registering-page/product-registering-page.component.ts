@@ -30,19 +30,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./product-registering-page.component.scss']
 })
 export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked {
-  constructor(
-    private formBuilder: FormBuilder,
-    private loadingService: LoadingService,
-    private productService: ProductService,
-    private accountService: AccountService,
-    private routingService: RoutingService,
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private formattedCurrencyPipe: FormattedCurrencyPipe,
-    private titleI18Service: TitleI18Service,
-    public translateService: TranslateService
-  ) {}
-
   productSeq = new FormControl('');
   productCode = new FormControl('', [Validators.required, Validators.pattern(RegexConstCore.SINGLE_BYTE_ALPHANUMERIC)]);
   productName = new FormControl('', [Validators.required]);
@@ -96,6 +83,19 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
   /** Called new or update? */
   isNew = this.routingService.router.url === UrlConst.SLASH + UrlConst.PATH_PRODUCT_REGISTERING_NEW;
 
+  constructor(
+    private formBuilder: FormBuilder,
+    private loadingService: LoadingService,
+    private productService: ProductService,
+    private accountService: AccountService,
+    private routingService: RoutingService,
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+    private formattedCurrencyPipe: FormattedCurrencyPipe,
+    private titleI18Service: TitleI18Service,
+    public translateService: TranslateService
+  ) {}
+
   /**
    * on init
    */
@@ -127,8 +127,8 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     if (mimeType.match(RegexConst.MIME_TYPE_FILE_UPLOAD) == null) {
       return;
     }
-    this.readFile(files[0]).subscribe((output) => {
-      this.productImage.setValue(output);
+    this.readFile(files[0]).subscribe((result) => {
+      this.productImage.setValue(result);
     });
   }
 
@@ -172,10 +172,17 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
     });
   }
 
+  /**
+   * Received event from child
+   * @param eventData entered end of sele date
+   */
   receivedEventFromChild(eventData: string): void {
     this.endOfSaleDate.setValue(eventData);
   }
 
+  /**
+   * Resets end of sale date
+   */
   resetEndOfSaleDate(): void {
     this.endOfSaleDate.setValue('');
   }

@@ -29,18 +29,6 @@ import { ProductStockResponseDto } from '../../models/dtos/responses/product-sto
   styleUrls: ['./stock-registering-page.component.scss']
 })
 export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
-  constructor(
-    private formBuilder: FormBuilder,
-    private loadingService: LoadingService,
-    private productService: ProductService,
-    private productStockService: ProductStockService,
-    private accountService: AccountService,
-    private dialog: MatDialog,
-    private formattedNumberPipe: FormattedNumberPipe,
-    private titleI18Service: TitleI18Service,
-    public translateService: TranslateService
-  ) {}
-
   productCode = new FormControl('');
   productName = new FormControl('');
   productGenre = new FormControl('');
@@ -74,6 +62,18 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
 
   /** Select item of genre */
   genres: string[];
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private loadingService: LoadingService,
+    private productService: ProductService,
+    private productStockService: ProductStockService,
+    private accountService: AccountService,
+    private dialog: MatDialog,
+    private formattedNumberPipe: FormattedNumberPipe,
+    private titleI18Service: TitleI18Service,
+    public translateService: TranslateService
+  ) {}
 
   /**
    * on init

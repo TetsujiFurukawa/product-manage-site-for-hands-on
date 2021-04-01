@@ -129,6 +129,14 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     this.translateService.use(lang);
   }
 
+  private clearStockRegisteringConditions(): void {
+    this.productName.reset();
+    this.productGenre.reset();
+    this.productSizeStandard.reset();
+    this.productStockQuantity.reset();
+    this.addProductStockQuantity.reset();
+  }
+
   private getProductStock(): void {
     this.loadingService.startLoading();
 
@@ -147,15 +155,6 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  private createProductStockRequestDto(): ProductStockRequestDto {
-    const productStockRequestDto: ProductStockRequestDto = {
-      productCode: this.productCode.value,
-      productStockQuantity: Number(this.formattedNumberPipe.parse(this.productStockQuantity.value, this.locale)),
-      addProductStockQuantity: Number(this.formattedNumberPipe.parse(this.addProductStockQuantity.value, this.locale))
-    };
-    return productStockRequestDto;
-  }
-
   private extractGetProductStockResponseDto(productStockResponseDto: ProductStockResponseDto): void {
     if (productStockResponseDto === null) {
       return;
@@ -169,6 +168,15 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     this.productImage.setValue(productStockResponseDto.productImage);
   }
 
+  private createProductStockRequestDto(): ProductStockRequestDto {
+    const productStockRequestDto: ProductStockRequestDto = {
+      productCode: this.productCode.value,
+      productStockQuantity: Number(this.formattedNumberPipe.parse(this.productStockQuantity.value, this.locale)),
+      addProductStockQuantity: Number(this.formattedNumberPipe.parse(this.addProductStockQuantity.value, this.locale))
+    };
+    return productStockRequestDto;
+  }
+
   private extractUpdateProductStockResponseDto(productStockResponseDto: ProductStockResponseDto): void {
     if (productStockResponseDto === null) {
       return;
@@ -176,14 +184,6 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
     this.productStockQuantity.setValue(
       this.formattedNumberPipe.transform(String(productStockResponseDto.productStockQuantity), this.locale)
     );
-    this.addProductStockQuantity.reset();
-  }
-
-  private clearStockRegisteringConditions(): void {
-    this.productName.reset();
-    this.productGenre.reset();
-    this.productSizeStandard.reset();
-    this.productStockQuantity.reset();
     this.addProductStockQuantity.reset();
   }
 }

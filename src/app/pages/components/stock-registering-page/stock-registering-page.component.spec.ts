@@ -6,7 +6,6 @@ import { MaterialModule } from 'src/app/material/material.module';
 import { User } from 'src/app/pages/models/user';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductStockService } from 'src/app/pages/services/product-stock.service';
-import { ProductService } from 'src/app/pages/services/product.service';
 import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
 
@@ -51,19 +50,16 @@ describe('StockRegisteringPageComponent', () => {
     SAVE_BUTTON: '#save-button'
   };
   const expectedUser: User = createExpectedUser();
-  const expectedGenres: string[] = createExpectedGenres();
   const expectedProductStockResponseDto: ProductStockResponseDto = createProductStockResponseDto();
   let component: StockRegisteringPageComponent;
   let fixture: ComponentFixture<StockRegisteringPageComponent>;
   let accountServiceSpy: { getUser: jasmine.Spy };
-  let productServiceSpy: { getGenres: jasmine.Spy };
   let titleI18ServiceSpy: { setTitle: jasmine.Spy };
   let matDialogSpy: { open: jasmine.Spy };
   let productStockServiceSpy: { getProductStock: jasmine.Spy; updateProductStock: jasmine.Spy };
 
   beforeEach(async () => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
-    productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres']);
     titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);
     matDialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
     productStockServiceSpy = jasmine.createSpyObj('ProductStockService', ['getProductStock', 'updateProductStock']);
@@ -84,7 +80,6 @@ describe('StockRegisteringPageComponent', () => {
         FormattedNumberPipe,
         { provide: MatDialog, useValue: matDialogSpy },
         { provide: AccountService, useValue: accountServiceSpy },
-        { provide: ProductService, useValue: productServiceSpy },
         { provide: TitleI18Service, useValue: titleI18ServiceSpy },
         { provide: ProductStockService, useValue: productStockServiceSpy }
       ],
@@ -94,7 +89,6 @@ describe('StockRegisteringPageComponent', () => {
 
   beforeEach(() => {
     accountServiceSpy.getUser.and.returnValue(expectedUser);
-    productServiceSpy.getGenres.and.returnValue(of(expectedGenres));
     fixture = TestBed.createComponent(StockRegisteringPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -108,10 +102,10 @@ describe('StockRegisteringPageComponent', () => {
 
   describe('#ngOnInit', () => {
     it('should init', async () => {
-      productServiceSpy.getGenres.and.returnValue(of(expectedGenres));
+      const privateMethodName = 'setupLanguage';
+      spyOn<any>(component, privateMethodName).and.callThrough();
       component.ngOnInit();
-      expect(productServiceSpy.getGenres.calls.count()).toBeGreaterThan(1);
-      expect(component.genres).toEqual(expectedGenres);
+      expect(component[privateMethodName]).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -174,41 +168,38 @@ describe('StockRegisteringPageComponent', () => {
   // --------------------------------------------------------------------------------
   describe('DOM placeholder', () => {
     it('title', () => {
-      const htmlHeadingElement: HTMLHeadingElement = fixture.debugElement.query(By.css(IDS.TITLE)).nativeElement;
-      expect(htmlHeadingElement.innerText).toEqual('在庫登録');
+      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.TITLE)).nativeElement;
+      expect(htmlElement.innerText).toEqual('在庫登録');
     });
 
     it('product code', () => {
-      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css(IDS.PRODUCT_CODE)).nativeElement;
-      expect(htmlInputElement.dataset.placeholder).toContain('商品コード');
+      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.PRODUCT_CODE)).nativeElement;
+      expect(htmlElement.dataset.placeholder).toContain('商品コード');
     });
     it('product name', () => {
-      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css(IDS.PRODUCT_NAME)).nativeElement;
-      expect(htmlInputElement.dataset.placeholder).toContain('商品名');
+      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.PRODUCT_NAME)).nativeElement;
+      expect(htmlElement.dataset.placeholder).toContain('商品名');
     });
     it('product genre', () => {
-      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css(IDS.PRODUCT_GENRE)).nativeElement;
-      expect(htmlInputElement.dataset.placeholder).toContain('ジャンル');
+      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.PRODUCT_GENRE)).nativeElement;
+      expect(htmlElement.dataset.placeholder).toContain('ジャンル');
     });
     it('product size standard', () => {
-      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css(IDS.PRODUCT_SIZE_STANDARD))
-        .nativeElement;
-      expect(htmlInputElement.dataset.placeholder).toContain('サイズ・規格');
+      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.PRODUCT_SIZE_STANDARD)).nativeElement;
+      expect(htmlElement.dataset.placeholder).toContain('サイズ・規格');
     });
     it('product stock quantity', () => {
-      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css(IDS.PRODUCT_STOCK_QUANTITY))
-        .nativeElement;
-      expect(htmlInputElement.dataset.placeholder).toContain('在庫数');
+      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.PRODUCT_STOCK_QUANTITY)).nativeElement;
+      expect(htmlElement.dataset.placeholder).toContain('在庫数');
     });
     it('product add stock quantity', () => {
-      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css(IDS.ADD_PRODUCT_STOCK_QUANTITY))
-        .nativeElement;
-      expect(htmlInputElement.dataset.placeholder).toContain('在庫追加数');
+      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.ADD_PRODUCT_STOCK_QUANTITY)).nativeElement;
+      expect(htmlElement.dataset.placeholder).toContain('在庫追加数');
     });
 
     it('saveBtn', () => {
-      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css(IDS.SAVE_BUTTON)).nativeElement;
-      expect(htmlInputElement.innerText).toContain('登録');
+      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.SAVE_BUTTON)).nativeElement;
+      expect(htmlElement.innerText).toContain('登録');
     });
   });
 
@@ -329,10 +320,6 @@ function createExpectedUser(): User {
   user.userTimezoneOffset = '+0900';
   user.userCurrency = 'JPY';
   return user;
-}
-
-function createExpectedGenres(): string[] {
-  return Array('1', '2', '3');
 }
 
 function createProductStockResponseDto(): ProductStockResponseDto {

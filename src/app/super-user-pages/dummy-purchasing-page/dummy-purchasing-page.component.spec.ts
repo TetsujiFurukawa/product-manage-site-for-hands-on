@@ -13,7 +13,6 @@ import {
 import { User } from 'src/app/pages/models/user';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductPurchaseService } from 'src/app/pages/services/product-purchase.service';
-import { ProductService } from 'src/app/pages/services/product.service';
 import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
 
@@ -29,7 +28,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DummyPurchasingPageComponent } from './dummy-purchasing-page.component';
 
 describe('DummyPurchasingPageComponent', () => {
-  const expectedGenres = Array('1', '2', '3');
   const user: User = new User();
   user.userAccount = 'userAccount';
   user.userCurrency = 'JPY';
@@ -53,14 +51,12 @@ describe('DummyPurchasingPageComponent', () => {
   let component: DummyPurchasingPageComponent;
   let fixture: ComponentFixture<DummyPurchasingPageComponent>;
   let accountServiceSpy: { getUser: jasmine.Spy };
-  let productServiceSpy: { getGenres: jasmine.Spy };
   let titleI18ServiceSpy: { setTitle: jasmine.Spy };
   let matDialogSpy: { open: jasmine.Spy };
   let productPurchaseServiceSpy: { getProductPurchase: jasmine.Spy; createProductPurchase: jasmine.Spy };
 
   beforeEach(async () => {
     accountServiceSpy = jasmine.createSpyObj('AccountService', ['getUser']);
-    productServiceSpy = jasmine.createSpyObj('ProductService', ['getGenres']);
     titleI18ServiceSpy = jasmine.createSpyObj('TitleI18Service', ['setTitle']);
     matDialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
     productPurchaseServiceSpy = jasmine.createSpyObj('PurchaseService', [
@@ -85,7 +81,6 @@ describe('DummyPurchasingPageComponent', () => {
         CurrencyPipe,
         { provide: MatDialog, useValue: matDialogSpy },
         { provide: AccountService, useValue: accountServiceSpy },
-        { provide: ProductService, useValue: productServiceSpy },
         { provide: TitleI18Service, useValue: titleI18ServiceSpy },
         { provide: ProductPurchaseService, useValue: productPurchaseServiceSpy }
       ],
@@ -95,7 +90,6 @@ describe('DummyPurchasingPageComponent', () => {
 
   beforeEach(() => {
     accountServiceSpy.getUser.and.returnValue(user);
-    productServiceSpy.getGenres.and.returnValue(of(expectedGenres));
     fixture = TestBed.createComponent(DummyPurchasingPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -109,10 +103,10 @@ describe('DummyPurchasingPageComponent', () => {
 
   describe('#ngOnInit', () => {
     it('should init', async () => {
-      productServiceSpy.getGenres.and.returnValue(of(expectedGenres));
+      const privateMethodName = 'setupLanguage';
+      spyOn<any>(component, privateMethodName).and.callThrough();
       component.ngOnInit();
-      expect(productServiceSpy.getGenres.calls.count()).toBeGreaterThan(1);
-      expect(component.genres).toEqual(expectedGenres);
+      expect(component[privateMethodName]).toHaveBeenCalledTimes(1);
     });
   });
 

@@ -16,7 +16,6 @@ import {
 } from 'src/app/pages/models/dtos/responses/product-purchase-response-dto';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductPurchaseService } from 'src/app/pages/services/product-purchase.service';
-import { ProductService } from 'src/app/pages/services/product.service';
 import {
     ProductCodeProductNameValidator
 } from 'src/app/pages/validators/product-code-product-name-validator';
@@ -44,7 +43,6 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     private formattedNumberPipe: FormattedNumberPipe,
     private loadingService: LoadingService,
     private productPurchaseService: ProductPurchaseService,
-    private productService: ProductService,
     private titleI18Service: TitleI18Service,
     public translateService: TranslateService
   ) {}
@@ -89,14 +87,10 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   locale: string = this.accountService.getUser().userLocale;
   currency: string = this.accountService.getUser().userCurrency;
 
-  /** Select item of genre */
-  genres: string[];
-
   /**
    * on init
    */
   ngOnInit() {
-    this.loadData();
     this.setupLanguage();
   }
 
@@ -162,9 +156,6 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------
-  private loadData() {
-    this.productService.getGenres().subscribe((data) => (this.genres = data));
-  }
   private setupLanguage() {
     const lang = this.accountService.getUser().userLanguage;
     this.translateService.setDefaultLang(lang);

@@ -21,25 +21,25 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="registering-condition-wrapper margin-left-25px">
+          <div class="registering-condition-wrapper">
             <mat-form-field class="form-field width-wide">
               <input id="product-name" matInput type="text" formControlName="productName"
                 placeholder="{{ 'dummyPurchasingPage.productName' | translate }}" [readonly]=true>
             </mat-form-field>
           </div>
-          <div class="registering-condition-wrapper margin-left-25px">
+          <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
               <input id="product-genre" matInput type="text" formControlName="productGenre"
                 placeholder="{{ 'dummyPurchasingPage.productGenre' | translate }}" [readonly]=true>
             </mat-form-field>
           </div>
-          <div class="registering-condition-wrapper margin-left-25px">
+          <div class="registering-condition-wrapper">
             <mat-form-field class="form-field width-wide">
               <input id="product-size-standard" matInput type="text" formControlName="productSizeStandard"
                 placeholder="{{ 'dummyPurchasingPage.productSizeStandard' | translate }}" [readonly]=true>
             </mat-form-field>
           </div>
-          <div class="registering-condition-wrapper margin-left-25px">
+          <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
               <input id="product-unit-price" class="align-right" matInput type="text" appFormattedCurrencyInput
                 formControlName="productPurchaseUnitPrice"
@@ -47,7 +47,7 @@
                 [attr.currency]="currency" [readonly]=true>
             </mat-form-field>
           </div>
-          <div class="registering-condition-wrapper margin-left-25px">
+          <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
               <input id="product-stock-quantity" class="align-right" matInput type="text" appFormattedNumberInput
                 formControlName="productStockQuantity"
@@ -89,7 +89,7 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="registering-condition-wrapper margin-left-25px">
+          <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
               <input id="product-purchase-amount" class="align-right" matInput type="text" appFormattedCurrencyInput
                 formControlName="productPurchaseAmount"
@@ -109,8 +109,8 @@
   <div class="registering-functions-wrapper">
     <div class="registering-functions">
       <button mat-flat-button id="save-button" class="flat-button active" (click)="clickSaveButton()"
-        [disabled]="!registeringForm.valid"
-        matTooltip="{{ 'dummyPurchasingPage.tooltip.saveButton' | translate }}">{{ 'dummyPurchasingPage.saveButton' | translate }}</button>
+        [disabled]="!registeringForm.valid" matTooltip="{{ 'dummyPurchasingPage.tooltip.saveButton' | translate }}">{{
+        'dummyPurchasingPage.saveButton' | translate }}</button>
     </div>
   </div>
 </section>

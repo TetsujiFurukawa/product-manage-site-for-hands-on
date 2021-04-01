@@ -60,13 +60,9 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   /** Locale */
   locale: string = this.accountService.getUser().userLocale;
 
-  /** Select item of genre */
-  genres: string[];
-
   constructor(
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
-    private productService: ProductService,
     private productStockService: ProductStockService,
     private accountService: AccountService,
     private dialog: MatDialog,
@@ -79,7 +75,6 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
    * on init
    */
   ngOnInit(): void {
-    this.loadData();
     this.setupLanguage();
   }
 
@@ -128,10 +123,6 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------
-  private loadData(): void {
-    this.productService.getGenres().subscribe((data) => (this.genres = data));
-  }
-
   private setupLanguage(): void {
     const lang = this.accountService.getUser().userLanguage;
     this.translateService.setDefaultLang(lang);

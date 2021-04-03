@@ -8,7 +8,7 @@ export const ProductCodeProductNameValidator: ValidatorFn = (control: FormGroup)
 
   if (productCode && productName) {
     control.get(PRODUCT_CODE).setErrors(null);
-    return;
+    return null;
   }
 
   const validateError = { productNotExistError: true };

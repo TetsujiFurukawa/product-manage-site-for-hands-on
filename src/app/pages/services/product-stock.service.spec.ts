@@ -1,5 +1,4 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
@@ -9,8 +8,10 @@ import { ProductStockResponseDto } from '../models/dtos/responses/product-stock-
 import { ProductStockService } from './product-stock.service';
 
 describe('ProductStockService', () => {
-  let httpTestingController: HttpTestingController;
+  const expectedProductStockResponseDto: ProductStockResponseDto = createProductStockResponseDto();
+
   let service: ProductStockService;
+  let httpTestingController: HttpTestingController;
   let successMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setMessageProperty: jasmine.Spy };
   let errorMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setupPageErrorMessageFromResponse: jasmine.Spy };
 
@@ -24,15 +25,14 @@ describe('ProductStockService', () => {
       'setupPageErrorMessageFromResponse'
     ]);
     TestBed.configureTestingModule({
-      schemas: [NO_ERRORS_SCHEMA],
       imports: [HttpClientTestingModule],
       providers: [
         { provide: SuccessMessagingService, useValue: successMessagingServiceSpy },
         { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }
       ]
     });
-    httpTestingController = TestBed.inject(HttpTestingController);
     service = TestBed.inject(ProductStockService);
+    httpTestingController = TestBed.inject(HttpTestingController);
   });
 
   afterEach(() => {
@@ -50,18 +50,8 @@ describe('ProductStockService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_STOCK;
 
     it('should return expected response', () => {
-      const expectedResponse: ProductStockResponseDto = {
-        productCode: 'productCode',
-        productColor: 'productColor',
-        productGenre: '1',
-        productImage: 'productImage',
-        productName: 'productName',
-        productSizeStandard: 'productSizeStandard',
-        productStockQuantity: 1
-      };
-
       service.getProductStock('productCode').subscribe((response) => {
-        expect(response).toEqual(expectedResponse);
+        expect(response).toEqual(expectedProductStockResponseDto);
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
@@ -71,7 +61,7 @@ describe('ProductStockService', () => {
       expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
-      req.flush(expectedResponse);
+      req.flush(expectedProductStockResponseDto);
     });
 
     it('should return null 404 Not Found', () => {
@@ -95,19 +85,10 @@ describe('ProductStockService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_STOCK;
 
     it('should return expected response', () => {
-      const expectedResponse: ProductStockResponseDto = {
-        productCode: 'productCode',
-        productColor: 'productColor',
-        productGenre: '1',
-        productImage: 'productImage',
-        productName: 'productName',
-        productSizeStandard: 'productSizeStandard',
-        productStockQuantity: 1
-      };
       service
         .updateProductStock({ productCode: '', productStockQuantity: 0, addProductStockQuantity: 0 })
         .subscribe((response) => {
-          expect(response).toEqual(expectedResponse);
+          expect(response).toEqual(expectedProductStockResponseDto);
           expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1);
           expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
         }, fail);
@@ -118,7 +99,7 @@ describe('ProductStockService', () => {
       expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
-      req.flush(expectedResponse);
+      req.flush(expectedProductStockResponseDto);
     });
 
     it('should return null 404 Not Found', () => {
@@ -141,3 +122,15 @@ describe('ProductStockService', () => {
     });
   });
 });
+
+function createProductStockResponseDto(): ProductStockResponseDto {
+  return {
+    productCode: 'productCode',
+    productColor: 'productColor',
+    productGenre: '1',
+    productImage: 'productImage',
+    productName: 'productName',
+    productSizeStandard: 'productSizeStandard',
+    productStockQuantity: 1
+  };
+}

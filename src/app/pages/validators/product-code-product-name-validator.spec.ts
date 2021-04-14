@@ -12,16 +12,16 @@ describe('ProductCodeProductNameValidator', () => {
   });
 
   describe('#validate', () => {
-    it('should have error', () => {
-      testingForm.setValue({ productCode: 'productCode', productName: null });
-      ProductCodeProductNameValidator(testingForm);
-      expect(testingForm.get(PRODUCT_CODE).getError('productNotExistError')).toBeTruthy();
-    });
-
     it('should not have error', () => {
       testingForm.setValue({ productCode: 'productCode', productName: 'productName' });
-      ProductCodeProductNameValidator(testingForm);
+      expect(ProductCodeProductNameValidator(testingForm)).toBeNull();
       expect(testingForm.get(PRODUCT_CODE).getError('productNotExistError')).toBeNull();
+    });
+
+    it('should have error', () => {
+      testingForm.setValue({ productCode: 'productCode', productName: null });
+      expect(ProductCodeProductNameValidator(testingForm)).toEqual({ productNotExistError: true });
+      expect(testingForm.get(PRODUCT_CODE).getError('productNotExistError')).toBeTruthy();
     });
   });
 });

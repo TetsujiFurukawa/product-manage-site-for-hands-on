@@ -4,6 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
 import { ApiConst } from '../constants/api-const';
+import { ProductStockRequestDto } from '../models/dtos/requests/product-stock-request-dto';
 import { ProductStockResponseDto } from '../models/dtos/responses/product-stock-response-dto';
 import { ProductStockService } from './product-stock.service';
 
@@ -47,15 +48,16 @@ describe('ProductStockService', () => {
   });
 
   describe('#getProductStock', () => {
-    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_STOCK;
+    const testProductCode = 'ABCD123';
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_STOCK + '?productCode=' + testProductCode;
 
     it('should return expected response', () => {
-      service.getProductStock('productCode').subscribe((response) => {
+      service.getProductStock(testProductCode).subscribe((response) => {
         expect(response).toEqual(expectedProductStockResponseDto);
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
-      const req = httpTestingController.expectOne(webApiUrl + '?productCode=productCode');
+      const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('GET');
       expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
       expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
@@ -66,12 +68,12 @@ describe('ProductStockService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      service.getProductStock('productCode').subscribe((response) => {
+      service.getProductStock(testProductCode).subscribe((response) => {
         expect(response).toBeNull();
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
       }, fail);
 
-      const req = httpTestingController.expectOne(webApiUrl + '?productCode=productCode');
+      const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('GET');
       expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
       expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
@@ -82,16 +84,15 @@ describe('ProductStockService', () => {
   });
 
   describe('#updateProductStock', () => {
+    const productStockRequestDto = createProductStockRequestDto();
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_STOCK;
 
     it('should return expected response', () => {
-      service
-        .updateProductStock({ productCode: '', productStockQuantity: 0, addProductStockQuantity: 0 })
-        .subscribe((response) => {
-          expect(response).toEqual(expectedProductStockResponseDto);
-          expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1);
-          expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
-        }, fail);
+      service.updateProductStock(productStockRequestDto).subscribe((response) => {
+        expect(response).toEqual(expectedProductStockResponseDto);
+        expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1);
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
+      }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('PUT');
@@ -104,13 +105,11 @@ describe('ProductStockService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      service
-        .updateProductStock({ productCode: '', productStockQuantity: 0, addProductStockQuantity: 0 })
-        .subscribe((response) => {
-          expect(response).toBeNull();
-          expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0);
-          expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
-        }, fail);
+      service.updateProductStock(productStockRequestDto).subscribe((response) => {
+        expect(response).toBeNull();
+        expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0);
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
+      }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('PUT');
@@ -123,8 +122,17 @@ describe('ProductStockService', () => {
   });
 });
 
+function createProductStockRequestDto(): ProductStockRequestDto {
+  const expectedProductStockRequestDto: ProductStockRequestDto = {
+    productCode: 'productCode',
+    productStockQuantity: 100,
+    addProductStockQuantity: 50
+  };
+  return expectedProductStockRequestDto;
+}
+
 function createProductStockResponseDto(): ProductStockResponseDto {
-  return {
+  const expectedProductStockResponseDto: ProductStockResponseDto = {
     productCode: 'productCode',
     productColor: 'productColor',
     productGenre: '1',
@@ -133,4 +141,5 @@ function createProductStockResponseDto(): ProductStockResponseDto {
     productSizeStandard: 'productSizeStandard',
     productStockQuantity: 1
   };
+  return expectedProductStockResponseDto;
 }

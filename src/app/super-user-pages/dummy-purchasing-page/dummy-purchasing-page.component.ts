@@ -191,7 +191,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   }
 
   private extractGetProductPurchaseResponseDto(productPurchaseResponseDto: ProductPurchaseResponseDto) {
-    if (productPurchaseResponseDto === null) {
+    if (!productPurchaseResponseDto) {
       return;
     }
     this.productName.setValue(productPurchaseResponseDto.productName);
@@ -211,24 +211,24 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   }
 
   private extractCreateProductPurchaseResponseDto(productPurchaseResponseDto: ProductPurchaseResponseDto) {
-    if (productPurchaseResponseDto === null) {
+    if (!productPurchaseResponseDto) {
       return;
     }
     this.productStockQuantity.setValue(
       this.formattedNumberPipe.transform(String(productPurchaseResponseDto.productStockQuantity), this.locale)
     );
-    this.productPurchaseQuantity.reset();
-    this.productPurchaseAmount.reset();
+    this.productPurchaseQuantity.setValue('');
+    this.productPurchaseAmount.setValue('');
   }
 
   private resetProductPurchaseControls() {
-    this.productName.reset();
-    this.productGenre.reset();
-    this.productSizeStandard.reset();
-    this.productPurchaseName.reset();
-    this.productPurchaseUnitPrice.reset();
-    this.productStockQuantity.reset();
-    this.productPurchaseQuantity.reset();
-    this.productPurchaseAmount.reset();
+    this.productName.setValue('');
+    this.productGenre.setValue('');
+    this.productSizeStandard.setValue('');
+    this.productPurchaseName.setValue('');
+    this.productPurchaseUnitPrice.setValue('');
+    this.productStockQuantity.setValue('');
+    this.productPurchaseQuantity.setValue('');
+    this.productPurchaseAmount.setValue('');
   }
 }

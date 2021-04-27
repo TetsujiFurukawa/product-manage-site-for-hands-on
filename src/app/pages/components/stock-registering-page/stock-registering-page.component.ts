@@ -1,4 +1,6 @@
-import { YesNoDialogComponent } from 'src/app/core/components/yes-no-dialog/yes-no-dialog.component';
+import {
+    YesNoDialogComponent
+} from 'src/app/core/components/yes-no-dialog/yes-no-dialog.component';
 import { RegexConst } from 'src/app/core/constants/regex-const';
 import { YesNoDialogData } from 'src/app/core/models/yes-no-dialog-data';
 import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
@@ -7,7 +9,9 @@ import { AppConst } from 'src/app/pages/constants/app-const';
 import { UrlConst } from 'src/app/pages/constants/url-const';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductStockService } from 'src/app/pages/services/product-stock.service';
-import { ProductCodeProductNameValidator } from 'src/app/pages/validators/product-code-product-name-validator';
+import {
+    ProductCodeProductNameValidator
+} from 'src/app/pages/validators/product-code-product-name-validator';
 import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
@@ -84,7 +88,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
    * Blurs product code
    */
   blurProductCode(): void {
-    if (this.productCode.value === '') {
+    if (!this.productCode.value) {
       return;
     }
     this.clearStockRegisteringConditions();
@@ -125,11 +129,11 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   }
 
   private clearStockRegisteringConditions(): void {
-    this.productName.reset();
-    this.productGenre.reset();
-    this.productSizeStandard.reset();
-    this.productStockQuantity.reset();
-    this.addProductStockQuantity.reset();
+    this.productName.setValue('');
+    this.productGenre.setValue('');
+    this.productSizeStandard.setValue('');
+    this.productStockQuantity.setValue('');
+    this.addProductStockQuantity.setValue('');
   }
 
   private getProductStock(): void {
@@ -151,7 +155,7 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   }
 
   private extractGetProductStockResponseDto(productStockResponseDto: ProductStockResponseDto): void {
-    if (productStockResponseDto === null) {
+    if (!productStockResponseDto) {
       return;
     }
     this.productName.setValue(productStockResponseDto.productName);
@@ -173,12 +177,12 @@ export class StockRegisteringPageComponent implements OnInit, AfterViewChecked {
   }
 
   private extractUpdateProductStockResponseDto(productStockResponseDto: ProductStockResponseDto): void {
-    if (productStockResponseDto === null) {
+    if (!productStockResponseDto) {
       return;
     }
     this.productStockQuantity.setValue(
       this.formattedNumberPipe.transform(String(productStockResponseDto.productStockQuantity), this.locale)
     );
-    this.addProductStockQuantity.reset();
+    this.addProductStockQuantity.setValue('');
   }
 }

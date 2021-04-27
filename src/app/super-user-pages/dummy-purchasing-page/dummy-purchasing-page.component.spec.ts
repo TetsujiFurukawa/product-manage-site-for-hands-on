@@ -158,8 +158,8 @@ describe('DummyPurchasingPageComponent', () => {
       component.clickSaveButton();
       expect(productPurchaseServiceSpy.createProductPurchase.calls.count()).toEqual(1);
       expect(component.productStockQuantity.value).toEqual('2,000');
-      expect(component.productPurchaseQuantity.value).toBeNull();
-      expect(component.productPurchaseAmount.value).toBeNull();
+      expect(component.productPurchaseQuantity.value).toEqual('');
+      expect(component.productPurchaseAmount.value).toEqual('');
     });
     it('should not create data', () => {
       matDialogSpy.open.and.returnValue({ afterClosed: () => of(false) });

@@ -35,25 +35,13 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./dummy-purchasing-page.component.scss']
 })
 export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
-  constructor(
-    private accountService: AccountService,
-    private dialog: MatDialog,
-    private formBuilder: FormBuilder,
-    private formattedCurrencyPipe: FormattedCurrencyPipe,
-    private formattedNumberPipe: FormattedNumberPipe,
-    private loadingService: LoadingService,
-    private productPurchaseService: ProductPurchaseService,
-    private titleI18Service: TitleI18Service,
-    public translateService: TranslateService
-  ) {}
-
   productCode = new FormControl('');
   productName = new FormControl('');
   productGenre = new FormControl('');
   productSizeStandard = new FormControl('');
-  productPurchaseName = new FormControl('', [Validators.required]);
   productPurchaseUnitPrice = new FormControl('');
   productStockQuantity = new FormControl('');
+  productPurchaseName = new FormControl('', [Validators.required]);
   productPurchaseQuantity = new FormControl('', [
     Validators.required,
     Validators.min(1),
@@ -62,7 +50,6 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   ]);
   productPurchaseAmount = new FormControl('');
   productImage = new FormControl(null);
-  validatorLocale = new FormControl(this.accountService.getUser().userLocale);
 
   registeringForm = this.formBuilder.group(
     {
@@ -75,17 +62,31 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
       productStockQuantity: this.productStockQuantity,
       productPurchaseQuantity: this.productPurchaseQuantity,
       productPurchaseAmount: this.productPurchaseAmount,
-      productImage: this.productImage,
-      validatorLocale: this.validatorLocale
+      productImage: this.productImage
     },
     {
-      validators: [ProductCodeProductNameValidator, PurchaseQuantityStockQuantityValidator]
+      validators: [
+        ProductCodeProductNameValidator,
+        PurchaseQuantityStockQuantityValidator(this.accountService.getUser().userLocale)
+      ]
     }
   );
 
   /** Locale, Currency */
   locale: string = this.accountService.getUser().userLocale;
   currency: string = this.accountService.getUser().userCurrency;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private loadingService: LoadingService,
+    private productPurchaseService: ProductPurchaseService,
+    private accountService: AccountService,
+    private dialog: MatDialog,
+    private formattedCurrencyPipe: FormattedCurrencyPipe,
+    private formattedNumberPipe: FormattedNumberPipe,
+    private titleI18Service: TitleI18Service,
+    public translateService: TranslateService
+  ) {}
 
   /**
    * on init
@@ -105,10 +106,10 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
    * Blurs product code
    */
   blurProductCode(): void {
-    if (this.productCode.value === '') {
+    if (!this.productCode.value) {
       return;
     }
-    this.resetProductPurchaseControls();
+    this.clearProductPurchaseConditions();
     this.getProductPurchase();
   }
 
@@ -131,7 +132,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        const purchaseRequest: ProductPurchaseRequestDto = this.createPurchaseRequest();
+        const purchaseRequest: ProductPurchaseRequestDto = this.createPurchaseRequestDto();
         this.createProductPurchase(purchaseRequest);
       }
     });
@@ -141,14 +142,24 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
    * Blurs product purchase quantity
    */
   blurProductPurchaseQuantity(): void {
-    const productPurchaseAmount =
-      Number(this.formattedCurrencyPipe.parse(this.productPurchaseUnitPrice.value, this.locale)) *
-      Number(
-        this.formattedNumberPipe.parse(
-          this.formattedNumberPipe.transform(this.productPurchaseQuantity.value, this.locale),
-          this.locale
-        )
-      );
+    this.productPurchaseQuantity.setValue(
+      this.formattedNumberPipe.transform(this.productPurchaseQuantity.value, this.locale)
+    );
+    if (!this.productPurchaseUnitPrice.value || !this.productPurchaseQuantity.value) {
+      return;
+    }
+
+    const numProductPurchaseUnitPrice = Number(
+      this.formattedCurrencyPipe.parse(this.productPurchaseUnitPrice.value, this.locale)
+    );
+    const numProductPurchaseQuantity = Number(
+      this.formattedNumberPipe.parse(this.productPurchaseQuantity.value, this.locale)
+    );
+    if (!Number.isFinite(numProductPurchaseUnitPrice) || !Number.isFinite(numProductPurchaseQuantity)) {
+      return;
+    }
+
+    const productPurchaseAmount = numProductPurchaseUnitPrice * numProductPurchaseQuantity;
     this.productPurchaseAmount.setValue(
       this.formattedCurrencyPipe.transform(String(productPurchaseAmount), this.locale, this.currency)
     );
@@ -156,13 +167,24 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
   // --------------------------------------------------------------------------------
   // private methods
   // --------------------------------------------------------------------------------
-  private setupLanguage() {
+  private setupLanguage(): void {
     const lang = this.accountService.getUser().userLanguage;
     this.translateService.setDefaultLang(lang);
     this.translateService.use(lang);
   }
 
-  private getProductPurchase() {
+  private clearProductPurchaseConditions(): void {
+    this.productName.setValue('');
+    this.productGenre.setValue('');
+    this.productSizeStandard.setValue('');
+    this.productPurchaseName.setValue('');
+    this.productPurchaseUnitPrice.setValue('');
+    this.productStockQuantity.setValue('');
+    this.productPurchaseQuantity.setValue('');
+    this.productPurchaseAmount.setValue('');
+  }
+
+  private getProductPurchase(): void {
     this.loadingService.startLoading();
 
     this.productPurchaseService.getProductPurchase(this.productCode.value).subscribe((data) => {
@@ -178,16 +200,6 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
       this.extractCreateProductPurchaseResponseDto(data);
       this.loadingService.stopLoading();
     });
-  }
-
-  private createPurchaseRequest(): ProductPurchaseRequestDto {
-    const productPurchaseRequestDto: ProductPurchaseRequestDto = {
-      productCode: this.productCode.value,
-      productPurchaseName: this.productPurchaseName.value,
-      productStockQuantity: Number(this.formattedNumberPipe.parse(this.productStockQuantity.value, this.locale)),
-      productPurchaseQuantity: Number(this.formattedCurrencyPipe.parse(this.productPurchaseQuantity.value, this.locale))
-    };
-    return productPurchaseRequestDto;
   }
 
   private extractGetProductPurchaseResponseDto(productPurchaseResponseDto: ProductPurchaseResponseDto) {
@@ -210,6 +222,16 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     this.productImage.setValue(productPurchaseResponseDto.productImage);
   }
 
+  private createPurchaseRequestDto(): ProductPurchaseRequestDto {
+    const productPurchaseRequestDto: ProductPurchaseRequestDto = {
+      productCode: this.productCode.value,
+      productPurchaseName: this.productPurchaseName.value,
+      productStockQuantity: Number(this.formattedNumberPipe.parse(this.productStockQuantity.value, this.locale)),
+      productPurchaseQuantity: Number(this.formattedCurrencyPipe.parse(this.productPurchaseQuantity.value, this.locale))
+    };
+    return productPurchaseRequestDto;
+  }
+
   private extractCreateProductPurchaseResponseDto(productPurchaseResponseDto: ProductPurchaseResponseDto) {
     if (!productPurchaseResponseDto) {
       return;
@@ -217,17 +239,6 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
     this.productStockQuantity.setValue(
       this.formattedNumberPipe.transform(String(productPurchaseResponseDto.productStockQuantity), this.locale)
     );
-    this.productPurchaseQuantity.setValue('');
-    this.productPurchaseAmount.setValue('');
-  }
-
-  private resetProductPurchaseControls() {
-    this.productName.setValue('');
-    this.productGenre.setValue('');
-    this.productSizeStandard.setValue('');
-    this.productPurchaseName.setValue('');
-    this.productPurchaseUnitPrice.setValue('');
-    this.productStockQuantity.setValue('');
     this.productPurchaseQuantity.setValue('');
     this.productPurchaseAmount.setValue('');
   }

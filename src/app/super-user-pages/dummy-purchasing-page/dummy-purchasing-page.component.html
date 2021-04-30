@@ -81,11 +81,11 @@
               <mat-error class="validation-error" *ngIf="productPurchaseQuantity.hasError('required')">
                 {{'validationError.required'|translate}}
               </mat-error>
-              <mat-error class="validation-error" *ngIf="productPurchaseQuantity.hasError('exceedStockError')">
-                {{'dummyPurchasingPage.validationError.exceedStockError'|translate}}
-              </mat-error>
               <mat-error class="validation-error" *ngIf="productPurchaseQuantity.hasError('pattern')">
                 {{'validationError.pattern.halfWidthNumericComma'|translate}}
+              </mat-error>
+              <mat-error class="validation-error" *ngIf="productPurchaseQuantity.hasError('exceedStockError')">
+                {{'dummyPurchasingPage.validationError.exceedStockError'|translate}}
               </mat-error>
             </mat-form-field>
           </div>

@@ -22,8 +22,6 @@ import { DummyPurchasingPageComponent } from './dummy-purchasing-page.component'
     CoreModule,
     SharedModule,
     NgxTranslateModule
-  ],
-  providers: [],
-  exports: [DummyPurchasingPageComponent]
+  ]
 })
 export class DummyPurchasingPageModule {}

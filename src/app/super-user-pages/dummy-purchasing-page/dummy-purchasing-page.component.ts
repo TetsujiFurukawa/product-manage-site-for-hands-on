@@ -227,7 +227,7 @@ export class DummyPurchasingPageComponent implements OnInit, AfterViewChecked {
       productCode: this.productCode.value,
       productPurchaseName: this.productPurchaseName.value,
       productStockQuantity: Number(this.formattedNumberPipe.parse(this.productStockQuantity.value, this.locale)),
-      productPurchaseQuantity: Number(this.formattedCurrencyPipe.parse(this.productPurchaseQuantity.value, this.locale))
+      productPurchaseQuantity: Number(this.formattedNumberPipe.parse(this.productPurchaseQuantity.value, this.locale))
     };
     return productPurchaseRequestDto;
   }

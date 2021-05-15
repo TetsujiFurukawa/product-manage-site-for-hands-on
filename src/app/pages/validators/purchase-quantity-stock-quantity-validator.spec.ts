@@ -10,60 +10,72 @@ const LOCALE = 'ja-JP';
 describe('PurchaseQuantityStockQuantityValidator', () => {
   const formBuilder: FormBuilder = new FormBuilder();
   const testingForm: FormGroup = formBuilder.group({
-    productStockQuantity: new FormControl(''),
-    productPurchaseQuantity: new FormControl(1)
+    productPurchaseQuantity: new FormControl(''),
+    productStockQuantity: new FormControl('')
   });
 
   describe('#validate', () => {
     const parameters = [
       {
-        description: 'should not have error | productStockQuantity is blank',
-        productStockQuantity: '',
-        productPurchaseQuantity: 1,
-        expectedErrorOfProductPurchaseQuantity: null
-      },
-      {
-        description: 'should not have error | productStockQuantity is null',
-        productStockQuantity: null,
-        productPurchaseQuantity: 1,
-        expectedErrorOfProductPurchaseQuantity: null
-      },
-      {
         description: 'should not have error | productPurchaseQuantity is blank',
-        productStockQuantity: 1,
         productPurchaseQuantity: '',
+        productStockQuantity: 1,
         expectedErrorOfProductPurchaseQuantity: null
       },
       {
         description: 'should not have error | productPurchaseQuantity is null',
-        productStockQuantity: 1,
         productPurchaseQuantity: null,
+        productStockQuantity: 1,
         expectedErrorOfProductPurchaseQuantity: null
       },
       {
         description: 'should not have error | productPurchaseQuantity is not numeric',
-        productStockQuantity: 1,
         productPurchaseQuantity: 'a',
+        productStockQuantity: 1,
+        expectedErrorOfProductPurchaseQuantity: null
+      },
+      {
+        description: 'should not have error | productStockQuantity is blank',
+        productPurchaseQuantity: 1,
+        productStockQuantity: '',
+        expectedErrorOfProductPurchaseQuantity: null
+      },
+      {
+        description: 'should not have error | productStockQuantity is null',
+        productPurchaseQuantity: 1,
+        productStockQuantity: null,
+        expectedErrorOfProductPurchaseQuantity: null
+      },
+      {
+        description: 'should not have error | productStockQuantity is not numeric',
+        productPurchaseQuantity: 1,
+        productStockQuantity: 'a',
+        expectedErrorOfProductPurchaseQuantity: null
+      },
+      {
+        description: 'should not have error | productPurchaseQuantity less than productStockQuantity',
+        productPurchaseQuantity: 1,
+        productStockQuantity: 2,
         expectedErrorOfProductPurchaseQuantity: null
       },
       {
         description: 'should not have error | productPurchaseQuantity equals productStockQuantity',
-        productStockQuantity: 1,
         productPurchaseQuantity: 1,
+        productStockQuantity: 1,
         expectedErrorOfProductPurchaseQuantity: null
       },
       {
         description: 'should have error | productPurchaseQuantity exceeds productStockQuantity',
-        productStockQuantity: 1,
         productPurchaseQuantity: 2,
+        productStockQuantity: 1,
         expectedErrorOfProductPurchaseQuantity: true
       }
     ];
     parameters.forEach((parameter) => {
       it(parameter.description, () => {
         testingForm.setValue({
-          productStockQuantity: parameter.productStockQuantity,
-          productPurchaseQuantity: parameter.productPurchaseQuantity
+          productPurchaseQuantity: parameter.productPurchaseQuantity,
+          productStockQuantity: parameter.productStockQuantity
         });
         const validatorFn = PurchaseQuantityStockQuantityValidator(LOCALE);
         validatorFn(testingForm);

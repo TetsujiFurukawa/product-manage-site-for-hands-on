@@ -62,7 +62,7 @@ describe('ProductPurchaseService', () => {
     it('should return expected response', () => {
       const productPurchaseResponseDto: ProductPurchaseHistorySearchResponseDto = {
         no: 1,
-        productCode: 'productCode',
+        productCode: VALUE_PRODUCT_CODE,
         productImageUrl: 'productImageUrl',
         productName: 'productName',
         productPurchaseAmount: 1,
@@ -113,7 +113,7 @@ describe('ProductPurchaseService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PURCHASE + '?productCode=' + VALUE_PRODUCT_CODE;
 
     it('should return expected response', () => {
-      service.getProductPurchase('productCode').subscribe((response) => {
+      service.getProductPurchase(VALUE_PRODUCT_CODE).subscribe((response) => {
         expect(response).toEqual(expectedProductPurchaseResponseDto);
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
@@ -129,7 +129,7 @@ describe('ProductPurchaseService', () => {
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      service.getProductPurchase('productCode').subscribe((response) => {
+      service.getProductPurchase(VALUE_PRODUCT_CODE).subscribe((response) => {
         expect(response).toBeNull();
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
       }, fail);

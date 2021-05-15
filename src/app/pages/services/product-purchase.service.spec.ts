@@ -6,6 +6,7 @@ import { TestBed } from '@angular/core/testing';
 import { ErrorMessagingService } from '../../core/services/error-messaging.service';
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
 import { ApiConst } from '../constants/api-const';
+import { ProductPurchaseRequestDto } from '../models/dtos/requests/product-purchase-request-dto';
 import {
     ProductPurchaseHistorySearchListResponseDto
 } from '../models/dtos/responses/product-purchase-history-search-list-response-dto';
@@ -15,9 +16,13 @@ import {
 import { ProductPurchaseResponseDto } from '../models/dtos/responses/product-purchase-response-dto';
 import { ProductPurchaseService } from './product-purchase.service';
 
+const VALUE_PRODUCT_CODE = 'productCode';
+
 describe('ProductPurchaseService', () => {
-  let httpTestingController: HttpTestingController;
+  const expectedProductPurchaseResponseDto: ProductPurchaseResponseDto = createProductPurchaseResponseDto();
+
   let service: ProductPurchaseService;
+  let httpTestingController: HttpTestingController;
   let successMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setMessageProperty: jasmine.Spy };
   let errorMessagingServiceSpy: { clearMessageProperty: jasmine.Spy; setupPageErrorMessageFromResponse: jasmine.Spy };
 
@@ -38,8 +43,8 @@ describe('ProductPurchaseService', () => {
         { provide: ErrorMessagingService, useValue: errorMessagingServiceSpy }
       ]
     });
-    httpTestingController = TestBed.inject(HttpTestingController);
     service = TestBed.inject(ProductPurchaseService);
+    httpTestingController = TestBed.inject(HttpTestingController);
   });
 
   afterEach(() => {
@@ -107,32 +112,21 @@ describe('ProductPurchaseService', () => {
   });
 
   describe('#getProductPurchase', () => {
-    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PURCHASE;
+    const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PURCHASE + '?productCode=' + VALUE_PRODUCT_CODE;
 
     it('should return expected response', () => {
-      const expectedResponse: ProductPurchaseResponseDto = {
-        productCode: 'productCode',
-        productColor: 'productColor',
-        productGenre: '1',
-        productImage: 'productImage',
-        productName: 'productName',
-        productPurchaseUnitPrice: 1,
-        productSizeStandard: 'productSizeStandard',
-        productStockQuantity: 1
-      };
-
       service.getProductPurchase('productCode').subscribe((response) => {
-        expect(response).toEqual(expectedResponse);
+        expect(response).toEqual(expectedProductPurchaseResponseDto);
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
-      const req = httpTestingController.expectOne(webApiUrl + '?productCode=productCode');
+      const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('GET');
       expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
       expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
-      req.flush(expectedResponse);
+      req.flush(expectedProductPurchaseResponseDto);
     });
 
     it('should return null 404 Not Found', () => {
@@ -142,7 +136,7 @@ describe('ProductPurchaseService', () => {
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
       }, fail);
 
-      const req = httpTestingController.expectOne(webApiUrl + '?productCode=productCode');
+      const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('GET');
       expect(successMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
       expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
@@ -153,32 +147,15 @@ describe('ProductPurchaseService', () => {
   });
 
   describe('#createProductPurchase', () => {
+    const productPurchaseRequestDto = createProductPurchaseRequestDto();
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PURCHASE;
 
     it('should return expected response', () => {
-      const expectedResponse: ProductPurchaseResponseDto = {
-        productCode: 'productCode',
-        productColor: 'productColor',
-        productGenre: '1',
-        productImage: 'productImage',
-        productName: 'productName',
-        productPurchaseUnitPrice: 1,
-        productSizeStandard: 'productSizeStandard',
-        productStockQuantity: 1
-      };
-
-      service
-        .createProductPurchase({
-          productCode: '',
-          productPurchaseName: '',
-          productStockQuantity: 0,
-          productPurchaseQuantity: 0
-        })
-        .subscribe((response) => {
-          expect(response).toEqual(expectedResponse);
-          expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1);
-          expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
-        }, fail);
+      service.createProductPurchase(productPurchaseRequestDto).subscribe((response) => {
+        expect(response).toEqual(expectedProductPurchaseResponseDto);
+        expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(1);
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
+      }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('POST');
@@ -186,23 +163,16 @@ describe('ProductPurchaseService', () => {
       expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
-      req.flush(expectedResponse);
+      req.flush(expectedProductPurchaseResponseDto);
     });
 
     it('should return null 404 Not Found', () => {
       const msg = '404 Not Found';
-      service
-        .createProductPurchase({
-          productCode: '',
-          productPurchaseName: '',
-          productStockQuantity: 0,
-          productPurchaseQuantity: 0
-        })
-        .subscribe((response) => {
-          expect(response).toBeNull();
-          expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0);
-          expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
-        }, fail);
+      service.createProductPurchase(productPurchaseRequestDto).subscribe((response) => {
+        expect(response).toBeNull();
+        expect(successMessagingServiceSpy.setMessageProperty.calls.count()).toBe(0);
+        expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
+      }, fail);
 
       const req = httpTestingController.expectOne(webApiUrl);
       expect(req.request.method).toEqual('POST');
@@ -214,3 +184,27 @@ describe('ProductPurchaseService', () => {
     });
   });
 });
+
+function createProductPurchaseRequestDto(): ProductPurchaseRequestDto {
+  const expectedProductPurchaseRequestDto: ProductPurchaseRequestDto = {
+    productCode: VALUE_PRODUCT_CODE,
+    productPurchaseName: 'productPurchaseName',
+    productStockQuantity: 100,
+    productPurchaseQuantity: 1
+  };
+  return expectedProductPurchaseRequestDto;
+}
+
+function createProductPurchaseResponseDto(): ProductPurchaseResponseDto {
+  const expectedProductPurchaseResponseDto: ProductPurchaseResponseDto = {
+    productCode: VALUE_PRODUCT_CODE,
+    productColor: 'productColor',
+    productGenre: '1',
+    productImage: 'productImage',
+    productName: 'productName',
+    productPurchaseUnitPrice: 1,
+    productSizeStandard: 'productSizeStandard',
+    productStockQuantity: 100
+  };
+  return expectedProductPurchaseResponseDto;
+}

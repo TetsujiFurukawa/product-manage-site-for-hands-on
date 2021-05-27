@@ -94,7 +94,6 @@ describe('DummyPurchasingPageComponent', () => {
         FormBuilder,
         FormattedCurrencyPipe,
         FormattedNumberPipe,
-        CurrencyPipe,
         { provide: AccountService, useValue: accountServiceSpy },
         { provide: ProductPurchaseService, useValue: productPurchaseServiceSpy },
         { provide: TitleI18Service, useValue: titleI18ServiceSpy },
@@ -174,6 +173,7 @@ describe('DummyPurchasingPageComponent', () => {
       productPurchaseServiceSpy.createProductPurchase.and.returnValue(of(null));
       component.clickSaveButton();
       expect(productPurchaseServiceSpy.createProductPurchase.calls.count()).toEqual(1);
+      expect(component.productStockQuantity.value).toEqual('');
     });
     it('should create data', async () => {
       matDialogSpy.open.and.returnValue({ afterClosed: () => of(true) });
@@ -187,19 +187,19 @@ describe('DummyPurchasingPageComponent', () => {
   });
 
   describe('#blurProductPurchaseQuantity', () => {
-    it('should not set formated value to productPurchaseAmount | productPurchaseQuantity is blank', () => {
+    it('should not set purchase amount when productPurchaseQuantity is blank', () => {
       component.productPurchaseUnitPrice.setValue(VALUE_PRODUCT_PURCHASE_UNIT_PRICE);
       component.productPurchaseQuantity.setValue('');
       component.blurProductPurchaseQuantity();
       expect(component.productPurchaseAmount.value).toEqual('');
     });
-    it('should not set formated value to productPurchaseAmount | productPurchaseQuantity is not numeric', () => {
+    it('should not set purchase amount when productPurchaseQuantity is not numeric', () => {
       component.productPurchaseUnitPrice.setValue(VALUE_PRODUCT_PURCHASE_UNIT_PRICE);
       component.productPurchaseQuantity.setValue('a');
       component.blurProductPurchaseQuantity();
       expect(component.productPurchaseAmount.value).toEqual('');
     });
-    it('should set formated value to productPurchaseAmount', () => {
+    it('should set purchase amount', () => {
       component.productPurchaseUnitPrice.setValue(VALUE_PRODUCT_PURCHASE_UNIT_PRICE);
       component.productPurchaseQuantity.setValue(1);
       component.blurProductPurchaseQuantity();
@@ -389,11 +389,6 @@ describe('DummyPurchasingPageComponent', () => {
         fixture,
         IDS.PRODUCT_PURCHASE_NAME,
         VALUE_PRODUCT_PURCHASE_NAME
-      );
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
-        fixture,
-        IDS.PRODUCT_STOCK_QUANTITY,
-        VALUE_PRODUCT_STOCK_QUANTITY_FORMATED
       );
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
         fixture,

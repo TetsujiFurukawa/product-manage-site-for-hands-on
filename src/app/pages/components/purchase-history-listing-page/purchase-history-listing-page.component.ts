@@ -3,7 +3,6 @@ import { map, startWith, switchMap } from 'rxjs/operators';
 import {
     MatDatepickerComponent
 } from 'src/app/core/components/mat-datepicker/mat-datepicker.component';
-import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { UrlConst } from 'src/app/pages/constants/url-const';
 import { AccountService } from 'src/app/pages/services/account.service';
@@ -20,6 +19,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { TranslateService } from '@ngx-translate/core';
 
 import {
+    PurchaseHistoryListingSearchParamsDto
+} from '../../models/dtos/requests/purchase-history-listing-search-params-dto';
+import {
     ProductPurchaseHistorySearchResponseDto
 } from '../../models/dtos/responses/product-purchase-history-search-response-dto';
 
@@ -29,17 +31,6 @@ import {
   styleUrls: ['./purchase-history-listing-page.component.scss']
 })
 export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChecked {
-  constructor(
-    private accountService: AccountService,
-    public formattedCurrencyPipe: FormattedCurrencyPipe,
-    private formBuilder: FormBuilder,
-    private loadingService: LoadingService,
-    private productPurchaseService: ProductPurchaseService,
-    private searchParamsService: SearchParamsService,
-    private titleI18Service: TitleI18Service,
-    public translateService: TranslateService
-  ) {}
-
   productPurchaseName = new FormControl('', []);
   productPurchaseDateFrom = new FormControl('', []);
   productPurchaseDateTo = new FormControl('', []);
@@ -57,7 +48,6 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
   /** Locale, Currency, Timezone */
   locale: string = this.accountService.getUser().userLocale;
   currency: string = this.accountService.getUser().userCurrency;
-  timezone: string = this.accountService.getUser().userTimezone;
   timezoneOffset: string = this.accountService.getUser().userTimezoneOffset;
 
   /** Material table's header */
@@ -78,8 +68,18 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
   resultsLength = 0;
 
   /** Paginator and DatePicker */
-  @ViewChild(MatPaginator, { static: true }) public paginator: MatPaginator;
-  @ViewChildren(MatDatepickerComponent) matDatePickerComponents!: QueryList<MatDatepickerComponent>;
+  @ViewChild(MatPaginator) public paginator: MatPaginator;
+  @ViewChildren(MatDatepickerComponent) public matDatePickerComponents: QueryList<MatDatepickerComponent>;
+
+  constructor(
+    private accountService: AccountService,
+    private formBuilder: FormBuilder,
+    private loadingService: LoadingService,
+    private productPurchaseService: ProductPurchaseService,
+    private searchParamsService: SearchParamsService,
+    private titleI18Service: TitleI18Service,
+    public translateService: TranslateService
+  ) {}
 
   /**
    * on init
@@ -113,8 +113,8 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
         startWith({}),
         switchMap(() => {
           this.loadingService.startLoading();
-          // const purchaseHistoryListingSearchParams: ProductPurchaseHistoryListingSearchParams = this.createSearchParamsDto();
-          return this.productPurchaseService.getProductPurchaseHistoryList(this.createHttpParams());
+          const searchParamsDto: PurchaseHistoryListingSearchParamsDto = this.createSearchParamsDto();
+          return this.productPurchaseService.getProductPurchaseHistoryList(this.createHttpParams(searchParamsDto));
         }),
         map((data) => {
           this.loadingService.stopLoading();
@@ -152,28 +152,35 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
     this.translateService.use(lang);
   }
 
-  private createHttpParams(): HttpParams {
-    const conditions: any = {
+  private createSearchParamsDto(): PurchaseHistoryListingSearchParamsDto {
+    const HALF_WIDTH_SPACE = ' ';
+    let productPurchaseDateFrom: Date;
+    let productPurchaseDateTo: Date;
+
+    if (this.productPurchaseDateFrom.value) {
+      productPurchaseDateFrom = new Date(this.productPurchaseDateFrom.value + HALF_WIDTH_SPACE + this.timezoneOffset);
+    }
+    if (this.productPurchaseDateTo.value) {
+      const date = new Date(this.productPurchaseDateTo.value);
+      date.setDate(date.getDate() + 1);
+      productPurchaseDateTo = new Date(date + HALF_WIDTH_SPACE + this.timezoneOffset);
+    }
+
+    const productListingSearchParamsDto: PurchaseHistoryListingSearchParamsDto = {
       productPurchaseName: this.productPurchaseName.value,
       productName: this.productName.value,
       productCode: this.productCode.value,
+      productPurchaseDateFrom: productPurchaseDateFrom ? productPurchaseDateFrom.toISOString() : '',
+      productPurchaseDateTo: productPurchaseDateTo ? productPurchaseDateTo.toISOString() : '',
       pageSize: this.paginator.pageSize,
       pageIndex: this.paginator.pageIndex
     };
 
-    if (this.productPurchaseDateFrom.value !== '' && this.productPurchaseDateFrom.value !== null) {
-      const localDate = new Date(this.productPurchaseDateFrom.value + ' ' + this.timezoneOffset);
-      conditions.productPurchaseDateFrom = localDate.toISOString();
-    }
+    return productListingSearchParamsDto;
+  }
 
-    if (this.productPurchaseDateTo.value !== '' && this.productPurchaseDateTo.value !== null) {
-      const date = new Date(this.productPurchaseDateTo.value);
-      date.setDate(date.getDate() + 1);
-      const localDate = new Date(date + ' ' + this.timezoneOffset);
-      conditions.productPurchaseDateTo = localDate.toISOString();
-    }
-
-    const paramsOptions = { fromObject: conditions } as any;
+  private createHttpParams(purchaseHistoryListingSearchParamsDto: PurchaseHistoryListingSearchParamsDto): HttpParams {
+    const paramsOptions = { fromObject: purchaseHistoryListingSearchParamsDto } as any;
     const params = new HttpParams(paramsOptions);
     return params;
   }
@@ -185,6 +192,7 @@ export class PurchaseHistoryListingPageComponent implements OnInit, AfterViewChe
     this.productPurchaseDateTo.setValue('');
     this.productName.setValue('');
     this.productCode.setValue('');
+    this.paginator.pageIndex = 0;
   }
 
   private clearSearchResultList(): void {

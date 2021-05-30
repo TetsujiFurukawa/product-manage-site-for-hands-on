@@ -6,18 +6,17 @@ import { ErrorMessagingService } from '../../core/services/error-messaging.servi
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
 import { ApiConst } from '../constants/api-const';
 import { ProductPurchaseRequestDto } from '../models/dtos/requests/product-purchase-request-dto';
-import {
-    ProductPurchaseHistorySearchListResponseDto
-} from '../models/dtos/responses/product-purchase-history-search-list-response-dto';
-import {
-    ProductPurchaseHistorySearchResponseDto
-} from '../models/dtos/responses/product-purchase-history-search-response-dto';
+import { ProductPurchaseHistorySearchListResponseDto } from '../models/dtos/responses/product-purchase-history-search-list-response-dto';
+import { ProductPurchaseHistorySearchResponseDto } from '../models/dtos/responses/product-purchase-history-search-response-dto';
 import { ProductPurchaseResponseDto } from '../models/dtos/responses/product-purchase-response-dto';
 import { ProductPurchaseService } from './product-purchase.service';
 
 const VALUE_PRODUCT_CODE = 'productCode';
 
 describe('ProductPurchaseService', () => {
+  const expectedHistorySearchResponseDto: ProductPurchaseHistorySearchResponseDto = createHistorySearchResponseDto();
+  const expectedHistorySearchListResponseDto: ProductPurchaseHistorySearchListResponseDto =
+    createHistorySearchListResponseDto(expectedHistorySearchResponseDto);
   const expectedProductPurchaseResponseDto: ProductPurchaseResponseDto = createProductPurchaseResponseDto();
 
   let service: ProductPurchaseService;
@@ -60,26 +59,8 @@ describe('ProductPurchaseService', () => {
     const webApiUrl = ApiConst.PATH_API_ROOT + ApiConst.PATH_PURCHASE_HISTORY_SEARCH;
 
     it('should return expected response', () => {
-      const productPurchaseResponseDto: ProductPurchaseHistorySearchResponseDto = {
-        no: 1,
-        productCode: VALUE_PRODUCT_CODE,
-        productImageUrl: 'productImageUrl',
-        productName: 'productName',
-        productPurchaseAmount: 1,
-        productPurchaseDate: new Date(),
-        productPurchaseName: 'productPurchaseName',
-        productPurchaseQuantity: 1,
-        productPurchaseUnitPrice: 1
-      };
-
-      const expectedResponse: ProductPurchaseHistorySearchListResponseDto = {
-        productPurchaseHistorySearchResponseDtos: Array(productPurchaseResponseDto),
-        pageIndex: 1,
-        resultsLength: 1
-      };
-
       service.getProductPurchaseHistoryList(new HttpParams()).subscribe((response) => {
-        expect(response).toEqual(expectedResponse);
+        expect(response).toEqual(expectedHistorySearchListResponseDto);
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(0);
       }, fail);
 
@@ -89,7 +70,7 @@ describe('ProductPurchaseService', () => {
       expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
-      req.flush(expectedResponse);
+      req.flush(expectedHistorySearchListResponseDto);
     });
 
     it('should return null 500 Internal Server Error', () => {
@@ -182,6 +163,32 @@ describe('ProductPurchaseService', () => {
     });
   });
 });
+
+function createHistorySearchResponseDto(): ProductPurchaseHistorySearchResponseDto {
+  const expectedProductPurchaseHistorySearchResponseDto: ProductPurchaseHistorySearchResponseDto = {
+    no: 1,
+    productCode: VALUE_PRODUCT_CODE,
+    productImageUrl: 'productImageUrl',
+    productName: 'productName',
+    productPurchaseAmount: 1,
+    productPurchaseDate: new Date(),
+    productPurchaseName: 'productPurchaseName',
+    productPurchaseQuantity: 1,
+    productPurchaseUnitPrice: 1
+  };
+  return expectedProductPurchaseHistorySearchResponseDto;
+}
+
+function createHistorySearchListResponseDto(
+  expectedProductPurchaseHistorySearchResponseDto: ProductPurchaseHistorySearchResponseDto
+): ProductPurchaseHistorySearchListResponseDto {
+  const expectedProductPurchaseRequestDto: ProductPurchaseHistorySearchListResponseDto = {
+    productPurchaseHistorySearchResponseDtos: Array(expectedProductPurchaseHistorySearchResponseDto),
+    pageIndex: 0,
+    resultsLength: 1
+  };
+  return expectedProductPurchaseRequestDto;
+}
 
 function createProductPurchaseRequestDto(): ProductPurchaseRequestDto {
   const expectedProductPurchaseRequestDto: ProductPurchaseRequestDto = {

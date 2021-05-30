@@ -1,33 +1,26 @@
 import { TranslateTestingModule } from 'ngx-translate-testing';
 import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 import { of } from 'rxjs';
+import { MatDatepickerComponent } from 'src/app/core/components/mat-datepicker/mat-datepicker.component';
 import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 import { MaterialModule } from 'src/app/material/material.module';
 import { User } from 'src/app/pages/models/user';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductPurchaseService } from 'src/app/pages/services/product-purchase.service';
-import { SearchParamsService } from 'src/app/pages/services/search-params.service';
 import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
 
-import { CurrencyPipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { By, HAMMER_LOADER } from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {
-    PurchaseHistoryListingSearchParamsDto
-} from '../../models/dtos/requests/purchase-history-listing-search-params-dto';
-import {
-    ProductPurchaseHistorySearchListResponseDto
-} from '../../models/dtos/responses/product-purchase-history-search-list-response-dto';
-import {
-    ProductPurchaseHistorySearchResponseDto
-} from '../../models/dtos/responses/product-purchase-history-search-response-dto';
+import { PurchaseHistoryListingSearchParamsDto } from '../../models/dtos/requests/purchase-history-listing-search-params-dto';
+import { ProductPurchaseHistorySearchListResponseDto } from '../../models/dtos/responses/product-purchase-history-search-list-response-dto';
+import { ProductPurchaseHistorySearchResponseDto } from '../../models/dtos/responses/product-purchase-history-search-response-dto';
 import { PurchaseHistoryListingPageComponent } from './purchase-history-listing-page.component';
 
 /** Frequently used values */
@@ -73,13 +66,11 @@ describe('PurchaseHistoryListingPageComponent', () => {
       ],
       providers: [
         FormBuilder,
-        FormattedNumberPipe,
-        FormattedCurrencyPipe,
         { provide: AccountService, useValue: accountServiceSpy },
         { provide: TitleI18Service, useValue: titleI18ServiceSpy },
         { provide: ProductPurchaseService, useValue: productPurchaseServiceSpy }
       ],
-      declarations: [PurchaseHistoryListingPageComponent, FormattedNumberPipe, FormattedCurrencyPipe]
+      declarations: [PurchaseHistoryListingPageComponent, MatDatepickerComponent]
     }).compileComponents();
   });
 
@@ -108,6 +99,28 @@ describe('PurchaseHistoryListingPageComponent', () => {
     it('should set title', () => {
       component.ngAfterViewChecked();
       expect(titleI18ServiceSpy.setTitle.calls.count()).toBeGreaterThan(1);
+    });
+  });
+
+  describe('#clickClearButton', () => {
+    it('should clear', () => {
+      spyOn(component.matDatePickerComponents.first, 'reset');
+      spyOn(component.matDatePickerComponents.last, 'reset');
+      component.productPurchaseName.setValue(VALUE_PRODUCT_PURCHASE_NAME);
+      component.productPurchaseDateFrom.setValue(VALUE_PRODUCT_PURCHASE_DATE_FROM);
+      component.productPurchaseDateTo.setValue(VALUE_PRODUCT_PURCHASE_DATE_TO);
+      component.productName.setValue(VALUE_PRODUCT_NAME);
+      component.productCode.setValue(VALUE_PRODUCT_CODE_LOWER);
+
+      component.clickClearButton();
+
+      expect(component.productPurchaseName.value).toEqual('');
+      expect(component.productPurchaseDateFrom.value).toEqual('');
+      expect(component.productPurchaseDateTo.value).toEqual('');
+      expect(component.productName.value).toEqual('');
+      expect(component.productCode.value).toEqual('');
+      expect(component.matDatePickerComponents.first.reset).toHaveBeenCalled();
+      expect(component.matDatePickerComponents.last.reset).toHaveBeenCalled();
     });
   });
 
@@ -157,16 +170,16 @@ describe('PurchaseHistoryListingPageComponent', () => {
       expect(htmlElement.dataset.placeholder).toContain('購入者');
     });
     it('product purchase date from', () => {
-      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(
+      const htmlInputElement: HTMLElement = fixture.debugElement.query(
         By.css('#product-purchase-date-from')
       ).nativeElement;
-      expect(htmlInputElement.placeholder).toContain('購入日From');
+      expect(htmlInputElement.innerText).toContain('購入日From');
     });
     it('product purchase date to', () => {
-      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(
+      const htmlInputElement: HTMLElement = fixture.debugElement.query(
         By.css('#product-purchase-date-to')
       ).nativeElement;
-      expect(htmlInputElement.placeholder).toContain('購入日To');
+      expect(htmlInputElement.innerText).toContain('購入日To');
     });
     it('product code', () => {
       const htmlElement: HTMLElement = fixture.debugElement.query(By.css('#product-code')).nativeElement;

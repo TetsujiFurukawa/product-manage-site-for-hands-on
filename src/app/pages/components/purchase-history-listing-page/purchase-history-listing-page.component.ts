@@ -1,8 +1,6 @@
 import { merge } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
-import {
-    MatDatepickerComponent
-} from 'src/app/core/components/mat-datepicker/mat-datepicker.component';
+import { MatDatepickerComponent } from 'src/app/core/components/mat-datepicker/mat-datepicker.component';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { UrlConst } from 'src/app/pages/constants/url-const';
 import { AccountService } from 'src/app/pages/services/account.service';
@@ -11,19 +9,13 @@ import { SearchParamsService } from 'src/app/pages/services/search-params.servic
 import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 
 import { HttpParams } from '@angular/common/http';
-import {
-    AfterViewChecked, Component, OnInit, QueryList, ViewChild, ViewChildren
-} from '@angular/core';
+import { AfterViewChecked, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { TranslateService } from '@ngx-translate/core';
 
-import {
-    PurchaseHistoryListingSearchParamsDto
-} from '../../models/dtos/requests/purchase-history-listing-search-params-dto';
-import {
-    ProductPurchaseHistorySearchResponseDto
-} from '../../models/dtos/responses/product-purchase-history-search-response-dto';
+import { PurchaseHistoryListingSearchParamsDto } from '../../models/dtos/requests/purchase-history-listing-search-params-dto';
+import { ProductPurchaseHistorySearchResponseDto } from '../../models/dtos/responses/product-purchase-history-search-response-dto';
 
 @Component({
   selector: 'app-purchase-history-listing-page',

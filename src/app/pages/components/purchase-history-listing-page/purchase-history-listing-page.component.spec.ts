@@ -1,7 +1,9 @@
 import { TranslateTestingModule } from 'ngx-translate-testing';
 import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 import { of } from 'rxjs';
-import { MatDatepickerComponent } from 'src/app/core/components/mat-datepicker/mat-datepicker.component';
+import {
+    MatDatepickerComponent
+} from 'src/app/core/components/mat-datepicker/mat-datepicker.component';
 import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 import { MaterialModule } from 'src/app/material/material.module';
@@ -18,9 +20,15 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { PurchaseHistoryListingSearchParamsDto } from '../../models/dtos/requests/purchase-history-listing-search-params-dto';
-import { ProductPurchaseHistorySearchListResponseDto } from '../../models/dtos/responses/product-purchase-history-search-list-response-dto';
-import { ProductPurchaseHistorySearchResponseDto } from '../../models/dtos/responses/product-purchase-history-search-response-dto';
+import {
+    PurchaseHistoryListingSearchParamsDto
+} from '../../models/dtos/requests/purchase-history-listing-search-params-dto';
+import {
+    ProductPurchaseHistorySearchListResponseDto
+} from '../../models/dtos/responses/product-purchase-history-search-list-response-dto';
+import {
+    ProductPurchaseHistorySearchResponseDto
+} from '../../models/dtos/responses/product-purchase-history-search-response-dto';
 import { PurchaseHistoryListingPageComponent } from './purchase-history-listing-page.component';
 
 /** Frequently used values */
@@ -129,7 +137,7 @@ describe('PurchaseHistoryListingPageComponent', () => {
       it('should search normally', () => {
         component.clickSearchButton();
         expect(productPurchaseServiceSpy.getProductPurchaseHistoryList.calls.count()).toEqual(1);
-        expect(component.purchaseHistorySearchResponses).toEqual(
+        expect(component.purchaseHistorySearchResponsesDtos).toEqual(
           expectedSearchListResponseDto.productPurchaseHistorySearchResponseDtos
         );
       });

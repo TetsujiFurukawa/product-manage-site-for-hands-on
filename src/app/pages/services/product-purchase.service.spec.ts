@@ -6,8 +6,12 @@ import { ErrorMessagingService } from '../../core/services/error-messaging.servi
 import { SuccessMessagingService } from '../../core/services/success-messaging.service';
 import { ApiConst } from '../constants/api-const';
 import { ProductPurchaseRequestDto } from '../models/dtos/requests/product-purchase-request-dto';
-import { ProductPurchaseHistorySearchListResponseDto } from '../models/dtos/responses/product-purchase-history-search-list-response-dto';
-import { ProductPurchaseHistorySearchResponseDto } from '../models/dtos/responses/product-purchase-history-search-response-dto';
+import {
+    ProductPurchaseHistorySearchListResponseDto
+} from '../models/dtos/responses/product-purchase-history-search-list-response-dto';
+import {
+    ProductPurchaseHistorySearchResponseDto
+} from '../models/dtos/responses/product-purchase-history-search-response-dto';
 import { ProductPurchaseResponseDto } from '../models/dtos/responses/product-purchase-response-dto';
 import { ProductPurchaseService } from './product-purchase.service';
 
@@ -73,8 +77,8 @@ describe('ProductPurchaseService', () => {
       req.flush(expectedHistorySearchListResponseDto);
     });
 
-    it('should return null 500 Internal Server Error', () => {
-      const msg = '500 Internal Server Error';
+    it('should return null 404 Not Found', () => {
+      const msg = '404 Not Found';
       service.getProductPurchaseHistoryList(new HttpParams()).subscribe((response) => {
         expect(response).toBeNull();
         expect(errorMessagingServiceSpy.setupPageErrorMessageFromResponse.calls.count()).toBe(1);
@@ -86,7 +90,7 @@ describe('ProductPurchaseService', () => {
       expect(errorMessagingServiceSpy.clearMessageProperty.calls.count()).toBe(1);
 
       // Respond with the mock
-      req.flush(msg, { status: 500, statusText: '500 Internal Server Error' });
+      req.flush(msg, { status: 404, statusText: '404 Not Found' });
     });
   });
 

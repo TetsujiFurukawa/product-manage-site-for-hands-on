@@ -4,8 +4,6 @@ import { of } from 'rxjs';
 import {
     MatDatepickerComponent
 } from 'src/app/core/components/mat-datepicker/mat-datepicker.component';
-import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
-import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 import { MaterialModule } from 'src/app/material/material.module';
 import { User } from 'src/app/pages/models/user';
 import { AccountService } from 'src/app/pages/services/account.service';
@@ -33,10 +31,12 @@ import { PurchaseHistoryListingPageComponent } from './purchase-history-listing-
 
 /** Frequently used values */
 const VALUE_PRODUCT_PURCHASE_NAME = 'productPurchaseName';
-const VALUE_PRODUCT_PURCHASE_DATE_FROM = 'Wed Jan 01 2020 00:00:00 GMT+0900';
-const VALUE_PRODUCT_PURCHASE_DATE_TO = 'Wed Jan 11 2020 00:00:00 GMT+0900';
+const VALUE_PRODUCT_PURCHASE_DATE_FROM = '2020/1/1';
+const VALUE_PRODUCT_PURCHASE_DATE_TO = '2030/1/1';
+const VALUE_PRODUCT_PURCHASE_DATE_FROM_RECEIVED = 'Wed Jan 01 2020 00:00:00 GMT+0900';
+const VALUE_PRODUCT_PURCHASE_DATE_TO_RECEIVED = 'Tue Jan 01 2030 00:00:00 GMT+0900';
 const VALUE_PRODUCT_PURCHASE_DATE_FROM_ISO = '2019-12-31T15:00:00.000Z';
-const VALUE_PRODUCT_PURCHASE_DATE_TO_ISO = '2020-01-11T15:00:00.000Z';
+const VALUE_PRODUCT_PURCHASE_DATE_TO_ISO = '2030-01-01T15:00:00.000Z';
 const VALUE_PRODUCT_NAME = 'productName';
 const VALUE_PRODUCT_CODE_UPPER = 'PRODUCTCODE';
 const VALUE_PRODUCT_CODE_LOWER = 'productCode';
@@ -47,6 +47,14 @@ const VALUE_PAGE_INDEX = 0;
 const VALUE_PAGE_SIZE = 50;
 
 describe('PurchaseHistoryListingPageComponent', () => {
+  const IDS = {
+    TITLE: '#title',
+    PRODUCT_PURCHASE_NAME: '#product-purchase-name',
+    PRODUCT_PURCHASE_DATE_FROM: '#product-purchase-date-from',
+    PRODUCT_PURCHASE_DATE_TO: '#product-purchase-date-to',
+    PRODUCT_CODE: '#product-code',
+    PRODUCT_NAME: '#product-name'
+  };
   const expectedUser = createExpectedUser();
   const expectedSearchParamsDto = createExpectedSearchParamsDto();
   const expectedSearchListResponseDto = createExpectedSearchListResponseDto();
@@ -75,8 +83,8 @@ describe('PurchaseHistoryListingPageComponent', () => {
       providers: [
         FormBuilder,
         { provide: AccountService, useValue: accountServiceSpy },
-        { provide: TitleI18Service, useValue: titleI18ServiceSpy },
-        { provide: ProductPurchaseService, useValue: productPurchaseServiceSpy }
+        { provide: ProductPurchaseService, useValue: productPurchaseServiceSpy },
+        { provide: TitleI18Service, useValue: titleI18ServiceSpy }
       ],
       declarations: [PurchaseHistoryListingPageComponent, MatDatepickerComponent]
     }).compileComponents();
@@ -112,13 +120,17 @@ describe('PurchaseHistoryListingPageComponent', () => {
 
   describe('#clickClearButton', () => {
     it('should clear', () => {
-      spyOn(component.matDatePickerComponents.first, 'reset');
-      spyOn(component.matDatePickerComponents.last, 'reset');
       component.productPurchaseName.setValue(VALUE_PRODUCT_PURCHASE_NAME);
       component.productPurchaseDateFrom.setValue(VALUE_PRODUCT_PURCHASE_DATE_FROM);
       component.productPurchaseDateTo.setValue(VALUE_PRODUCT_PURCHASE_DATE_TO);
       component.productName.setValue(VALUE_PRODUCT_NAME);
       component.productCode.setValue(VALUE_PRODUCT_CODE_LOWER);
+      spyOn(component.matDatePickerComponents.first, 'reset');
+      spyOn(component.matDatePickerComponents.last, 'reset');
+
+      component.purchaseHistorySearchResponsesDtos =
+        expectedSearchListResponseDto.productPurchaseHistorySearchResponseDtos;
+      component.resultsLength = expectedSearchListResponseDto.resultsLength;
 
       component.clickClearButton();
 
@@ -129,6 +141,9 @@ describe('PurchaseHistoryListingPageComponent', () => {
       expect(component.productCode.value).toEqual('');
       expect(component.matDatePickerComponents.first.reset).toHaveBeenCalled();
       expect(component.matDatePickerComponents.last.reset).toHaveBeenCalled();
+
+      expect(component.purchaseHistorySearchResponsesDtos).toBeNull();
+      expect(component.resultsLength).toEqual(0);
     });
   });
 
@@ -153,15 +168,15 @@ describe('PurchaseHistoryListingPageComponent', () => {
 
   describe('#receivedEventFromChildFrom', () => {
     it('should set date', () => {
-      component.receivedEventFromChildFrom(VALUE_PRODUCT_PURCHASE_DATE_FROM);
-      expect(component.productPurchaseDateFrom.value).toEqual(VALUE_PRODUCT_PURCHASE_DATE_FROM);
+      component.receivedEventFromChildFrom(VALUE_PRODUCT_PURCHASE_DATE_FROM_RECEIVED);
+      expect(component.productPurchaseDateFrom.value).toEqual(VALUE_PRODUCT_PURCHASE_DATE_FROM_RECEIVED);
     });
   });
 
   describe('#receivedEventFromChildTo', () => {
     it('should set date', () => {
-      component.receivedEventFromChildTo(VALUE_PRODUCT_PURCHASE_DATE_TO);
-      expect(component.productPurchaseDateTo.value).toEqual(VALUE_PRODUCT_PURCHASE_DATE_TO);
+      component.receivedEventFromChildTo(VALUE_PRODUCT_PURCHASE_DATE_TO_RECEIVED);
+      expect(component.productPurchaseDateTo.value).toEqual(VALUE_PRODUCT_PURCHASE_DATE_TO_RECEIVED);
     });
   });
   // --------------------------------------------------------------------------------
@@ -169,32 +184,32 @@ describe('PurchaseHistoryListingPageComponent', () => {
   // --------------------------------------------------------------------------------
   describe('DOM placeholder', () => {
     it('title', () => {
-      const htmlElement: HTMLElement = fixture.debugElement.query(By.css('#title')).nativeElement;
+      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.TITLE)).nativeElement;
       expect(htmlElement.innerText).toContain('購入履歴一覧');
     });
 
     it('product purchase name', () => {
-      const htmlElement: HTMLElement = fixture.debugElement.query(By.css('#product-purchase-name')).nativeElement;
+      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.PRODUCT_PURCHASE_NAME)).nativeElement;
       expect(htmlElement.dataset.placeholder).toContain('購入者');
     });
     it('product purchase date from', () => {
       const htmlInputElement: HTMLElement = fixture.debugElement.query(
-        By.css('#product-purchase-date-from')
+        By.css(IDS.PRODUCT_PURCHASE_DATE_FROM)
       ).nativeElement;
       expect(htmlInputElement.innerText).toContain('購入日From');
     });
     it('product purchase date to', () => {
       const htmlInputElement: HTMLElement = fixture.debugElement.query(
-        By.css('#product-purchase-date-to')
+        By.css(IDS.PRODUCT_PURCHASE_DATE_TO)
       ).nativeElement;
       expect(htmlInputElement.innerText).toContain('購入日To');
     });
     it('product code', () => {
-      const htmlElement: HTMLElement = fixture.debugElement.query(By.css('#product-code')).nativeElement;
+      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.PRODUCT_CODE)).nativeElement;
       expect(htmlElement.dataset.placeholder).toContain('商品コード');
     });
     it('product name', () => {
-      const htmlElement: HTMLElement = fixture.debugElement.query(By.css('#product-name')).nativeElement;
+      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.PRODUCT_NAME)).nativeElement;
       expect(htmlElement.dataset.placeholder).toContain('商品名');
     });
   });
@@ -202,18 +217,34 @@ describe('PurchaseHistoryListingPageComponent', () => {
   describe('DOM input test', () => {
     it('product purchase name', () => {
       const expectedValue = VALUE_PRODUCT_PURCHASE_NAME;
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-purchase-name', expectedValue);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
+        fixture,
+        IDS.PRODUCT_PURCHASE_NAME,
+        expectedValue
+      );
       expect(component.productPurchaseName.value).toEqual(expectedValue);
+    });
+    it('product purchase date from', () => {
+      const expectedValue = VALUE_PRODUCT_PURCHASE_DATE_FROM_RECEIVED;
+      component.receivedEventFromChildFrom(expectedValue);
+      fixture.detectChanges();
+      expect(component.productPurchaseDateFrom.value).toEqual(expectedValue);
+    });
+    it('product purchase date to', () => {
+      const expectedValue = VALUE_PRODUCT_PURCHASE_DATE_TO;
+      component.receivedEventFromChildTo(expectedValue);
+      fixture.detectChanges();
+      expect(component.productPurchaseDateTo.value).toEqual(expectedValue);
     });
     it('product name', () => {
       const expectedValue = VALUE_PRODUCT_NAME;
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', expectedValue);
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, IDS.PRODUCT_NAME, expectedValue);
       expect(component.productName.value).toEqual(expectedValue);
     });
     it('product code', () => {
       const expectedValue = VALUE_PRODUCT_CODE_LOWER;
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-code', expectedValue);
-      expect(component.productCode.value).toEqual(expectedValue.toUpperCase());
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, IDS.PRODUCT_CODE, expectedValue);
+      expect(component.productCode.value).toEqual(VALUE_PRODUCT_CODE_UPPER);
     });
   });
 
@@ -224,19 +255,19 @@ describe('PurchaseHistoryListingPageComponent', () => {
         '#product-purchase-name',
         VALUE_PRODUCT_PURCHASE_NAME
       );
-      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, '#product-name', VALUE_PRODUCT_NAME);
+      component.receivedEventFromChildFrom(VALUE_PRODUCT_PURCHASE_DATE_FROM_RECEIVED);
+      component.receivedEventFromChildTo(VALUE_PRODUCT_PURCHASE_DATE_TO_RECEIVED);
+
+      HtmlElementUtility.setValueToHTMLInputElement<typeof component>(fixture, IDS.PRODUCT_NAME, VALUE_PRODUCT_NAME);
       HtmlElementUtility.setValueToHTMLInputElement<typeof component>(
         fixture,
-        '#product-code',
+        IDS.PRODUCT_CODE,
         VALUE_PRODUCT_CODE_LOWER
       );
 
-      component.receivedEventFromChildFrom(VALUE_PRODUCT_PURCHASE_DATE_FROM);
-      component.receivedEventFromChildTo(VALUE_PRODUCT_PURCHASE_DATE_TO);
-
       const privateMethodName = 'createSearchParamsDto';
-      const resultProductListingSearchParamsDto: PurchaseHistoryListingSearchParamsDto = component[privateMethodName]();
-      expect(resultProductListingSearchParamsDto).toEqual(expectedSearchParamsDto);
+      const searchParamsDto: PurchaseHistoryListingSearchParamsDto = component[privateMethodName]();
+      expect(searchParamsDto).toEqual(expectedSearchParamsDto);
     });
   });
 });

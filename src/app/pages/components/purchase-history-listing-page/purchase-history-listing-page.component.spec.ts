@@ -301,9 +301,9 @@ function createExpectedSearchListResponseDto(): ProductPurchaseHistorySearchList
   const productPurchaseHistorySearchResponseDto: ProductPurchaseHistorySearchResponseDto[] = [
     {
       no: 1,
-      productName: 'productName',
-      productCode: 'productCode',
-      productPurchaseName: 'productPurchaseName',
+      productName: VALUE_PRODUCT_NAME,
+      productCode: VALUE_PRODUCT_CODE_UPPER,
+      productPurchaseName: VALUE_PRODUCT_PURCHASE_NAME,
       productImageUrl: 'productImageUrl',
       productPurchaseDate: new Date(),
       productPurchaseUnitPrice: VALUE_PRODUCT_PURCHASE_UNIT_PRICE,

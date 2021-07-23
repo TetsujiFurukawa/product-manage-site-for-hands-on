@@ -46,7 +46,7 @@
 /* --------------------------------------------------------------------------------
  * Smart Phones and tablets settings.
  * -------------------------------------------------------------------------------- */
-@media(max-width:768px) {
+@media screen and (max-width:768px) {
   .header-wrapper .menu.mainMenu {
     display: none;
   }

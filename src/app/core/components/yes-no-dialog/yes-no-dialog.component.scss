@@ -35,7 +35,7 @@ p {
 /* --------------------------------------------------------------------------------
  * Smart Phones and tablets settings.
  * -------------------------------------------------------------------------------- */
-@media(max-width:768px) {
+@media screen and (max-width:768px) {
   .mat-dialog-actions .flat-button {
     width: 135px;
     font-size: 1.0rem;

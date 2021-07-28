@@ -1,4 +1,12 @@
 export class ProductRegisteringPage {
+  TEST_ARGS = {
+    GENRE: {
+      SNEAKERS_AND_SHOES: '1',
+      TOPS: '2',
+      BAGS: '3'
+    }
+  };
+
   private TEST_IDS = {
     PRODUCT_CODE: '#product-code',
     PRODUCT_NAME: '#product-name',
@@ -7,6 +15,9 @@ export class ProductRegisteringPage {
     PRODUCT_SIZE_STANDARD: '#product-size-standard',
     PRODUCT_COLOR: '#product-color',
     PRODUCT_UNIT_PRICE: '#product-unit-price',
+    END_OF_SALE: '#end-of-sale .mat-checkbox-label',
+    END_OF_SALE_INPUT: '#end-of-sale input',
+    END_OF_SALE_DATE_INPUT: '#end-of-sale-date input',
     RETURN_BUTTON: '#return-button',
     SAVE_BUTTON: '#save-button',
     YES_NO_DIALOG_BUTTON_YES: '#yesNoDialog_button_yes'
@@ -39,15 +50,12 @@ export class ProductRegisteringPage {
     productGenre: string,
     productSizeStandard: string,
     productColor: string,
-    productUnitPrice: string
+    productUnitPrice: string,
+    endOfSaleDate: string
   ): ProductRegisteringPage {
     cy.get(this.TEST_IDS.PRODUCT_CODE).type(productCode);
-    cy.get(this.TEST_IDS.PRODUCT_NAME).type(productName);
-    cy.get(this.TEST_IDS.PRODUCT_GENRE).click();
-    cy.get(this.TEST_IDS.PRODUCT_GENRE_OPTIONS + ':nth-child(' + productGenre + ')').click();
-    cy.get(this.TEST_IDS.PRODUCT_SIZE_STANDARD).type(productSizeStandard);
-    cy.get(this.TEST_IDS.PRODUCT_COLOR).type(productColor);
-    cy.get(this.TEST_IDS.PRODUCT_UNIT_PRICE).type(productUnitPrice);
+
+    this.setupCommon(productName, productGenre, productSizeStandard, productColor, productUnitPrice, endOfSaleDate);
     return this;
   }
 
@@ -65,21 +73,48 @@ export class ProductRegisteringPage {
     productGenre: string,
     productSizeStandard: string,
     productColor: string,
-    productUnitPrice: string
+    productUnitPrice: string,
+    endOfSaleDate: string
   ): ProductRegisteringPage {
     cy.get(this.TEST_IDS.PRODUCT_NAME).clear();
-    cy.get(this.TEST_IDS.PRODUCT_GENRE).click();
-    cy.get(this.TEST_IDS.PRODUCT_GENRE_OPTIONS + ':nth-child(' + productGenre + ')').click();
     cy.get(this.TEST_IDS.PRODUCT_SIZE_STANDARD).clear();
     cy.get(this.TEST_IDS.PRODUCT_COLOR).clear();
     cy.get(this.TEST_IDS.PRODUCT_UNIT_PRICE).clear();
+    cy.get(this.TEST_IDS.END_OF_SALE_INPUT)
+      .invoke('attr', 'aria-checked')
+      .then((checked) => {
+        if ('true' === checked.toLowerCase()) {
+          cy.get(this.TEST_IDS.END_OF_SALE).click();
+        }
+      });
 
+    this.setupCommon(productName, productGenre, productSizeStandard, productColor, productUnitPrice, endOfSaleDate);
+    return this;
+  }
+
+  private setupCommon(
+    productName: string,
+    productGenre: string,
+    productSizeStandard: string,
+    productColor: string,
+    productUnitPrice: string,
+    endOfSaleDate: string
+  ) {
     cy.get(this.TEST_IDS.PRODUCT_NAME).type(productName);
-    cy.get(this.TEST_IDS.PRODUCT_GENRE).click();
-    cy.get(this.TEST_IDS.PRODUCT_GENRE_OPTIONS + ':nth-child(' + productGenre + ')').click();
+    cy.get(this.TEST_IDS.PRODUCT_GENRE)
+      .click()
+      .then(() => {
+        cy.get(this.TEST_IDS.PRODUCT_GENRE_OPTIONS + ':nth-child(' + productGenre + ')').click();
+      });
     cy.get(this.TEST_IDS.PRODUCT_SIZE_STANDARD).type(productSizeStandard);
     cy.get(this.TEST_IDS.PRODUCT_COLOR).type(productColor);
     cy.get(this.TEST_IDS.PRODUCT_UNIT_PRICE).type(productUnitPrice);
-    return this;
+    if (endOfSaleDate) {
+      cy.get(this.TEST_IDS.END_OF_SALE)
+        .click()
+        .then(() => {
+          cy.get(this.TEST_IDS.END_OF_SALE_DATE_INPUT).type(endOfSaleDate);
+        });
+    }
   }
 }

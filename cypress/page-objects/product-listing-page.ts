@@ -1,9 +1,19 @@
 export class ProductListingPage {
+  TEST_ARGS = {
+    GENRE: {
+      NONE: '1',
+      SNEAKERS_AND_SHOES: '2',
+      TOPS: '3',
+      BAGS: '4'
+    }
+  };
+
   private TEST_IDS = {
     PRODUCT_NAME: '#product-name',
     PRODUCT_CODE: '#product-code',
     PRODUCT_GENRE: '#product-genre',
     PRODUCT_GENRE_OPTIONS: '.product-genre-option',
+    END_OF_SALE: '#end-of-sale .mat-checkbox-label',
     SEARCH_RESULT: '.search-results > tbody > tr',
     NEW_BUTTON: '#new-button',
     CLEAR_BUTTON: '#clear-button',
@@ -49,12 +59,18 @@ export class ProductListingPage {
 
   /**
    * Params product listing page
-   * @param [productName] product name
-   * @param [productCode] product code
-   * @param [productGenre] product genre
+   * @param productName product name
+   * @param productCode product code
+   * @param productGenre product genre
+   * @param endOfSale end of sale
    * @returns ProductListingPage
    */
-  setupSearchCriteria(productName?: string, productCode?: string, productGenre?: string): ProductListingPage {
+  setupSearchCriteria(
+    productName: string,
+    productCode: string,
+    productGenre: string,
+    endOfSale: boolean
+  ): ProductListingPage {
     if (productName) {
       cy.get(this.TEST_IDS.PRODUCT_NAME).type(productName);
     }
@@ -62,17 +78,23 @@ export class ProductListingPage {
       cy.get(this.TEST_IDS.PRODUCT_CODE).type(productCode);
     }
     if (productGenre) {
-      cy.get(this.TEST_IDS.PRODUCT_GENRE).click();
-      cy.get(this.TEST_IDS.PRODUCT_GENRE_OPTIONS + ':nth-child(' + productGenre + ')').click();
+      cy.get(this.TEST_IDS.PRODUCT_GENRE)
+        .click()
+        .then(() => {
+          cy.get(this.TEST_IDS.PRODUCT_GENRE_OPTIONS + ':nth-child(' + productGenre + ')').click();
+        });
+    }
+    if (endOfSale) {
+      cy.get(this.TEST_IDS.END_OF_SALE).click();
     }
     return this;
   }
 
   /**
-   * Counts search results
-   * @returns search results
+   * Gets search result rows
+   * @returns search result rows
    */
-  countSearchResults(): number {
-    return cy.get(this.TEST_IDS.SEARCH_RESULT).should.length;
+  getSearchResultRows(): Cypress.Chainable<JQuery<HTMLElement>> {
+    return cy.get(this.TEST_IDS.SEARCH_RESULT);
   }
 }

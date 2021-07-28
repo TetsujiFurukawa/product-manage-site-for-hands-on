@@ -29,25 +29,27 @@ const expectedProductPurchaseName = '藤田 茂平';
 const VIEW_WIDTH = 1440;
 const VIEW_HEIGHT = 900;
 
-describe('#Senario1 User01 Registers a new product and edits it', () => {
+describe('#Senario1 User01 registers a new product and edits it', () => {
   beforeEach(() => {
     cy.viewport(VIEW_WIDTH, VIEW_HEIGHT);
   });
 
   it('Should register new product', () => {
-    const expectedProductGenreNth = '1';
-    const expectedSearchProductGenreNth = '2';
+    const expectedProductGenreNth = productRegisteringPage.TEST_ARGS.GENRE.SNEAKERS_AND_SHOES;
+    const expectedSearchProductGenreNth = productListingPage.TEST_ARGS.GENRE.SNEAKERS_AND_SHOES;
     const expectedProductSizeStandard = 'Test ProductvSizevStandard';
     const expectedProductColor = 'Test Product Color';
     const expectedProductUnitPrice = '1234';
+    const userAccount = 'user01';
+    const passWord = 'demo';
 
     // Signs in.
-    signInPage.setupSignIn('user01', 'demo').clickSignInButton();
+    signInPage.setupSignIn(userAccount, passWord).clickSignInButton();
+    cy.url().should((url) => expect(url).equal(UrlConst.PATH_CONTEXT + UrlConst.PATH_SIGN_IN));
 
     // Clicks New button.
     productListingPage.clickNewButton();
     cy.url().should((url) => expect(url).equal(UrlConst.PATH_CONTEXT + UrlConst.PATH_PRODUCT_REGISTERING_NEW));
-    cy.screenshot();
 
     // Registers the new product.
     productRegisteringPage
@@ -57,16 +59,16 @@ describe('#Senario1 User01 Registers a new product and edits it', () => {
         expectedProductGenreNth,
         expectedProductSizeStandard,
         expectedProductColor,
-        expectedProductUnitPrice
+        expectedProductUnitPrice,
+        ''
       )
       .clickSaveButton();
 
     // Searches the new product.
     productListingPage
-      .setupSearchCriteria(expectedProductName, expectedProductCode, expectedSearchProductGenreNth)
+      .setupSearchCriteria(expectedProductName, expectedProductCode, expectedSearchProductGenreNth, false)
       .clickSearchButton();
-    // expect(productListingPage.countSearchResults()).equal(1);
-    cy.screenshot();
+    productListingPage.getSearchResultRows().should((rows) => expect(rows).to.have.lengthOf(1));
 
     // Edits the new product.
     productListingPage.clickSearchList(1);
@@ -76,7 +78,8 @@ describe('#Senario1 User01 Registers a new product and edits it', () => {
         expectedProductGenreNth,
         expectedProductSizeStandard,
         expectedProductColor,
-        expectedProductUnitPrice
+        expectedProductUnitPrice,
+        ''
       )
       .clickSaveButton();
 
@@ -86,8 +89,10 @@ describe('#Senario1 User01 Registers a new product and edits it', () => {
   });
 });
 
-describe('#Senario2 User02 Adds stock of the new product', () => {
+describe('#Senario2 User02 adds stock of the new product', () => {
   const expectedAddProductStockQuantity = 50;
+  const userAccount = 'user02';
+  const passWord = 'demo';
 
   beforeEach(() => {
     cy.viewport(VIEW_WIDTH, VIEW_HEIGHT);
@@ -95,7 +100,8 @@ describe('#Senario2 User02 Adds stock of the new product', () => {
 
   it('Should add stock of the new product', () => {
     // Signs in.
-    signInPage.setupSignIn('user02', 'demo').clickSignInButton();
+    signInPage.setupSignIn(userAccount, passWord).clickSignInButton();
+    cy.url().should((url) => expect(url).equal(UrlConst.PATH_CONTEXT + UrlConst.PATH_SIGN_IN));
 
     // Moves to stock registering page
     headerPage.clickSubMenuStockRegistering();
@@ -113,6 +119,8 @@ describe('#Senario2 User02 Adds stock of the new product', () => {
 describe('#Senario3 User99 purchases the new product(for testing)', () => {
   const expectedProductPurchaseName1 = '小野 重三郎';
   const expectedProductPurchaseName2 = '高野 圭織';
+  const userAccount = 'user99';
+  const passWord = 'demo';
 
   beforeEach(() => {
     cy.viewport(VIEW_WIDTH, VIEW_HEIGHT);
@@ -120,7 +128,8 @@ describe('#Senario3 User99 purchases the new product(for testing)', () => {
 
   it('Should purchase the new product', () => {
     // Signs in.
-    signInPage.setupSignIn('user99', 'demo').clickSignInButton();
+    signInPage.setupSignIn(userAccount, passWord).clickSignInButton();
+    cy.url().should((url) => expect(url).equal(UrlConst.PATH_CONTEXT + UrlConst.PATH_SIGN_IN));
 
     // Moves to purchase registering page.
     headerPage.clickSubMenuDummyPurchasing();
@@ -139,6 +148,8 @@ describe('#Senario3 User99 purchases the new product(for testing)', () => {
 
 describe('#Senario4 User01 checks the purchase history of the product', () => {
   const expectedProductPurchaseNameNone = '';
+  const userAccount = 'user01';
+  const passWord = 'demo';
 
   beforeEach(() => {
     cy.viewport(VIEW_WIDTH, VIEW_HEIGHT);
@@ -146,7 +157,7 @@ describe('#Senario4 User01 checks the purchase history of the product', () => {
 
   it('Should confirm purchase history of the new product', () => {
     // Signs in.
-    signInPage.setupSignIn('user01', 'demo').clickSignInButton();
+    signInPage.setupSignIn(userAccount, passWord).clickSignInButton();
     cy.url().should((url) => expect(url).equal(UrlConst.PATH_CONTEXT + UrlConst.PATH_PRODUCT_LISTING));
 
     // Moves to purchase listing page.
@@ -163,7 +174,7 @@ describe('#Senario4 User01 checks the purchase history of the product', () => {
         expectedProductCode
       )
       .clickSearchButton();
-    // expect(purchaseHistoryListingPage.countSearchResults()).equal(1);
+    purchaseHistoryListingPage.getSearchResultRows().should((rows) => expect(rows).to.have.lengthOf(1));
 
     purchaseHistoryListingPage
       .clickClearButton()
@@ -175,7 +186,7 @@ describe('#Senario4 User01 checks the purchase history of the product', () => {
         expectedProductCode
       )
       .clickSearchButton();
-    // expect(purchaseHistoryListingPage.countSearchResults()).equal(3);
+    purchaseHistoryListingPage.getSearchResultRows().should((rows) => expect(rows).to.have.lengthOf(3));
 
     // Signs out.
     headerPage.clickSignOutButton();

@@ -43,19 +43,19 @@ export class PurchaseHistoryListingPage {
 
   /**
    * Params purchase history listing page
-   * @param [productPurchaseName] product purchase name
-   * @param [productPurchaseDateFrom] product purchase date from
-   * @param [productPurchaseDateTo] product purchase date to
-   * @param [productName] product name
-   * @param [productCode] product code
+   * @param productPurchaseName product purchase name
+   * @param productPurchaseDateFrom product purchase date from
+   * @param productPurchaseDateTo product purchase date to
+   * @param productName product name
+   * @param productCode product code
    * @returns PurchaseHistoryListingPage
    */
   setupSearchCriteria(
-    productPurchaseName?: string,
-    productPurchaseDateFrom?: string,
-    productPurchaseDateTo?: string,
-    productName?: string,
-    productCode?: string
+    productPurchaseName: string,
+    productPurchaseDateFrom: string,
+    productPurchaseDateTo: string,
+    productName: string,
+    productCode: string
   ): PurchaseHistoryListingPage {
     if (productPurchaseName) {
       cy.get(this.TEST_IDS.PRODUCT_PURCHASE_NAME).type(productPurchaseName);
@@ -76,10 +76,10 @@ export class PurchaseHistoryListingPage {
   }
 
   /**
-   * Counts search results
-   * @returns search results
+   * Gets search result rows
+   * @returns search result rows
    */
-  countSearchResults(): number {
-    return cy.get(this.TEST_IDS.SEARCH_RESULT).should.length;
+  getSearchResultRows(): Cypress.Chainable<JQuery<HTMLElement>> {
+    return cy.get(this.TEST_IDS.SEARCH_RESULT);
   }
 }

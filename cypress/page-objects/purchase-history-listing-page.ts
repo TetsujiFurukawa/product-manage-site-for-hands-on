@@ -37,7 +37,7 @@ export class PurchaseHistoryListingPage {
    * @returns PurchaseHistoryListingPage
    */
   clickSearchList(rowNo: number): PurchaseHistoryListingPage {
-    cy.get(this.TEST_IDS.SEARCH_RESULT + ':nth-child(' + rowNo + ')').click();
+    cy.get(this.TEST_IDS.SEARCH_RESULT + ':nth-child(' + rowNo.toString() + ')').click();
     return this;
   }
 

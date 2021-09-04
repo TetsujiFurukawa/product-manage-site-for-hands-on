@@ -1,9 +1,9 @@
 export class ProductRegisteringPage {
   TEST_ARGS = {
     GENRE: {
-      SNEAKERS_AND_SHOES: '1',
-      TOPS: '2',
-      BAGS: '3'
+      SNEAKERS_AND_SHOES: 1,
+      TOPS: 2,
+      BAGS: 3
     }
   };
 
@@ -47,7 +47,7 @@ export class ProductRegisteringPage {
   setupRegisterProduct(
     productCode: string,
     productName: string,
-    productGenre: string,
+    productGenre: number,
     productSizeStandard: string,
     productColor: string,
     productUnitPrice: string,
@@ -70,7 +70,7 @@ export class ProductRegisteringPage {
    */
   setupEditProduct(
     productName: string,
-    productGenre: string,
+    productGenre: number,
     productSizeStandard: string,
     productColor: string,
     productUnitPrice: string,
@@ -94,27 +94,21 @@ export class ProductRegisteringPage {
 
   private setupCommon(
     productName: string,
-    productGenre: string,
+    productGenre: number,
     productSizeStandard: string,
     productColor: string,
     productUnitPrice: string,
     endOfSaleDate: string
   ) {
     cy.get(this.TEST_IDS.PRODUCT_NAME).type(productName);
-    cy.get(this.TEST_IDS.PRODUCT_GENRE)
-      .click()
-      .then(() => {
-        cy.get(this.TEST_IDS.PRODUCT_GENRE_OPTIONS + ':nth-child(' + productGenre + ')').click();
-      });
+    cy.get(this.TEST_IDS.PRODUCT_GENRE).click();
+    cy.get(this.TEST_IDS.PRODUCT_GENRE_OPTIONS + ':nth-child(' + productGenre.toString() + ')').click();
     cy.get(this.TEST_IDS.PRODUCT_SIZE_STANDARD).type(productSizeStandard);
     cy.get(this.TEST_IDS.PRODUCT_COLOR).type(productColor);
     cy.get(this.TEST_IDS.PRODUCT_UNIT_PRICE).type(productUnitPrice);
     if (endOfSaleDate) {
-      cy.get(this.TEST_IDS.END_OF_SALE)
-        .click()
-        .then(() => {
-          cy.get(this.TEST_IDS.END_OF_SALE_DATE_INPUT).type(endOfSaleDate);
-        });
+      cy.get(this.TEST_IDS.END_OF_SALE).click();
+      cy.get(this.TEST_IDS.END_OF_SALE_DATE_INPUT).type(endOfSaleDate);
     }
   }
 }

@@ -1,10 +1,10 @@
 export class ProductListingPage {
   TEST_ARGS = {
     GENRE: {
-      NONE: '1',
-      SNEAKERS_AND_SHOES: '2',
-      TOPS: '3',
-      BAGS: '4'
+      NONE: 1,
+      SNEAKERS_AND_SHOES: 2,
+      TOPS: 3,
+      BAGS: 4
     }
   };
 
@@ -53,7 +53,7 @@ export class ProductListingPage {
    * @returns ProductListingPage
    */
   clickSearchList(rowNo: number): ProductListingPage {
-    cy.get(this.TEST_IDS.SEARCH_RESULT + ':nth-child(' + rowNo + ')').click();
+    cy.get(this.TEST_IDS.SEARCH_RESULT + ':nth-child(' + rowNo.toString() + ')').click();
     return this;
   }
 
@@ -68,7 +68,7 @@ export class ProductListingPage {
   setupSearchCriteria(
     productName: string,
     productCode: string,
-    productGenre: string,
+    productGenre: number,
     endOfSale: boolean
   ): ProductListingPage {
     if (productName) {
@@ -78,11 +78,8 @@ export class ProductListingPage {
       cy.get(this.TEST_IDS.PRODUCT_CODE).type(productCode);
     }
     if (productGenre) {
-      cy.get(this.TEST_IDS.PRODUCT_GENRE)
-        .click()
-        .then(() => {
-          cy.get(this.TEST_IDS.PRODUCT_GENRE_OPTIONS + ':nth-child(' + productGenre + ')').click();
-        });
+      cy.get(this.TEST_IDS.PRODUCT_GENRE).click();
+      cy.get(this.TEST_IDS.PRODUCT_GENRE_OPTIONS + ':nth-child(' + productGenre.toString() + ')').click();
     }
     if (endOfSale) {
       cy.get(this.TEST_IDS.END_OF_SALE).click();

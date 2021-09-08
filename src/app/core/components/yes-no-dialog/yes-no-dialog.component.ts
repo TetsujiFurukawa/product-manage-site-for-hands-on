@@ -9,8 +9,6 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './yes-no-dialog.component.html',
   styleUrls: ['./yes-no-dialog.component.scss']
 })
-export class YesNoDialogComponent implements OnInit {
+export class YesNoDialogComponent {
   constructor(public translateService: TranslateService, @Inject(MAT_DIALOG_DATA) public data: YesNoDialogData) {}
-
-  ngOnInit() {}
 }

@@ -1,5 +1,7 @@
 import { Observable } from 'rxjs';
-import { YesNoDialogComponent } from 'src/app/core/components/yes-no-dialog/yes-no-dialog.component';
+import {
+    YesNoDialogComponent
+} from 'src/app/core/components/yes-no-dialog/yes-no-dialog.component';
 import { RegexConst as RegexConstCore } from 'src/app/core/constants/regex-const';
 import { YesNoDialogData } from 'src/app/core/models/yes-no-dialog-data';
 import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
@@ -11,7 +13,9 @@ import { UrlConst } from 'src/app/pages/constants/url-const';
 import { ProductDto } from 'src/app/pages/models/dtos/product-dto';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductService } from 'src/app/pages/services/product.service';
-import { EndOfSaleEndOfSaleDateValidator } from 'src/app/pages/validators/end-of-sale-end-of-sale-date-validator';
+import {
+    EndOfSaleEndOfSaleDateValidator
+} from 'src/app/pages/validators/end-of-sale-end-of-sale-date-validator';
 import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
@@ -115,7 +119,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
    * Clicks product image button
    * @param files image file
    */
-  clickProductImageButton(files: File[]): void {
+  clickProductImageButton(files: FileList): void {
     if (files.length === 0) {
       return;
     }

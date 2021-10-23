@@ -151,7 +151,10 @@ describe('ProductRegisteringPageComponent_new', () => {
 
     it('should return When there is no file', () => {
       spyOn<any>(component, privateMethodReadFile).and.callThrough();
-      component.clickProductImageButton(Array());
+
+      let dataTransfer = new DataTransfer();
+      let imageFiles = dataTransfer.files;
+      component.clickProductImageButton(imageFiles);
       expect(component[privateMethodReadFile]).toHaveBeenCalledTimes(0);
     });
     it('should return when not images', () => {
@@ -159,7 +162,10 @@ describe('ProductRegisteringPageComponent_new', () => {
       const decodedImage = Buffer.from(VALUE_NOT_PRODUCT_IMAGE_BASE64, 'base64');
       const arrayOfBlob = new Array<Blob>();
       arrayOfBlob.push(new Blob([decodedImage]));
-      const imageFiles = Array(new File(arrayOfBlob, 'test01.zip', { type: 'application/zip' }));
+
+      let dataTransfer = new DataTransfer();
+      dataTransfer.items.add(new File(arrayOfBlob, 'test01.zip', { type: 'application/zip' }));
+      let imageFiles = dataTransfer.files;
 
       spyOn<any>(component, privateMethodReadFile).and.callThrough();
       component.clickProductImageButton(imageFiles);
@@ -172,7 +178,10 @@ describe('ProductRegisteringPageComponent_new', () => {
       const decodedImage = Buffer.from(VALUE_PRODUCT_IMAGE_BASE64, 'base64');
       const arrayOfBlob = new Array<Blob>();
       arrayOfBlob.push(new Blob([decodedImage]));
-      const imageFiles = Array(new File(arrayOfBlob, 'test01.img', { type: 'image/png' }));
+
+      let dataTransfer = new DataTransfer();
+      dataTransfer.items.add(new File(arrayOfBlob, 'test01.img', { type: 'image/png' }));
+      let imageFiles = dataTransfer.files;
 
       spyOn<any>(component, privateMethodReadFile).and.returnValue(of(VALUE_PRODUCT_IMAGE_DATA_URL));
       component.clickProductImageButton(imageFiles);

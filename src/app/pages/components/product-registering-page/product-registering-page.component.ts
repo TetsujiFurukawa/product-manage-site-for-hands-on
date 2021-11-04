@@ -117,7 +117,7 @@ export class ProductRegisteringPageComponent implements OnInit, AfterViewChecked
 
   /**
    * Clicks product image button
-   * @param files image file
+   * @param files image file list
    */
   clickProductImageButton(files: FileList): void {
     if (files.length === 0) {

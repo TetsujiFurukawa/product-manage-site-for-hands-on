@@ -7,12 +7,6 @@ import { SignInPage } from 'cypress/page-objects/sign-in-page';
 import { StockRegisteringPage } from 'cypress/page-objects/stock-registering-page';
 import { UrlConst } from 'cypress/page-objects/url-const';
 
-import { DatePipe, registerLocaleData } from '@angular/common';
-import localeJa from '@angular/common/locales/ja';
-
-registerLocaleData(localeJa);
-const locale = 'ja-JP';
-
 const signInPage: SignInPage = new SignInPage();
 const headerPage: HeaderPage = new HeaderPage();
 const productListingPage: ProductListingPage = new ProductListingPage();
@@ -21,9 +15,24 @@ const stockRegisteringPage: StockRegisteringPage = new StockRegisteringPage();
 const dummyPurchasingPage: DummyPurchasingPage = new DummyPurchasingPage();
 const purchaseHistoryListingPage: PurchaseHistoryListingPage = new PurchaseHistoryListingPage();
 
-const now = new Date();
-const testDate = formatDate(now, 'yyyy/MM/dd');
-const productCode = 'TEST' + formatDate(now, 'yyyyMMddhhmmss');
+const now = new Date().toLocaleDateString('ja-JP', {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  timeZone: 'Asia/Tokyo'
+}); // → 2022/01/01 00:00:00
+
+const testDate = now.substring(0, 10); // Cuts to length only for date → 2022/01/01
+const productCode =
+  'TEST' +
+  now
+    .replace(/\//g, '') // Removes all slashes.
+    .replace(/:/g, '') // Removes all colons.
+    .replace(' ', ''); // Removes space. → TEST20220101120000
+
 const productName = 'Test Product Name';
 const productPurchaseName = '藤田 茂平';
 
@@ -175,8 +184,3 @@ describe('#Senario4 User01 checks the purchase history of the product', () => {
     cy.url().should((url) => expect(url).equal(UrlConst.PATH_CONTEXT + UrlConst.PATH_SIGN_IN));
   });
 });
-
-function formatDate(targetDate: Date, format: string): string {
-  const datePipe = new DatePipe(locale);
-  return datePipe.transform(targetDate, format);
-}

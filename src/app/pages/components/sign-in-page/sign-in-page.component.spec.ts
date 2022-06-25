@@ -8,7 +8,7 @@ import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
 
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
@@ -42,7 +42,7 @@ describe('SignInPageComponent', () => {
         ReactiveFormsModule
       ],
       providers: [
-        FormBuilder,
+        UntypedFormBuilder,
         { provide: AccountService, useValue: accountServiceSpy },
         { provide: TitleI18Service, useValue: titleI18ServiceSpy }
       ],

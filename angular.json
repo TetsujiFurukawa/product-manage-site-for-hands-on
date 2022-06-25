@@ -152,7 +152,6 @@
       }
     }
   },
-  "defaultProject": "product-manage-site-for-hands-on",
   "cli": {
     "analytics": false
   }

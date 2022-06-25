@@ -7,7 +7,7 @@ import { AccountService } from 'src/app/pages/services/account.service';
 import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
 import { SignInRequestDto } from '../../models/dtos/requests/sign-in-request-dto';
@@ -19,8 +19,8 @@ import { SignInResponseDto } from '../../models/dtos/responses/sign-in-response-
   styleUrls: ['./sign-in-page.component.scss']
 })
 export class SignInPageComponent implements OnInit, AfterViewChecked {
-  signInUserAccount = new FormControl('', [Validators.required]);
-  signInUserPassword = new FormControl('', [Validators.required]);
+  signInUserAccount = new UntypedFormControl('', [Validators.required]);
+  signInUserPassword = new UntypedFormControl('', [Validators.required]);
 
   signInForm = this.formBuilder.group({
     signInUserAccount: this.signInUserAccount,
@@ -28,7 +28,7 @@ export class SignInPageComponent implements OnInit, AfterViewChecked {
   });
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private accountService: AccountService,
     private loadingService: LoadingService,
     private routingService: RoutingService,

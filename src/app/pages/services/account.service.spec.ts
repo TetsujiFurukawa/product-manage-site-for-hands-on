@@ -1,4 +1,4 @@
-import { UrlConst } from 'e2e/src/url-const';
+import { UrlConst } from 'src/app/pages/constants/url-const';
 
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';

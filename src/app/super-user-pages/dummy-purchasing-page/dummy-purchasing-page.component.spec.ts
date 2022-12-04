@@ -16,11 +16,10 @@ import { ProductPurchaseService } from 'src/app/pages/services/product-purchase.
 import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
 
-import { CurrencyPipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -91,7 +90,7 @@ describe('DummyPurchasingPageComponent', () => {
         ReactiveFormsModule
       ],
       providers: [
-        UntypedFormBuilder,
+        FormBuilder,
         FormattedCurrencyPipe,
         FormattedNumberPipe,
         { provide: AccountService, useValue: accountServiceSpy },
@@ -101,10 +100,9 @@ describe('DummyPurchasingPageComponent', () => {
       ],
       declarations: [DummyPurchasingPageComponent]
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     accountServiceSpy.getUser.and.returnValue(expectedUser);
+
     fixture = TestBed.createComponent(DummyPurchasingPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -188,22 +186,22 @@ describe('DummyPurchasingPageComponent', () => {
 
   describe('#blurProductPurchaseQuantity', () => {
     it('should not set purchase amount when productPurchaseQuantity is blank', () => {
-      component.productPurchaseUnitPrice.setValue(VALUE_PRODUCT_PURCHASE_UNIT_PRICE);
+      component.productPurchaseUnitPrice.setValue(VALUE_PRODUCT_PURCHASE_UNIT_PRICE_FORMATED);
       component.productPurchaseQuantity.setValue('');
       component.blurProductPurchaseQuantity();
       expect(component.productPurchaseAmount.value).toEqual('');
     });
     it('should not set purchase amount when productPurchaseQuantity is not numeric', () => {
-      component.productPurchaseUnitPrice.setValue(VALUE_PRODUCT_PURCHASE_UNIT_PRICE);
+      component.productPurchaseUnitPrice.setValue(VALUE_PRODUCT_PURCHASE_UNIT_PRICE_FORMATED);
       component.productPurchaseQuantity.setValue('a');
       component.blurProductPurchaseQuantity();
       expect(component.productPurchaseAmount.value).toEqual('');
     });
     it('should set purchase amount', () => {
-      component.productPurchaseUnitPrice.setValue(VALUE_PRODUCT_PURCHASE_UNIT_PRICE);
-      component.productPurchaseQuantity.setValue(1);
+      component.productPurchaseUnitPrice.setValue(VALUE_PRODUCT_PURCHASE_UNIT_PRICE_FORMATED);
+      component.productPurchaseQuantity.setValue('1');
       component.blurProductPurchaseQuantity();
-      expect(component.productPurchaseAmount.value).toEqual(VALUE_PRODUCT_PURCHASE_UNIT_PRICE_FORMATED);
+      expect(component.productPurchaseAmount.value).toEqual(VALUE_PRODUCT_PURCHASE_QUANTITY_FORMATED);
     });
   });
   // --------------------------------------------------------------------------------

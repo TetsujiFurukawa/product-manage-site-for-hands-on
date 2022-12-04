@@ -15,14 +15,18 @@ import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { ProductListingSearchParamsDto } from '../../models/dtos/requests/product-listing-search-params-dto';
-import { ProductSearchListResponseDto } from '../../models/dtos/responses/product-search-list-response-dto';
+import {
+    ProductListingSearchParamsDto
+} from '../../models/dtos/requests/product-listing-search-params-dto';
+import {
+    ProductSearchListResponseDto
+} from '../../models/dtos/responses/product-search-list-response-dto';
 import { ProductSearchResponseDto } from '../../models/dtos/responses/product-search-response-dto';
 import { ProductListingPageComponent } from './product-listing-page.component';
 
@@ -77,7 +81,7 @@ describe('ProductListingPageComponent', () => {
         NgxUpperCaseDirectiveModule
       ],
       providers: [
-        UntypedFormBuilder,
+        FormBuilder,
         FormattedNumberPipe,
         FormattedCurrencyPipe,
         { provide: AccountService, useValue: accountServiceSpy },
@@ -88,13 +92,12 @@ describe('ProductListingPageComponent', () => {
       declarations: [ProductListingPageComponent, FormattedNumberPipe, FormattedCurrencyPipe]
     }).compileComponents();
     router = TestBed.inject(Router);
-  });
 
-  beforeEach(() => {
     accountServiceSpy.getUser.and.returnValue(expectedUser);
     productServiceSpy.getGenres.and.returnValue(of(expectedGenres));
     searchParamsServiceSpy.getProductListingSearchParamsDto.and.returnValue(null);
     productServiceSpy.getProductList.and.returnValue(of(expectedSearchListResponseDto));
+
     fixture = TestBed.createComponent(ProductListingPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

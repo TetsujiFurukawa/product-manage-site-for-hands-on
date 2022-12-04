@@ -12,7 +12,7 @@ import { HtmlElementUtility } from 'src/app/tetsing/html-element-utility';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -75,7 +75,7 @@ describe('StockRegisteringPageComponent', () => {
         ReactiveFormsModule
       ],
       providers: [
-        UntypedFormBuilder,
+        FormBuilder,
         FormattedNumberPipe,
         { provide: AccountService, useValue: accountServiceSpy },
         { provide: ProductStockService, useValue: productStockServiceSpy },
@@ -84,10 +84,9 @@ describe('StockRegisteringPageComponent', () => {
       ],
       declarations: [StockRegisteringPageComponent]
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     accountServiceSpy.getUser.and.returnValue(expectedUser);
+
     fixture = TestBed.createComponent(StockRegisteringPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

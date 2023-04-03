@@ -36,6 +36,7 @@ describe('SuccessMessagingService', () => {
 
   describe('#hideStart', () => {
     it('should hide', () => {
+      jasmine.clock().uninstall();
       jasmine.clock().install();
       const initialValue = 'messageProperty';
       service.setMessageProperty(initialValue);

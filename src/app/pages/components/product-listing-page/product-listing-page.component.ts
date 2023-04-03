@@ -11,7 +11,7 @@ import { TitleI18Service } from 'src/app/shared/services/title-i18.service';
 import { HttpParams } from '@angular/common/http';
 import { AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
 import { TranslateService } from '@ngx-translate/core';
 
 import {

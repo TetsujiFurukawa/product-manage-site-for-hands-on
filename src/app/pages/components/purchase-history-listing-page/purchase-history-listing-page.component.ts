@@ -14,7 +14,7 @@ import {
     AfterViewChecked, Component, OnInit, QueryList, ViewChild, ViewChildren
 } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { TranslateService } from '@ngx-translate/core';
 
 import {

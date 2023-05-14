@@ -118,13 +118,13 @@ describe('SignInPageComponent', () => {
       const htmlInputElement: HTMLInputElement = fixture.debugElement.query(
         By.css('#signin-user-account')
       ).nativeElement;
-      expect(htmlInputElement.dataset.placeholder).toContain('ユーザアカウント');
+      expect(htmlInputElement.placeholder).toContain('ユーザアカウント');
     });
     it('sign in user password', () => {
       const htmlInputElement: HTMLInputElement = fixture.debugElement.query(
         By.css('#signin-user-password')
       ).nativeElement;
-      expect(htmlInputElement.dataset.placeholder).toContain('パスワード');
+      expect(htmlInputElement.placeholder).toContain('パスワード');
     });
     it('saveBtn', () => {
       const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#sign-in-button')).nativeElement;

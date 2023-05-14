@@ -12,6 +12,7 @@
         <div class="registering-area-wrapper left">
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
+              <mat-label id="product-code-label">{{ 'productRegisteringPage.productCode' | translate }}</mat-label>
               <input id="product-code" matInput type="text" formControlName="productCode" upperCase
                 placeholder="{{ 'productRegisteringPage.productCode' | translate }}"
                 matTooltip="{{ 'tooltip.registerValue.input.alphaNumeric' | translate }}" maxlength=20
@@ -26,6 +27,7 @@
           </div>
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field width-wide">
+              <mat-label>{{ 'productRegisteringPage.productName' | translate }}</mat-label>
               <input id="product-name" matInput type="text" formControlName="productName"
                 placeholder="{{ 'productRegisteringPage.productName' | translate }}"
                 matTooltip="{{ 'tooltip.registerValue.input.all' | translate }}" maxlength=50>
@@ -36,9 +38,8 @@
           </div>
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
-              <mat-label id="product-genre-label" class="form-field">
-                {{ 'productRegisteringPage.productGenre' | translate }}</mat-label>
-              <mat-select id="product-genre" class="form-field" formControlName="productGenre"
+              <mat-label id="product-genre-label"> {{ 'productRegisteringPage.productGenre' | translate }}</mat-label>
+              <mat-select id="product-genre" formControlName="productGenre"
                 matTooltip="{{ 'tooltip.registerValue.pulldown' | translate }}">
                 <mat-option class="product-genre-option" *ngFor="let code of genres" [value]="code">
                   {{ 'genre.' + code | translate }}
@@ -51,6 +52,7 @@
           </div>
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field width-wide">
+              <mat-label>{{ 'productRegisteringPage.productSizeStandard' | translate }}</mat-label>
               <input id="product-size-standard" matInput type="text" formControlName="productSizeStandard"
                 placeholder="{{ 'productRegisteringPage.productSizeStandard' | translate }}"
                 matTooltip="{{ 'tooltip.registerValue.input.all' | translate }}" maxlength=50>
@@ -61,6 +63,7 @@
           </div>
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
+              <mat-label>{{ 'productRegisteringPage.productColor' | translate }}</mat-label>
               <input id="product-color" matInput type="text" formControlName="productColor"
                 placeholder="{{ 'productRegisteringPage.productColor' | translate }}"
                 matTooltip="{{ 'tooltip.registerValue.input.all' | translate }}" maxlength=20>
@@ -71,6 +74,7 @@
           </div>
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
+              <mat-label>{{ 'productRegisteringPage.productUnitPrice' | translate }}</mat-label>
               <input id="product-unit-price" matInput type="text" appFormattedCurrencyInput
                 formControlName="productUnitPrice"
                 placeholder="{{ 'productRegisteringPage.productUnitPrice' | translate }}"
@@ -100,7 +104,8 @@
             <app-mat-datepicker id="end-of-sale-date" *ngIf="endOfSale.value"
               placeholder="{{ 'productRegisteringPage.endOfSaleDate' | translate }}"
               matTooltip="{{ 'productRegisteringPage.tooltip.endOfSaleDate' | translate }}" [locale]="locale"
-              [required]=true [initialValue]="endOfSaleDate.value" (event)="receivedEventFromChild($event)">
+              [required]=true [datepickerId]="'dp-end-of-sale-date'" [datepickerlabelId]="'dp-end-of-sale-date-label'"
+              [initialValue]="endOfSaleDate.value" (event)="receivedEventFromChild($event)">
             </app-mat-datepicker>
           </div>
         </div>

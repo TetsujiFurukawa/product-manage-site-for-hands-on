@@ -8,6 +8,7 @@ export class ProductRegisteringPage {
   };
 
   private TEST_IDS = {
+    PRODUCT_CODE_LABEL: '#product-code-label',
     PRODUCT_CODE: '#product-code',
     PRODUCT_NAME: '#product-name',
     PRODUCT_GENRE: '#product-genre',
@@ -53,6 +54,7 @@ export class ProductRegisteringPage {
     productUnitPrice: string,
     endOfSaleDate: string
   ): ProductRegisteringPage {
+    cy.get(this.TEST_IDS.PRODUCT_CODE_LABEL).click();
     cy.get(this.TEST_IDS.PRODUCT_CODE).type(productCode);
 
     this.setupCommon(productName, productGenre, productSizeStandard, productColor, productUnitPrice, endOfSaleDate);

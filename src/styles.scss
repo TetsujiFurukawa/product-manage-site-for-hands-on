@@ -13,8 +13,6 @@ body {
 }
 
 .body-wrapper {
-  min-height: 95vh;
-  /* ↑ Fallback of calc() for unsupported browsers */
   min-height: calc(100vh - 50px);
   position: relative;
   padding-bottom: 30px;
@@ -57,7 +55,7 @@ body {
 }
 
 .search-criteria {
-  height: 50px;
+  height: 90px;
   width: 95%;
   padding: 15px 10px 5px;
   margin: 0 0 0;
@@ -75,18 +73,20 @@ body {
 }
 
 .search-criteria .form-field {
+  vertical-align: middle;
   margin: 0 auto 0;
-  width: 200px;
+  height: 70px;
+  width: 250px;
 }
 
 .search-criteria .date-from .form-field,
 .search-criteria .date-to .form-field {
-  width: 100px;
+  width: 150px;
 }
 
 .search-functions-wrapper {
   display: table;
-  height: 30px;
+  // height: 30px;
   width: 100%;
   margin: 0 auto;
   padding: 5px 0px;
@@ -103,7 +103,7 @@ body {
   text-align: right;
 }
 
-.search-functions-wrapper .mat-paginator-container {
+.search-functions-wrapper .mat-mdc-paginator-container {
   justify-content: left;
   padding-left: 8px;
   min-height: 50px;
@@ -113,12 +113,13 @@ body {
 
 .search-functions-wrapper .flat-button {
   margin-right: 10px;
+  height: 40px;
   width: 200px;
   border-radius: 2px;
   background-color: #78BBE6;
   color: #ffffff;
   letter-spacing: 1px;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 
 .search-functions-wrapper .flat-button:hover {
@@ -152,9 +153,7 @@ body {
 
 .search-results-wrapper tbody {
   overflow-y: scroll;
-  height: 55vh;
-  /* ↑ Fallback of calc() for unsupported browsers */
-  height: calc(100vh - 310px);
+  height: calc(100vh - 350px);
 }
 
 .search-results-wrapper .search-results table,
@@ -171,6 +170,7 @@ body {
   border-bottom: 1px solid #F2F2F2;
   text-align: center;
   min-width: 100px;
+  white-space: nowrap;
 }
 
 .search-results-wrapper .search-results tr {
@@ -219,7 +219,7 @@ body {
 }
 
 .registering-criteria-wrapper {
-  height: 520px;
+  height: 680px;
   background-color: #ffffff;
 }
 
@@ -271,6 +271,7 @@ body {
 }
 
 .registering-criteria-wrapper .form-field {
+  height: 70px;
   width: 20rem;
   font-size: 1.4rem;
 }
@@ -297,6 +298,7 @@ body {
 .registering-area-wrapper .flat-button,
 .registering-functions-wrapper .flat-button {
   width: 200px;
+  height: 40px;
   border-radius: 2px;
   background-color: #78BBE6;
   color: #ffffff;
@@ -314,6 +316,7 @@ body {
   color: #ffffff;
 }
 
+.registering-area-wrapper .flat-button:disabled,
 .registering-functions-wrapper .flat-button:disabled {
   opacity: 0.4;
 }
@@ -321,19 +324,12 @@ body {
 /* --------------------------------------------------------------------------------
  * Other Material settings.
  * -------------------------------------------------------------------------------- */
-.mat-dialog-container {
+.mat-mdc-dialog-container {
   background-color: #ECEFF1;
   box-shadow: none;
   padding: 0 !important;
 }
 
-.mat-checkbox.mat-accent.mat-checkbox-checked .mat-checkbox-background {
-  background-color: #F99F48;
-}
-
-.mat-calendar-body-cell-content.mat-calendar-body-selected {
-  background: #F99F48;
-}
 
 /* --------------------------------------------------------------------------------
  * Smart Phones and tablets settings.
@@ -384,7 +380,7 @@ body {
     width: 100%;
   }
 
-  .search-functions-wrapper .mat-paginator-container {
+  .search-functions-wrapper .mat-mdc-paginator-container {
     justify-content: center;
     margin: 0;
     padding: 0;

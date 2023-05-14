@@ -1,5 +1,6 @@
 export class DummyPurchasingPage {
   private TEST_IDS = {
+    PRODUCT_CODE_LABEL: '#product-code-label',
     PRODUCT_CODE: '#product-code',
     PRODUCT_PURCHASE_NAME: '#product-Purchase-name',
     PRODUCT_PURCHASE_QUANTITY: '#product-purchase-quantity',
@@ -29,8 +30,8 @@ export class DummyPurchasingPage {
     productPurchaseName: string,
     productPurchaseQuantity: number
   ): DummyPurchasingPage {
+    cy.get(this.TEST_IDS.PRODUCT_CODE_LABEL).click();
     cy.get(this.TEST_IDS.PRODUCT_CODE).clear();
-
     cy.get(this.TEST_IDS.PRODUCT_CODE).type(productCode);
     cy.get(this.TEST_IDS.PRODUCT_PURCHASE_NAME).type(productPurchaseName);
     cy.get(this.TEST_IDS.PRODUCT_PURCHASE_QUANTITY).type(productPurchaseQuantity.toString());

@@ -9,6 +9,7 @@ export class ProductListingPage {
   };
 
   private TEST_IDS = {
+    PRODUCT_NAME_LABEL: '#product-name-label',
     PRODUCT_NAME: '#product-name',
     PRODUCT_CODE: '#product-code',
     PRODUCT_GENRE: '#product-genre',
@@ -71,6 +72,7 @@ export class ProductListingPage {
     productGenre: number,
     endOfSale: boolean
   ): ProductListingPage {
+    cy.get(this.TEST_IDS.PRODUCT_NAME_LABEL).click();
     if (productName) {
       cy.get(this.TEST_IDS.PRODUCT_NAME).type(productName);
     }

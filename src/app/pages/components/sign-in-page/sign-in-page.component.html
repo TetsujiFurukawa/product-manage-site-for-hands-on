@@ -8,6 +8,7 @@
       <form [formGroup]="signInForm">
 
         <mat-form-field class="form-field" hideRequiredMarker>
+          <mat-label id="signin-user-account-label">{{ 'signInPage.userAccount' | translate }}</mat-label>
           <input id="signin-user-account" matInput type="text" formControlName="signInUserAccount"
             placeholder="{{ 'signInPage.userAccount' | translate }}">
           <mat-error class="validation-error" *ngIf="signInUserAccount.hasError('required')">
@@ -16,6 +17,7 @@
         </mat-form-field>
 
         <mat-form-field class="form-field" hideRequiredMarker>
+          <mat-label>{{ 'signInPage.userPassword' | translate }}</mat-label>
           <input id="signin-user-password" matInput type="password" formControlName="signInUserPassword"
             placeholder="{{ 'signInPage.userPassword' | translate }}">
           <mat-error class="validation-error" *ngIf="signInUserPassword.hasError('required')">

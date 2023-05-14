@@ -1,6 +1,19 @@
 /* --------------------------------------------------------------------------------
  * Purchase History Listing page specific settings.
  * -------------------------------------------------------------------------------- */
+// ↓ Maybe bug fix.
+.search-functions-wrapper .flat-button {
+  background-color: #78BBE6;
+  color: #ffffff;
+}
+
+.search-functions-wrapper .flat-button.active {
+  background-color: #F99F48;
+  color: #ffffff;
+}
+
+// ↑ Maybe bug fix.
+
 .search-condition-wrapper .form-field-dates {
   display: inline-table;
   table-layout: fixed;
@@ -107,7 +120,7 @@
  * -------------------------------------------------------------------------------- */
 @media screen and (max-width:768px) {
   .search-criteria {
-    height: 200px;
+    height: 280px;
   }
 
   .search-results-wrapper .search-results tr {

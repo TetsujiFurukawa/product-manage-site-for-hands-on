@@ -2,6 +2,7 @@ import { UrlConst } from './url-const';
 
 export class SignInPage {
   private TEST_IDS = {
+    SIGN_IN_USER_ACCOUNT_LABEL: '#signin-user-account-label',
     SIGN_IN_USER_ACCOUNT: '#signin-user-account',
     SIGN_IN_USER_PASSWORD: '#signin-user-password',
     SIGN_IN_BTN: '#sign-in-button'
@@ -31,6 +32,7 @@ export class SignInPage {
    */
   setupSignIn(signInUserAccount: string, signInUserPassword: string): SignInPage {
     this.visit();
+    cy.get(this.TEST_IDS.SIGN_IN_USER_ACCOUNT_LABEL).click();
     cy.get(this.TEST_IDS.SIGN_IN_USER_ACCOUNT).type(signInUserAccount);
     cy.get(this.TEST_IDS.SIGN_IN_USER_PASSWORD).type(signInUserPassword);
     return this;

@@ -25,7 +25,7 @@ export class HtmlElementUtility {
    * @param selectIndex index no to set element
    */
   static setValueToHtmlSelectElement<T>(fixture: ComponentFixture<T>, querySelector: string, selectIndex: number) {
-    const optionSelector = '.mat-option';
+    const optionSelector = '.mat-mdc-option';
     const htmlSelectElement: HTMLSelectElement = fixture.debugElement.query(By.css(querySelector)).nativeElement;
     htmlSelectElement.click();
     htmlSelectElement.dispatchEvent(new Event('change'));

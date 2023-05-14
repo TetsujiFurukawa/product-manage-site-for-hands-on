@@ -4,12 +4,8 @@ import { of } from 'rxjs';
 import { FormattedCurrencyPipe } from 'src/app/core/pipes/formatted-currency.pipe';
 import { FormattedNumberPipe } from 'src/app/core/pipes/formatted-number.pipe';
 import { MaterialModule } from 'src/app/material/material.module';
-import {
-    ProductPurchaseRequestDto
-} from 'src/app/pages/models/dtos/requests/product-purchase-request-dto';
-import {
-    ProductPurchaseResponseDto
-} from 'src/app/pages/models/dtos/responses/product-purchase-response-dto';
+import { ProductPurchaseRequestDto } from 'src/app/pages/models/dtos/requests/product-purchase-request-dto';
+import { ProductPurchaseResponseDto } from 'src/app/pages/models/dtos/responses/product-purchase-response-dto';
 import { User } from 'src/app/pages/models/user';
 import { AccountService } from 'src/app/pages/services/account.service';
 import { ProductPurchaseService } from 'src/app/pages/services/product-purchase.service';
@@ -20,7 +16,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -213,40 +209,52 @@ describe('DummyPurchasingPageComponent', () => {
       expect(htmlElement.innerText).toEqual('購入ダミー');
     });
     it('product code', () => {
-      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.PRODUCT_CODE)).nativeElement;
-      expect(htmlElement.dataset.placeholder).toContain('商品コード');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css(IDS.PRODUCT_CODE)).nativeElement;
+      expect(htmlInputElement.placeholder).toContain('商品コード');
     });
     it('product name', () => {
-      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.PRODUCT_NAME)).nativeElement;
-      expect(htmlElement.dataset.placeholder).toContain('商品名');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css(IDS.PRODUCT_NAME)).nativeElement;
+      expect(htmlInputElement.placeholder).toContain('商品名');
     });
     it('product genre', () => {
-      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.PRODUCT_GENRE)).nativeElement;
-      expect(htmlElement.dataset.placeholder).toContain('ジャンル');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css(IDS.PRODUCT_GENRE)).nativeElement;
+      expect(htmlInputElement.placeholder).toContain('ジャンル');
     });
     it('product size standard', () => {
-      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.PRODUCT_SIZE_STANDARD)).nativeElement;
-      expect(htmlElement.dataset.placeholder).toContain('サイズ・規格');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(
+        By.css(IDS.PRODUCT_SIZE_STANDARD)
+      ).nativeElement;
+      expect(htmlInputElement.placeholder).toContain('サイズ・規格');
     });
     it('product unit price', () => {
-      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.PRODUCT_UNIT_PRICE)).nativeElement;
-      expect(htmlElement.dataset.placeholder).toContain('購入単価');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(
+        By.css(IDS.PRODUCT_UNIT_PRICE)
+      ).nativeElement;
+      expect(htmlInputElement.placeholder).toContain('購入単価');
     });
     it('product Stock quantity', () => {
-      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.PRODUCT_STOCK_QUANTITY)).nativeElement;
-      expect(htmlElement.dataset.placeholder).toContain('在庫数');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(
+        By.css(IDS.PRODUCT_STOCK_QUANTITY)
+      ).nativeElement;
+      expect(htmlInputElement.placeholder).toContain('在庫数');
     });
     it('product Purchase name', () => {
-      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.PRODUCT_PURCHASE_NAME)).nativeElement;
-      expect(htmlElement.dataset.placeholder).toContain('購入者');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(
+        By.css(IDS.PRODUCT_PURCHASE_NAME)
+      ).nativeElement;
+      expect(htmlInputElement.placeholder).toContain('購入者');
     });
     it('product purchase quantity', () => {
-      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.PRODUCT_PURCHASE_QUANTITY)).nativeElement;
-      expect(htmlElement.dataset.placeholder).toContain('購入数量');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(
+        By.css(IDS.PRODUCT_PURCHASE_QUANTITY)
+      ).nativeElement;
+      expect(htmlInputElement.placeholder).toContain('購入数量');
     });
     it('product purchase amount', () => {
-      const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.PRODUCT_PURCHASE_AMOUNT)).nativeElement;
-      expect(htmlElement.dataset.placeholder).toContain('購入金額');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(
+        By.css(IDS.PRODUCT_PURCHASE_AMOUNT)
+      ).nativeElement;
+      expect(htmlInputElement.placeholder).toContain('購入金額');
     });
     it('saveBtn', () => {
       const htmlElement: HTMLElement = fixture.debugElement.query(By.css(IDS.SAVE_BUTTON)).nativeElement;

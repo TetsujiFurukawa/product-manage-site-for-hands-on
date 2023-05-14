@@ -12,6 +12,8 @@ export class MatDatepickerComponent implements OnInit {
   @Input() initialValue: Date;
   @Input() required: boolean;
   @Input() locale: string;
+  @Input() datepickerId: string;
+  @Input() datepickerlabelId: string;
   @Output() event: EventEmitter<Date> = new EventEmitter<Date>();
 
   date = new FormControl<Date>(null);

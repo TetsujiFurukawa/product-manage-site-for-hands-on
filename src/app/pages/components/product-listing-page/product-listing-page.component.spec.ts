@@ -21,12 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import {
-    ProductListingSearchParamsDto
-} from '../../models/dtos/requests/product-listing-search-params-dto';
-import {
-    ProductSearchListResponseDto
-} from '../../models/dtos/responses/product-search-list-response-dto';
+import { ProductListingSearchParamsDto } from '../../models/dtos/requests/product-listing-search-params-dto';
+import { ProductSearchListResponseDto } from '../../models/dtos/responses/product-search-list-response-dto';
 import { ProductSearchResponseDto } from '../../models/dtos/responses/product-search-response-dto';
 import { ProductListingPageComponent } from './product-listing-page.component';
 
@@ -256,12 +252,12 @@ describe('ProductListingPageComponent', () => {
     });
 
     it('product name', () => {
-      const htmlElement: HTMLElement = fixture.debugElement.query(By.css('#product-name')).nativeElement;
-      expect(htmlElement.dataset.placeholder).toContain('商品名');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#product-name')).nativeElement;
+      expect(htmlInputElement.placeholder).toContain('商品名');
     });
     it('product code', () => {
-      const htmlElement: HTMLElement = fixture.debugElement.query(By.css('#product-code')).nativeElement;
-      expect(htmlElement.dataset.placeholder).toContain('商品コード');
+      const htmlInputElement: HTMLInputElement = fixture.debugElement.query(By.css('#product-code')).nativeElement;
+      expect(htmlInputElement.placeholder).toContain('商品コード');
     });
     it('product genre', () => {
       const htmlElement: HTMLElement = fixture.debugElement.query(By.css('#product-genre-label')).nativeElement;

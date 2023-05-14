@@ -8,6 +8,7 @@
       <div class="search-criteria">
         <div class="search-condition-wrapper">
           <mat-form-field class="form-field">
+            <mat-label id="product-name-label">{{ 'productListingPage.productName' | translate }}</mat-label>
             <input id="product-name" matInput type="text" formControlName="productName"
               placeholder="{{ 'productListingPage.productName' | translate }}" maxlength=50
               matTooltip="{{ 'tooltip.searchCriteria.prefixMatching' | translate }}">
@@ -15,6 +16,7 @@
         </div>
         <div class="search-condition-wrapper">
           <mat-form-field class="form-field">
+            <mat-label>{{ 'productListingPage.productCode' | translate }}</mat-label>
             <input id="product-code" matInput type="text" formControlName="productCode" upperCase
               placeholder="{{ 'productListingPage.productCode' | translate }}" maxlength=20
               matTooltip="{{ 'tooltip.searchCriteria.prefixMatching' | translate }}">
@@ -48,13 +50,16 @@
     </div>
     <div class="search-functions-buttons">
       <button mat-flat-button id="new-button" class="flat-button" (click)="clickNewButton()"
-        matTooltip="{{ 'productListingPage.tooltip.newBtn' | translate }}">{{ 'productListingPage.newButton' | translate }}</button>
+        matTooltip="{{ 'productListingPage.tooltip.newBtn' | translate }}">{{ 'productListingPage.newButton' | translate
+        }}</button>
 
       <button mat-flat-button id="clear-button" class="flat-button" (click)="clickClearButton()"
-        matTooltip="{{ 'tooltip.searchBtn.clearBtn' | translate }}">{{ 'productListingPage.clearButton' | translate }}</button>
+        matTooltip="{{ 'tooltip.searchBtn.clearBtn' | translate }}">{{ 'productListingPage.clearButton' | translate
+        }}</button>
 
       <button mat-flat-button id="search-button" class="flat-button active" (click)="clickSearchButton()"
-        matTooltip="{{ 'tooltip.searchBtn.searchBtn' | translate }}">{{ 'productListingPage.searchButton' | translate }}</button>
+        matTooltip="{{ 'tooltip.searchBtn.searchBtn' | translate }}">{{ 'productListingPage.searchButton' | translate
+        }}</button>
     </div>
   </div>
   <div class="search-results-wrapper">

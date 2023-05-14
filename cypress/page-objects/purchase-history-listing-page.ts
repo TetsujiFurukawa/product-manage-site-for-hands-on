@@ -1,11 +1,11 @@
-const SELECTOR_FOR_MAT_DATE_PICKER =
-  ' > form > mat-form-field > div > div.mat-form-field-flex > div.mat-form-field-infix > input';
-
 export class PurchaseHistoryListingPage {
   private TEST_IDS = {
+    PRODUCT_PURCHASE_NAME_LABEL: '#product-purchase-name-label',
     PRODUCT_PURCHASE_NAME: '#product-purchase-name',
-    PRODUCT_PURCHASE_DATE_FROM: '#product-purchase-date-from' + SELECTOR_FOR_MAT_DATE_PICKER,
-    PRODUCT_PURCHASE_DATE_TO: '#product-purchase-date-to' + SELECTOR_FOR_MAT_DATE_PICKER,
+    PRODUCT_PURCHASE_DATE_FROM_LABEL: '#dp-product-purchase-date-from-label',
+    PRODUCT_PURCHASE_DATE_FROM: '#dp-product-purchase-date-from',
+    PRODUCT_PURCHASE_DATE_TO_LABEL: '#dp-product-purchase-date-to-label',
+    PRODUCT_PURCHASE_DATE_TO: '#dp-product-purchase-date-to',
     PRODUCT_NAME: '#product-name',
     PRODUCT_CODE: '#product-code',
     SEARCH_RESULT: '.search-results > tbody > tr',
@@ -57,13 +57,16 @@ export class PurchaseHistoryListingPage {
     productName: string,
     productCode: string
   ): PurchaseHistoryListingPage {
+    cy.get(this.TEST_IDS.PRODUCT_PURCHASE_NAME_LABEL).click();
     if (productPurchaseName) {
       cy.get(this.TEST_IDS.PRODUCT_PURCHASE_NAME).type(productPurchaseName);
     }
     if (productPurchaseDateFrom) {
+      cy.get(this.TEST_IDS.PRODUCT_PURCHASE_DATE_FROM_LABEL).click();
       cy.get(this.TEST_IDS.PRODUCT_PURCHASE_DATE_FROM).type(productPurchaseDateFrom);
     }
     if (productPurchaseDateTo) {
+      cy.get(this.TEST_IDS.PRODUCT_PURCHASE_DATE_TO_LABEL).click();
       cy.get(this.TEST_IDS.PRODUCT_PURCHASE_DATE_TO).type(productPurchaseDateTo);
     }
     if (productName) {

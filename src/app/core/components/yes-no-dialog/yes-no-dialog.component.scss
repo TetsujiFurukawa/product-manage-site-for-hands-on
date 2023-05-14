@@ -1,13 +1,13 @@
-.mat-dialog-title {
+.mat-mdc-dialog-title {
   background-color: rgba(0, 0, 0, 0.12);
 }
 
-.mat-dialog-actions {
+.mat-mdc-dialog-actions {
   padding-left: 10px;
   padding-top: 30px;
 }
 
-.mat-dialog-actions .flat-button {
+.mat-mdc-dialog-actions .flat-button {
   width: 140px;
   border-radius: 2px;
   background-color: #78BBE6;
@@ -17,7 +17,7 @@
   margin-left: 5px;
 }
 
-.mat-dialog-actions .flat-button:hover {
+.mat-mdc-dialog-actions .flat-button:hover {
   opacity: 0.8;
 }
 
@@ -36,7 +36,7 @@ p {
  * Smart Phones and tablets settings.
  * -------------------------------------------------------------------------------- */
 @media screen and (max-width:768px) {
-  .mat-dialog-actions .flat-button {
+  .mat-mdc-dialog-actions .flat-button {
     width: 135px;
     font-size: 1.0rem;
   }

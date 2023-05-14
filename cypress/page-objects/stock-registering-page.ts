@@ -1,6 +1,8 @@
 export class StockRegisteringPage {
   private TEST_IDS = {
+    PRODUCT_CODE_LABEL: '#product-code-label',
     PRODUCT_CODE: '#product-code',
+    ADD_PRODUCT_STOCK_QUANTITY_LABEL: '#add-product-stock-quantity-label',
     ADD_PRODUCT_STOCK_QUANTITY: '#add-product-stock-quantity',
     SAVE_BUTTON: '#save-button',
     YES_NO_DIALOG_BUTTON_YES: '#yesNoDialog_button_yes'
@@ -23,7 +25,10 @@ export class StockRegisteringPage {
    * @returns StockRegisteringPage
    */
   setupAddStockOfProduct(productCode: string, addProductStockQuantity: number): StockRegisteringPage {
+    cy.get(this.TEST_IDS.PRODUCT_CODE_LABEL).click();
     cy.get(this.TEST_IDS.PRODUCT_CODE).type(productCode);
+    cy.get(this.TEST_IDS.ADD_PRODUCT_STOCK_QUANTITY_LABEL).click();
+    cy.get(this.TEST_IDS.ADD_PRODUCT_STOCK_QUANTITY_LABEL).click();
     cy.get(this.TEST_IDS.ADD_PRODUCT_STOCK_QUANTITY).type(addProductStockQuantity.toString());
     return this;
   }

@@ -12,6 +12,7 @@
         <div class="registering-area-wrapper left">
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
+              <mat-label id="product-code-label">{{ 'dummyPurchasingPage.productCode' | translate }}</mat-label>
               <input id="product-code" matInput type="text" formControlName="productCode" upperCase
                 placeholder="{{ 'dummyPurchasingPage.productCode' | translate }}"
                 matTooltip="{{ 'tooltip.registerValue.input.alphaNumeric' | translate }}" maxlength=20
@@ -23,24 +24,28 @@
           </div>
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field width-wide">
+              <mat-label>{{ 'dummyPurchasingPage.productName' | translate }}</mat-label>
               <input id="product-name" matInput type="text" formControlName="productName"
                 placeholder="{{ 'dummyPurchasingPage.productName' | translate }}" [readonly]=true>
             </mat-form-field>
           </div>
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
+              <mat-label>{{ 'dummyPurchasingPage.productGenre' | translate }}</mat-label>
               <input id="product-genre" matInput type="text" formControlName="productGenre"
                 placeholder="{{ 'dummyPurchasingPage.productGenre' | translate }}" [readonly]=true>
             </mat-form-field>
           </div>
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field width-wide">
+              <mat-label>{{ 'dummyPurchasingPage.productSizeStandard' | translate }}</mat-label>
               <input id="product-size-standard" matInput type="text" formControlName="productSizeStandard"
                 placeholder="{{ 'dummyPurchasingPage.productSizeStandard' | translate }}" [readonly]=true>
             </mat-form-field>
           </div>
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
+              <mat-label>{{ 'dummyPurchasingPage.productPurchaseUnitPrice' | translate }}</mat-label>
               <input id="product-unit-price" class="align-right" matInput type="text" appFormattedCurrencyInput
                 formControlName="productPurchaseUnitPrice"
                 placeholder="{{ 'dummyPurchasingPage.productPurchaseUnitPrice' | translate }}" [attr.locale]="locale"
@@ -49,6 +54,7 @@
           </div>
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
+              <mat-label>{{ 'dummyPurchasingPage.productStockQuantity' | translate }}</mat-label>
               <input id="product-stock-quantity" class="align-right" matInput type="text" appFormattedNumberInput
                 formControlName="productStockQuantity"
                 placeholder="{{ 'dummyPurchasingPage.productStockQuantity' | translate }}" [attr.locale]="locale"
@@ -57,6 +63,7 @@
           </div>
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field width-wide">
+              <mat-label>{{ 'dummyPurchasingPage.productPurchaseName' | translate }}</mat-label>
               <input id="product-Purchase-name" matInput type="text" formControlName="productPurchaseName"
                 placeholder="{{ 'dummyPurchasingPage.productPurchaseName' | translate }}"
                 matTooltip="{{ 'dummyPurchasingPage.tooltip.purchaseName' | translate }}" maxlength=50>
@@ -67,6 +74,7 @@
           </div>
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
+              <mat-label>{{ 'dummyPurchasingPage.productPurchaseQuantity' | translate }}</mat-label>
               <input id="product-purchase-quantity" class="align-right" matInput type="text" appFormattedNumberInput
                 formControlName="productPurchaseQuantity"
                 placeholder="{{ 'dummyPurchasingPage.productPurchaseQuantity' | translate }}"
@@ -91,6 +99,7 @@
           </div>
           <div class="registering-condition-wrapper">
             <mat-form-field class="form-field">
+              <mat-label>{{ 'dummyPurchasingPage.productPurchaseAmount' | translate }}</mat-label>
               <input id="product-purchase-amount" class="align-right" matInput type="text" appFormattedCurrencyInput
                 formControlName="productPurchaseAmount"
                 placeholder="{{ 'dummyPurchasingPage.productPurchaseAmount' | translate }}" [attr.locale]="locale"

@@ -71,8 +71,7 @@ describe('#Senario1 User01 registers a new product and edits it', () => {
         productGenre,
         productSizeStandard,
         newProductColor,
-        newProductUnitPrice,
-        ''
+        newProductUnitPrice
       )
       .clickSaveButton();
     cy.url().should((url) => expect(url).equal(UrlConst.PATH_CONTEXT + UrlConst.PATH_PRODUCT_LISTING));
@@ -84,7 +83,7 @@ describe('#Senario1 User01 registers a new product and edits it', () => {
     // Edits the new product.
     productListingPage.clickSearchList(1);
     productRegisteringPage
-      .setupEditProduct(productName, productGenre, productSizeStandard, editProductColor, editProductUnitPrice, '')
+      .setupEditProduct(productName, productGenre, productSizeStandard, editProductColor, editProductUnitPrice)
       .clickSaveButton();
 
     // Signs out.

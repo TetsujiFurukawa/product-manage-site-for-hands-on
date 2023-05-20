@@ -16,9 +16,6 @@ export class ProductRegisteringPage {
     PRODUCT_SIZE_STANDARD: '#product-size-standard',
     PRODUCT_COLOR: '#product-color',
     PRODUCT_UNIT_PRICE: '#product-unit-price',
-    END_OF_SALE: '#end-of-sale .mat-checkbox-label',
-    END_OF_SALE_INPUT: '#end-of-sale input',
-    END_OF_SALE_DATE_INPUT: '#end-of-sale-date input',
     RETURN_BUTTON: '#return-button',
     SAVE_BUTTON: '#save-button',
     YES_NO_DIALOG_BUTTON_YES: '#yesNoDialog_button_yes'
@@ -51,13 +48,12 @@ export class ProductRegisteringPage {
     productGenre: number,
     productSizeStandard: string,
     productColor: string,
-    productUnitPrice: string,
-    endOfSaleDate: string
+    productUnitPrice: string
   ): ProductRegisteringPage {
     cy.get(this.TEST_IDS.PRODUCT_CODE_LABEL).click();
     cy.get(this.TEST_IDS.PRODUCT_CODE).type(productCode);
 
-    this.setupCommon(productName, productGenre, productSizeStandard, productColor, productUnitPrice, endOfSaleDate);
+    this.setupCommon(productName, productGenre, productSizeStandard, productColor, productUnitPrice);
     return this;
   }
 
@@ -75,22 +71,14 @@ export class ProductRegisteringPage {
     productGenre: number,
     productSizeStandard: string,
     productColor: string,
-    productUnitPrice: string,
-    endOfSaleDate: string
+    productUnitPrice: string
   ): ProductRegisteringPage {
     cy.get(this.TEST_IDS.PRODUCT_NAME).clear();
     cy.get(this.TEST_IDS.PRODUCT_SIZE_STANDARD).clear();
     cy.get(this.TEST_IDS.PRODUCT_COLOR).clear();
     cy.get(this.TEST_IDS.PRODUCT_UNIT_PRICE).clear();
-    cy.get(this.TEST_IDS.END_OF_SALE_INPUT)
-      .invoke('attr', 'aria-checked')
-      .then((checked) => {
-        if ('true' === checked.toLowerCase()) {
-          cy.get(this.TEST_IDS.END_OF_SALE).click();
-        }
-      });
 
-    this.setupCommon(productName, productGenre, productSizeStandard, productColor, productUnitPrice, endOfSaleDate);
+    this.setupCommon(productName, productGenre, productSizeStandard, productColor, productUnitPrice);
     return this;
   }
 
@@ -99,8 +87,7 @@ export class ProductRegisteringPage {
     productGenre: number,
     productSizeStandard: string,
     productColor: string,
-    productUnitPrice: string,
-    endOfSaleDate: string
+    productUnitPrice: string
   ) {
     cy.get(this.TEST_IDS.PRODUCT_NAME).type(productName);
     cy.get(this.TEST_IDS.PRODUCT_GENRE).click();
@@ -108,9 +95,5 @@ export class ProductRegisteringPage {
     cy.get(this.TEST_IDS.PRODUCT_SIZE_STANDARD).type(productSizeStandard);
     cy.get(this.TEST_IDS.PRODUCT_COLOR).type(productColor);
     cy.get(this.TEST_IDS.PRODUCT_UNIT_PRICE).type(productUnitPrice);
-    if (endOfSaleDate) {
-      cy.get(this.TEST_IDS.END_OF_SALE).click();
-      cy.get(this.TEST_IDS.END_OF_SALE_DATE_INPUT).type(endOfSaleDate);
-    }
   }
 }
